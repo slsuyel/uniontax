@@ -1,7 +1,15 @@
+import HeroSlider from '@/components/ui/HeroSlider';
+import RightSidebar from './RightSidebar';
+import ServiceBox from '@/components/ui/ServiceBox';
+
 const Home = () => {
   return (
-    <div>
-      <h1>This is Home page</h1>
+    <div className="row mx-auto container my-4">
+      <div className="col-md-9 ps-0">
+        <HeroSlider />
+        <ServiceBox />
+      </div>
+      <RightSidebar />
     </div>
   );
 };

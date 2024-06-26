@@ -5,7 +5,6 @@ import UnderConstruction from '@/components/reusable/UnderConstruction';
 import AdminCheck from '@/hooks/AdminCheck';
 
 import UserCheck from '@/hooks/UserCheck';
-import About from '@/pages/Home/About';
 
 import Home from '@/pages/Home/Home';
 
@@ -27,10 +26,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-      },
-      {
-        path: '/about',
-        element: <About />,
       },
 
       {
