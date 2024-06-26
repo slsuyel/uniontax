@@ -163,6 +163,29 @@ select.searchFrom.form_control {
   height: 93px;
 }
 
+.form-control:focus {
+  border-color: #008000 !important;
+  box-shadow: 0 0 0 0.03rem rgb(2 48 118) !important;
+}
+
+.btn_main {
+  background: green;
+  border: 2px solid #023076;
+  color: white;
+  width: 125px;
+  font-size: 19px;
+  border-radius: 5px;
+  padding: 4px 0px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btn_main:hover,
+.btn_main:focus {
+  background: #4caf50; /* Change color on hover/focus */
+  color: black; /* Change text color on hover/focus */
+  border-color: #4caf50; /* Change border color on hover/focus */
+}
+
 /* .navbar-toggler-icon {
   background-image: url('https://www.pngitem.com/pimgs/m/634-6342297_menu-bar-icon-white-clipart-png-download-3.png') !important;
 } */

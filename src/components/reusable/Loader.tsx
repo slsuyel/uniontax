@@ -1,16 +1,18 @@
-import logo from '../../assets/images/logo-icon.webp';
+import { Spin } from 'antd';
+
 const Loader = () => {
   return (
-    <div className="loader-container">
-      <div className="loader-content font_amazon">
-        <div>
-          <img src={logo} width={100} alt="" />
-        </div>
-        <h1 className="fs-1 fw-bold" style={{ color: '#f89509' }}>
-          Mustafiz Foundation Inc.
-        </h1>
-        <h5 className="mt-3 text-muted">Frontiers for Humanity</h5>
-      </div>
+    <div
+      className="container"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+      }}
+    >
+      <Spin size="large" />
+      <h1 style={{ marginLeft: '20px' }}>Loading...</h1>
     </div>
   );
 };

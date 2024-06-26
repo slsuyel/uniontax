@@ -4,7 +4,7 @@ import ServiceBox from '@/components/ui/ServiceBox';
 
 const Home = () => {
   return (
-    <div className="row mx-auto container my-4">
+    <div className="row mx-auto container my-3">
       <div className="col-md-9 ps-0">
         <HeroSlider />
         <ServiceBox />

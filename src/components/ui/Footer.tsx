@@ -75,12 +75,10 @@ const Footer = () => {
           <div className="row">
             <div className="col-md-4">
               <ul className="footerList">
-                <li>
-                  <b> পরিকল্পনা ও বাস্তবায়নে:</b> <br />
-                  সোহাগ চন্দ্র সাহা
-                  <br />
-                  উপজেলা নির্বাহী অফিসার,তেঁতুলিয়া,পঞ্চগড়
-                </li>
+                <b> পরিকল্পনা ও বাস্তবায়নে:</b> <br />
+                সোহাগ চন্দ্র সাহা
+                <br />
+                অতিরিক্ত জেলা প্রশাসক (রাজস্ব) দিনাজপুর
               </ul>
             </div>{' '}
             <div className="col-md-4">
@@ -114,7 +112,7 @@ const Footer = () => {
                     <b> কারিগরি সহায়তায়:</b> <br />{' '}
                     <a
                       target="_blank"
-                      className="text-decoration-none"
+                      className="text-decoration-none text-black"
                       href="https://softwebsys.com/"
                     >
                       {' '}

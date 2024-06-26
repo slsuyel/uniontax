@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input, Checkbox, message } from 'antd';
-import logo from '../../assets/images/logo-icon.webp';
+
 import { callApi } from '@/utilities/functions';
 import { Spinner } from 'react-bootstrap';
 import useLoggedIn from '@/hooks/useLoggedIn';
@@ -64,22 +64,10 @@ const Login = () => {
           <div className="row mx-auto py-5 ">
             <div className="col-md-4 mx-auto my-3">
               <div className="p-3 w-100 mx-auto border-0 rounded shadow py-5">
-                <div className="align-items-center d-flex gap-3 justify-content-center font_amazon">
-                  <img src={logo} alt="Logo" width={50} />
-                  <div>
-                    <h2 className="fs-1 fw-bold" style={{ color: '#f89509' }}>
-                      Mustafiz Foundation Inc.
-                    </h2>
-                    <h5>Frontiers for Humanity</h5>
-                  </div>
-                </div>
-                <h1 className="bg-white mx-3 my-4 opacity-75 rounded text-center text-secondary-emphasis font_amazon">
-                  Login Mustafiz Foundation{' '}
-                </h1>
                 <form onSubmit={handleSubmit} className="px-3">
                   <div className="form-group mb-2">
                     <label
-                      className="fs-3 my-1 text-secondary"
+                      className="fs-5 my-1 text-secondary"
                       htmlFor="loginUsername"
                     >
                       Email
@@ -87,14 +75,14 @@ const Login = () => {
                     <Input
                       id="loginUsername"
                       placeholder="Enter Your Email"
-                      style={{ height: 45 }}
+                      style={{ height: 35 }}
                       value={username}
                       onChange={e => setUsername(e.target.value)}
                     />
                   </div>
                   <div className="form-group mb-2">
                     <label
-                      className="fs-3 my-1 text-secondary"
+                      className="fs-5 my-1 text-secondary"
                       htmlFor="loginPassword"
                     >
                       Password
@@ -102,7 +90,7 @@ const Login = () => {
                     <Input.Password
                       id="loginPassword"
                       placeholder="Enter Password"
-                      style={{ height: 45 }}
+                      style={{ height: 35 }}
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                     />
@@ -114,29 +102,19 @@ const Login = () => {
                       </Checkbox>
                     </div>
                     <div>
-                      <Link className="fs-4" to={'/reset-pass'}>
-                        {' '}
-                        Reset password
-                      </Link>
+                      <Link to={'/reset-pass'}> Reset password</Link>
                     </div>
                   </div>
                   <div className="form-group">
                     <button
                       type="submit"
-                      className="primary_btn py-3 rounded w-100"
-                      disabled={loading} // Disable button during loading state
+                      className="border-1 btn_main w-100"
+                      disabled={loading}
                     >
                       {loading ? <Spinner /> : 'Login'}
                     </button>
                   </div>
                 </form>
-
-                <div className="text-center fs-2">
-                  New?{' '}
-                  <Link to="/register" className="text-primary">
-                    Sign Up Free{' '}
-                  </Link>
-                </div>
               </div>
             </div>
           </div>

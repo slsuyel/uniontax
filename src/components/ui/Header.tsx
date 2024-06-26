@@ -1,10 +1,11 @@
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
+import { useState } from 'react';
 const Header = () => {
   const navItems = [
     { title: 'হোম', link: '/' },
-    { title: 'ইউপি সেবা পরিচিতি', link: '' },
+    { title: 'ইউপি সেবা পরিচিতি', link: 'about' },
     {
       title: 'নাগরিক সেবা',
       dropdown: [
@@ -42,7 +43,7 @@ const Header = () => {
     },
     { title: 'সনদ যাচাই', link: '/sonod/search' },
     { title: 'নোটিশ', link: '/notice' },
-    { title: 'ইজারা', link: '/notice/tenders' },
+    { title: 'ইজারা', link: '/tenders' },
     { title: 'যোগাযোগ', link: '/contact' },
     { title: 'হোল্ডিং ট্যাক্স', link: '/holding/tax' },
     { title: 'নাগরিক কর্নার', link: '/citizens_corner' },
@@ -53,13 +54,27 @@ const Header = () => {
     console.log(service);
   };
 
+  const [navbarExpanded, setNavbarExpanded] = useState(false);
+  const closeNavbar = () => {
+    setNavbarExpanded(false);
+  };
   return (
     <>
-      <div id="mainMenu" className="col-md-12 container mx-auto">
-        <Navbar expand="lg" className="py-0" bg="light" variant="light">
-          <Navbar.Toggle aria-controls="navbarSupportedContent" />
+      <div id="mainMenu" className="col-md-12 container mx-auto mt-2">
+        <Navbar
+          expand="lg"
+          className="py-0"
+          bg="light"
+          variant="light"
+          expanded={navbarExpanded}
+        >
+          <Navbar.Toggle
+            onClick={() => setNavbarExpanded(!navbarExpanded)}
+            aria-controls="navbarSupportedContent"
+            className="bg-primary-subtle border-0  rounded-0"
+          />
           <Navbar.Collapse id="navbarSupportedContent">
-            <Nav className="mr-auto main_nav">
+            <Nav className="mr-auto main_nav ps-2">
               {navItems.map((item, index) => {
                 if (item.dropdown) {
                   return (
@@ -87,6 +102,7 @@ const Header = () => {
                       as={Link}
                       to={item.link}
                       className="border-end text-white"
+                      onClick={closeNavbar}
                     >
                       {item.title}
                     </Nav.Link>

@@ -6,7 +6,7 @@ const TopHeader = () => {
   return (
     <div className="container">
       <div className="topHeader ">
-        <div className="row mx-auto ">
+        <div className="row mx-auto mb-2">
           <div className="topheaderItem col-md-6 col-6">
             <span>ইউনিয়ন পরিষদ ক্যাশলেস সেবা সিস্টেমে স্বাগতম</span>
           </div>{' '}
