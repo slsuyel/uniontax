@@ -2,11 +2,13 @@
 import { Form, Input, Button, Select, DatePicker, Upload, message } from 'antd';
 import addressFields from './addressFields';
 import attachmentForm from './attachmentForm';
-
-import FormHeader from './FormHeader';
 const { Option } = Select;
 
+import useSelectedServices from '@/hooks/useSelectedServices';
+
 const ApplicationForm = () => {
+  const selectedService = useSelectedServices();
+
   const onFinish = async (values: any) => {
     console.log(values);
     message.success('Form submitted successfully');
@@ -17,6 +19,8 @@ const ApplicationForm = () => {
     message.error('Form submission failed');
   };
 
+  console.log(selectedService);
+
   return (
     <div className="container my-3">
       <Form
@@ -24,7 +28,18 @@ const ApplicationForm = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <FormHeader />
+        <div
+          className="panel-heading"
+          style={{
+            fontWeight: 'bold',
+            fontSize: '20px',
+            background: 'rgb(21, 149, 19)',
+            textAlign: 'center',
+            color: 'white',
+          }}
+        >
+          {selectedService?.title}
+        </div>
         <div className="form-pannel">
           <Form.Item name="hidden" initialValue="tepriganj" hidden>
             <Input style={{ height: 40, width: '100%' }} type="hidden" />
