@@ -75,12 +75,12 @@ export const AddressFields = () => {
             rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
+              placeholder="বিভাগ নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
               className=""
               value={selectedDivision}
               onChange={handleDivChange}
             >
-              <Option value="">বিভাগ নির্বাচন করুন</Option>
               {divisions.map(division => (
                 <Option key={division.id} value={division.id}>
                   {division.bn_name}
@@ -94,12 +94,12 @@ export const AddressFields = () => {
             rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
+              placeholder="জেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
               className=""
               value={selectedDistrict}
               onChange={handleDistrictChange}
             >
-              <Option value="">জেলা নির্বাচন করুন</Option>
               {districts.map(district => (
                 <Option key={district.id} value={district.id}>
                   {district.bn_name}
@@ -113,12 +113,12 @@ export const AddressFields = () => {
             rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
+              placeholder="উপজেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
               className=""
               value={selectedUpazila}
               onChange={handleUpazilaChange}
             >
-              <Option value="">উপজেলা নির্বাচন করুন</Option>
               {upazilas.map(upazila => (
                 <Option key={upazila.id} value={upazila.id}>
                   {upazila.bn_name}
@@ -154,12 +154,12 @@ export const AddressFields = () => {
             rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
+              placeholder="বিভাগ নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
               className=""
               value={selectedDivision}
               onChange={handleDivChange}
             >
-              <Option value="">বিভাগ নির্বাচন করুন</Option>
               {divisions.map(division => (
                 <Option key={division.id} value={division.id}>
                   {division.bn_name}
@@ -173,12 +173,12 @@ export const AddressFields = () => {
             rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
+              placeholder="জেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
               className=""
               value={selectedDistrict}
               onChange={handleDistrictChange}
             >
-              <Option value="">জেলা নির্বাচন করুন</Option>
               {districts.map(district => (
                 <Option key={district.id} value={district.id}>
                   {district.bn_name}
@@ -192,12 +192,12 @@ export const AddressFields = () => {
             rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
+              placeholder="উপজেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
               className=""
               value={selectedUpazila}
               onChange={handleUpazilaChange}
             >
-              <Option value="">উপজেলা নির্বাচন করুন</Option>
               {upazilas.map(upazila => (
                 <Option key={upazila.id} value={upazila.id}>
                   {upazila.bn_name}

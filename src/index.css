@@ -203,6 +203,7 @@ select.searchFrom.form_control {
 .form-pannel {
   border: 1px solid #159513;
   padding: 25px;
+  border-radius: 0px 0px 6px 6px;
 }
 .app-heading {
   background: #255f95;

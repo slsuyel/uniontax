@@ -18,7 +18,7 @@ const ApplicationForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container my-3">
       <Form
         layout="vertical"
         onFinish={onFinish}
@@ -47,8 +47,11 @@ const ApplicationForm = () => {
             </div>
             <div className="col-md-4">
               <Form.Item label="লিঙ্গ" name="gender">
-                <Select style={{ height: 40, width: '100%' }} className="">
-                  <Option value="">লিঙ্গ নির্বাচন করুন</Option>
+                <Select
+                  placeholder="লিঙ্গ নির্বাচন করুন"
+                  style={{ height: 40, width: '100%' }}
+                  className=""
+                >
                   <Option value="male">পুরুষ</Option>
                   <Option value="female">মহিলা</Option>
                 </Select>
