@@ -1,6 +1,6 @@
 import dc from '../../assets/images/dc_anchagarh.png';
 import uno from '../../assets/images/uno-pic2.png';
-import suport from '../../assets/images/suport.jpg';
+import suport from '../../assets/images/support.png';
 const RightSidebar = () => {
   return (
     <div data-v-7ab7c763 className="RightSidebar mt-3 col-md-3">

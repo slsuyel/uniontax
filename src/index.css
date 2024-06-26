@@ -158,6 +158,11 @@ select.searchFrom.form_control {
   box-shadow: 0px 0px 17px -4px #000 !important;
 }
 
+.footer_top_bg {
+  background: url('./assets/icons/footer_top_bg.png') 0% 0% / cover no-repeat;
+  height: 93px;
+}
+
 /* .navbar-toggler-icon {
   background-image: url('https://www.pngitem.com/pimgs/m/634-6342297_menu-bar-icon-white-clipart-png-download-3.png') !important;
 } */
