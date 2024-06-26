@@ -6,6 +6,9 @@ const { Option } = Select;
 
 import useSelectedServices from '@/hooks/useSelectedServices';
 
+import tradeLicenseForm from './tradeLicenseForm';
+import citizenCertificateForm from './citizenCertificateForm';
+
 const ApplicationForm = () => {
   const selectedService = useSelectedServices();
 
@@ -18,8 +21,6 @@ const ApplicationForm = () => {
     console.log('Failed:', errorInfo);
     message.error('Form submission failed');
   };
-
-  console.log(selectedService);
 
   return (
     <div className="container my-3">
@@ -120,8 +121,7 @@ const ApplicationForm = () => {
                 />
               </Form.Item>
             </div>
-          </div>
-          <div className="row">
+
             <div className="col-md-4">
               <Form.Item label="ছবি" name="photo">
                 <Upload
@@ -135,16 +135,13 @@ const ApplicationForm = () => {
                 </Upload>
               </Form.Item>
             </div>
+            {/*  */}
 
-            <div className="col-md-4">
-              <Form.Item label="বাসিন্দার ধরণ" name="residentType">
-                <Select style={{ height: 40, width: '100%' }} className="">
-                  <Option value="">নির্বাচন করুন</Option>
-                  <Option value="permanent">স্থায়ী</Option>
-                  <Option value="temporary">অস্থায়ী</Option>
-                </Select>
-              </Form.Item>
-            </div>
+            {selectedService?.link == 'Citizenship_certificate' &&
+              citizenCertificateForm()}
+            {selectedService?.link == 'Trade_license' && tradeLicenseForm()}
+
+            {/*  */}
             <div className="col-md-4">
               <Form.Item
                 label="মোবাইল"

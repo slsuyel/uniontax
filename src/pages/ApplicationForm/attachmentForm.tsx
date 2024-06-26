@@ -18,6 +18,7 @@ const AttachmentForm = () => {
         <div className="col-md-12 row mb-3">
           <div className="col-md-4">
             <Form.Item
+              initialValue="nationalId"
               name="attachmentType"
               label="সংযুক্তির ধরণ"
               rules={[
