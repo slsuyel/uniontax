@@ -1,0 +1,122 @@
+@import url('https://fonts.maateen.me/kalpurush/font.css');
+
+body {
+  font-family: 'Kalpurush', sans-serif;
+  font-size: medium;
+}
+
+* {
+  --defaultColor: green;
+}
+
+nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+  background: #023076 !important;
+}
+
+.defaltColor {
+  background: var(--defaultColor) !important;
+}
+
+.topHeader {
+  background: #9e5bba;
+  border-bottom: 2px solid #ff0000a8;
+  overflow: hidden;
+  padding: 0 17px;
+}
+.topheaderItem {
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 10px;
+}
+.middleHeaderItem.col-md-6.mb-3 {
+  z-index: 1;
+}
+
+h3.searchHeader {
+  background: #159513;
+  color: #fff;
+  padding: 5px 1px;
+  position: relative;
+}
+h3.searchHeader {
+  color: #9e5bba;
+  text-align: center;
+}
+
+h3.searchHeader:after {
+  position: absolute;
+  content: '';
+  top: 15px;
+  left: -19px;
+  background: #fff;
+  width: 57px;
+  height: 34px;
+  transform: rotate(45deg);
+}
+
+.searchFrom {
+  margin: 0 6px;
+  padding: 2px 10px !important;
+  height: 31px !important;
+}
+.form_control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+select.searchFrom.form_control {
+  z-index: 9999;
+}
+
+.searchFrom:focus {
+  box-shadow: 0 0 0 !important;
+}
+.form_control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.main_nav {
+  .nav_a_color {
+    .dropdown-toggle {
+      color: #fff;
+    }
+  }
+  .dropdown-menu.show {
+    background: #9e5bba;
+    color: white;
+  }
+  .navbar-nav .nav-link.active,
+  .navbar-nav .nav-link.show {
+    color: #fff !important;
+  }
+
+  .dropdown-item:focus,
+  .dropdown-item:hover {
+    background-color: #008000;
+  }
+}
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0;
+  border: 0;
+  box-shadow: none !important;
+}
+
+/* .navbar-toggler-icon {
+  background-image: url('https://www.pngitem.com/pimgs/m/634-6342297_menu-bar-icon-white-clipart-png-download-3.png') !important;
+} */
