@@ -5,6 +5,7 @@ import UnderConstruction from '@/components/reusable/UnderConstruction';
 import AdminCheck from '@/hooks/AdminCheck';
 import About from '@/pages/About/About';
 import CitizenCorner from '@/pages/About/CitizenCorner';
+import ApplicationForm from '@/pages/ApplicationForm/ApplicationForm';
 import Contact from '@/pages/Contact/Contact';
 import Holding from '@/pages/Holding/Holding';
 
@@ -66,6 +67,12 @@ const router = createBrowserRouter([
       {
         path: '/reset-pass',
         element: <ResetPassword />,
+      },
+
+      /* application */
+      {
+        path: '/application/:service',
+        element: <ApplicationForm />,
       },
     ],
   },

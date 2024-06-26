@@ -1,5 +1,7 @@
 @import url('https://fonts.maateen.me/kalpurush/font.css');
-
+* {
+  font-family: 'Kalpurush', sans-serif;
+}
 body {
   font-family: 'Kalpurush', sans-serif;
   font-size: medium;
@@ -189,6 +191,34 @@ select.searchFrom.form_control {
 /* .navbar-toggler-icon {
   background-image: url('https://www.pngitem.com/pimgs/m/634-6342297_menu-bar-icon-white-clipart-png-download-3.png') !important;
 } */
+
+/* application */
+.panel-heading {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  margin-top: 20px;
+  padding: 11px 0;
+}
+
+.form-pannel {
+  border: 1px solid #159513;
+  padding: 25px;
+}
+.app-heading {
+  background: #255f95;
+  border-bottom: 1px solid #159513;
+  color: #fff;
+  font-size: 23px;
+  margin: 32px 0;
+  text-align: center;
+}
+.labelColor {
+  color: #493eff;
+  font-weight: 600;
+  margin: 3px 2px;
+}
+
+/* /application end/ */
 
 /* MOBILE__RESPONSIVE */
 

@@ -86,3 +86,8 @@ export interface TypeDataForm {
   email: string;
   status: string;
 }
+
+export type TService = {
+  title: string;
+  link: string;
+};
