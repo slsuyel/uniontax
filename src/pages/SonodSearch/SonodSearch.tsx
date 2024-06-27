@@ -16,8 +16,8 @@ const SonodSearch = () => {
     <div className="row mx-auto my-3 container">
       <div className="mainBody col-md-9">
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>সনদের ধরন নির্বাচন করুন</label>{' '}
+          <div className="form-group my-2">
+            <label className="defaltTextColor">সনদের ধরন নির্বাচন করুন</label>{' '}
             <select
               id="sonod"
               className="form-control"
@@ -48,8 +48,8 @@ const SonodSearch = () => {
               </option>
             </select>
           </div>{' '}
-          <div className="form-group">
-            <label>ইস্যুকৃত সনদ নম্বর লিখুন</label>{' '}
+          <div className="form-group my-2">
+            <label className="defaltTextColor">ইস্যুকৃত সনদ নম্বর লিখুন</label>{' '}
             <input
               type="text"
               id="sonodNo"

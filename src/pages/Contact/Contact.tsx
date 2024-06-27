@@ -32,8 +32,8 @@ const Contact = () => {
           <h1 className="contact-form_title">যোগাযোগ</h1>
           <div className="separator" />
           <form className="form" onSubmit={handleFormSubmit}>
-            <div className="form-group">
-              <label>নাম</label>
+            <div className="form-group my-2">
+              <label className="defaltTextColor">নাম</label>
               <input
                 name="name"
                 placeholder="নাম"
@@ -44,8 +44,8 @@ const Contact = () => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label>বিষয়</label>
+            <div className="form-group my-2">
+              <label className="defaltTextColor">বিষয়</label>
               <select
                 name="subject"
                 className="form-control"
@@ -76,8 +76,8 @@ const Contact = () => {
                 </option>
               </select>
             </div>
-            <div className="form-group">
-              <label>ইমেইল</label>
+            <div className="form-group my-2">
+              <label className="defaltTextColor">ইমেইল</label>
               <input
                 name="email"
                 placeholder="ইমেইল"
@@ -88,8 +88,8 @@ const Contact = () => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label>মেসেজ</label>
+            <div className="form-group my-2">
+              <label className="defaltTextColor">মেসেজ</label>
               <textarea
                 name="message"
                 rows={4}
