@@ -29,6 +29,7 @@ const AttachmentForm = () => {
               // ]}
             >
               <Select
+                style={{ height: 40, width: '100%' }}
                 placeholder="নির্বাচন করুন"
                 onChange={handleAttachmentTypeChange}
               >

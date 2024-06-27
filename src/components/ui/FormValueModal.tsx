@@ -1,4 +1,5 @@
 import { TApplicantData } from '@/types';
+import { getFormattedDate } from '@/utilities/getFormattedDate';
 import { Modal } from 'antd';
 
 interface FormValueModalProps {
@@ -7,23 +8,20 @@ interface FormValueModalProps {
   onCancel: () => void;
 }
 
-const FormValueModal: React.FC<FormValueModalProps> = ({
-  visible,
-  data,
-  onCancel,
-}) => {
+const FormValueModal = ({ visible, data, onCancel }: FormValueModalProps) => {
   const handleCancel = () => {
     onCancel();
   };
-  const formattedDate = data?.applicant_date_of_birth
-    ? (() => {
-        const date = new Date(data.applicant_date_of_birth);
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        return `${year}-${month}-${day}`;
-      })()
-    : null;
+  // const formattedDate = data?.applicant_date_of_birth
+  //   ? (() => {
+  //       const date = new Date(data.applicant_date_of_birth);
+  //       const year = date.getFullYear();
+  //       const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //       const day = date.getDate().toString().padStart(2, '0');
+  //       return `${year}-${month}-${day}`;
+  //     })()
+  //   : null;
+  const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
 
   return (
     <Modal width={800} open={visible} onCancel={handleCancel}>
