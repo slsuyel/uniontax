@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Input, Button, Select, DatePicker, Upload, message } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import addressFields from './addressFields';
 import attachmentForm from './attachmentForm';
-const { Option } = Select;
 
 import useSelectedServices from '@/hooks/useSelectedServices';
 
 import tradeLicenseForm from './tradeLicenseForm';
 import citizenCertificateForm from './citizenCertificateForm';
+import InheritanceForm from './inheritanceForm';
+import inheritanceList from './inheritanceList';
+import commonFields from './commonFields';
 
 const ApplicationForm = () => {
   const selectedService = useSelectedServices();
@@ -46,97 +48,13 @@ const ApplicationForm = () => {
             <Input style={{ height: 40, width: '100%' }} type="hidden" />
           </Form.Item>
           <div className="row">
+            {selectedService?.link == 'Certificate_of_Inheritance' &&
+              InheritanceForm()}
             <div className="col-md-12">
               <div className="app-heading">আবেদনকারীর তথ্য</div>
             </div>
-            <div className="col-md-4">
-              <Form.Item
-                label="আবেদনকারীর নাম"
-                name="applicantName"
-                rules={[{ required: true, message: 'Please enter your name' }]}
-              >
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="লিঙ্গ" name="gender">
-                <Select
-                  placeholder="লিঙ্গ নির্বাচন করুন"
-                  style={{ height: 40, width: '100%' }}
-                  className=""
-                >
-                  <Option value="male">পুরুষ</Option>
-                  <Option value="female">মহিলা</Option>
-                </Select>
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="পিতা/স্বামীর নাম" name="fatherHusbandName">
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="মাতার নাম" name="motherName">
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="জাতীয় পরিচয়পত্র নং" name="nationalID">
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="জন্ম নিবন্ধন নং" name="birthRegistration">
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="হোল্ডিং নং" name="holdingNumber">
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="জন্ম তারিখ" name="birthDate">
-                <DatePicker
-                  className="form-control"
-                  style={{ width: '100%' }}
-                />
-              </Form.Item>
-            </div>
-
-            <div className="col-md-4">
-              <Form.Item label="ছবি" name="photo">
-                <Upload
-                  style={{ height: 40, width: '100%' }}
-                  accept="image/*"
-                  listType="picture"
-                  maxCount={1}
-                  className="custom-file-input"
-                >
-                  <Button>Choose file</Button>
-                </Upload>
-              </Form.Item>
-            </div>
             {/*  */}
-
+            {commonFields()}
             {selectedService?.link == 'Citizenship_certificate' &&
               citizenCertificateForm()}
             {selectedService?.link == 'Trade_license' && tradeLicenseForm()}
@@ -177,6 +95,8 @@ const ApplicationForm = () => {
           </div>
           {addressFields()}
           {attachmentForm()}
+          {selectedService?.link == 'Certificate_of_Inheritance' &&
+            inheritanceList()}
           <div style={{ textAlign: 'center' }}>
             <Button type="primary" htmlType="submit">
               সাবমিট
