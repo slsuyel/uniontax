@@ -184,7 +184,7 @@ select.searchFrom.form_control {
 .btn_main:hover,
 .btn_main:focus {
   background: #4caf50; /* Change color on hover/focus */
-  color: black; /* Change text color on hover/focus */
+  color: rgb(255, 255, 255); /* Change text color on hover/focus */
   border-color: #4caf50; /* Change border color on hover/focus */
 }
 

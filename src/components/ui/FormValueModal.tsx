@@ -1,3 +1,4 @@
+import useSelectedServices from '@/hooks/useSelectedServices';
 import { TApplicantData } from '@/types';
 import { getFormattedDate } from '@/utilities/getFormattedDate';
 import { Modal } from 'antd';
@@ -12,15 +13,7 @@ const FormValueModal = ({ visible, data, onCancel }: FormValueModalProps) => {
   const handleCancel = () => {
     onCancel();
   };
-  // const formattedDate = data?.applicant_date_of_birth
-  //   ? (() => {
-  //       const date = new Date(data.applicant_date_of_birth);
-  //       const year = date.getFullYear();
-  //       const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //       const day = date.getDate().toString().padStart(2, '0');
-  //       return `${year}-${month}-${day}`;
-  //     })()
-  //   : null;
+  const selectedService = useSelectedServices();
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
 
   return (
@@ -148,10 +141,10 @@ const FormValueModal = ({ visible, data, onCancel }: FormValueModalProps) => {
           style={{ width: '50%', margin: '0px auto' }}
         >
           <h3>
-            আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । নাগরিকত্ব সনদ এর
-            ফি 1 টাকা ।
+            আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন ।{' '}
+            {selectedService?.title} এর ফি 1 টাকা ।
           </h3>
-          <button type="submit" className="btn btn-info">
+          <button type="submit" className="border-1 btn_main text-nowrap w-100">
             Pay And Submit
           </button>
         </div>
