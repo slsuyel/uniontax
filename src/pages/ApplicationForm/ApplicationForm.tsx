@@ -8,11 +8,14 @@ import useSelectedServices from '@/hooks/useSelectedServices';
 import tradeLicenseForm from './tradeLicenseForm';
 import citizenCertificateForm from './citizenCertificateForm';
 import InheritanceForm from './inheritanceForm';
-import inheritanceList from './inheritanceList';
+
 import commonFields from './commonFields';
+import inheritanceList from './inheritanceList';
+import { useState } from 'react';
 
 const ApplicationForm = () => {
   const selectedService = useSelectedServices();
+  const [inherList, setInherList] = useState(1);
 
   const onFinish = async (values: any) => {
     console.log(values);
@@ -96,7 +99,7 @@ const ApplicationForm = () => {
           {addressFields()}
           {attachmentForm()}
           {selectedService?.link == 'Certificate_of_Inheritance' &&
-            inheritanceList()}
+            inheritanceList(inherList, setInherList)}
           <div style={{ textAlign: 'center' }}>
             <Button type="primary" htmlType="submit">
               সাবমিট
