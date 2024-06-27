@@ -40,8 +40,12 @@ const conditionalForm = (service: { title: string; link: string } | null) => {
       {renderDynamicFormItem(
         'বাসিন্দার ধরণ',
         'applicant_resident_status',
-        <Select style={{ height: 40, width: '100%' }} className="">
-          <Option value="">নির্বাচন করুন</Option>
+        <Select
+          defaultValue={'permanent'}
+          placeholder="নির্বাচন করুন"
+          style={{ height: 40, width: '100%' }}
+          className=""
+        >
           <Option value="permanent">স্থায়ী</Option>
           <Option value="temporary">অস্থায়ী</Option>
         </Select>

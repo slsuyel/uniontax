@@ -13,6 +13,7 @@ import commonFields from './commonFields';
 import inheritanceList from './inheritanceList';
 import { useState } from 'react';
 import conditionalForm from './conditionalForm';
+import sameNameForm from './sameNameForm';
 
 const ApplicationForm = () => {
   const selectedService = useSelectedServices();
@@ -56,6 +57,8 @@ const ApplicationForm = () => {
               InheritanceForm(selectedService)}
             {selectedService?.link == 'Inheritance_certificate' &&
               InheritanceForm(selectedService)}
+            {selectedService?.link == 'Certification_of_the_same_name' &&
+              sameNameForm()}
 
             <div className="col-md-12">
               <div className="app-heading">আবেদনকারীর তথ্য</div>
