@@ -2,31 +2,34 @@
 import { Form, Input, Button, message } from 'antd';
 import addressFields from './addressFields';
 import attachmentForm from './attachmentForm';
-
 import useSelectedServices from '@/hooks/useSelectedServices';
-
 import tradeLicenseForm from './tradeLicenseForm';
-
 import InheritanceForm from './inheritanceForm';
-
 import commonFields from './commonFields';
 import inheritanceList from './inheritanceList';
 import { useState } from 'react';
 import conditionalForm from './conditionalForm';
 import sameNameForm from './sameNameForm';
+import FormValueModal from '@/components/ui/FormValueModal';
 
 const ApplicationForm = () => {
   const selectedService = useSelectedServices();
   const [inherList, setInherList] = useState(1);
-
+  const [userDta, setUserData] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
   const onFinish = async (values: any) => {
-    console.log(values);
+    setUserData(values);
+    setModalVisible(true);
     message.success('Form submitted successfully');
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
     message.error('Form submission failed');
+  };
+
+  const handleCancel = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -81,6 +84,12 @@ const ApplicationForm = () => {
           </div>
         </div>
       </Form>
+
+      <FormValueModal
+        visible={modalVisible}
+        data={userDta}
+        onCancel={handleCancel}
+      />
     </div>
   );
 };

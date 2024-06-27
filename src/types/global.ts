@@ -91,3 +91,35 @@ export type TService = {
   title: string;
   link: string;
 };
+
+export interface TApplicantData {
+  unioun_name?: string;
+  applicant_name?: string;
+  applicant_gender?: string;
+  applicant_father_name?: string;
+  applicant_mother_name?: string;
+  applicant_birth_certificate_number?: string;
+  applicant_date_of_birth?: string;
+  applicant_email?: string;
+  applicant_holding_tax_number?: string;
+  applicant_mobile?: string;
+  applicant_national_id_number?: string;
+  applicant_national_id_front_attachment?: string;
+  applicant_national_id_back_attachment?: string;
+  applicant_permanent_district?: string;
+  applicant_permanent_Upazila?: string;
+  applicant_permanent_village?: string;
+  applicant_permanent_post_office?: string;
+  applicant_permanent_word_number?: string;
+  applicant_present_district?: string;
+  applicant_present_Upazila?: string;
+  applicant_present_village?: string;
+  applicant_present_post_office?: string;
+  applicant_present_word_number?: string;
+  applicant_resident_status?: string;
+  attachmentType?: string;
+  currentDivision?: string;
+  image?: string;
+  sameAsCurrent?: boolean;
+  applicant_religion?: string;
+}

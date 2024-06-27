@@ -33,11 +33,7 @@ const inheritanceForm = (service: { title: string; link: string }) => {
 
       <div className="col-md-4">
         {' '}
-        <Form.Item
-          label="ধর্ম"
-          name="applicant_religion"
-          rules={[{ required: true, message: 'এই তথ্যটি প্রয়োজন' }]}
-        >
+        <Form.Item label="ধর্ম" name="applicant_religion">
           <Select style={{ height: 40 }}>
             <Option value="islam">ইসলাম</Option>
             <Option value="hindu">হিন্দু</Option>

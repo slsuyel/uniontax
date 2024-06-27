@@ -72,7 +72,7 @@ export const AddressFields = () => {
           <Form.Item
             name="currentDivision"
             label="বিভাগ"
-            rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
@@ -91,7 +91,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_present_district"
             label="জেলা"
-            rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="জেলা নির্বাচন করুন"
@@ -110,7 +110,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_present_Upazila"
             label="উপজেলা/থানা"
-            rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="উপজেলা নির্বাচন করুন"
@@ -151,7 +151,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_permanent_village"
             label="বিভাগ"
-            rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
@@ -170,7 +170,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_permanent_district"
             label="জেলা"
-            rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="জেলা নির্বাচন করুন"
@@ -189,7 +189,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_permanent_Upazila"
             label="উপজেলা/থানা"
-            rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="উপজেলা নির্বাচন করুন"

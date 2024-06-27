@@ -21,12 +21,12 @@ const AttachmentForm = () => {
               initialValue="nationalId"
               name="attachmentType"
               label="সংযুক্তির ধরণ"
-              rules={[
-                {
-                  required: true,
-                  message: 'সংযুক্তির ধরণ নির্বাচন করুন!',
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: 'সংযুক্তির ধরণ নির্বাচন করুন!',
+              //   },
+              // ]}
             >
               <Select
                 placeholder="নির্বাচন করুন"
@@ -44,12 +44,12 @@ const AttachmentForm = () => {
               <Form.Item
                 name="applicant_national_id_front_attachment"
                 label="আগের পাতা (জাতীয় পরিচয়পত্র)"
-                rules={[
-                  {
-                    required: true,
-                    message: 'আগের পাতা ফাইল আপলোড করুন!',
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: 'আগের পাতা ফাইল আপলোড করুন!',
+                //   },
+                // ]}
               >
                 <Upload
                   style={{ height: 40, width: '100%' }}
@@ -66,12 +66,12 @@ const AttachmentForm = () => {
               <Form.Item
                 name="applicant_national_id_back_attachment"
                 label="পেছনের পাতা (জাতীয় পরিচয়পত্র)"
-                rules={[
-                  {
-                    required: true,
-                    message: 'পেছনের পাতা ফাইল আপলোড করুন!',
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: 'পেছনের পাতা ফাইল আপলোড করুন!',
+                //   },
+                // ]}
               >
                 <Upload
                   style={{ height: 40, width: '100%' }}
