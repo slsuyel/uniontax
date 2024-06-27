@@ -42,7 +42,7 @@ const AttachmentForm = () => {
           <>
             <div className="col-md-4">
               <Form.Item
-                name="frontPageNationalId"
+                name="applicant_national_id_front_attachment"
                 label="আগের পাতা (জাতীয় পরিচয়পত্র)"
                 rules={[
                   {
@@ -64,7 +64,7 @@ const AttachmentForm = () => {
             </div>
             <div className="col-md-4">
               <Form.Item
-                name="backPageNationalId"
+                name="applicant_national_id_back_attachment"
                 label="পেছনের পাতা (জাতীয় পরিচয়পত্র)"
                 rules={[
                   {
@@ -90,7 +90,7 @@ const AttachmentForm = () => {
           <>
             <div className="col-md-4">
               <Form.Item
-                name="birthCertificate"
+                name="applicant_birth_certificate_attachment"
                 label="জন্ম নিবন্ধন"
                 rules={[
                   {

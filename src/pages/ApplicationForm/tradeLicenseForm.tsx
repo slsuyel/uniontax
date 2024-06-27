@@ -6,7 +6,7 @@ const tradeLicenseForm = () => {
       <div className="col-md-4">
         <Form.Item
           label="প্রতিষ্ঠানের মালিকানার ধরণ *"
-          name="ownershipType"
+          name="applicant_owner_type"
           rules={[{ required: true, message: 'Please select ownership type' }]}
         >
           <Select
@@ -25,29 +25,32 @@ const tradeLicenseForm = () => {
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="প্রতিষ্ঠানের ঠিকানা" name="companyAddress">
+        <Form.Item label="প্রতিষ্ঠানের ঠিকানা" name="organization_address">
           <Input style={{ height: 40, width: '100%' }} />
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="পেশা" name="occupation">
+        <Form.Item label="পেশা" name="applicant_occupation">
           <Input style={{ height: 40, width: '100%' }} />
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="ভ্যাট আইডি (যদি থাকে)" name="vatId">
+        <Form.Item label="ভ্যাট আইডি (যদি থাকে)" name="applicant_vat_id_number">
           <Input style={{ height: 40, width: '100%' }} />
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="ট্যাক্স আইডি (যদি থাকে)" name="taxId">
+        <Form.Item
+          label="ট্যাক্স আইডি (যদি থাকে)"
+          name="applicant_tax_id_number"
+        >
           <Input style={{ height: 40, width: '100%' }} />
         </Form.Item>
       </div>
       <div className="col-md-4">
         <Form.Item
           label="ব্যবসা, বৃত্তি, পেশা, বা শিল্প প্রতিষ্ঠানের শ্রেণী"
-          name="businessCategory"
+          name="applicant_type_of_business"
           rules={[
             { required: true, message: 'Please select business category' },
           ]}
@@ -134,7 +137,7 @@ const tradeLicenseForm = () => {
       <div className="col-md-4">
         <Form.Item
           label="অর্থ বছর"
-          name="financialYear"
+          name="orthoBchor"
           rules={[{ required: true, message: 'Please select financial year' }]}
         >
           <Select

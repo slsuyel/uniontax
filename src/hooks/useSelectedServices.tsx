@@ -9,11 +9,12 @@ const useSelectedServices = () => {
   const serviceLink = pathname.substring(pathname.lastIndexOf('/') + 1);
   const services = useAllServices();
 
-  const [selectedService, setSelectedService] = useState<TService>();
+  const [selectedService, setSelectedService] = useState<
+    TService | undefined
+  >();
 
   useEffect(() => {
     const foundService = services.find(s => s.link === serviceLink);
-
     setSelectedService(foundService);
   }, [serviceLink, services]);
 

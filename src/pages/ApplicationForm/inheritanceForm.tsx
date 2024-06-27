@@ -1,14 +1,16 @@
 import { Form, Input, Select } from 'antd';
 const { Option } = Select;
 
-const inheritanceForm = () => {
+const inheritanceForm = (service: { title: string; link: string }) => {
   return (
     <div className="row mx-auto">
       <div className="col-md-4">
         {' '}
         <Form.Item
-          label="মৃত ব্যাক্তির নাম"
-          name="deceased_name"
+          label={`${
+            service.title == 'উত্তরাধিকারী সনদ' ? 'জীবিত ' : 'মৃত'
+          } ব্যাক্তির নাম`}
+          name="nheritance_name"
           rules={[{ required: true, message: 'এই তথ্যটি প্রয়োজন' }]}
         >
           <Input style={{ height: 40 }} />
@@ -33,7 +35,7 @@ const inheritanceForm = () => {
         {' '}
         <Form.Item
           label="ধর্ম"
-          name="religion"
+          name="applicant_religion"
           rules={[{ required: true, message: 'এই তথ্যটি প্রয়োজন' }]}
         >
           <Select style={{ height: 40 }}>

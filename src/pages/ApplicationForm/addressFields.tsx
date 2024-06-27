@@ -89,7 +89,7 @@ export const AddressFields = () => {
             </Select>
           </Form.Item>
           <Form.Item
-            name="currentDistrict"
+            name="applicant_present_district"
             label="জেলা"
             rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
@@ -108,7 +108,7 @@ export const AddressFields = () => {
             </Select>
           </Form.Item>
           <Form.Item
-            name="currentUpazila"
+            name="applicant_present_Upazila"
             label="উপজেলা/থানা"
             rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
@@ -126,10 +126,10 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="currentPostOffice" label="পোষ্ট অফিস">
+          <Form.Item name="applicant_present_post_office" label="পোষ্ট অফিস">
             <Input className="form-control" />
           </Form.Item>
-          <Form.Item name="currentWardNo" label="ওয়ার্ড নং">
+          <Form.Item name="applicant_present_word_number" label="ওয়ার্ড নং">
             <Select style={{ height: 40, width: '100%' }}>
               <Option value="">ওয়াড নং</Option>
               {Array.from({ length: 9 }, (_, i) => (
@@ -139,7 +139,7 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="currentVillage" label="গ্রাম/মহল্লা">
+          <Form.Item name="applicant_present_village" label="গ্রাম/মহল্লা">
             <Input className="form-control" />
           </Form.Item>
         </div>
@@ -149,7 +149,7 @@ export const AddressFields = () => {
             <Checkbox> বর্তমান ঠিকানা ও স্থায়ী ঠিকানা একই হলে</Checkbox>
           </Form.Item>
           <Form.Item
-            name="permanentDivision"
+            name="applicant_permanent_village"
             label="বিভাগ"
             rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
@@ -168,7 +168,7 @@ export const AddressFields = () => {
             </Select>
           </Form.Item>
           <Form.Item
-            name="permanentDistrict"
+            name="applicant_permanent_district"
             label="জেলা"
             rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
@@ -187,7 +187,7 @@ export const AddressFields = () => {
             </Select>
           </Form.Item>
           <Form.Item
-            name="permanentUpazila"
+            name="applicant_permanent_Upazila"
             label="উপজেলা/থানা"
             rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
@@ -205,10 +205,10 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="permanentPostOffice" label="পোষ্ট অফিস">
+          <Form.Item name="applicant_permanent_post_office" label="পোষ্ট অফিস">
             <Input className="form-control" />
           </Form.Item>
-          <Form.Item name="permanentWardNo" label="ওয়ার্ড নং">
+          <Form.Item name="applicant_permanent_word_number" label="ওয়ার্ড নং">
             <Select style={{ height: 40, width: '100%' }}>
               <Option value="">ওয়াড নং</Option>
               {Array.from({ length: 9 }, (_, i) => (
@@ -218,7 +218,7 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="permanentVillage" label="গ্রাম/মহল্লা">
+          <Form.Item name="applicant_permanent_village" label="গ্রাম/মহল্লা">
             <Input className="form-control" />
           </Form.Item>
         </div>

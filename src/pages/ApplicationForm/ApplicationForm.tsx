@@ -6,12 +6,13 @@ import attachmentForm from './attachmentForm';
 import useSelectedServices from '@/hooks/useSelectedServices';
 
 import tradeLicenseForm from './tradeLicenseForm';
-import citizenCertificateForm from './citizenCertificateForm';
+
 import InheritanceForm from './inheritanceForm';
 
 import commonFields from './commonFields';
 import inheritanceList from './inheritanceList';
 import { useState } from 'react';
+import conditionalForm from './conditionalForm';
 
 const ApplicationForm = () => {
   const selectedService = useSelectedServices();
@@ -47,54 +48,24 @@ const ApplicationForm = () => {
           {selectedService?.title}
         </div>
         <div className="form-pannel">
-          <Form.Item name="hidden" initialValue="tepriganj" hidden>
+          <Form.Item name="unioun_name" initialValue="tepriganj" hidden>
             <Input style={{ height: 40, width: '100%' }} type="hidden" />
           </Form.Item>
           <div className="row">
             {selectedService?.link == 'Certificate_of_Inheritance' &&
-              InheritanceForm()}
+              InheritanceForm(selectedService)}
+            {selectedService?.link == 'Inheritance_certificate' &&
+              InheritanceForm(selectedService)}
+
             <div className="col-md-12">
               <div className="app-heading">আবেদনকারীর তথ্য</div>
             </div>
-            {/*  */}
+
             {commonFields()}
-            {selectedService?.link == 'Citizenship_certificate' &&
-              citizenCertificateForm()}
+
             {selectedService?.link == 'Trade_license' && tradeLicenseForm()}
 
-            {/*  */}
-            <div className="col-md-4">
-              <Form.Item
-                label="মোবাইল"
-                name="mobile"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter your mobile number',
-                  },
-                  {
-                    min: 11,
-                    max: 11,
-                    message: 'Mobile number must be 11 digits',
-                  },
-                ]}
-              >
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  type="tel"
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
-            <div className="col-md-4">
-              <Form.Item label="ই-মেইল" name="email">
-                <Input
-                  style={{ height: 40, width: '100%' }}
-                  type="email"
-                  className="form-control"
-                />
-              </Form.Item>
-            </div>
+            {conditionalForm(selectedService)}
           </div>
           {addressFields()}
           {attachmentForm()}
