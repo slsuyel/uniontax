@@ -1,15 +1,21 @@
 import useSelectedServices from '@/hooks/useSelectedServices';
 import { TApplicantData } from '@/types';
 import { getFormattedDate } from '@/utilities/getFormattedDate';
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
 
 interface FormValueModalProps {
   visible: boolean;
   data?: TApplicantData;
   onCancel: () => void;
+  from?: string;
 }
 
-const FormValueModal = ({ visible, data, onCancel }: FormValueModalProps) => {
+const FormValueModal = ({
+  visible,
+  data,
+  onCancel,
+  from,
+}: FormValueModalProps) => {
   const handleCancel = () => {
     onCancel();
   };
@@ -17,7 +23,16 @@ const FormValueModal = ({ visible, data, onCancel }: FormValueModalProps) => {
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
 
   return (
-    <Modal width={800} open={visible} onCancel={handleCancel}>
+    <Modal
+      width={800}
+      open={visible}
+      onCancel={handleCancel}
+      footer={
+        <Button danger onClick={handleCancel}>
+          Close
+        </Button>
+      }
+    >
       <div>
         <div className="row w-100">
           <div className="col-md-12">
@@ -136,18 +151,23 @@ const FormValueModal = ({ visible, data, onCancel }: FormValueModalProps) => {
           </div>
         </div>
         <br /> <br />
-        <div
-          className="text-center"
-          style={{ width: '50%', margin: '0px auto' }}
-        >
-          <h3>
-            আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন ।{' '}
-            {selectedService?.title} এর ফি 1 টাকা ।
-          </h3>
-          <button type="submit" className="border-1 btn_main text-nowrap w-100">
-            Pay And Submit
-          </button>
-        </div>
+        {from !== 'dashboard' && (
+          <div
+            className="text-center"
+            style={{ width: '50%', margin: '0px auto' }}
+          >
+            <h3>
+              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন ।{' '}
+              {selectedService?.title} এর ফি 1 টাকা ।
+            </h3>
+            <button
+              type="submit"
+              className="border-1 btn_main text-nowrap w-100"
+            >
+              Pay And Submit
+            </button>
+          </div>
+        )}
       </div>
     </Modal>
   );

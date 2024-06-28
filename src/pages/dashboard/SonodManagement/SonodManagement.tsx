@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Form, Input, Button, Card } from 'antd';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import Breadcrumbs from '@/components/reusable/Breadcrumbs';
 import useAllServices from '@/hooks/useAllServices';
 import { checkNameCondition } from '@/utils/checkNameCondition';
+import SonodActionBtn from '@/components/reusable/SonodActionBtn';
 
 const SonodManagement = () => {
   const services = useAllServices();
@@ -36,7 +37,7 @@ const SonodManagement = () => {
       fatherOrHusbandName: 'মোঃ মোহাম্মদ আলী',
       villageOrWard: 'কমলাপুর বাজার',
       applicationDate: '2023-06-10 4:45 pm',
-      feeStatus: 'পরিশোধিত',
+      feeStatus: 'অপরিশোধিত',
     },
   ]);
 
@@ -93,44 +94,19 @@ const SonodManagement = () => {
                 <p>
                   <strong>আবেদনের তারিখ:</strong> {item.applicationDate}
                 </p>
-                <p>
+
+                <SonodActionBtn
+                  condition={condition}
+                  item={item}
+                  sonodName={sonodName}
+                />
+                <p
+                  className={`mt-2 fs-6 text-white text-center py-2 ${
+                    item.feeStatus == 'পরিশোধিত' ? 'bg-success' : 'bg-danger'
+                  }`}
+                >
                   <strong>ফি:</strong> {item.feeStatus}
                 </p>
-                <div
-                  className="d-flex justify-content-center flex-wrap gap-2"
-                  role="group"
-                  aria-label="Actions"
-                >
-                  <Link
-                    to={`/dashboard/sonod/${sonodName}/action/edit/${item.key}`}
-                    className="btn btn-info btn-sm mr-1"
-                  >
-                    এডিট করুন
-                  </Link>
-                  <Link
-                    to={`/document/নাগরিকত্ব সনদ/${item.key}`}
-                    className="btn btn-success btn-sm mr-1"
-                    target="_blank"
-                  >
-                    প্রাপ্তী স্বীকারপত্র
-                  </Link>
-                  <button type="button" className="btn btn-info btn-sm mr-1">
-                    আবেদনপত্র দেখুন
-                  </button>
-                  <button type="button" className="btn btn-success btn-sm mr-1">
-                    অনুমোদন
-                  </button>
-                  <Link
-                    to={`/invoice/d/${item.key}`}
-                    className="btn btn-info btn-sm mr-1"
-                    target="_blank"
-                  >
-                    রশিদ প্রিন্ট
-                  </Link>
-                  <button type="button" className="btn btn-danger btn-sm mr-1">
-                    বাতিল করুন
-                  </button>
-                </div>
               </Card>
             ))}
           </div>
@@ -157,52 +133,19 @@ const SonodManagement = () => {
                   <td>{item.fatherOrHusbandName}</td>
                   <td>{item.villageOrWard}</td>
                   <td>{item.applicationDate}</td>
-                  <td>{item.feeStatus}</td>
+                  <td
+                    className={` fs-6 text-white ${
+                      item.feeStatus == 'পরিশোধিত' ? 'bg-success' : 'bg-danger'
+                    }`}
+                  >
+                    {item.feeStatus}
+                  </td>
                   <td>
-                    <div
-                      className="btn-group"
-                      role="group"
-                      aria-label="Actions"
-                    >
-                      <Link
-                        to={`/dashboard/sonod/${sonodName}/action/edit/${item.key}`}
-                        className="btn btn-info btn-sm mr-1"
-                      >
-                        এডিট করুন
-                      </Link>
-                      <Link
-                        to={`/document/নাগরিকত্ব সনদ/${item.key}`}
-                        className="btn btn-success btn-sm mr-1"
-                        target="_blank"
-                      >
-                        প্রাপ্তী স্বীকারপত্র
-                      </Link>
-                      <button
-                        type="button"
-                        className="btn btn-info btn-sm mr-1"
-                      >
-                        আবেদনপত্র দেখুন
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-success btn-sm mr-1"
-                      >
-                        অনুমোদন
-                      </button>
-                      <Link
-                        to={`/invoice/d/${item.key}`}
-                        className="btn btn-info btn-sm mr-1"
-                        target="_blank"
-                      >
-                        রশিদ প্রিন্ট
-                      </Link>
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-sm mr-1"
-                      >
-                        বাতিল করুন
-                      </button>
-                    </div>
+                    <SonodActionBtn
+                      condition={condition}
+                      item={item}
+                      sonodName={sonodName}
+                    />
                   </td>
                 </tr>
               ))}
