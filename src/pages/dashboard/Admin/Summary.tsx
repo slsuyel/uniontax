@@ -24,22 +24,14 @@ const SummaryItem = ({
 
 const Summary = () => {
   const summaryItems = [
-    { icon: 'fa-solid fa-users', title: 'Total Registrations', value: 15299 },
-    { icon: 'fa-solid fa-user-graduate', title: 'Total Students', value: 1126 },
-    { icon: 'fa-solid fa-chalkboard-user', title: 'Total Refuges', value: 26 },
-    { icon: 'fa-solid fa-people-roof', title: 'Others', value: 500 },
-    { icon: 'fa-solid fa-user-plus', title: 'Pending Request', value: 396 },
+    { icon: 'fa-solid fa-file-contract', title: 'মোট আবেদন', value: 15299 },
+    { icon: 'fa-solid fa-file-pen', title: 'নতুন আবেদন', value: 1126 },
+    { icon: 'fa-solid fa-file-circle-check', title: 'ইস্যুকৃত সনদ', value: 26 },
+    { icon: 'fa-solid fa-file-excel', title: 'বাতিলকৃত আবেদন', value: 500 },
     {
-      icon: 'fa-solid fa-hand-holding-usd',
-      title: 'Scholarships Given',
-      value: 2996,
-    },
-    { icon: 'fa-solid fa-donate', title: 'Total Given amount', value: 120 },
-    { icon: 'fa-solid fa-user-plus', title: 'Given This month', value: 25 },
-    {
-      icon: 'fa-solid fa-exclamation-circle',
-      title: 'Pending this month',
-      value: 80,
+      icon: 'fa-solid fa-bangladeshi-taka-sign',
+      title: 'মোট আদায়কৃত ফি পরিমাণ',
+      value: 396,
     },
   ];
 

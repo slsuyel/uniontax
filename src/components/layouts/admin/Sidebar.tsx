@@ -5,38 +5,42 @@ const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 const sidebarItems = [
-  { key: 'dashboard', title: 'ড্যাশবোর্ড', slug: '/dashboard' },
+  { key: 'dashboard', title: 'ড্যাশবোর্ড', slug: '' },
   { key: 'reports', title: 'সকল প্রতিবেদন', slug: '/reports' },
-  { key: 'profile', title: 'ইউনিয়ন প্রোফাইল', slug: '/union/profile' },
-  { key: 'tax', title: 'হোল্ডিং ট্যাক্স', slug: '/holding/tax/' },
-  { key: 'fee', title: 'সনদ ফি', slug: 'sonod/fee' },
-
   {
-    key: '1',
-    title: 'ইজারা',
-    submenu: [
-      {
-        key: '1-1',
-        title: 'নতুন ইজারা',
-        slug: '/dashboard/tenders/list/pending',
-      },
-      {
-        key: '1-2',
-        title: 'চলমান ইজারা',
-        slug: '/dashboard/tenders/list/active',
-      },
-      {
-        key: '1-3',
-        title: 'নির্বাচন প্রক্রিয়াধীন',
-        slug: '/dashboard/tenders/list/proccesing',
-      },
-      {
-        key: '1-4',
-        title: 'কমপ্লিট ইজারা',
-        slug: '/dashboard/tenders/list/Completed',
-      },
-    ],
+    key: 'profile',
+    title: 'ইউনিয়ন প্রোফাইল',
+    slug: '/union/profile',
   },
+  { key: 'tax', title: 'হোল্ডিং ট্যাক্স', slug: '/holding/tax/' },
+  { key: 'fee', title: 'সনদ ফি', slug: '/sonod/fee' },
+
+  // {
+  //   key: '1',
+  //   title: 'ইজারা',
+  //   submenu: [
+  //     {
+  //       key: '1-1',
+  //       title: 'নতুন ইজারা',
+  //       slug: '/tenders/list/pending',
+  //     },
+  //     {
+  //       key: '1-2',
+  //       title: 'চলমান ইজারা',
+  //       slug: '/tenders/list/active',
+  //     },
+  //     {
+  //       key: '1-3',
+  //       title: 'নির্বাচন প্রক্রিয়াধীন',
+  //       slug: '/tenders/list/proccesing',
+  //     },
+  //     {
+  //       key: '1-4',
+  //       title: 'কমপ্লিট ইজারা',
+  //       slug: '/tenders/list/Completed',
+  //     },
+  //   ],
+  // },
   {
     key: '2',
     title: 'নাগরিকত্ব সনদ',
@@ -45,17 +49,17 @@ const sidebarItems = [
       {
         key: '2-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Citizenship_certificate/new',
+        slug: '/sonod/Citizenship_certificate/new',
       },
       {
         key: '2-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Citizenship_certificate/approved',
+        slug: '/sonod/Citizenship_certificate/approved',
       },
       {
         key: '2-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Citizenship_certificate/cancel',
+        slug: '/sonod/Citizenship_certificate/cancel',
       },
     ],
   },
@@ -66,17 +70,17 @@ const sidebarItems = [
       {
         key: '3-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Trade_license/new',
+        slug: '/sonod/Trade_license/new',
       },
       {
         key: '3-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Trade_license/approved',
+        slug: '/sonod/Trade_license/approved',
       },
       {
         key: '3-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Trade_license/cancel',
+        slug: '/sonod/Trade_license/cancel',
       },
     ],
   },
@@ -87,17 +91,17 @@ const sidebarItems = [
       {
         key: '4-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Inheritance/new',
+        slug: '/sonod/Certificate_of_Inheritance/new',
       },
       {
         key: '4-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Inheritance/approved',
+        slug: '/sonod/Certificate_of_Inheritance/approved',
       },
       {
         key: '4-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Inheritance/cancel',
+        slug: '/sonod/Certificate_of_Inheritance/cancel',
       },
     ],
   },
@@ -108,17 +112,17 @@ const sidebarItems = [
       {
         key: '5-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Inheritance_certificate/new',
+        slug: '/sonod/Inheritance_certificate/new',
       },
       {
         key: '5-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Inheritance_certificate/approved',
+        slug: '/sonod/Inheritance_certificate/approved',
       },
       {
         key: '5-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Inheritance_certificate/cancel',
+        slug: '/sonod/Inheritance_certificate/cancel',
       },
     ],
   },
@@ -129,17 +133,17 @@ const sidebarItems = [
       {
         key: '6-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Miscellaneous_certificates/new',
+        slug: '/sonod/Miscellaneous_certificates/new',
       },
       {
         key: '6-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Miscellaneous_certificates/approved',
+        slug: '/sonod/Miscellaneous_certificates/approved',
       },
       {
         key: '6-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Miscellaneous_certificates/cancel',
+        slug: '/sonod/Miscellaneous_certificates/cancel',
       },
     ],
   },
@@ -150,17 +154,17 @@ const sidebarItems = [
       {
         key: '7-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Character/new',
+        slug: '/sonod/Certificate_of_Character/new',
       },
       {
         key: '7-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Character/approved',
+        slug: '/sonod/Certificate_of_Character/approved',
       },
       {
         key: '7-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Character/cancel',
+        slug: '/sonod/Certificate_of_Character/cancel',
       },
     ],
   },
@@ -171,17 +175,17 @@ const sidebarItems = [
       {
         key: '8-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Landless_certificate/new',
+        slug: '/sonod/Landless_certificate/new',
       },
       {
         key: '8-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Landless_certificate/approved',
+        slug: '/sonod/Landless_certificate/approved',
       },
       {
         key: '8-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Landless_certificate/cancel',
+        slug: '/sonod/Landless_certificate/cancel',
       },
     ],
   },
@@ -192,17 +196,17 @@ const sidebarItems = [
       {
         key: '9-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Family_certificate/new',
+        slug: '/sonod/Family_certificate/new',
       },
       {
         key: '9-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Family_certificate/approved',
+        slug: '/sonod/Family_certificate/approved',
       },
       {
         key: '9-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Family_certificate/cancel',
+        slug: '/sonod/Family_certificate/cancel',
       },
     ],
   },
@@ -213,17 +217,17 @@ const sidebarItems = [
       {
         key: '10-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Unmarried_certificate/new',
+        slug: '/sonod/Unmarried_certificate/new',
       },
       {
         key: '10-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Unmarried_certificate/approved',
+        slug: '/sonod/Unmarried_certificate/approved',
       },
       {
         key: '10-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Unmarried_certificate/cancel',
+        slug: '/sonod/Unmarried_certificate/cancel',
       },
     ],
   },
@@ -234,17 +238,17 @@ const sidebarItems = [
       {
         key: '11-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_not_remarrying/new',
+        slug: '/sonod/Certificate_of_not_remarrying/new',
       },
       {
         key: '11-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_not_remarrying/approved',
+        slug: '/sonod/Certificate_of_not_remarrying/approved',
       },
       {
         key: '11-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_not_remarrying/cancel',
+        slug: '/sonod/Certificate_of_not_remarrying/cancel',
       },
     ],
   },
@@ -255,17 +259,17 @@ const sidebarItems = [
       {
         key: '12-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_annual_income/new',
+        slug: '/sonod/Certificate_of_annual_income/new',
       },
       {
         key: '12-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_annual_income/approved',
+        slug: '/sonod/Certificate_of_annual_income/approved',
       },
       {
         key: '12-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_annual_income/cancel',
+        slug: '/sonod/Certificate_of_annual_income/cancel',
       },
     ],
   },
@@ -276,17 +280,17 @@ const sidebarItems = [
       {
         key: '13-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Certification_of_the_same_name/new',
+        slug: '/sonod/Certification_of_the_same_name/new',
       },
       {
         key: '13-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Certification_of_the_same_name/approved',
+        slug: '/sonod/Certification_of_the_same_name/approved',
       },
       {
         key: '13-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Certification_of_the_same_name/cancel',
+        slug: '/sonod/Certification_of_the_same_name/cancel',
       },
     ],
   },
@@ -297,17 +301,17 @@ const sidebarItems = [
       {
         key: '14-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Disability_application/new',
+        slug: '/sonod/Disability_application/new',
       },
       {
         key: '14-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Disability_application/approved',
+        slug: '/sonod/Disability_application/approved',
       },
       {
         key: '14-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Disability_application/cancel',
+        slug: '/sonod/Disability_application/cancel',
       },
     ],
   },
@@ -318,17 +322,17 @@ const sidebarItems = [
       {
         key: '15-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_No_Objection/new',
+        slug: '/sonod/Certificate_of_No_Objection/new',
       },
       {
         key: '15-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_No_Objection/approved',
+        slug: '/sonod/Certificate_of_No_Objection/approved',
       },
       {
         key: '15-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_No_Objection/cancel',
+        slug: '/sonod/Certificate_of_No_Objection/cancel',
       },
     ],
   },
@@ -339,22 +343,22 @@ const sidebarItems = [
       {
         key: '16-1',
         title: 'নতুন আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Financial_Insolvency/new',
+        slug: '/sonod/Certificate_of_Financial_Insolvency/new',
       },
       {
         key: '16-2',
         title: 'অনুমোদিত আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Financial_Insolvency/approved',
+        slug: '/sonod/Certificate_of_Financial_Insolvency/approved',
       },
       {
         key: '16-3',
         title: 'বাতিল আবেদন',
-        slug: '/dashboard/sonod/Certificate_of_Financial_Insolvency/cancel',
+        slug: '/sonod/Certificate_of_Financial_Insolvency/cancel',
       },
     ],
   },
-  { key: '17', title: 'ক্যাশ বহি', slug: '/dashboard/cashbook/list' },
-  { key: '18', title: 'Settings', slug: '/dashboard/settings' },
+  { key: '17', title: 'ক্যাশ বহি', slug: '/cashbook/list' },
+  { key: '18', title: 'Settings', slug: '/settings' },
 ];
 
 const theme = false;
@@ -396,7 +400,10 @@ const Sidebar = () => (
           <SubMenu key={item.key} title={item.title}>
             {item.submenu.map(subItem => (
               <Menu.Item key={subItem.key}>
-                <Link className="text-decoration-none" to={subItem.slug}>
+                <Link
+                  className="text-decoration-none"
+                  to={`/dashboard${subItem.slug}`}
+                >
                   {subItem.title}
                 </Link>
               </Menu.Item>
@@ -404,7 +411,10 @@ const Sidebar = () => (
           </SubMenu>
         ) : (
           <Menu.Item key={item.key}>
-            <Link className="text-decoration-none" to={item.slug}>
+            <Link
+              className="text-decoration-none"
+              to={`/dashboard${item.slug}`}
+            >
               {item.title}
             </Link>
           </Menu.Item>

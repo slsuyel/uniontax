@@ -9,7 +9,6 @@ body {
 
 * {
   --defaultColor: green;
-  --defaultColor: green;
 }
 .defaltTextColor {
   color: var(--defaultColor) !important;
@@ -221,6 +220,23 @@ select.searchFrom.form_control {
 
 /* /application end/ */
 
+/* Dashboard */
+
+.breadcrumbs-area h3 {
+  font-weight: 500;
+  text-transform: capitalize;
+  color: #111;
+  margin-bottom: 8px;
+  font-family: 'Kalpurush';
+}
+.breadcrumbs-area ul li {
+  display: inline-block;
+  color: var(--defaultColor);
+  font-size: 16px;
+  position: relative;
+  margin-right: 15px;
+  padding-right: 10px;
+}
 /* MOBILE__RESPONSIVE */
 
 @media only screen and (max-width: 600px) {

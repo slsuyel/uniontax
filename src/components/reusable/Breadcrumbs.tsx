@@ -1,36 +1,37 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { Breadcrumb } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
 
-interface BreadcrumbItem {
-  name: string;
-  path: string;
+interface BreadcrumbProps {
+  paths: { name?: string; link?: string }[];
+  current?: string;
 }
 
-interface BreadcrumbsProps {
-  items: BreadcrumbItem[];
-  current: string;
-}
-
-const Breadcrumbs = ({ items, current }: BreadcrumbsProps) => {
+const Breadcrumbs = ({ paths, current }: BreadcrumbProps) => {
   return (
-    <div className="banner mx-auto container">
-      <div className="banner-content">
-        <h1 className="banner-title">Student Application Form</h1>
-        <p className="banner-links">
-          {items.map((item, index) => (
-            <React.Fragment key={index}>
-              <Link to={item.path} className="banner-link">
-                {item.name}
-              </Link>
-              {index < items.length - 1 && (
-                <span className="banner-divider">/</span>
-              )}
-            </React.Fragment>
-          ))}
-          <span className="banner-divider">/</span>
-          <span className="banner-current">{current}</span>
-        </p>
-      </div>
+    <div className="breadcrumbs-area mb-4">
+      <h3>
+        {paths[0].name} || {current}
+      </h3>
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item>
+          <Link to="/dashboard">
+            <HomeOutlined />
+          </Link>
+        </Breadcrumb.Item>
+        {paths.map((path, index) => (
+          <Breadcrumb.Item key={index}>
+            {index === paths.length - 1 ? (
+              <span>{path.name}</span>
+            ) : (
+              <Link to={path.link || '/dashboard'}>{path.name}</Link>
+            )}
+          </Breadcrumb.Item>
+        ))}
+        <Breadcrumb.Item>{current}</Breadcrumb.Item>
+      </Breadcrumb>
+
+      <br />
     </div>
   );
 };
