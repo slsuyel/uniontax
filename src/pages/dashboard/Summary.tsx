@@ -13,8 +13,8 @@ const SummaryItem = ({
         <div className="card-body d-flex align-item-center justify-content-around">
           <i className={`p-3 rounded-circle my-auto ${icon} fs-1`}></i>
           <div className="text-end">
-            <h5 className="card-title fw-bold fs-2">{title}</h5>
-            <p className="card-text fs-2 mb-0">{value}</p>
+            <h5 className="card-title fw-bold ">{title}</h5>
+            <p className="card-text fs-4 mb-0">{value}</p>
           </div>
         </div>
       </div>
