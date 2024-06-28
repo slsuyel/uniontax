@@ -38,6 +38,7 @@ const Header = () => {
   ];
   const navigate = useNavigate();
   const handleService = (service: string) => {
+    setNavbarExpanded(false);
     navigate(`/application/${service}`);
   };
 
