@@ -32,7 +32,7 @@ const Breadcrumbs = ({ paths, current }: BreadcrumbProps) => {
   return (
     <div className="breadcrumbs-area mb-4">
       <h3>
-        {paths[0].name} || {current}
+        {paths[0].name && '||'} {current}
       </h3>
       <Breadcrumb items={breadcrumbItems} separator=">" />
       <br />
