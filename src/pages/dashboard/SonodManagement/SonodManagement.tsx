@@ -11,12 +11,12 @@ import { checkNameCondition } from '@/utils/checkNameCondition';
 const SonodManagement = () => {
   const services = useAllServices();
   const { sonodName, condition } = useParams();
+
   const { s_name, condition_bn } = checkNameCondition(
     services,
     sonodName,
     condition
   );
-  console.log(condition);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const [dataSource] = useState([
@@ -102,7 +102,7 @@ const SonodManagement = () => {
                   aria-label="Actions"
                 >
                   <Link
-                    to={`/dashboard/sonod/action/edit/${item.key}`}
+                    to={`/dashboard/sonod/${sonodName}/action/edit/${item.key}`}
                     className="btn btn-info btn-sm mr-1"
                   >
                     এডিট করুন
@@ -165,7 +165,7 @@ const SonodManagement = () => {
                       aria-label="Actions"
                     >
                       <Link
-                        to={`/dashboard/sonod/action/edit/${item.key}`}
+                        to={`/dashboard/sonod/${sonodName}/action/edit/${item.key}`}
                         className="btn btn-info btn-sm mr-1"
                       >
                         এডিট করুন

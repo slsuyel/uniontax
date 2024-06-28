@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Badge, Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 
 const { Sider } = Layout;
@@ -49,6 +49,7 @@ const sidebarItems = [
       {
         key: '2-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Citizenship_certificate/new',
       },
       {
@@ -70,6 +71,7 @@ const sidebarItems = [
       {
         key: '3-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Trade_license/new',
       },
       {
@@ -91,6 +93,7 @@ const sidebarItems = [
       {
         key: '4-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Certificate_of_Inheritance/new',
       },
       {
@@ -112,6 +115,7 @@ const sidebarItems = [
       {
         key: '5-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Inheritance_certificate/new',
       },
       {
@@ -133,6 +137,7 @@ const sidebarItems = [
       {
         key: '6-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Miscellaneous_certificates/new',
       },
       {
@@ -154,6 +159,7 @@ const sidebarItems = [
       {
         key: '7-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Certificate_of_Character/new',
       },
       {
@@ -175,6 +181,7 @@ const sidebarItems = [
       {
         key: '8-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Landless_certificate/new',
       },
       {
@@ -196,6 +203,7 @@ const sidebarItems = [
       {
         key: '9-1',
         title: 'নতুন আবেদন',
+        new_sonod: 0,
         slug: '/sonod/Family_certificate/new',
       },
       {
@@ -217,6 +225,7 @@ const sidebarItems = [
       {
         key: '10-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2222,
         slug: '/sonod/Unmarried_certificate/new',
       },
       {
@@ -233,11 +242,12 @@ const sidebarItems = [
   },
   {
     key: '11',
-    title: 'পুনঃ বিবাহ না হওয়া সনদ',
+    title: 'পুনঃ বিবাহ না ',
     submenu: [
       {
         key: '11-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Certificate_of_not_remarrying/new',
       },
       {
@@ -259,6 +269,7 @@ const sidebarItems = [
       {
         key: '12-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Certificate_of_annual_income/new',
       },
       {
@@ -280,6 +291,7 @@ const sidebarItems = [
       {
         key: '13-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Certification_of_the_same_name/new',
       },
       {
@@ -301,6 +313,7 @@ const sidebarItems = [
       {
         key: '14-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Disability_application/new',
       },
       {
@@ -322,6 +335,7 @@ const sidebarItems = [
       {
         key: '15-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Certificate_of_No_Objection/new',
       },
       {
@@ -338,11 +352,12 @@ const sidebarItems = [
   },
   {
     key: '16',
-    title: 'আর্থিক অস্বচ্ছলতার সনদপত্র',
+    title: 'আর্থিক অস্বচ্ছলতা',
     submenu: [
       {
         key: '16-1',
         title: 'নতুন আবেদন',
+        new_sonod: 2,
         slug: '/sonod/Certificate_of_Financial_Insolvency/new',
       },
       {
@@ -364,17 +379,7 @@ const sidebarItems = [
 const theme = false;
 
 const Sidebar = () => (
-  <Sider
-    theme={theme ? 'light' : 'dark'}
-    breakpoint="lg"
-    collapsedWidth="0"
-    style={{
-      height: '100vh',
-      position: 'sticky',
-      top: '0',
-      left: '0',
-    }}
-  >
+  <Sider theme={theme ? 'light' : 'dark'} breakpoint="lg" collapsedWidth="0">
     <div
       className="border-bottom "
       style={{
@@ -397,14 +402,21 @@ const Sidebar = () => (
     >
       {sidebarItems.map(item =>
         item.submenu ? (
-          <SubMenu key={item.key} title={item.title}>
+          <SubMenu
+            key={item.key}
+            title={
+              <>
+                {item.title} <Badge count={item.submenu[0].new_sonod} />
+              </>
+            }
+          >
             {item.submenu.map(subItem => (
               <Menu.Item key={subItem.key}>
                 <Link
                   className="text-decoration-none"
                   to={`/dashboard${subItem.slug}`}
                 >
-                  {subItem.title}
+                  {subItem.title} <Badge count={subItem.new_sonod} />
                 </Link>
               </Menu.Item>
             ))}

@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useAllServices from '@/hooks/useAllServices';
 import { TService } from '@/types';
 
 const useSelectedServices = () => {
+  const { sonodName } = useParams();
   const location = useLocation();
   const pathname = location.pathname;
+  const isDashboard = pathname.includes('dashboard');
+
   const serviceLink = pathname.substring(pathname.lastIndexOf('/') + 1);
   const services = useAllServices();
 
@@ -14,9 +17,11 @@ const useSelectedServices = () => {
   >();
 
   useEffect(() => {
-    const foundService = services.find(s => s.link === serviceLink);
+    const foundService = services.find(s =>
+      isDashboard ? s.link === sonodName : s.link === serviceLink
+    );
     setSelectedService(foundService);
-  }, [serviceLink, services]);
+  }, [serviceLink, sonodName, services, isDashboard]);
 
   return selectedService
     ? { title: selectedService.title, link: selectedService.link }

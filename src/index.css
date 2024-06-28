@@ -237,6 +237,7 @@ select.searchFrom.form_control {
   margin-right: 15px;
   padding-right: 10px;
 }
+
 /* MOBILE__RESPONSIVE */
 
 @media only screen and (max-width: 600px) {

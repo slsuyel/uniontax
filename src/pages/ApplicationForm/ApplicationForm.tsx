@@ -11,15 +11,22 @@ import { useState } from 'react';
 import conditionalForm from './conditionalForm';
 import sameNameForm from './sameNameForm';
 import FormValueModal from '@/components/ui/FormValueModal';
+import { useLocation } from 'react-router-dom';
 
 const ApplicationForm = () => {
   const selectedService = useSelectedServices();
+  const location = useLocation();
+  const pathname = location.pathname;
+  const isDashboard = pathname.includes('dashboard');
   const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const onFinish = async (values: any) => {
     setUserData(values);
-    setModalVisible(true);
+    if (isDashboard) {
+      console.log(values);
+      message.success('Form submitted successfully');
+    } else setModalVisible(true);
     message.success('Form submitted successfully');
   };
 
@@ -33,7 +40,7 @@ const ApplicationForm = () => {
   };
 
   return (
-    <div className="container my-3">
+    <div className={`${!isDashboard ? 'container my-3' : ''} `}>
       <Form
         layout="vertical"
         onFinish={onFinish}

@@ -2,6 +2,7 @@ import UnderConstruction from '@/components/reusable/UnderConstruction';
 import Dhome from '@/pages/dashboard/Admin/Dhome';
 import HoldingTax from '@/pages/dashboard/HoldingTax';
 import SonodFee from '@/pages/dashboard/SonodFee';
+import EditSonod from '@/pages/dashboard/SonodManagement/EditSonod';
 import SonodManagement from '@/pages/dashboard/SonodManagement/SonodManagement';
 import UnionProfile from '@/pages/dashboard/UnionProfile';
 import UnionReports from '@/pages/dashboard/UnionReports';
@@ -30,6 +31,10 @@ export const adminRoutes = [
   {
     path: 'sonod/:sonodName/:condition',
     element: <SonodManagement />,
+  },
+  {
+    path: 'sonod/:sonodName/action/edit/:id',
+    element: <EditSonod />,
   },
   {
     path: 'settings',
