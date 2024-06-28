@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import Breadcrumbs from '@/components/reusable/Breadcrumbs';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 interface FormData {
   full_name: string;
@@ -18,7 +19,7 @@ interface FormData {
   socib_signture: File | null;
   u_image: File | null;
 }
-const UnionProfile: React.FC = () => {
+const UnionProfile = () => {
   const [formData, setFormData] = useState<FormData>({
     full_name: '',
     short_name_b: '',
@@ -67,6 +68,7 @@ const UnionProfile: React.FC = () => {
 
   return (
     <div>
+      <Breadcrumbs current="ইউনিয়ন প্রোফাইল" />
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="card-body">
           <div className="row">
@@ -343,8 +345,8 @@ const UnionProfile: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="border-top">
-          <div className="card-body">
+        <div className=" pt-4">
+          <div className="">
             <button type="submit" className="btn btn-primary">
               সাবমিট
             </button>

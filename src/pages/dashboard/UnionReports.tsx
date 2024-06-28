@@ -22,7 +22,7 @@ const UnionReports = () => {
 
   return (
     <div>
-      <Breadcrumbs paths={[{ name: '', link: 'report' }]} current="প্রতিবেদন" />
+      <Breadcrumbs current="প্রতিবেদন" />
 
       <form onSubmit={handleSubmit}>
         <div

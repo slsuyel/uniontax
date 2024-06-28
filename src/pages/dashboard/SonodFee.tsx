@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import Breadcrumbs from '@/components/reusable/Breadcrumbs';
 import { Form, Input, Button, Table } from 'antd';
 
 interface FormData {
@@ -36,7 +37,8 @@ const SonodFee = () => {
   }));
 
   return (
-    <div className="col-6 mx-auto ">
+    <div className="">
+      <Breadcrumbs current="সনদ ফি" />
       <Form
         name="sonod_fee_form"
         initialValues={initialValues}

@@ -50,10 +50,7 @@ const SonodManagement = () => {
 
   return (
     <div>
-      <Breadcrumbs
-        paths={[{ name: s_name, link: '' }]}
-        current={condition_bn}
-      />
+      <Breadcrumbs page={s_name} current={condition_bn} />
 
       <Form
         layout="inline"

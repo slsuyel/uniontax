@@ -3,38 +3,24 @@ import { Breadcrumb } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 
 interface BreadcrumbProps {
-  paths: { name?: string; link?: string }[];
   current?: string;
+  page?: string;
 }
 
-const Breadcrumbs = ({ paths, current }: BreadcrumbProps) => {
-  const breadcrumbItems = [
-    {
-      title: (
-        <Link to="/dashboard">
-          <HomeOutlined />
-        </Link>
-      ),
-    },
-    ...paths.map((path, index) => ({
-      title:
-        index === paths.length - 1 ? (
-          <span>{path.name}</span>
-        ) : (
-          <Link to={path.link || '/dashboard'}>{path.name}</Link>
-        ),
-    })),
-    {
-      title: current,
-    },
-  ];
-
+const Breadcrumbs = ({ page, current }: BreadcrumbProps) => {
   return (
     <div className="breadcrumbs-area mb-4">
       <h3>
-        {paths[0].name && '||'} {current}
+        {page && ` ${page} ||`} {current}
       </h3>
-      <Breadcrumb items={breadcrumbItems} separator=">" />
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item>
+          <Link to="/dashboard">
+            <HomeOutlined />
+          </Link>
+        </Breadcrumb.Item>
+        {current && <Breadcrumb.Item>{current}</Breadcrumb.Item>}
+      </Breadcrumb>
       <br />
     </div>
   );
