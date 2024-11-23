@@ -1,81 +1,80 @@
-import MainLayout from '@/components/layouts/MainLayout';
-import AdminLayout from '@/components/layouts/admin/AdminLayout';
-import ErrorPage from '@/components/reusable/ErrorPage';
+import MainLayout from "@/components/layouts/MainLayout";
+import AdminLayout from "@/components/layouts/admin/AdminLayout";
+import ErrorPage from "@/components/reusable/ErrorPage";
 
-// import AdminCheck from '@/hooks/AdminCheck';
-import About from '@/pages/About/About';
-import CitizenCorner from '@/pages/About/CitizenCorner';
-import ApplicationForm from '@/pages/ApplicationForm/ApplicationForm';
-import Contact from '@/pages/Contact/Contact';
-import Holding from '@/pages/Holding/Holding';
+import About from "@/pages/About/About";
+import CitizenCorner from "@/pages/About/CitizenCorner";
+import ApplicationForm from "@/pages/ApplicationForm/ApplicationForm";
+import Contact from "@/pages/Contact/Contact";
+import Holding from "@/pages/Holding/Holding";
 
-import Home from '@/pages/Home/Home';
-import Notice from '@/pages/Notice/Notice';
-import SonodSearch from '@/pages/SonodSearch/SonodSearch';
-import Tenders from '@/pages/Tenders/Tenders';
-import Login from '@/pages/auth/Login';
-import ResetPassword from '@/pages/auth/ResetPassword';
+import Home from "@/pages/Home/Home";
+import Notice from "@/pages/Notice/Notice";
+import SonodSearch from "@/pages/SonodSearch/SonodSearch";
+import Tenders from "@/pages/Tenders/Tenders";
+import Login from "@/pages/auth/Login";
+import ResetPassword from "@/pages/auth/ResetPassword";
 
-import { createBrowserRouter } from 'react-router-dom';
-import { adminRoutes } from './adminRoutes';
+import { createBrowserRouter } from "react-router-dom";
+import { adminRoutes } from "./adminRoutes";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
-        path: '/about',
+        path: "/about",
         element: <About />,
       },
       {
-        path: '/sonod/search',
+        path: "/sonod/search",
         element: <SonodSearch />,
       },
       {
-        path: '/notice',
+        path: "/notice",
         element: <Notice />,
       },
       {
-        path: '/tenders',
+        path: "/tenders",
         element: <Tenders />,
       },
       {
-        path: '/contact',
+        path: "/contact",
         element: <Contact />,
       },
       {
-        path: '/holding/tax',
+        path: "/holding/tax",
         element: <Holding />,
       },
       {
-        path: '/citizens_corner',
+        path: "/citizens_corner",
         element: <CitizenCorner />,
       },
       {
-        path: '/login',
+        path: "/login",
         element: <Login />,
       },
       {
-        path: '/reset-pass',
+        path: "/reset-pass",
         element: <ResetPassword />,
       },
 
       /* application */
       {
-        path: '/application/:service',
+        path: "/application/:service",
         element: <ApplicationForm />,
       },
     ],
   },
 
   {
-    path: 'dashboard',
+    path: "dashboard",
     element: (
       <>
         <AdminLayout />
