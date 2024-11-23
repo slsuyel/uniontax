@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Input, Checkbox, message } from 'antd';
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Input, Checkbox, message } from "antd";
 
-import { callApi } from '@/utilities/functions';
-import { Spinner } from 'react-bootstrap';
-import useLoggedIn from '@/hooks/useLoggedIn';
-import Loader from '@/components/reusable/Loader';
+import { Spinner } from "react-bootstrap";
+import useLoggedIn from "@/hooks/useLoggedIn";
+import Loader from "@/components/reusable/Loader";
+import { callApi } from "@/utilities/functions";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
   const { authenticated, loading: userLoading } = useLoggedIn();
@@ -18,30 +18,30 @@ const Login = () => {
   const location = useLocation();
   const from =
     (location.state && location.state.from && location.state.from.pathname) ||
-    '/profile';
+    "/profile";
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       setLoading(true);
-      const res = await callApi('POST', '/api/user/login', {
+      const res = await callApi("POST", "/api/user/login", {
         email: username,
         password,
       });
       console.log(res);
       if (res.status === 200) {
-        localStorage.setItem('token', res.data.token);
+        localStorage.setItem("token", res.data.token);
 
         message.success(
-          'Login successfully! Now Update Your Profile to get help'
+          "Login successfully! Now Update Your Profile to get help"
         );
         navigate(from, { replace: true });
       } else {
-        message.error('Login failed | An error occurred while logging in');
+        message.error("Login failed | An error occurred while logging in");
       }
     } catch (error) {
-      console.error('An error occurred while logging in:', error);
-      message.error('Login failed | An error occurred while logging in');
+      console.error("An error occurred while logging in:", error);
+      message.error("Login failed | An error occurred while logging in");
     } finally {
       setLoading(false);
     }
@@ -56,9 +56,9 @@ const Login = () => {
       {!authenticated ? (
         <div
           style={{
-            background: '#f4f5f7',
-            paddingTop: '50px',
-            minHeight: '80vh',
+            background: "#f4f5f7",
+            paddingTop: "50px",
+            minHeight: "80vh",
           }}
         >
           <div className="row mx-auto py-5 ">
@@ -77,7 +77,7 @@ const Login = () => {
                       placeholder="Enter Your Email"
                       style={{ height: 35 }}
                       value={username}
-                      onChange={e => setUsername(e.target.value)}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
                   <div className="form-group mb-2">
@@ -92,7 +92,7 @@ const Login = () => {
                       placeholder="Enter Password"
                       style={{ height: 35 }}
                       value={password}
-                      onChange={e => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <div className="d-flex justify-content-between mb-3">
@@ -102,7 +102,7 @@ const Login = () => {
                       </Checkbox>
                     </div>
                     <div>
-                      <Link to={'/reset-pass'}> Reset password</Link>
+                      <Link to={"/reset-pass"}> Reset password</Link>
                     </div>
                   </div>
                   <div className="form-group">
@@ -111,7 +111,7 @@ const Login = () => {
                       className="border-1 btn_main w-100"
                       disabled={loading}
                     >
-                      {loading ? <Spinner /> : 'Login'}
+                      {loading ? <Spinner /> : "Login"}
                     </button>
                   </div>
                 </form>
@@ -120,7 +120,7 @@ const Login = () => {
           </div>
         </div>
       ) : (
-        navigate('/profile')
+        navigate("/profile")
       )}
     </>
   );

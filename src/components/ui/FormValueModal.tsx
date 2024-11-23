@@ -1,7 +1,7 @@
-import useSelectedServices from '@/hooks/useSelectedServices';
-import { TApplicantData } from '@/types';
-import { getFormattedDate } from '@/utilities/getFormattedDate';
-import { Button, Modal } from 'antd';
+import useSelectedServices from "@/hooks/useSelectedServices";
+import { TApplicantData } from "@/types";
+import { getFormattedDate } from "@/utils/getFormattedDate";
+import { Button, Modal } from "antd";
 
 interface FormValueModalProps {
   visible: boolean;
@@ -151,13 +151,13 @@ const FormValueModal = ({
           </div>
         </div>
         <br /> <br />
-        {from !== 'dashboard' && (
+        {from !== "dashboard" && (
           <div
             className="text-center"
-            style={{ width: '50%', margin: '0px auto' }}
+            style={{ width: "50%", margin: "0px auto" }}
           >
             <h3>
-              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন ।{' '}
+              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন ।{" "}
               {selectedService?.title} এর ফি 1 টাকা ।
             </h3>
             <button
