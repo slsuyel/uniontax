@@ -12,7 +12,7 @@ const RightSidebar = () => {
       </p>{" "}
       <div className="contactInfo text-center">
         <span>
-          <b>জনাব মো: জহুরুল ইসলাম</b>
+          <b>জনাব মোঃ সাবেত আলী </b>
         </span>{" "}
         <br />{" "}
         <span>
