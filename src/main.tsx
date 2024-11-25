@@ -6,11 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/routes.tsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/features/store.ts";
 
-import { QueryClient, QueryClientProvider } from "react-query";
-const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
+  <Provider store={store}>
     <RouterProvider router={router} />
-  </QueryClientProvider>
+  </Provider>
 );
