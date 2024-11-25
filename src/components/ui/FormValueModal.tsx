@@ -22,6 +22,10 @@ const FormValueModal = ({
   const selectedService = useSelectedServices();
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
 
+  const handlePayment = () => {
+    console.log(data, selectedService);
+  };
+
   return (
     <Modal
       width={800}
@@ -34,7 +38,7 @@ const FormValueModal = ({
       }
     >
       <div>
-        <div className="row w-100">
+        <div className="row w-100 mx-auto">
           <div className="col-md-12">
             <div className="app-heading">আবেদনকারীর তথ্য</div>
           </div>
@@ -161,6 +165,7 @@ const FormValueModal = ({
               {selectedService?.title} এর ফি 1 টাকা ।
             </h3>
             <button
+              onClick={handlePayment}
               type="submit"
               className="border-1 btn_main text-nowrap w-100"
             >

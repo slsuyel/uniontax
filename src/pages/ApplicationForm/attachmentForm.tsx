@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Form, Upload, Select, Button } from 'antd';
+import { useState } from "react";
+import { Form, Upload, Select, Button } from "antd";
 const { Option } = Select;
 
 const AttachmentForm = () => {
-  const [attachmentType, setAttachmentType] = useState('nationalId');
+  const [attachmentType, setAttachmentType] = useState("national_id");
 
   const handleAttachmentTypeChange = (value: React.SetStateAction<string>) => {
     setAttachmentType(value);
@@ -18,7 +18,7 @@ const AttachmentForm = () => {
         <div className="col-md-12 row mb-3">
           <div className="col-md-4">
             <Form.Item
-              initialValue="nationalId"
+              initialValue="national_id"
               name="attachmentType"
               label="সংযুক্তির ধরণ"
               // rules={[
@@ -29,17 +29,17 @@ const AttachmentForm = () => {
               // ]}
             >
               <Select
-                style={{ height: 40, width: '100%' }}
+                style={{ height: 40, width: "100%" }}
                 placeholder="নির্বাচন করুন"
                 onChange={handleAttachmentTypeChange}
               >
-                <Option value="nationalId">জাতীয় পরিচয়পত্র</Option>
+                <Option value="national_id">জাতীয় পরিচয়পত্র</Option>
                 <Option value="birthCertificate">জন্ম নিবন্ধন</Option>
               </Select>
             </Form.Item>
           </div>
         </div>
-        {attachmentType === 'nationalId' && (
+        {attachmentType === "national_id" && (
           <>
             <div className="col-md-4">
               <Form.Item
@@ -53,7 +53,7 @@ const AttachmentForm = () => {
                 // ]}
               >
                 <Upload
-                  style={{ height: 40, width: '100%' }}
+                  style={{ height: 40, width: "100%" }}
                   accept="image/*"
                   listType="picture"
                   maxCount={1}
@@ -75,7 +75,7 @@ const AttachmentForm = () => {
                 // ]}
               >
                 <Upload
-                  style={{ height: 40, width: '100%' }}
+                  style={{ height: 40, width: "100%" }}
                   accept="image/*"
                   listType="picture"
                   maxCount={1}
@@ -87,7 +87,7 @@ const AttachmentForm = () => {
             </div>
           </>
         )}
-        {attachmentType === 'birthCertificate' && (
+        {attachmentType === "birthCertificate" && (
           <>
             <div className="col-md-4">
               <Form.Item
@@ -96,12 +96,12 @@ const AttachmentForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'জন্ম নিবন্ধন ফাইল আপলোড করুন!',
+                    message: "জন্ম নিবন্ধন ফাইল আপলোড করুন!",
                   },
                 ]}
               >
                 <Upload
-                  style={{ height: 40, width: '100%' }}
+                  style={{ height: 40, width: "100%" }}
                   accept="image/*"
                   listType="picture"
                   maxCount={1}
