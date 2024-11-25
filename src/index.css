@@ -14,6 +14,13 @@ body {
   color: var(--defaultColor) !important;
 }
 
+ label {
+  color: #493eff !important;
+  font-weight: 600;
+  margin: 3px 2px;
+  font-size: 17px !important;
+}
+
 nav.navbar.navbar-expand-lg.navbar-light.bg-light {
   background: #023076 !important;
 }
@@ -210,11 +217,7 @@ select.searchFrom.form_control {
   margin: 32px 0;
   text-align: center;
 }
-.labelColor {
-  color: #493eff;
-  font-weight: 600;
-  margin: 3px 2px;
-}
+
 
 /* /application end/ */
 

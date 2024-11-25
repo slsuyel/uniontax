@@ -117,9 +117,9 @@ export interface TApplicantData {
   applicant_present_post_office?: string;
   applicant_present_word_number?: string;
   applicant_resident_status?: string;
-  attachmentType?: string;
-  currentDivision?: string;
+  attachment_type?: string;
+  current_division?: string;
   image?: string;
-  sameAsCurrent?: boolean;
+  same_address?: boolean;
   applicant_religion?: string;
 }
