@@ -3,10 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useState } from "react";
 import useAllServices from "@/hooks/useAllServices";
-import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
+
 const Header = () => {
-  const unionData = useAppSelector((state: RootState) => state.union.unionData);
   const services = useAllServices();
 
   const navItems = [
@@ -50,11 +48,9 @@ const Header = () => {
     setNavbarExpanded(false);
   };
 
-  console.log(unionData);
-
   return (
     <>
-      <div id="mainMenu" className="col-md-12 container mx-auto mt-2">
+      <div id="mainMenu" className="container mx-auto mt-2">
         <Navbar
           expand="lg"
           className="py-0"
