@@ -4,22 +4,39 @@ import Footer from "../ui/Footer";
 import ScrollToTop from "@/utils/ScrollToTop";
 import TopHeader from "../ui/TopHeader";
 import { GoToTop } from "go-to-top-react";
-import { useEffect } from "react";
-import { message } from "antd";
+import { useEffect, useState } from "react";
+
+import { useUnionInfoQuery } from "@/redux/api/user/userApi";
+import Loader from "../reusable/Loader";
+
+import { setUnionData } from "@/redux/features/union/unionSlice";
+import { useAppDispatch } from "@/redux/features/hooks";
 
 const MainLayout = () => {
+  const dispatch = useAppDispatch();
+  const [unionName, setUnionName] = useState("");
   const navigate = useNavigate();
+  const { data, isLoading } = useUnionInfoQuery(unionName, {
+    skip: !unionName,
+  });
 
   useEffect(() => {
     const hostname = window.location.hostname;
     const union = hostname.split(".")[0];
     if (union !== "localhost") {
-      // Handle union-specific logic
-
-      console.log(union);
-      message.success(`apni akhon ${union} e`);
+      setUnionName(union);
     }
   }, [navigate]);
+
+  useEffect(() => {
+    if (data?.data?.uniouninfos) {
+      dispatch(setUnionData(data.data.uniouninfos));
+    }
+  }, [data, dispatch]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <ScrollToTop>

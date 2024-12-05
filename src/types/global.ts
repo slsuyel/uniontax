@@ -25,7 +25,7 @@ export type TUnion = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface ScrollToTopProps {
   children?: ReactNode;
@@ -122,4 +122,19 @@ export interface TApplicantData {
   image?: string;
   same_address?: boolean;
   applicant_religion?: string;
+}
+
+export interface TUnionInfo {
+  id: number;
+  short_name_e: string;
+  short_name_b: string;
+  thana: string;
+  district: string;
+  web_logo: string;
+  format: string;
+  google_map: string | null;
+  defaultColor: string;
+  payment_type: string;
+  nidServicestatus: number;
+  nidService: string;
 }

@@ -1,40 +1,43 @@
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import Marquee from 'react-fast-marquee';
-import { useState } from 'react';
-import useAllServices from '@/hooks/useAllServices';
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import Marquee from "react-fast-marquee";
+import { useState } from "react";
+import useAllServices from "@/hooks/useAllServices";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 const Header = () => {
+  const unionData = useAppSelector((state: RootState) => state.union.unionData);
   const services = useAllServices();
 
   const navItems = [
-    { title: 'হোম', link: '/' },
-    { title: 'ইউপি সেবা পরিচিতি', link: 'about' },
+    { title: "হোম", link: "/" },
+    { title: "ইউপি সেবা পরিচিতি", link: "about" },
     {
-      title: 'নাগরিক সেবা',
+      title: "নাগরিক সেবা",
       dropdown: services,
     },
     {
-      title: 'অন্যান্য',
+      title: "অন্যান্য",
       dropdown: [
         {
-          title: 'জন্ম নিবন্ধন সনদের আবেদন',
-          link: 'https://bdris.gov.bd/br/application',
-          target: '_blank',
+          title: "জন্ম নিবন্ধন সনদের আবেদন",
+          link: "https://bdris.gov.bd/br/application",
+          target: "_blank",
         },
         {
-          title: 'মৃত্যু নিবন্ধন সনদের আবেদন',
-          link: 'https://bdris.gov.bd/dr/application',
-          target: '_blank',
+          title: "মৃত্যু নিবন্ধন সনদের আবেদন",
+          link: "https://bdris.gov.bd/dr/application",
+          target: "_blank",
         },
       ],
     },
-    { title: 'সনদ যাচাই', link: '/sonod/search' },
-    { title: 'নোটিশ', link: '/notice' },
-    { title: 'ইজারা', link: '/tenders' },
-    { title: 'যোগাযোগ', link: '/contact' },
-    { title: 'হোল্ডিং ট্যাক্স', link: '/holding/tax' },
-    { title: 'নাগরিক কর্নার', link: '/citizens_corner' },
-    { title: 'লগইন', link: '/login' },
+    { title: "সনদ যাচাই", link: "/sonod/search" },
+    { title: "নোটিশ", link: "/notice" },
+    { title: "ইজারা", link: "/tenders" },
+    { title: "যোগাযোগ", link: "/contact" },
+    { title: "হোল্ডিং ট্যাক্স", link: "/holding/tax" },
+    { title: "নাগরিক কর্নার", link: "/citizens_corner" },
+    { title: "লগইন", link: "/login" },
   ];
   const navigate = useNavigate();
   const handleService = (service: string) => {
@@ -46,6 +49,9 @@ const Header = () => {
   const closeNavbar = () => {
     setNavbarExpanded(false);
   };
+
+  console.log(unionData);
+
   return (
     <>
       <div id="mainMenu" className="col-md-12 container mx-auto mt-2">
