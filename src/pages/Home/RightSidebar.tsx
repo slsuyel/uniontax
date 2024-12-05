@@ -5,17 +5,15 @@ import { RootState } from "@/redux/features/store";
 import { useAppSelector } from "@/redux/features/hooks";
 import Marquee from "react-fast-marquee";
 const RightSidebar = () => {
-  const unionData = useAppSelector((state: RootState) => state.union.unionData);
-
-  console.log(unionData?.short_name_b);
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
 
   return (
     <>
-      {unionData ? (
+      {unionInfo ? (
         <div className=" pt-3 col-md-3 services">
           {" "}
-          <div className={`sidebarTitle mb-3 ${unionData.defaultColor}`}>
-            <h4> এক নজরে {unionData?.short_name_b} ইউনিয়ন</h4>
+          <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>
+            <h4> এক নজরে {unionInfo?.short_name_b} ইউনিয়ন</h4>
           </div>{" "}
           <p className="sidebaruser text-center">
             <img

@@ -29,14 +29,21 @@ const MainLayout = () => {
   }, [navigate]);
 
   useEffect(() => {
-    if (data?.data?.uniouninfos) {
-      dispatch(setUnionData(data.data.uniouninfos));
+    if (data?.data) {
+      dispatch(
+        setUnionData({
+          unionInfo: data.data.uniouninfos,
+          sonodList: data.data.sonod_name_lists,
+        })
+      );
     }
   }, [data, dispatch]);
 
   if (isLoading) {
     return <Loader />;
   }
+
+  // console.log(data.data);
 
   return (
     <ScrollToTop>

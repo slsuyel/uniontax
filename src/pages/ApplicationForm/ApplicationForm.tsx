@@ -12,11 +12,12 @@ import { useState } from "react";
 import conditionalForm from "./conditionalForm";
 import sameNameForm from "./sameNameForm";
 import FormValueModal from "@/components/ui/FormValueModal";
-import { useLocation } from "react-router-dom";
-import { useSonodApplyMutation } from "@/redux/api/user/userApi";
-
+import { useLocation, useParams } from "react-router-dom";
+// import { useSonodApplyMutation } from "@/redux/api/user/userApi";
 const ApplicationForm = () => {
-  const [sonodApply, { isLoading }] = useSonodApplyMutation();
+  const { service } = useParams<{ service: string }>();
+
+  // const [sonodApply, { isLoading }] = useSonodApplyMutation();
   const selectedService = useSelectedServices();
   const location = useLocation();
   const pathname = location.pathname;
@@ -65,7 +66,7 @@ const ApplicationForm = () => {
             color: "white",
           }}
         >
-          {selectedService?.title || "Form Title"}
+          {service || "Form Title"}
         </div>
         <div className="form-pannel">
           <Form.Item name="unioun_name" initialValue="tepriganj" hidden>

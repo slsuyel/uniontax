@@ -2,17 +2,22 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useState } from "react";
-import useAllServices from "@/hooks/useAllServices";
+
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const Header = () => {
-  const services = useAllServices();
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
 
   const navItems = [
     { title: "হোম", link: "/" },
     { title: "ইউপি সেবা পরিচিতি", link: "about" },
     {
       title: "নাগরিক সেবা",
-      dropdown: services,
+      dropdown: sonodInfo.map((sonod) => ({
+        title: sonod.bnname,
+        link: `/application/${sonod.bnname}`,
+      })),
     },
     {
       title: "অন্যান্য",
@@ -37,10 +42,12 @@ const Header = () => {
     { title: "নাগরিক কর্নার", link: "/citizens_corner" },
     { title: "লগইন", link: "/login" },
   ];
+
   const navigate = useNavigate();
-  const handleService = (service: string) => {
+
+  const handleService = (serviceLink: string) => {
     setNavbarExpanded(false);
-    navigate(`/application/${service}`);
+    navigate(serviceLink);
   };
 
   const [navbarExpanded, setNavbarExpanded] = useState(false);
@@ -61,7 +68,7 @@ const Header = () => {
           <Navbar.Toggle
             onClick={() => setNavbarExpanded(!navbarExpanded)}
             aria-controls="navbarSupportedContent"
-            className="bg-primary-subtle border-0  rounded-0"
+            className="bg-primary-subtle border-0 rounded-0"
           />
           <Navbar.Collapse id="navbarSupportedContent">
             <Nav className="mr-auto main_nav ps-2">
@@ -78,7 +85,12 @@ const Header = () => {
                         <NavDropdown.Item
                           className="border-top text-white border-danger-subtle"
                           key={subIndex}
-                          onClick={() => handleService(dropdownItem.link)}
+                          onClick={() =>
+                            dropdownItem.link
+                              ? handleService(dropdownItem.link)
+                              : null
+                          }
+                          target={dropdownItem.title}
                         >
                           {dropdownItem.title}
                         </NavDropdown.Item>
