@@ -4,7 +4,7 @@ import { RootState } from '@/redux/features/store';
 
 import { TApplicantData } from '@/types';
 import { getFormattedDate } from '@/utils/getFormattedDate';
-import { Button, Modal } from 'antd';
+import { Button, message, Modal } from 'antd';
 import { useParams } from 'react-router-dom';
 
 interface FormValueModalProps {
@@ -21,23 +21,27 @@ const FormValueModal = ({
   from,
 }: FormValueModalProps) => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const { service } = useParams<{ service: string }>();
 
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
-
-  const { service } = useParams<{ service: string }>();
 
   const handleCancel = () => {
     onCancel();
   };
-
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
 
   const handlePayment = async () => {
-    // const response = await sonodApply(data);
-    console.log(data);
+    const additionalData = {
+      applicant_date_of_birth: formattedDate,
+      unioun_name: unionInfo?.short_name_e,
+      sonod_name: service,
+    };
+    const updatedData = { ...data, ...additionalData };
+    const response = await sonodApply(updatedData).unwrap();
+    if (response.status_code == 200) {
+      message.success('Data submitted');
+    }
   };
-
-  console.log(unionInfo);
 
   return (
     <Modal
@@ -178,6 +182,7 @@ const FormValueModal = ({
               1 টাকা ।
             </h3>
             <button
+              disabled={isLoading}
               onClick={handlePayment}
               type="submit"
               className="border-1 btn_main text-nowrap w-100"
