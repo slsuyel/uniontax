@@ -37,14 +37,14 @@ const FormValueModal = ({
       sonod_name: service,
     };
     const updatedData = { ...data, ...additionalData };
-
-    // console.log(updatedData);
-    // return;
-    const response = await sonodApply(updatedData).unwrap();
-    console.log(response);
-    if (response.status_code == 200) {
-      message.success("You are redirect to payment gateway");
-      // window.location.href = response.redirect_url;
+    try {
+      const response = await sonodApply(updatedData).unwrap();
+      if (response.status_code === 200) {
+        message.success("You are redirect to payment gateway");
+        window.location.href = response.data.redirect_url;
+      }
+    } catch (error) {
+      message.error("An error occurred while processing your request");
     }
   };
 
@@ -183,7 +183,7 @@ const FormValueModal = ({
             style={{ width: "50%", margin: "0px auto" }}
           >
             <h3>
-              আপনার আবেদনটি সফল করার জন্য {service} সনদের ফি প্রদান করুন । এর ফি
+              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি
               1 টাকা ।
             </h3>
             <button
@@ -192,7 +192,7 @@ const FormValueModal = ({
               type="submit"
               className="border-1 btn_main text-nowrap w-100"
             >
-              Pay And Submit
+              {isLoading ? "Please wait" : "Pay And Submit"}
             </button>
           </div>
         )}
