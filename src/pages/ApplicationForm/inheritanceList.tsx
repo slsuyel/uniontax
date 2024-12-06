@@ -1,5 +1,5 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd';
-import { SetStateAction } from 'react';
+import { Button, DatePicker, Form, Input, Select } from "antd";
+import { SetStateAction } from "react";
 
 const { Option } = Select;
 
@@ -13,14 +13,17 @@ const inheritanceList = (
   const handleAddMore = () => {
     setInherList((prevState: number) => prevState + 1);
   };
-  const newArray = Array.from({ length: inherList }, (_, index) => index + 1);
 
   const handleRemove = () => {
-    setInherList((prevState: number) => prevState - 1);
+    setInherList((prevState: number) =>
+      prevState > 1 ? prevState - 1 : prevState
+    );
   };
 
+  const newArray = Array.from({ length: inherList }, (_, index) => index);
+
   return (
-    <div className="">
+    <div>
       <div className="app-heading">ওয়ারিশগণের তালিকা</div>
       <div className="table-responsive">
         <table className="table">
@@ -42,57 +45,55 @@ const inheritanceList = (
             </tr>
           </thead>
           <tbody>
-            {newArray.map(index => (
+            {newArray.map((index) => (
               <tr key={index}>
                 <td>
                   <Form.Item
                     label="নাম"
-                    name={`inheritance_name[${index}]`}
-                    rules={[{ required: true, message: 'এই তথ্যটি প্রয়োজন' }]}
+                    name={`successor_list[${index}].w_name`}
+                    rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
                   >
-                    <Input style={{ height: 40, width: '100%' }} />
+                    <Input style={{ height: 40, width: "100%" }} />
                   </Form.Item>
                 </td>
                 <td>
                   <Form.Item
                     label="সম্পর্ক"
-                    name={`inheritance_relation[${index}]`}
-                    rules={[{ required: true, message: 'এই তথ্যটি প্রয়োজন' }]}
+                    name={`successor_list[${index}].w_relation`}
+                    rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
                   >
                     <Select
-                      style={{ height: 40, width: '100%' }}
+                      style={{ height: 40, width: "100%" }}
                       placeholder="সম্পর্ক নির্বাচন করুন"
                     >
                       <Option value="স্ত্রী">স্ত্রী</Option>
                       <Option value="পুত্র">পুত্র</Option>
+                      <Option value="কন্যা">কন্যা</Option>
                     </Select>
                   </Form.Item>
                 </td>
                 <td>
                   <Form.Item
                     label="জন্ম তারিখ"
-                    name={`inheritance_dob[${index}]`}
+                    name={`successor_list[${index}].w_dob`}
                   >
-                    <DatePicker style={{ height: 40, width: '100%' }} />
+                    <DatePicker style={{ height: 40, width: "100%" }} />
                   </Form.Item>
                 </td>
                 <td>
                   <Form.Item
                     label="জাতীয় পরিচয়পত্র নাম্বার/জন্মনিবন্ধন নাম্বার"
-                    name={`inheritance_nid[${index}]`}
-                    rules={[{ required: true, message: 'এই তথ্যটি প্রয়োজন' }]}
+                    name={`successor_list[${index}].w_nid`}
+                    rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
                   >
-                    <Input style={{ height: 40, width: '100%' }} />
+                    <Input style={{ height: 40, width: "100%" }} />
                   </Form.Item>
                 </td>
-                <td className={index === 1 ? 'd-none' : ''}>
-                  {index !== 1 && (
-                    <>
-                      <label className="d-block mb-2">Action</label>
-                      <Button onClick={handleRemove} danger>
-                        মুছন
-                      </Button>
-                    </>
+                <td>
+                  {newArray.length > 1 && (
+                    <Button onClick={handleRemove} danger>
+                      মুছন
+                    </Button>
                   )}
                 </td>
               </tr>

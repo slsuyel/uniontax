@@ -1,30 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Form, Button, message } from 'antd';
-import addressFields from './addressFields';
+import { Form, Button, message } from "antd";
+import addressFields from "./addressFields";
 // import attachmentForm from './attachmentForm';
 
-import { useState } from 'react';
-import tradeLicenseForm from './tradeLicenseForm';
+import { useState } from "react";
+import tradeLicenseForm from "./tradeLicenseForm";
 
-// import InheritanceForm from './inheritanceForm';
-import commonFields from './commonFields';
-// import inheritanceList from './inheritanceList';
-// import conditionalForm from './conditionalForm';
+import InheritanceForm from "./inheritanceForm";
+import commonFields from "./commonFields";
+import inheritanceList from "./inheritanceList";
+import conditionalForm from "./conditionalForm";
 // import sameNameForm from './sameNameForm';
-import FormValueModal from '@/components/ui/FormValueModal';
-import { useLocation, useParams } from 'react-router-dom';
+import FormValueModal from "@/components/ui/FormValueModal";
+import { useLocation, useParams } from "react-router-dom";
+
 // import { useSonodApplyMutation } from "@/redux/api/user/userApi";
 const ApplicationForm = () => {
   const { service } = useParams<{ service: string }>();
-
-  // const [sonodApply, { isLoading }] = useSonodApplyMutation();
-
   const location = useLocation();
   const pathname = location.pathname;
-  const isDashboard = pathname.includes('dashboard');
+  const isDashboard = pathname.includes("dashboard");
 
-  // const [inherList, setInherList] = useState(1);
+  const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -32,8 +30,8 @@ const ApplicationForm = () => {
     setUserData(values);
 
     if (isDashboard) {
-      console.log('Submitted values:', values);
-      message.success('Form submitted from dashboard successfully');
+      console.log("Submitted values:", values);
+      message.success("Form submitted from dashboard successfully");
     } else {
       setModalVisible(true);
     }
@@ -42,29 +40,27 @@ const ApplicationForm = () => {
   const handleCancel = () => {
     setModalVisible(false);
   };
-  console.log(service);
+
   return (
-    <div className={`${!isDashboard ? 'container my-3' : ''}`}>
+    <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form layout="vertical" onFinish={onFinish}>
         <div
           className="panel-heading"
           style={{
-            fontWeight: 'bold',
-            fontSize: '20px',
-            background: 'rgb(21, 149, 19)',
-            textAlign: 'center',
-            color: 'white',
+            fontWeight: "bold",
+            fontSize: "20px",
+            background: "rgb(21, 149, 19)",
+            textAlign: "center",
+            color: "white",
           }}
         >
-          {service || 'Form Title'}
+          {service || "Form Title"}
         </div>
         <div className="form-pannel">
           <div className="row">
-            {/* {selectedService?.link === 'Certificate_of_Inheritance' &&
-              InheritanceForm(selectedService)} */}
+            {service == "ওয়ারিশান সনদ" && InheritanceForm(service)}
+            {service == "উত্তরাধিকারী সনদ" && InheritanceForm(service)}
 
-            {/* {selectedService?.link === 'Inheritance_certificate' &&
-              InheritanceForm(selectedService)} */}
             {/* {selectedService?.link === 'Certification_of_the_same_name' &&
               sameNameForm()} */}
 
@@ -74,15 +70,20 @@ const ApplicationForm = () => {
 
             {commonFields()}
 
-            {service === 'ট্রেড লাইসেন্স' && tradeLicenseForm()}
+            {service === "ট্রেড লাইসেন্স" && tradeLicenseForm()}
 
-            {/* {conditionalForm(selectedService)} */}
+            {conditionalForm(service)}
           </div>
           {addressFields()}
           {/* {attachmentForm()} */}
-          {/* {selectedService?.link === 'Certificate_of_Inheritance' &&
-            inheritanceList(inherList, setInherList)} */}
-          <div style={{ textAlign: 'center' }}>
+
+          {service === "ওয়ারিশান সনদ" &&
+            inheritanceList(inherList, setInherList)}
+
+          {service === "উত্তরাধিকারী সনদ" &&
+            inheritanceList(inherList, setInherList)}
+
+          <div style={{ textAlign: "center" }}>
             <Button type="primary" htmlType="submit" size="large">
               সাবমিট
             </Button>

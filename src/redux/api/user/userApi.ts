@@ -17,7 +17,14 @@ const userApi = apiSlice.injectEndpoints({
         method: "Get",
       }),
     }),
+    tradeInfo: builder.query({
+      query: ({ unionName, TradeLicenseKhat }) => ({
+        url: `/global/uniouninfo?name=${unionName}&type=${TradeLicenseKhat}`,
+        method: "Get",
+      }),
+    }),
   }),
 });
 
-export const { useSonodApplyMutation, useUnionInfoQuery } = userApi;
+export const { useSonodApplyMutation, useUnionInfoQuery, useTradeInfoQuery } =
+  userApi;

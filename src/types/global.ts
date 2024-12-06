@@ -138,3 +138,21 @@ export interface TUnionInfo {
   nidServicestatus: number;
   nidService: string;
 }
+
+export interface TTradeResponse {
+  data: TKhats[];
+  isError: boolean;
+  error?: any;
+  status_code: number;
+}
+export interface TKhats {
+  name: string;
+  khat_id: string;
+  khat_fees: TKhatfee[];
+}
+export interface TKhatfee {
+  name?: string;
+  applicant_type_of_businessKhat: string;
+  applicant_type_of_businessKhatAmount: string;
+  fee: string;
+}

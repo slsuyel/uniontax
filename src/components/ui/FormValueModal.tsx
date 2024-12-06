@@ -1,11 +1,11 @@
-import { useSonodApplyMutation } from '@/redux/api/user/userApi';
-import { useAppSelector } from '@/redux/features/hooks';
-import { RootState } from '@/redux/features/store';
+import { useSonodApplyMutation } from "@/redux/api/user/userApi";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
-import { TApplicantData } from '@/types';
-import { getFormattedDate } from '@/utils/getFormattedDate';
-import { Button, message, Modal } from 'antd';
-import { useParams } from 'react-router-dom';
+import { TApplicantData } from "@/types";
+import { getFormattedDate } from "@/utils/getFormattedDate";
+import { Button, message, Modal } from "antd";
+import { useParams } from "react-router-dom";
 
 interface FormValueModalProps {
   visible: boolean;
@@ -37,10 +37,14 @@ const FormValueModal = ({
       sonod_name: service,
     };
     const updatedData = { ...data, ...additionalData };
+
+    // console.log(updatedData);
+    // return;
     const response = await sonodApply(updatedData).unwrap();
+    console.log(response);
     if (response.status_code == 200) {
-      message.success('You are redirect to payment gateway');
-      window.location.href = response.redirect_url;
+      message.success("You are redirect to payment gateway");
+      // window.location.href = response.redirect_url;
     }
   };
 
@@ -173,10 +177,10 @@ const FormValueModal = ({
           </div>
         </div>
         <br /> <br />
-        {from !== 'dashboard' && (
+        {from !== "dashboard" && (
           <div
             className="text-center"
-            style={{ width: '50%', margin: '0px auto' }}
+            style={{ width: "50%", margin: "0px auto" }}
           >
             <h3>
               আপনার আবেদনটি সফল করার জন্য {service} সনদের ফি প্রদান করুন । এর ফি

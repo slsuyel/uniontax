@@ -1,8 +1,9 @@
-import { Form, Input, Select } from 'antd';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Form, Input, Select } from "antd";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const conditionalForm = (service: { title: string; link: string } | null) => {
+const conditionalForm = ({ service }: any) => {
   const renderDynamicFormItem = (
     label: string,
     name: string,
@@ -18,33 +19,33 @@ const conditionalForm = (service: { title: string; link: string } | null) => {
   return (
     <>
       {renderDynamicFormItem(
-        'মোবাইল',
-        'applicant_mobile',
+        "মোবাইল",
+        "applicant_mobile",
         <Input
           min={11}
           max={11}
-          style={{ height: 40, width: '100%' }}
+          style={{ height: 40, width: "100%" }}
           type="tel"
           className="form-control"
         />
       )}
 
       {renderDynamicFormItem(
-        'ই-মেইল',
-        'applicant_email',
+        "ই-মেইল",
+        "applicant_email",
         <Input
-          style={{ height: 40, width: '100%' }}
+          style={{ height: 40, width: "100%" }}
           type="email"
           className="form-control"
         />
       )}
 
       {renderDynamicFormItem(
-        'বাসিন্দার ধরণ',
-        'applicant_resident_status',
+        "বাসিন্দার ধরণ",
+        "applicant_resident_status",
         <Select
           placeholder="নির্বাচন করুন"
-          style={{ height: 40, width: '100%' }}
+          style={{ height: 40, width: "100%" }}
           className=""
         >
           <Option value="permanent">স্থায়ী</Option>
@@ -52,33 +53,32 @@ const conditionalForm = (service: { title: string; link: string } | null) => {
         </Select>
       )}
 
-      {service?.link === 'Miscellaneous_certificates' ||
-      service?.link === 'Certificate_of_No_Objection'
+      {service == "বিবিধ প্রত্যয়নপত্র" || service === "অনাপত্তি সনদপত্র"
         ? renderDynamicFormItem(
-            'আবেদনকৃত প্রত্যয়নের বিবরণ উল্লেখ করুন',
-            'prottoyon',
+            "আবেদনকৃত প্রত্যয়নের বিবরণ উল্লেখ করুন",
+            "prottoyon",
             <TextArea style={{ height: 80 }} />
           )
         : null}
 
-      {service?.link === 'Family_certificate' &&
+      {service == "পারিবারিক সনদ" &&
         renderDynamicFormItem(
-          'বংশের নাম',
-          'family_name',
+          "বংশের নাম",
+          "family_name",
           <Input style={{ height: 40 }} />
         )}
 
-      {service?.link === 'Certificate_of_annual_income' &&
+      {service == "বার্ষিক আয়ের প্রত্যয়ন" &&
         renderDynamicFormItem(
-          'বার্ষিক আয়',
-          'Annual_income',
+          "বার্ষিক আয়",
+          "Annual_income",
           <Input style={{ height: 40 }} />
         )}
 
-      {service?.link === 'Disability_application' &&
+      {service == "প্রতিবন্ধী সনদপত্র" &&
         renderDynamicFormItem(
-          'প্রতিবন্ধী',
-          'disabled',
+          "প্রতিবন্ধী",
+          "disabled",
           <Select placeholder="নির্বাচন করুন">
             <Option value="physical">শারীরিক (Physical)</Option>
             <Option value="vision">দৃষ্টি (Vision)</Option>
