@@ -3,7 +3,7 @@ import { Form, Input, Select } from "antd";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const conditionalForm = ({ service }: any) => {
+const conditionalForm = (service: any) => {
   const renderDynamicFormItem = (
     label: string,
     name: string,

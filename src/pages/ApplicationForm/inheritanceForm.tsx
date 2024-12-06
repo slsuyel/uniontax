@@ -8,8 +8,12 @@ const inheritanceForm = (service: string) => {
         {" "}
         <Form.Item
           label={`${
-            service == "উত্তরাধিকারী সনদ" ? "জীবিত " : "মৃত"
-          } ব্যাক্তির নাম`}
+            service == "উত্তরাধিকারী সনদ"
+              ? "জীবিত ব্যাক্তির"
+              : service == "বিবিধ প্রত্যয়নপত্র"
+              ? "সনদ ধারীর "
+              : "মৃত ব্যাক্তির"
+          }  নাম`}
           name="utname"
           rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
@@ -22,7 +26,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="লিঙ্গ"
           name="ut_gender"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Select placeholder="লিঙ্গ " style={{ height: 40 }}>
             <Option value="male">পুরুষ</Option>
@@ -49,7 +53,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="পিতা/স্বামীর নাম"
           name="ut_father_name"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
@@ -60,7 +64,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="মাতার নাম"
           name="ut_mother_name"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
@@ -71,7 +75,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="গ্রাম"
           name="ut_grame"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
@@ -82,7 +86,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="ওয়ার্ড নং"
           name="ut_word"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
@@ -93,7 +97,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="ডাকঘর"
           name="ut_post"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
@@ -104,7 +108,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="উপজেলা"
           name="ut_thana"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
@@ -115,7 +119,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="জেলা"
           name="ut_district"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
@@ -126,7 +130,7 @@ const inheritanceForm = (service: string) => {
         <Form.Item
           label="বাসিন্দার ধরণ"
           name="applicant_resident_status"
-          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Select style={{ height: 40 }}>
             <Option value="">নির্বাচন করুন</Option>
