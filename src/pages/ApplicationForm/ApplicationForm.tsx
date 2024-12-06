@@ -2,7 +2,7 @@
 
 import { Form, Button, message } from "antd";
 import addressFields from "./addressFields";
-// import attachmentForm from './attachmentForm';
+import attachmentForm from "./attachmentForm";
 
 import { useState } from "react";
 import tradeLicenseForm from "./tradeLicenseForm";
@@ -11,11 +11,10 @@ import InheritanceForm from "./inheritanceForm";
 import commonFields from "./commonFields";
 import inheritanceList from "./inheritanceList";
 import conditionalForm from "./conditionalForm";
-// import sameNameForm from './sameNameForm';
+
 import FormValueModal from "@/components/ui/FormValueModal";
 import { useLocation, useParams } from "react-router-dom";
 
-// import { useSonodApplyMutation } from "@/redux/api/user/userApi";
 const ApplicationForm = () => {
   const { service } = useParams<{ service: string }>();
   const location = useLocation();
@@ -64,9 +63,6 @@ const ApplicationForm = () => {
             {service == "বিবিধ প্রত্যয়নপত্র" && InheritanceForm(service)}
             {service == "একই নামের প্রত্যয়ন" && InheritanceForm(service)}
 
-            {/* {selectedService?.link === 'Certification_of_the_same_name' &&
-              sameNameForm()} */}
-
             <div className="col-md-12">
               <div className="app-heading">আবেদনকারীর তথ্য</div>
             </div>
@@ -78,7 +74,7 @@ const ApplicationForm = () => {
             {conditionalForm(service)}
           </div>
           {addressFields()}
-          {/* {attachmentForm()} */}
+          {attachmentForm()}
 
           {service === "ওয়ারিশান সনদ" &&
             inheritanceList(inherList, setInherList)}

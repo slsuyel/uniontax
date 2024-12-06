@@ -58,12 +58,12 @@ const AttachmentForm = () => {
             <Form.Item
               name="applicant_national_id_front_attachment"
               label="Upload National ID Front"
-              rules={[
-                {
-                  required: true,
-                  message: "Please upload the front side of your ID",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Please upload the front side of your ID",
+              //   },
+              // ]}
             >
               <div>
                 <Input
