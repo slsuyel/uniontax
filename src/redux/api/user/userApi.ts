@@ -11,6 +11,12 @@ const userApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    sonodSearch: builder.mutation({
+      query: ({ sonodType, sonodNo }) => ({
+        url: `/sonod/search?sonod_name=${sonodType}&sonod_Id=${sonodNo}`,
+        method: "Post",
+      }),
+    }),
     unionInfo: builder.query({
       query: (unionName) => ({
         url: `/global/uniouninfo?name=${unionName}`,
@@ -26,5 +32,9 @@ const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useSonodApplyMutation, useUnionInfoQuery, useTradeInfoQuery } =
-  userApi;
+export const {
+  useSonodApplyMutation,
+  useUnionInfoQuery,
+  useTradeInfoQuery,
+  useSonodSearchMutation,
+} = userApi;

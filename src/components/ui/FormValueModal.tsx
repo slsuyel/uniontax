@@ -21,7 +21,9 @@ const FormValueModal = ({
   from,
 }: FormValueModalProps) => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const sonodList = useAppSelector((state: RootState) => state.union.sonodList);
   const { service } = useParams<{ service: string }>();
+  const sonod = sonodList.find((d) => d.bnname == service);
 
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
 
@@ -35,10 +37,14 @@ const FormValueModal = ({
       applicant_date_of_birth: formattedDate,
       unioun_name: unionInfo?.short_name_e,
       sonod_name: service,
+      s_uri: "http://example.com/success",
+      f_uri: "http://example.com/failed",
+      c_uri: "http://example.com/cancel",
     };
     const updatedData = { ...data, ...additionalData };
     try {
       const response = await sonodApply(updatedData).unwrap();
+      console.log(response);
       if (response.status_code === 200) {
         message.success("You are redirect to payment gateway");
         window.location.href = response.data.redirect_url;
@@ -183,8 +189,8 @@ const FormValueModal = ({
             style={{ width: "50%", margin: "0px auto" }}
           >
             <h3>
-              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি
-              1 টাকা ।
+              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
+              {sonod?.sonod_fees} টাকা ।
             </h3>
             <button
               disabled={isLoading}
