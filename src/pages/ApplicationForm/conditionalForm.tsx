@@ -21,6 +21,8 @@ const conditionalForm = (service: { title: string; link: string } | null) => {
         'মোবাইল',
         'applicant_mobile',
         <Input
+          min={11}
+          max={11}
           style={{ height: 40, width: '100%' }}
           type="tel"
           className="form-control"

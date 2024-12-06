@@ -20,7 +20,10 @@ const tradeLicenseForm = () => {
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="প্রতিষ্ঠানের নাম" name="companyName">
+        <Form.Item
+          label="প্রতিষ্ঠানের নাম"
+          name="applicant_name_of_the_organization"
+        >
           <Input style={{ height: 40, width: '100%' }} />
         </Form.Item>
       </div>
@@ -50,7 +53,7 @@ const tradeLicenseForm = () => {
       <div className="col-md-4">
         <Form.Item
           label="ব্যবসা, বৃত্তি, পেশা, বা শিল্প প্রতিষ্ঠানের শ্রেণী"
-          name="applicant_type_of_business"
+          name="applicant_type_of_businessKhat"
           rules={[
             { required: true, message: 'Please select business category' },
           ]}
@@ -106,7 +109,7 @@ const tradeLicenseForm = () => {
       <div className="col-md-4">
         <Form.Item
           label="মূলধন/ব্যবসার ধরন"
-          name="investmentType"
+          name="applicant_type_of_businessKhatAmount"
           rules={[{ required: true, message: 'Please select investment type' }]}
         >
           <Select
@@ -119,14 +122,14 @@ const tradeLicenseForm = () => {
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="বকেয়া" name="due">
+        <Form.Item label="বকেয়া" name="last_years_money">
           <Input style={{ height: 40, width: '100%' }} />
         </Form.Item>
       </div>
       <div className="col-md-4">
         <Form.Item
           label="ব্যবসার বিবরণ"
-          name="businessDescription"
+          name="applicant_type_of_business"
           rules={[
             { required: true, message: 'Please enter business description' },
           ]}

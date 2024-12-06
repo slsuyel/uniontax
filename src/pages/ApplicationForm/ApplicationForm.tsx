@@ -3,7 +3,7 @@
 import { Form, Button, message } from 'antd';
 import addressFields from './addressFields';
 // import attachmentForm from './attachmentForm';
-import useSelectedServices from '@/hooks/useSelectedServices';
+
 import tradeLicenseForm from './tradeLicenseForm';
 import InheritanceForm from './inheritanceForm';
 import commonFields from './commonFields';
@@ -18,7 +18,7 @@ const ApplicationForm = () => {
   const { service } = useParams<{ service: string }>();
 
   // const [sonodApply, { isLoading }] = useSonodApplyMutation();
-  const selectedService = useSelectedServices();
+
   const location = useLocation();
   const pathname = location.pathname;
   const isDashboard = pathname.includes('dashboard');
@@ -41,7 +41,7 @@ const ApplicationForm = () => {
   const handleCancel = () => {
     setModalVisible(false);
   };
-
+  console.log(service);
   return (
     <div className={`${!isDashboard ? 'container my-3' : ''}`}>
       <Form layout="vertical" onFinish={onFinish}>
@@ -59,12 +59,13 @@ const ApplicationForm = () => {
         </div>
         <div className="form-pannel">
           <div className="row">
-            {selectedService?.link === 'Certificate_of_Inheritance' &&
-              InheritanceForm(selectedService)}
-            {selectedService?.link === 'Inheritance_certificate' &&
-              InheritanceForm(selectedService)}
-            {selectedService?.link === 'Certification_of_the_same_name' &&
-              sameNameForm()}
+            {/* {selectedService?.link === 'Certificate_of_Inheritance' &&
+              InheritanceForm(selectedService)} */}
+
+            {/* {selectedService?.link === 'Inheritance_certificate' &&
+              InheritanceForm(selectedService)} */}
+            {/* {selectedService?.link === 'Certification_of_the_same_name' &&
+              sameNameForm()} */}
 
             <div className="col-md-12">
               <div className="app-heading">আবেদনকারীর তথ্য</div>
@@ -72,14 +73,14 @@ const ApplicationForm = () => {
 
             {commonFields()}
 
-            {selectedService?.link === 'Trade_license' && tradeLicenseForm()}
+            {service === 'ট্রেড লাইসেন্স' && tradeLicenseForm()}
 
-            {conditionalForm(selectedService)}
+            {/* {conditionalForm(selectedService)} */}
           </div>
           {addressFields()}
           {/* {attachmentForm()} */}
-          {selectedService?.link === 'Certificate_of_Inheritance' &&
-            inheritanceList(inherList, setInherList)}
+          {/* {selectedService?.link === 'Certificate_of_Inheritance' &&
+            inheritanceList(inherList, setInherList)} */}
           <div style={{ textAlign: 'center' }}>
             <Button type="primary" htmlType="submit" size="large">
               সাবমিট

@@ -39,7 +39,8 @@ const FormValueModal = ({
     const updatedData = { ...data, ...additionalData };
     const response = await sonodApply(updatedData).unwrap();
     if (response.status_code == 200) {
-      message.success('Data submitted');
+      message.success('You are redirect to payment gateway');
+      window.location.href = response.redirect_url;
     }
   };
 
