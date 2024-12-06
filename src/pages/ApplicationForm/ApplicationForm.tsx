@@ -58,9 +58,11 @@ const ApplicationForm = () => {
         </div>
         <div className="form-pannel">
           <div className="row">
+            {service == "উত্তরাধিকারী সনদ" && InheritanceForm(service)}
             {service == "ওয়ারিশান সনদ" && InheritanceForm(service)}
             {service == "ওয়ারিশান সনদ" && InheritanceForm(service)}
             {service == "বিবিধ প্রত্যয়নপত্র" && InheritanceForm(service)}
+            {service == "একই নামের প্রত্যয়ন" && InheritanceForm(service)}
 
             {/* {selectedService?.link === 'Certification_of_the_same_name' &&
               sameNameForm()} */}

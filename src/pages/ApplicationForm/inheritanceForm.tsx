@@ -8,18 +8,45 @@ const inheritanceForm = (service: string) => {
         {" "}
         <Form.Item
           label={`${
-            service == "উত্তরাধিকারী সনদ"
+            service === "উত্তরাধিকারী সনদ"
               ? "জীবিত ব্যাক্তির"
-              : service == "বিবিধ প্রত্যয়নপত্র"
-              ? "সনদ ধারীর "
+              : service === "বিবিধ প্রত্যয়নপত্র"
+              ? "সনদ ধারীর"
+              : service === "একই নামের প্রত্যয়ন"
+              ? "সনদ ধারীর"
               : "মৃত ব্যাক্তির"
-          }  নাম`}
+          } নাম`}
           name="utname"
           rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Input style={{ height: 40 }} />
         </Form.Item>
       </div>
+
+      {service == "একই নামের প্রত্যয়ন" && (
+        <div className="col-md-4">
+          {" "}
+          <Form.Item
+            label="সনদ ধারীর দ্বিতীয় নাম"
+            name="applicant_second_name"
+            // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          >
+            <Input style={{ height: 40 }} />
+          </Form.Item>
+        </div>
+      )}
+
+      {service == "বিবিধ প্রত্যয়নপত্র" && (
+        <div className="col-md-4">
+          {" "}
+          <Form.Item label="জীবিত/মৃত" name="alive_status">
+            <Select placeholder="লিঙ্গ " style={{ height: 40 }}>
+              <Option value="1">জীবিত</Option>
+              <Option value="0">মৃত</Option>
+            </Select>
+          </Form.Item>
+        </div>
+      )}
 
       <div className="col-md-4">
         {" "}

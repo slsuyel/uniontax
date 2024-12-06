@@ -79,7 +79,7 @@ const conditionalForm = (service: any) => {
         renderDynamicFormItem(
           "প্রতিবন্ধী",
           "disabled",
-          <Select placeholder="নির্বাচন করুন">
+          <Select style={{ height: 40 }} placeholder="নির্বাচন করুন">
             <Option value="physical">শারীরিক (Physical)</Option>
             <Option value="vision">দৃষ্টি (Vision)</Option>
             <Option value="hearing">শ্রবন (Hearing)</Option>
