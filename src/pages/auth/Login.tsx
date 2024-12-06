@@ -11,13 +11,21 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ups@gmail.com");
+  const [password, setPassword] = useState("12345678");
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const res = await userLogin({ email, password });
-    console.log(res);
+    try {
+      const res = await userLogin({ email, password }).unwrap();
+      if (res.status_code == 200) {
+        navigate(from);
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   return (

@@ -15,10 +15,10 @@ const authApi = apiSlice.injectEndpoints({
     }),
 
     userLogin: builder.mutation({
-      query: ({ data }) => ({
+      query: ({ email, password }) => ({
         url: `/auth/user/login`,
         method: "POST",
-        body: data,
+        body: { email, password },
       }),
       invalidatesTags: ["profileCreate"] as any,
     }),
