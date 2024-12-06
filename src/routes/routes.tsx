@@ -17,6 +17,7 @@ import ResetPassword from "@/pages/auth/ResetPassword";
 
 import { createBrowserRouter } from "react-router-dom";
 import { adminRoutes } from "./adminRoutes";
+import AuthProvider from "@/Providers/AuthProvider";
 
 const router = createBrowserRouter([
   {
@@ -76,9 +77,9 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: (
-      <>
+      <AuthProvider>
         <AdminLayout />
-      </>
+      </AuthProvider>
     ),
     errorElement: <ErrorPage />,
     children: adminRoutes,

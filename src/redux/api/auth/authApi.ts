@@ -28,7 +28,6 @@ const authApi = apiSlice.injectEndpoints({
         url: `/auth/user/check-token`,
         headers: { Authorization: `Bearer ${token}` },
       }),
-      providesTags: ["profileUpdate", "profileCreate"] as any,
     }),
 
     resetPassLink: builder.mutation({

@@ -19,6 +19,7 @@ const Login = () => {
     try {
       const res = await userLogin({ email, password }).unwrap();
       if (res.status_code == 200) {
+        localStorage.setItem("token", res.data.token);
         navigate(from);
       } else {
         console.error("Login failed");
