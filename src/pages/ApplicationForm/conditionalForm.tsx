@@ -41,7 +41,6 @@ const conditionalForm = (service: { title: string; link: string } | null) => {
         'বাসিন্দার ধরণ',
         'applicant_resident_status',
         <Select
-          defaultValue={'permanent'}
           placeholder="নির্বাচন করুন"
           style={{ height: 40, width: '100%' }}
           className=""

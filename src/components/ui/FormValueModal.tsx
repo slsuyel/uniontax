@@ -1,7 +1,11 @@
-import useSelectedServices from "@/hooks/useSelectedServices";
-import { TApplicantData } from "@/types";
-import { getFormattedDate } from "@/utils/getFormattedDate";
-import { Button, Modal } from "antd";
+import { useSonodApplyMutation } from '@/redux/api/user/userApi';
+import { useAppSelector } from '@/redux/features/hooks';
+import { RootState } from '@/redux/features/store';
+
+import { TApplicantData } from '@/types';
+import { getFormattedDate } from '@/utils/getFormattedDate';
+import { Button, Modal } from 'antd';
+import { useParams } from 'react-router-dom';
 
 interface FormValueModalProps {
   visible: boolean;
@@ -16,15 +20,24 @@ const FormValueModal = ({
   onCancel,
   from,
 }: FormValueModalProps) => {
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+
+  const [sonodApply, { isLoading }] = useSonodApplyMutation();
+
+  const { service } = useParams<{ service: string }>();
+
   const handleCancel = () => {
     onCancel();
   };
-  const selectedService = useSelectedServices();
+
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
 
-  const handlePayment = () => {
-    console.log(data, selectedService);
+  const handlePayment = async () => {
+    // const response = await sonodApply(data);
+    console.log(data);
   };
+
+  console.log(unionInfo);
 
   return (
     <Modal
@@ -155,14 +168,14 @@ const FormValueModal = ({
           </div>
         </div>
         <br /> <br />
-        {from !== "dashboard" && (
+        {from !== 'dashboard' && (
           <div
             className="text-center"
-            style={{ width: "50%", margin: "0px auto" }}
+            style={{ width: '50%', margin: '0px auto' }}
           >
             <h3>
-              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন ।{" "}
-              {selectedService?.title} এর ফি 1 টাকা ।
+              আপনার আবেদনটি সফল করার জন্য {service} সনদের ফি প্রদান করুন । এর ফি
+              1 টাকা ।
             </h3>
             <button
               onClick={handlePayment}

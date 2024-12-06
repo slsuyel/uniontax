@@ -14,7 +14,7 @@ body {
   color: var(--defaultColor) !important;
 }
 
- label {
+label {
   color: #493eff !important;
   font-weight: 600;
   margin: 3px 2px;
@@ -194,8 +194,6 @@ select.searchFrom.form_control {
   border-color: #4caf50; /* Change border color on hover/focus */
 }
 
-
-
 /* application */
 .panel-heading {
   border-top-left-radius: 6px;
@@ -217,7 +215,6 @@ select.searchFrom.form_control {
   margin: 32px 0;
   text-align: center;
 }
-
 
 /* /application end/ */
 
@@ -245,5 +242,79 @@ select.searchFrom.form_control {
   .hero_slider_img {
     height: 210.938px;
     max-width: 100%;
+  }
+}
+
+@keyframes loader {
+  0%,
+  10%,
+  100% {
+    width: 80px;
+    height: 80px;
+  }
+  65% {
+    width: 150px;
+    height: 150px;
+  }
+}
+@keyframes loaderBlock {
+  0%,
+  30% {
+    transform: rotate(0);
+  }
+  55% {
+    background-color: #f37272;
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+@keyframes loaderBlockInverse {
+  0%,
+  20% {
+    transform: rotate(0);
+  }
+  55% {
+    background-color: #f37272;
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%) rotate(45deg) translate3d(0, 0, 0);
+  animation: loader 1.2s infinite ease-in-out;
+
+  span {
+    position: absolute;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-color: #ee4040;
+    animation: loaderBlock 1.2s infinite ease-in-out both;
+
+    &:nth-child(1) {
+      top: 0;
+      left: 0;
+    }
+    &:nth-child(2) {
+      top: 0;
+      right: 0;
+      animation: loaderBlockInverse 1.2s infinite ease-in-out both;
+    }
+    &:nth-child(3) {
+      bottom: 0;
+      left: 0;
+      animation: loaderBlockInverse 1.2s infinite ease-in-out both;
+    }
+    &:nth-child(4) {
+      bottom: 0;
+      right: 0;
+    }
   }
 }
