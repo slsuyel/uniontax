@@ -4,13 +4,14 @@ import { Form, Button, message } from 'antd';
 import addressFields from './addressFields';
 // import attachmentForm from './attachmentForm';
 
-import tradeLicenseForm from './tradeLicenseForm';
-import InheritanceForm from './inheritanceForm';
-import commonFields from './commonFields';
-import inheritanceList from './inheritanceList';
 import { useState } from 'react';
-import conditionalForm from './conditionalForm';
-import sameNameForm from './sameNameForm';
+import tradeLicenseForm from './tradeLicenseForm';
+
+// import InheritanceForm from './inheritanceForm';
+import commonFields from './commonFields';
+// import inheritanceList from './inheritanceList';
+// import conditionalForm from './conditionalForm';
+// import sameNameForm from './sameNameForm';
 import FormValueModal from '@/components/ui/FormValueModal';
 import { useLocation, useParams } from 'react-router-dom';
 // import { useSonodApplyMutation } from "@/redux/api/user/userApi";
@@ -23,7 +24,7 @@ const ApplicationForm = () => {
   const pathname = location.pathname;
   const isDashboard = pathname.includes('dashboard');
 
-  const [inherList, setInherList] = useState(1);
+  // const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
