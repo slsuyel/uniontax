@@ -55,7 +55,7 @@ const SonodActionBtn = ({
           </button>
         )}
         <Link
-          to={`{https://api.uniontax.gov.bd/sonod/invoice/download/${item.id}}`}
+          to={`https://api.uniontax.gov.bd/sonod/invoice/download/${item.id}`}
           className="btn btn-info btn-sm mr-1"
           target="_blank"
         >
