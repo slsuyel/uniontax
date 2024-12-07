@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input, Checkbox } from "antd";
-import { Spinner } from "react-bootstrap";
+
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 
 const Login = () => {
@@ -76,8 +76,12 @@ const Login = () => {
                 </div>
               </div>
               <div className="form-group">
-                <button type="submit" className="border-1 btn_main w-100">
-                  {isLoading ? <Spinner /> : "Login"}
+                <button
+                  disabled={isLoading}
+                  type="submit"
+                  className="border-1 btn_main w-100"
+                >
+                  {isLoading ? "Login ..." : "Login"}
                 </button>
               </div>
             </form>

@@ -1,17 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-import { Form, Input, Button, Card } from 'antd';
-import { useParams } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
-import Breadcrumbs from '@/components/reusable/Breadcrumbs';
-import useAllServices from '@/hooks/useAllServices';
-import { checkNameCondition } from '@/utils/checkNameCondition';
-import SonodActionBtn from '@/components/reusable/SonodActionBtn';
+import { useEffect, useState } from "react";
+import { Form, Input, Button, Card } from "antd";
+import { useParams } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import Breadcrumbs from "@/components/reusable/Breadcrumbs";
+import useAllServices from "@/hooks/useAllServices";
+import { checkNameCondition } from "@/utils/checkNameCondition";
+import SonodActionBtn from "@/components/reusable/SonodActionBtn";
+import { useAllSonodQuery } from "@/redux/api/sonod/sonodApi";
+import Loader from "@/components/reusable/Loader";
+import { TApplicantData } from "@/types/global";
 
 const SonodManagement = () => {
-  const services = useAllServices();
   const { sonodName, condition } = useParams();
+  const token = localStorage.getItem("token");
+  const { data, isLoading } = useAllSonodQuery({
+    sonodName: sonodName,
+    stutus: condition || "Pending",
+    token,
+  });
+
+  const services = useAllServices();
 
   const { s_name, condition_bn } = checkNameCondition(
     services,
@@ -22,31 +32,38 @@ const SonodManagement = () => {
 
   const [dataSource] = useState([
     {
-      key: '1',
-      sonodNumber: '77349852200016',
-      name: 'মোঃ রুহুল আমিন',
-      fatherOrHusbandName: 'মোঃ আব্দুল বারেক',
-      villageOrWard: 'চতুরাডাঙ্গী সুতিপাড়া',
-      applicationDate: '2023-05-26 6:33 pm',
-      feeStatus: 'পরিশোধিত',
+      key: "1",
+      sonodNumber: "77349852200016",
+      name: "মোঃ রুহুল আমিন",
+      fatherOrHusbandName: "মোঃ আব্দুল বারেক",
+      villageOrWard: "চতুরাডাঙ্গী সুতিপাড়া",
+      applicationDate: "2023-05-26 6:33 pm",
+      feeStatus: "পরিশোধিত",
     },
     {
-      key: '2',
-      sonodNumber: '77349852200017',
-      name: 'মোঃ আব্দুল করিম',
-      fatherOrHusbandName: 'মোঃ মোহাম্মদ আলী',
-      villageOrWard: 'কমলাপুর বাজার',
-      applicationDate: '2023-06-10 4:45 pm',
-      feeStatus: 'অপরিশোধিত',
+      key: "2",
+      sonodNumber: "77349852200017",
+      name: "মোঃ আব্দুল করিম",
+      fatherOrHusbandName: "মোঃ মোহাম্মদ আলী",
+      villageOrWard: "কমলাপুর বাজার",
+      applicationDate: "2023-06-10 4:45 pm",
+      feeStatus: "অপরিশোধিত",
     },
   ]);
 
   const handleSearch = (values: any) => {
     const searchText = values.searchText;
     if (searchText) {
-      console.log('সনদ নাম্বার:', searchText);
+      console.log("সনদ নাম্বার:", searchText);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  const allSonod: TApplicantData[] = data.data.sonods.data;
+
+  console.log(allSonod);
 
   return (
     <div>
@@ -74,7 +91,7 @@ const SonodManagement = () => {
       {isMobile ? (
         <Card title="সনদ নাম্বার দিয়ে খুঁজুন" className="sonodCard">
           <div className="sonodCardBody">
-            {dataSource.map(item => (
+            {dataSource.map((item) => (
               <Card key={item.key} style={{ marginBottom: 16 }}>
                 <p>
                   <strong>সনদ নাম্বার:</strong> {item.sonodNumber}
@@ -99,7 +116,7 @@ const SonodManagement = () => {
                 />
                 <p
                   className={`mt-2 fs-6 text-white text-center py-2 ${
-                    item.feeStatus == 'পরিশোধিত' ? 'bg-success' : 'bg-danger'
+                    item.feeStatus == "পরিশোধিত" ? "bg-success" : "bg-danger"
                   }`}
                 >
                   <strong>ফি:</strong> {item.feeStatus}
@@ -123,19 +140,19 @@ const SonodManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {dataSource.map(item => (
-                <tr key={item.key} className="text-center">
-                  <td>{item.sonodNumber}</td>
-                  <td>{item.name}</td>
-                  <td>{item.fatherOrHusbandName}</td>
-                  <td>{item.villageOrWard}</td>
-                  <td>{item.applicationDate}</td>
+              {allSonod.map((item) => (
+                <tr key={item.id} className="text-center">
+                  <td>{item.sonod_Id}</td>
+                  <td>{item.applicant_name}</td>
+                  <td>{item.applicant_father_name}</td>
+                  <td>{item.applicant_present_word_number}</td>
+                  <td>{item.created_at}</td>
                   <td
                     className={` fs-6 text-white ${
-                      item.feeStatus == 'পরিশোধিত' ? 'bg-success' : 'bg-danger'
+                      item.payment_status == "Paid" ? "bg-success" : "bg-danger"
                     }`}
                   >
-                    {item.feeStatus}
+                    {item.payment_status}
                   </td>
                   <td>
                     <SonodActionBtn

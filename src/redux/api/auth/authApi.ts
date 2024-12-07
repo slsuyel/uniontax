@@ -85,21 +85,6 @@ const authApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    checkOtp: builder.mutation({
-      query: ({ email, otp }) => ({
-        url: `/verify-otp`,
-        method: "POST",
-        body: { email, otp },
-      }),
-    }),
-
-    resentOtp: builder.mutation({
-      query: ({ email }) => ({
-        url: `/resend/otp`,
-        method: "POST",
-        body: { email },
-      }),
-    }),
   }),
 });
 
@@ -114,6 +99,4 @@ export const {
   useUpdateProfileMutation,
   useResetPassLinkMutation,
   useChangePasswordMutation,
-  useCheckOtpMutation,
-  useResentOtpMutation,
 } = authApi;
