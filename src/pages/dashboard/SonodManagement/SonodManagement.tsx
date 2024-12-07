@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form, Input, Button, Card } from "antd";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -13,11 +13,14 @@ import Loader from "@/components/reusable/Loader";
 import { TApplicantData } from "@/types/global";
 
 const SonodManagement = () => {
+  const [sonod_Id, setSonod_Id] = useState("");
   const { sonodName, condition } = useParams();
   const token = localStorage.getItem("token");
+  const [searchTrigger, setSearchTrigger] = useState(false);
   const { data, isLoading } = useAllSonodQuery({
     sonodName: sonodName,
     stutus: condition || "Pending",
+    sondId: searchTrigger ? sonod_Id : "",
     token,
   });
 
@@ -30,32 +33,8 @@ const SonodManagement = () => {
   );
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  const [dataSource] = useState([
-    {
-      key: "1",
-      sonodNumber: "77349852200016",
-      name: "মোঃ রুহুল আমিন",
-      fatherOrHusbandName: "মোঃ আব্দুল বারেক",
-      villageOrWard: "চতুরাডাঙ্গী সুতিপাড়া",
-      applicationDate: "2023-05-26 6:33 pm",
-      feeStatus: "পরিশোধিত",
-    },
-    {
-      key: "2",
-      sonodNumber: "77349852200017",
-      name: "মোঃ আব্দুল করিম",
-      fatherOrHusbandName: "মোঃ মোহাম্মদ আলী",
-      villageOrWard: "কমলাপুর বাজার",
-      applicationDate: "2023-06-10 4:45 pm",
-      feeStatus: "অপরিশোধিত",
-    },
-  ]);
-
-  const handleSearch = (values: any) => {
-    const searchText = values.searchText;
-    if (searchText) {
-      console.log("সনদ নাম্বার:", searchText);
-    }
+  const handleSearch = () => {
+    setSearchTrigger(true);
   };
 
   if (isLoading) {
@@ -69,16 +48,18 @@ const SonodManagement = () => {
     <div>
       <Breadcrumbs page={s_name} current={condition_bn} />
 
-      <Form
-        layout="inline"
-        onFinish={handleSearch}
-        className="my-2 ps-2 py-4 rounded-1 bg-white"
-      >
-        <Form.Item name="searchText">
-          <Input style={{ height: 36 }} placeholder="সনদ নাম্বার" />
+      <Form layout="inline" className="my-2 ps-2 py-4 rounded-1 bg-white">
+        <Form.Item name="">
+          <Input
+            style={{ height: 36 }}
+            placeholder="সনদ নাম্বার"
+            value={sonod_Id}
+            onChange={(e) => setSonod_Id(e.target.value)}
+          />
         </Form.Item>
         <Form.Item>
           <Button
+            onClick={handleSearch}
             type="primary"
             htmlType="submit"
             className="btn_main border-1 py-3"
@@ -91,24 +72,25 @@ const SonodManagement = () => {
       {isMobile ? (
         <Card title="সনদ নাম্বার দিয়ে খুঁজুন" className="sonodCard">
           <div className="sonodCardBody">
-            {dataSource.map((item) => (
-              <Card key={item.key} style={{ marginBottom: 16 }}>
+            {allSonod.map((item) => (
+              <Card key={item.id} style={{ marginBottom: 16 }}>
                 <p>
-                  <strong>সনদ নাম্বার:</strong> {item.sonodNumber}
+                  <strong>সনদ নাম্বার:</strong> {item.sonod_Id}
                 </p>
                 <p>
-                  <strong>নাম:</strong> {item.name}
+                  <strong>নাম:</strong> {item.applicant_name}
                 </p>
                 <p>
-                  <strong>পিতার/স্বামীর নাম:</strong> {item.fatherOrHusbandName}
+                  <strong>পিতার/স্বামীর নাম:</strong>{" "}
+                  {item.applicant_father_name}
                 </p>
                 <p>
-                  <strong>গ্রাম/মহল্লা:</strong> {item.villageOrWard}
+                  <strong>গ্রাম/মহল্লা:</strong>{" "}
+                  {item.applicant_present_word_number}
                 </p>
                 <p>
-                  <strong>আবেদনের তারিখ:</strong> {item.applicationDate}
+                  <strong>আবেদনের তারিখ:</strong> {item.created_at}
                 </p>
-
                 <SonodActionBtn
                   condition={condition}
                   item={item}
@@ -116,10 +98,10 @@ const SonodManagement = () => {
                 />
                 <p
                   className={`mt-2 fs-6 text-white text-center py-2 ${
-                    item.feeStatus == "পরিশোধিত" ? "bg-success" : "bg-danger"
+                    item.payment_status === "Paid" ? "bg-success" : "bg-danger"
                   }`}
                 >
-                  <strong>ফি:</strong> {item.feeStatus}
+                  <strong>ফি:</strong> {item.payment_status}
                 </p>
               </Card>
             ))}
