@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import FormValueModal from '../ui/FormValueModal';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import FormValueModal from "../ui/FormValueModal";
+import { TApplicantData } from "@/types";
 interface SonodActionBtnProps {
   sonodName: string | undefined;
-  item: any;
+  item: TApplicantData;
   condition: string | undefined;
 }
 const SonodActionBtn = ({
@@ -20,6 +21,7 @@ const SonodActionBtn = ({
   const handleCancel = () => {
     setView(false);
   };
+
   return (
     <>
       <div
@@ -28,13 +30,13 @@ const SonodActionBtn = ({
         aria-label="Actions"
       >
         <Link
-          to={`/dashboard/sonod/${sonodName}/action/edit/${item.key}`}
+          to={`/dashboard/sonod/${sonodName}/action/edit/${item.id}`}
           className="btn btn-info btn-sm mr-1"
         >
           এডিট করুন
         </Link>
         <Link
-          to={`/document/নাগরিকত্ব সনদ/${item.key}`}
+          to={`https://api.uniontax.gov.bd/applicant/copy/download/${item.id}`}
           className="btn btn-success btn-sm mr-1"
           target="_blank"
         >
@@ -47,26 +49,26 @@ const SonodActionBtn = ({
         >
           আবেদনপত্র দেখুন
         </button>
-        {condition !== 'cancel' && condition !== 'approved' && (
+        {condition !== "cancel" && condition !== "approved" && (
           <button type="button" className="btn btn-success btn-sm mr-1">
             অনুমোদন
           </button>
         )}
         <Link
-          to={`/invoice/d/${item.key}`}
+          to={`{https://api.uniontax.gov.bd/sonod/invoice/download/${item.id}}`}
           className="btn btn-info btn-sm mr-1"
           target="_blank"
         >
           রশিদ প্রিন্ট
         </Link>
 
-        {condition == 'approved' && (
+        {condition == "approved" && (
           <button type="button" className="btn btn-info btn-sm mr-1">
             সনদ
           </button>
         )}
 
-        {condition == 'new' && (
+        {condition == "new" && (
           <button type="button" className="btn btn-danger btn-sm mr-1">
             বাতিল করুন
           </button>
