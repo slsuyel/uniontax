@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import FormValueModal from "../ui/FormValueModal";
 import { TApplicantData } from "@/types";
+import { useSonodActionMutation } from "@/redux/api/sonod/sonodApi";
+import { message } from "antd";
 interface SonodActionBtnProps {
   sonodName: string | undefined;
   item: TApplicantData;
@@ -13,6 +15,9 @@ const SonodActionBtn = ({
   item,
   condition,
 }: SonodActionBtnProps) => {
+  const token = localStorage.getItem("token");
+  const [sonodAction, { isLoading }] = useSonodActionMutation();
+
   const [view, setView] = useState(false);
 
   const handleView = () => {
@@ -20,6 +25,17 @@ const SonodActionBtn = ({
   };
   const handleCancel = () => {
     setView(false);
+  };
+
+  const handleApproved = async () => {
+    try {
+      const response = await sonodAction({ id: item.id, token }).unwrap();
+      console.log("Success:", response.data.message);
+      message.success(` ${response.data.message}`);
+    } catch (err) {
+      console.error("Error:", err);
+      message.error("কিছু সমস্যা হয়েছে");
+    }
   };
 
   return (
@@ -50,8 +66,12 @@ const SonodActionBtn = ({
           আবেদনপত্র দেখুন
         </button>
         {condition !== "cancel" && condition !== "approved" && (
-          <button type="button" className="btn btn-success btn-sm mr-1">
-            অনুমোদন
+          <button
+            onClick={handleApproved}
+            type="button"
+            className="btn btn-success btn-sm mr-1"
+          >
+            {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
           </button>
         )}
         <Link

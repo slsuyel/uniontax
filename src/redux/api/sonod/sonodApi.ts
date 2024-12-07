@@ -12,8 +12,17 @@ const sonodApi = apiSlice.injectEndpoints({
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
+      providesTags: ["sonod-action"],
+    }),
+    sonodAction: builder.mutation({
+      query: ({ id, token }) => ({
+        url: `/user/sonod/action/${id}`,
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      invalidatesTags: ["sonod-action"],
     }),
   }),
 });
 
-export const { useAllSonodQuery } = sonodApi;
+export const { useAllSonodQuery, useSonodActionMutation } = sonodApi;

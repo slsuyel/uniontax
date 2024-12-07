@@ -8,7 +8,13 @@ const apiSlice = createApi({
   }),
   // endpoints: (builder: any) => ({}),
   endpoints: () => ({}),
-  tagTypes: ["logout", "profileCreate", "profileUpdate", "buy-pack", "support"],
+  tagTypes: [
+    "logout",
+    "profileCreate",
+    "profileUpdate",
+    "sonod-action",
+    "support",
+  ],
 });
 
 export default apiSlice;

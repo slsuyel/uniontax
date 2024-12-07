@@ -53,8 +53,6 @@ const SonodManagement = () => {
 
   const allSonod: TApplicantData[] = data?.data.sonods.data || [];
 
-  console.log(s_name);
-
   return (
     <div>
       <Breadcrumbs page={s_name} current={condition_bn} />
