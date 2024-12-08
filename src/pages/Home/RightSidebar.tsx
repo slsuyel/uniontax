@@ -6,10 +6,10 @@ import { useAppSelector } from "@/redux/features/hooks";
 import Marquee from "react-fast-marquee";
 const RightSidebar = () => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
-
+  console.log(unionInfo);
   return (
     <>
-      {unionInfo ? (
+      {unionInfo && unionInfo.short_name_e !== "uniontax" ? (
         <div className=" pt-3 col-md-3 services">
           {" "}
           <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>
