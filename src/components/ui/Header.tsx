@@ -5,9 +5,13 @@ import { useState } from "react";
 
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { message, Modal } from "antd";
+import SearchBox from "../reusable/SearchBox";
 
 const Header = () => {
+  const [noUnion, setNoUnion] = useState(false);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
 
   const navItems = [
     { title: "হোম", link: "/" },
@@ -46,14 +50,18 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleService = (serviceLink: string) => {
+    if (unionInfo?.short_name_e == "uniontax") {
+      message.warning("ইউনিয়ন নির্বাচন করুন");
+      setNoUnion(true);
+      return;
+    }
     setNavbarExpanded(false);
     navigate(serviceLink);
   };
 
   const [navbarExpanded, setNavbarExpanded] = useState(false);
-  const closeNavbar = () => {
-    setNavbarExpanded(false);
-  };
+
+  console.log(noUnion);
 
   return (
     <>
@@ -68,10 +76,11 @@ const Header = () => {
           <Navbar.Toggle
             onClick={() => setNavbarExpanded(!navbarExpanded)}
             aria-controls="navbarSupportedContent"
+            aria-label="Toggle navigation"
             className="bg-primary-subtle border-0 rounded-0"
           />
           <Navbar.Collapse id="navbarSupportedContent">
-            <Nav className="mr-auto main_nav ps-2">
+            <Nav className="me-auto main_nav ps-2">
               {navItems.map((item, index) => {
                 if (item.dropdown) {
                   return (
@@ -84,13 +93,13 @@ const Header = () => {
                       {item.dropdown.map((dropdownItem, subIndex) => (
                         <NavDropdown.Item
                           className="border-top text-white border-danger-subtle"
-                          key={subIndex}
-                          onClick={() =>
-                            dropdownItem.link
-                              ? handleService(dropdownItem.link)
-                              : null
-                          }
-                          target={dropdownItem.title}
+                          key={`${index}-${subIndex}`}
+                          onClick={() => {
+                            setNavbarExpanded(false);
+                            dropdownItem.link.startsWith("http")
+                              ? window.open(dropdownItem.link, "_blank")
+                              : handleService(dropdownItem.link);
+                          }}
                         >
                           {dropdownItem.title}
                         </NavDropdown.Item>
@@ -104,7 +113,7 @@ const Header = () => {
                       as={Link}
                       to={item.link}
                       className="border-end text-white"
-                      onClick={closeNavbar}
+                      onClick={() => setNavbarExpanded(false)}
                     >
                       {item.title}
                     </Nav.Link>
@@ -124,6 +133,19 @@ const Header = () => {
           </span>
         </Marquee>
       </div>
+
+      <Modal
+        className="w-100 container mx-auto"
+        open={noUnion}
+        onCancel={() => setNoUnion(false)}
+        footer={null}
+        animation="fade-down"
+      >
+        <div style={{ zIndex: 999 }} className=" py-3">
+          <h3 className="">ইউনিয়ন নির্বাচন করুন </h3>
+          <SearchBox />
+        </div>
+      </Modal>
     </>
   );
 };

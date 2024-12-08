@@ -83,9 +83,13 @@ const SonodActionBtn = ({
         </Link>
 
         {condition == "approved" && (
-          <button type="button" className="btn btn-info btn-sm mr-1">
+          <Link
+            target="_blank"
+            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+            className="btn btn-success btn-sm mr-1"
+          >
             সনদ
-          </button>
+          </Link>
         )}
 
         {condition == "new" && (

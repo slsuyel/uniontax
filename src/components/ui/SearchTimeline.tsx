@@ -20,18 +20,34 @@ export interface TSonodDetails {
 const SearchTimeline = ({ data }: any) => {
   const sonod: TSonodDetails = data?.data;
 
+  const steps = [
+    "আবেদন জমা হয়েছে",
+    "পেমেন্ট",
+    "সেক্রেটারি",
+    "চেয়ারম্যান",
+    "কমপ্লিট",
+  ];
+
+  // Determine the current active step index
+  const activeStep = (() => {
+    if (sonod.stutus === "approved") return 4;
+    if (sonod.stutus === "approved") return 3;
+    if (sonod.stutus === "sec_approved") return 2;
+    if (sonod.payment_status === "Paid") return 1;
+    return 0;
+  })();
+
   return (
     <div>
       <Steps
-        className=" mt-3 p-2 rounded shadow-sm"
+        className="mt-3 p-2 rounded shadow-sm"
         direction="horizontal"
         size="default"
+        current={activeStep}
       >
-        <Steps.Step title="আবেদন জমা হয়েছে" />
-        <Steps.Step title="পেমেন্ট" />
-        <Steps.Step title="সেক্রেটারি" />
-        <Steps.Step title="চেয়ারম্যান" />
-        <Steps.Step title="কমপ্লিট" />
+        {steps.map((title, index) => (
+          <Steps.Step key={index} title={title} />
+        ))}
       </Steps>
 
       {data && (
@@ -42,26 +58,26 @@ const SearchTimeline = ({ data }: any) => {
                 colSpan={2}
                 style={{ textAlign: "center", fontSize: "20px" }}
               ></td>
-            </tr>{" "}
+            </tr>
             <tr>
               <td>সনদের ধরণ</td> <td>{sonod.sonod_name}</td>
-            </tr>{" "}
+            </tr>
             <tr>
               <td>সনদ নম্বর</td> <td>{sonod.sonod_Id}</td>
-            </tr>{" "}
+            </tr>
             <tr>
               <td>সনদ ইস্যুর বছর</td> <td>{sonod.year}</td>
-            </tr>{" "}
+            </tr>
             <tr>
               <td>আবেদনকারীর নাম</td> <td>{sonod.applicant_name}</td>
-            </tr>{" "}
+            </tr>
             <tr>
               <td>জাতীয় পরিচয়পত্র নম্বর</td>{" "}
               <td>{sonod.applicant_national_id_number}</td>
-            </tr>{" "}
+            </tr>
             <tr>
-              <td>ইউনিয়নের নাম</td> <td> {sonod.unioun_name} </td>
-            </tr>{" "}
+              <td>ইউনিয়নের নাম</td> <td>{sonod.unioun_name}</td>
+            </tr>
             <tr>
               <td>জন্ম নিবন্ধন নম্বর</td>{" "}
               <td>{sonod.applicant_birth_certificate_number}</td>

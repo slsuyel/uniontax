@@ -88,7 +88,7 @@ h3.searchHeader:after {
 }
 
 select.searchFrom.form_control {
-  z-index: 9999;
+  z-index: 99;
 }
 
 .searchFrom:focus {
