@@ -61,8 +61,6 @@ const Header = () => {
 
   const [navbarExpanded, setNavbarExpanded] = useState(false);
 
-  console.log(noUnion);
-
   return (
     <>
       <div id="mainMenu" className="container mx-auto mt-2">

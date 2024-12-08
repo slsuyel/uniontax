@@ -1,64 +1,28 @@
-import icon1 from '../../assets/icons/citizen.png';
-import icon2 from '../../assets/icons/trade.png';
+import { RootState } from "@/redux/features/store";
+import { useAppSelector } from "@/redux/features/hooks";
 
-const services = [
-  {
-    img: icon1,
-    title: 'নাগরিকত্ব সনদ',
-  },
-  {
-    title: 'ট্রেড লাইসেন্স',
-  },
-  {
-    title: 'ওয়ারিশান সনদ',
-  },
-  {
-    title: 'উত্তরাধিকারী সনদ',
-  },
-  {
-    title: 'বিবিধ প্রত্যয়নপত্র',
-  },
-  {
-    title: 'চারিত্রিক সনদ',
-  },
-  {
-    title: 'ভূমিহীন সনদ',
-  },
-  {
-    title: 'পারিবারিক সনদ',
-  },
-  {
-    title: 'অবিবাহিত সনদ',
-  },
-  {
-    title: 'পুনঃ বিবাহ না হওয়া সনদ',
-  },
-  {
-    title: 'বার্ষিক আয়ের প্রত্যয়ন',
-  },
-  {
-    title: 'একই নামের প্রত্যয়ন',
-  },
-  {
-    title: 'প্রতিবন্ধী সনদপত্র',
-  },
-  {
-    title: 'অনাপত্তি সনদপত্র',
-  },
-  {
-    title: 'আর্থিক অস্বচ্ছলতার সনদপত্র',
-  },
-  {
-    title: 'জন্ম নিবন্ধন সনদের আবেদন',
-    link: 'https://bdris.gov.bd/br/application',
-  },
-  {
-    title: 'মৃত্যু নিবন্ধন সনদের আবেদন',
-    link: 'https://bdris.gov.bd/dr/application',
-  },
-];
+import icon2 from "../../assets/icons/trade.png";
+import { useNavigate } from "react-router-dom";
+import { message, Modal } from "antd";
+import { useState } from "react";
+import SearchBox from "../reusable/SearchBox";
 
 const ServiceBox = () => {
+  const [noUnion, setNoUnion] = useState(false);
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+
+  const navigate = useNavigate();
+
+  const handleService = (service: string) => {
+    if (unionInfo?.short_name_e == "uniontax") {
+      message.warning("অনুগ্রহ করে আপনার ইউনিয়ন নির্বাচন করুন");
+      setNoUnion(true);
+      return;
+    }
+    navigate(`/application/${service}`);
+  };
+
   return (
     <div className="row mx-auto services pt-3">
       <div className="col-md-12">
@@ -66,29 +30,21 @@ const ServiceBox = () => {
           সেবাসমূহ
         </h6>
       </div>
-      {services.map((service, index) => (
-        <div
+      {sonodInfo.map((service, index) => (
+        <button
+          onClick={() => handleService(service.bnname)}
           key={index}
-          className="col-lg-2 col-md-3 col-sm-4 col-6 mt-3 mb-3 text-center"
+          className="col-lg-2 col-md-3 col-sm-4 col-6 my-3 text-center border-0 bg-transparent"
         >
-          <div className="serviceBox">
+          <div className="serviceBox py-2">
             <div className="serviceLogo">
-              <img src={service.img || icon2} width="50%" alt="" />
+              <img src={icon2} alt="" width={60} />
             </div>
-            <div className="serviceTitle defaltTextColor">
-              {service.link ? (
-                <a
-                  href={service.link}
-                  className="defaltTextColor text-decoration-none"
-                >
-                  {service.title}
-                </a>
-              ) : (
-                service.title
-              )}
+            <div className="serviceTitle defaltTextColor mt-2">
+              <h6> {service.bnname.slice(0, 20)}</h6>
             </div>
           </div>
-        </div>
+        </button>
       ))}
 
       <div className="col-md-12">
@@ -121,6 +77,19 @@ const ServiceBox = () => {
           www.uniontax.gov.bd অনলাইন সিস্টেমটির শুভ উদ্বোধন করেন।
         </p>
       </div>
+
+      <Modal
+        className="w-100 container mx-auto"
+        open={noUnion}
+        onCancel={() => setNoUnion(false)}
+        footer={null}
+        animation="fade-down"
+      >
+        <div style={{ zIndex: 999 }} className=" py-3">
+          <h3 className="">ইউনিয়ন নির্বাচন করুন </h3>
+          <SearchBox />
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -26,8 +26,6 @@ const SonodSearch = () => {
     }
   };
 
-  console.log(data);
-
   return (
     <div className="row mx-auto my-3 container">
       <div className="mainBody col-md-9">

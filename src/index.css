@@ -151,7 +151,7 @@ select.searchFrom.form_control {
 .serviceBox {
   box-shadow: 0px 7px 9px -2px #0000007a !important;
   padding: 9px 8px;
-  height: 117px !important;
+  height: 122px !important;
   transition: all 0.4s;
   border: 1px solid green;
 }
@@ -320,3 +320,42 @@ select.searchFrom.form_control {
 }
 
 
+
+.sonod-verification{
+
+.header-text {
+font-size: 16px;
+line-height: 70px;
+}
+
+.header-text p:first-child {
+font-weight: 500;
+line-height: 18px;
+margin-bottom: 0;
+margin-top: 18px;
+}
+
+.header-text p:last-child {
+line-height: 18px;
+}
+.beneficiary {
+  background-color: #eee;
+  border: 1px solid #dee2e6;
+}
+.beneficiary h3 {
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.border-dash {
+  border: 1px dashed #dee2e6;
+}
+
+.beneficiary-details-right {
+  font-size: 13px;
+  overflow-wrap: break-word;
+  padding: 5px;
+  text-align: right;
+}
+}

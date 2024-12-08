@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Steps } from "antd";
+import VerificationSuccessful from "./VerificationSuccessful";
 
 export interface TSonodDetails {
   id?: number;
@@ -37,6 +38,8 @@ const SearchTimeline = ({ data }: any) => {
     return 0;
   })();
 
+  // console.log(sonod);
+
   return (
     <div>
       <Steps
@@ -50,7 +53,9 @@ const SearchTimeline = ({ data }: any) => {
         ))}
       </Steps>
 
-      {data && (
+      {sonod.stutus == "approved" && <VerificationSuccessful sonod={sonod} />}
+
+      {data && sonod.stutus !== "approved" && (
         <table className="table">
           <tbody>
             <tr>
