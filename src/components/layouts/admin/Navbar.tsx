@@ -1,24 +1,6 @@
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, message } from "antd";
-
-const items = [
-  {
-    label: "Profile",
-    key: "1",
-    icon: <UserOutlined />,
-    onClick: handleProfileClick,
-  },
-  {
-    label: "Log Out",
-    key: "2", // Use a unique key for each menu item
-    icon: <LogoutOutlined />,
-    onClick: handleLogoutClick,
-  },
-];
-
-const menuProps = {
-  items,
-};
+import { useNavigate } from "react-router-dom";
 
 // Define the onClick handler for Profile click
 function handleProfileClick() {
@@ -27,12 +9,34 @@ function handleProfileClick() {
 }
 
 // Define the onClick handler for Logout click
-async function handleLogoutClick() {
-  localStorage.removeItem("token");
-  message.success("Logout successfully");
-}
 
 const Navbar = () => {
+  const items = [
+    {
+      label: "Profile",
+      key: "1",
+      icon: <UserOutlined />,
+      onClick: handleProfileClick,
+    },
+    {
+      label: "Log Out",
+      key: "2", // Use a unique key for each menu item
+      icon: <LogoutOutlined />,
+      onClick: handleLogoutClick,
+    },
+  ];
+
+  const navigate = useNavigate();
+
+  const menuProps = {
+    items,
+  };
+  async function handleLogoutClick() {
+    localStorage.removeItem("token");
+    navigate("/");
+    message.success("Logout successfully");
+  }
+
   return (
     <div className="d-flex gap-3 align-item-center ">
       <Dropdown.Button
