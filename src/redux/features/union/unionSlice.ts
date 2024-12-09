@@ -13,11 +13,13 @@ interface TSonod {
 interface UnionState {
   unionInfo: TUnionInfo | null;
   sonodList: TSonod[] | [];
+  tradeFee: string | null;
 }
 
 const initialState: UnionState = {
   unionInfo: null,
   sonodList: [],
+  tradeFee: null,
 };
 
 const unionSlice = createSlice({
@@ -34,10 +36,18 @@ const unionSlice = createSlice({
     clearUnionData: (state) => {
       state.unionInfo = null;
       state.sonodList = [];
+      state.tradeFee = null;
+    },
+    setTradeFee: (state, action: PayloadAction<string>) => {
+      state.tradeFee = action.payload;
+    },
+    clearTradeFee: (state) => {
+      state.tradeFee = null;
     },
   },
 });
 
-export const { setUnionData, clearUnionData } = unionSlice.actions;
+export const { setUnionData, clearUnionData, setTradeFee, clearTradeFee } =
+  unionSlice.actions;
 
 export default unionSlice.reducer;

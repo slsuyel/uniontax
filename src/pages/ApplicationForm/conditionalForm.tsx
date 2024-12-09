@@ -18,7 +18,7 @@ const conditionalForm = (service: any) => {
 
   return (
     <>
-      {renderDynamicFormItem(
+      {/* {renderDynamicFormItem(
         "মোবাইল",
         "applicant_mobile",
         <Input
@@ -28,7 +28,7 @@ const conditionalForm = (service: any) => {
           type="tel"
           className="form-control"
         />
-      )}
+      )} */}
 
       {renderDynamicFormItem(
         "ই-মেইল",

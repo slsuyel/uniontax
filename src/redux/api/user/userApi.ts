@@ -24,8 +24,8 @@ const userApi = apiSlice.injectEndpoints({
       }),
     }),
     tradeInfo: builder.query({
-      query: ({ unionName, TradeLicenseKhat }) => ({
-        url: `/global/uniouninfo?name=${unionName}&type=${TradeLicenseKhat}`,
+      query: ({ unionName }) => ({
+        url: `/global/uniouninfo?name=${unionName}&type=TradeLicenseKhat`,
         method: "Get",
       }),
     }),

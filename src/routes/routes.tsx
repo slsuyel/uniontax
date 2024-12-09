@@ -18,6 +18,7 @@ import ResetPassword from "@/pages/auth/ResetPassword";
 import { createBrowserRouter } from "react-router-dom";
 import { adminRoutes } from "./adminRoutes";
 import AuthProvider from "@/Providers/AuthProvider";
+import PaymentSuccessPage from "@/pages/payment/PaymentSuccessPage";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/reset-pass",
         element: <ResetPassword />,
+      },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccessPage />,
       },
 
       /* application */

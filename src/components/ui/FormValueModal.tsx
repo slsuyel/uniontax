@@ -24,8 +24,10 @@ const FormValueModal = ({
   const sonodList = useAppSelector((state: RootState) => state.union.sonodList);
   const { service } = useParams<{ service: string }>();
   const sonod = sonodList.find((d) => d.bnname == service);
-
+  const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
+
+  console.log(tradeFee);
 
   const handleCancel = () => {
     onCancel();
@@ -37,9 +39,9 @@ const FormValueModal = ({
       applicant_date_of_birth: formattedDate,
       unioun_name: unionInfo?.short_name_e,
       sonod_name: service,
-      s_uri: "http://example.com/success",
-      f_uri: "http://example.com/failed",
-      c_uri: "http://example.com/cancel",
+      s_uri: window.origin + "/payment-success",
+      f_uri: window.origin + "/payment-failed",
+      c_uri: window.origin + "/payment-cancel",
     };
     const updatedData = { ...data, ...additionalData };
     try {
@@ -190,7 +192,8 @@ const FormValueModal = ({
           >
             <h3>
               আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
-              {sonod?.sonod_fees} টাকা ।
+              {service === "ট্রেড লাইসেন্স" ? tradeFee : sonod?.sonod_fees} টাকা
+              ।
             </h3>
             <button
               disabled={isLoading}

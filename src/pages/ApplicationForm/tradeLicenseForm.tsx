@@ -1,6 +1,46 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { useAppDispatch } from "@/redux/features/hooks";
+import { setTradeFee } from "@/redux/features/union/unionSlice";
 import { Form, Input, Select } from "antd";
+import { useState } from "react";
 const { Option } = Select;
-const tradeLicenseForm = () => {
+export interface TTradeKhat {
+  name: string;
+  khat_id: string;
+  khat_fees: TKhatFee[];
+}
+
+export interface TKhatFee {
+  name: null | string;
+  applicant_type_of_businessKhat: string;
+  applicant_type_of_businessKhatAmount: string;
+  fee: string;
+}
+
+const TradeLicenseForm = ({
+  data,
+  isLoading,
+}: {
+  data: any;
+  isLoading: boolean;
+}) => {
+  const [khatAmounts, setKhatAmounts] = useState<TKhatFee[]>([]);
+  const dispatch = useAppDispatch();
+  const handleBusinessKhatChange = (value: string) => {
+    const selectedD = data?.data?.find((d: TTradeKhat) => d.khat_id === value);
+    setKhatAmounts(selectedD.khat_fees);
+  };
+
+  const handleTradeFees = (value: string) => {
+    const selectedKhat = khatAmounts.find(
+      (khat) => khat.applicant_type_of_businessKhatAmount === value
+    );
+    if (selectedKhat) {
+      dispatch(setTradeFee(selectedKhat.fee));
+    }
+  };
+
   return (
     <>
       <div className="col-md-4">
@@ -13,9 +53,9 @@ const tradeLicenseForm = () => {
             style={{ height: 40, width: "100%" }}
             placeholder="নির্বাচন করুন"
           >
-            <Option value="individual">ব্যক্তি মালিকানাধীন</Option>
-            <Option value="joint">যৌথ মালিকানা</Option>
-            <Option value="company">কোম্পানী</Option>
+            <Option value="ব্যক্তি মালিকানাধীন">ব্যক্তি মালিকানাধীন</Option>
+            <Option value="যৌথ মালিকানা">যৌথ মালিকানা</Option>
+            <Option value="কোম্পানী">কোম্পানী</Option>
           </Select>
         </Form.Item>
       </div>
@@ -61,8 +101,14 @@ const tradeLicenseForm = () => {
           <Select
             style={{ height: 40, width: "100%" }}
             placeholder="নির্বাচন করুন"
+            onChange={handleBusinessKhatChange}
           >
-            <Option value="101">গুদাম (লিমিটেড কোম্পানী ব্যতীত)</Option>
+            {!isLoading &&
+              data?.data?.map((d: TTradeKhat) => (
+                <Option key={d.khat_id} value={d.khat_id}>
+                  {d.name}
+                </Option>
+              ))}
           </Select>
         </Form.Item>
       </div>
@@ -75,9 +121,16 @@ const tradeLicenseForm = () => {
           <Select
             style={{ height: 40, width: "100%" }}
             placeholder="নির্বাচন করুন"
+            onChange={handleTradeFees}
           >
-            <Option value="10000-20000">১০০০০-২০০০০</Option>
-            <Option value="20000-30000">২০০০০-৩০০০০</Option>
+            {khatAmounts.map((khat) => (
+              <Option
+                key={khat.name}
+                value={khat.applicant_type_of_businessKhatAmount}
+              >
+                {khat.name}
+              </Option>
+            ))}
           </Select>
         </Form.Item>
       </div>
@@ -115,4 +168,4 @@ const tradeLicenseForm = () => {
   );
 };
 
-export default tradeLicenseForm;
+export default TradeLicenseForm;
