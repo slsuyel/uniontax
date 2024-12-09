@@ -13,12 +13,20 @@ import { setUnionData } from "@/redux/features/union/unionSlice";
 import { useAppDispatch } from "@/redux/features/hooks";
 
 const MainLayout = () => {
+  const token = localStorage.getItem("token");
   const dispatch = useAppDispatch();
   const [unionName, setUnionName] = useState("uniontax");
   const navigate = useNavigate();
-  const { data, isLoading } = useUnionInfoQuery(unionName, {
-    skip: !unionName,
-  });
+  const { data, isLoading } = useUnionInfoQuery(
+    { unionName, token },
+    {
+      skip: !unionName,
+    }
+  );
+
+  // const { data, isLoading } = useUnionInfoQuery(unionName, {
+  //   skip: !unionName,
+  // });
 
   useEffect(() => {
     const hostname = window.location.hostname;
@@ -43,7 +51,7 @@ const MainLayout = () => {
     return <Loader />;
   }
 
-  // console.log(data.data);
+  console.log(data.data);
 
   return (
     <ScrollToTop>

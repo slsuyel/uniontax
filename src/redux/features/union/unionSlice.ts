@@ -8,6 +8,7 @@ interface TSonod {
   enname: string;
   icon: string;
   sonod_fees: number;
+  pendingCount?: number;
 }
 
 interface UnionState {

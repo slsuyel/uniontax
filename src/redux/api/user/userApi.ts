@@ -18,9 +18,12 @@ const userApi = apiSlice.injectEndpoints({
       }),
     }),
     unionInfo: builder.query({
-      query: (unionName) => ({
+      query: ({ unionName, token }) => ({
         url: `/global/uniouninfo?name=${unionName}`,
         method: "Get",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       }),
     }),
     tradeInfo: builder.query({

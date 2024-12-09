@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RootState } from "@/redux/features/store";
 import { useAppSelector } from "@/redux/features/hooks";
-import { Layout, Menu } from "antd";
+import { Badge, Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
@@ -14,6 +14,7 @@ type SidebarItemBase = {
   key: string;
   title: string;
   slug?: string;
+  pendingCount?: string | number;
 };
 
 type SidebarItemWithSubmenu = SidebarItemBase & {
@@ -30,8 +31,15 @@ type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 const Sidebar = () => {
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
 
+  console.log(sonodInfo);
+
   const sidebarItems: SidebarItem[] = [
-    { key: "dashboard", title: "ড্যাশবোর্ড", slug: "" },
+    {
+      key: "dashboard",
+      title: "ড্যাশবোর্ড",
+      slug: "",
+      pendingCount: 0,
+    },
     { key: "reports", title: "সকল প্রতিবেদন", slug: "/reports" },
     {
       key: "profile",
@@ -43,6 +51,7 @@ const Sidebar = () => {
     ...sonodInfo.map((sonod) => ({
       key: sonod.id.toString(),
       title: sonod.bnname,
+      pendingCount: sonod.pendingCount,
       submenu: [
         {
           key: `${sonod.id}-1`,
@@ -88,7 +97,20 @@ const Sidebar = () => {
       >
         {sidebarItems.map((item) =>
           item.submenu ? (
-            <SubMenu key={item.key} title={<>{item.title}</>}>
+            <SubMenu
+              key={item.key}
+              title={
+                <>
+                  {item.title}{" "}
+                  <Badge
+                    className=" bg-danger rounded-circle p-1"
+                    style={{ marginLeft: "5px" }}
+                  >
+                    {item.pendingCount}
+                  </Badge>
+                </>
+              }
+            >
               {item.submenu.map((subItem) => (
                 <Menu.Item key={subItem.key}>
                   <Link
@@ -106,7 +128,7 @@ const Sidebar = () => {
                 className="text-decoration-none"
                 to={`/dashboard${item.slug}`}
               >
-                {item.title}
+                {item.title}{" "}
               </Link>
             </Menu.Item>
           )
