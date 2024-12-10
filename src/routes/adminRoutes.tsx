@@ -1,6 +1,9 @@
 import UnderConstruction from '@/components/reusable/UnderConstruction';
 import Dhome from '@/pages/dashboard/Admin/Dhome';
-import HoldingTax from '@/pages/dashboard/HoldingTax';
+import HoldingAdd from '@/pages/dashboard/holding/HoldingAdd';
+import HoldingShow from '@/pages/dashboard/holding/HoldingShow';
+import HoldingTax from '@/pages/dashboard/holding/HoldingTax';
+
 import SonodFee from '@/pages/dashboard/SonodFee';
 import EditSonod from '@/pages/dashboard/SonodManagement/EditSonod';
 import SonodManagement from '@/pages/dashboard/SonodManagement/SonodManagement';
@@ -23,6 +26,14 @@ export const adminRoutes = [
   {
     path: 'holding/tax/',
     element: <HoldingTax />,
+  },
+  {
+    path: '/dashboard/holding/tax/list/:word',
+    element: <HoldingShow />,
+  },
+  {
+    path: '/dashboard/holding/list/add/:word',
+    element: <HoldingAdd />,
   },
   {
     path: 'sonod/fee',

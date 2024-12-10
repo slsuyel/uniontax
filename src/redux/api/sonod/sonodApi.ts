@@ -14,6 +14,18 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["sonod-action"],
     }),
+    
+    allHolding: builder.query({
+      query: ({ word, token, search }) => ({
+        url: `/user/holdingtax?page=1&word_no=${word}${search ? `&search=${search}` : ''}`,
+        method: "Get",
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["holding"],
+    }),
+
+
+
     sonodAction: builder.mutation({
       query: ({ id, token }) => ({
         url: `/user/sonod/action/${id}`,
@@ -25,4 +37,4 @@ const sonodApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAllSonodQuery, useSonodActionMutation } = sonodApi;
+export const { useAllSonodQuery, useSonodActionMutation, useAllHoldingQuery } = sonodApi;

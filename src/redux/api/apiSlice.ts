@@ -13,7 +13,7 @@ const apiSlice = createApi({
     "profileCreate",
     "profileUpdate",
     "sonod-action",
-    "support",
+    "holding",
   ],
 });
 
