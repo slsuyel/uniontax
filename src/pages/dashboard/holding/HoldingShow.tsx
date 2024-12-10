@@ -54,7 +54,7 @@ const HoldingShow = () => {
                                     বকেয়া রিপোর্ট
                                 </Link>{" "}
                                 <Link
-                                    to="/dashboard/holding/list/add/1"
+                                    to={`/dashboard/holding/list/add/${word}`}
                                     className="btn btn-info"
                                 >
                                     হোল্ডিং ট্যাক্স যোগ করুন
