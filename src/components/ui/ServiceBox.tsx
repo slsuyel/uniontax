@@ -15,7 +15,9 @@ const ServiceBox = () => {
   const navigate = useNavigate();
 
   const handleService = (service: string) => {
-    if (unionInfo?.short_name_e == "uniontax") {
+    console.log(unionInfo?.short_name_e);
+
+    if (unionInfo?.short_name_e === "uniontax") {
       message.warning("অনুগ্রহ করে আপনার ইউনিয়ন নির্বাচন করুন");
       setNoUnion(true);
       return;

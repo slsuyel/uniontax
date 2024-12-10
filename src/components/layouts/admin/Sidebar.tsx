@@ -31,8 +31,6 @@ type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 const Sidebar = () => {
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
 
-
-
   const sidebarItems: SidebarItem[] = [
     {
       key: "dashboard",
@@ -102,10 +100,7 @@ const Sidebar = () => {
               title={
                 <>
                   {item.title}{" "}
-                  <Badge
-                    className="bg-danger rounded-circle p-2"
-
-                  >
+                  <Badge className="bg-danger rounded-circle p-2">
                     {item.pendingCount}
                   </Badge>
                 </>

@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { Card, Button } from 'antd';
+import { Card } from "antd";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 
 const HoldingTax = () => {
   const wards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  // const wards_bn = ['১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 
   return (
     <div>
@@ -18,10 +17,11 @@ const HoldingTax = () => {
               </div>
               {wards.map((ward) => (
                 <div key={ward} className="col-md-2 col-sm-3 my-4 col-4">
-                  <Link to={`/dashboard/holding/tax/list/${ward}`}>
-                    <Button type="primary" size="large">
-                      {`${ward} নং ওয়ার্ড`}
-                    </Button>
+                  <Link
+                    className="align-item-center btn btn-info d-flex fs-4 justify-content-center text-center text-nowrap"
+                    to={`/dashboard/holding/tax/list/${ward}`}
+                  >
+                    {`${ward} নং ওয়ার্ড`}
                   </Link>
                 </div>
               ))}

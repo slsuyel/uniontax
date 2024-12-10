@@ -19,20 +19,19 @@ const userApi = apiSlice.injectEndpoints({
     }),
 
     payTax: builder.mutation({
-      query: ({ id,data}) => ({
+      query: ({ id, data }) => ({
         url: `/pay/holding/tax/${id}`,
         method: "Post",
-        body:data
+        body: data,
       }),
     }),
     createHolding: builder.mutation({
-      query: ({data}) => ({
+      query: ({ data }) => ({
         url: `/user/holdingtax`,
         method: "Post",
-        body:data
+        body: data,
       }),
     }),
-
 
     unionInfo: builder.query({
       query: ({ unionName, token }) => ({
@@ -42,6 +41,7 @@ const userApi = apiSlice.injectEndpoints({
           authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: ["sonod-action"],
     }),
     tradeInfo: builder.query({
       query: ({ unionName }) => ({
@@ -49,9 +49,6 @@ const userApi = apiSlice.injectEndpoints({
         method: "Get",
       }),
     }),
-
-
-    
   }),
 });
 
@@ -61,5 +58,5 @@ export const {
   useTradeInfoQuery,
   useSonodSearchMutation,
   usePayTaxMutation,
-  useCreateHoldingMutation
+  useCreateHoldingMutation,
 } = userApi;
