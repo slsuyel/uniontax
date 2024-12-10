@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import Breadcrumbs from '@/components/reusable/Breadcrumbs';
+import { useAppSelector } from '@/redux/features/hooks';
+import { RootState } from '@/redux/features/store';
+
 
 const UnionReports = () => {
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const [formData, setFormData] = useState({
     sonod: '',
     paymentType: '',
     fromDate: '',
     toDate: '',
   });
+
 
   const handleInputChange = (event: { target: { id: any; value: any } }) => {
     const { id, value } = event.target;
@@ -18,6 +24,8 @@ const UnionReports = () => {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     console.log('ফর্ম ডেটা:', formData);
+    const url = `https://api.uniontax.gov.bd/payment/report/download?union=${unionInfo?.short_name_e}&from=${formData.fromDate}&to=${formData.toDate}&sonod_type=${formData.sonod}`;
+    window.open(url, '_blank');
   };
 
   return (
@@ -37,11 +45,13 @@ const UnionReports = () => {
               onChange={handleInputChange}
               value={formData.sonod}
             >
+
+
               <option value="">চিহ্নিত করুন</option>
               <option value="all">সকল</option>
               <option value="holdingtax">হোল্ডিং ট্যাক্স</option>
-              <option value="নাগরিকত্ব সনদ">নাগরিকত্ব সনদ</option>
-              {/* Add more options as needed */}
+              {sonodInfo.map((d) => <option value={d.bnname}>{d.bnname}</option>)}
+
             </select>
           </div>
           <div className="form-group col-md-3 my-1">
@@ -89,28 +99,7 @@ const UnionReports = () => {
         </div>
       </form>
 
-      <div className="card-body mt-5 p-4">
-        <div className="text-end">
-          {' '}
-          <button className="btn btn-success mb-2 me-2">
-            প্রতিবেদন ডাউনলোড
-          </button>
-        </div>
-        <div className="table-responsive ">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>তারিখ</th> <th>সনদের ধরণ</th> <th>টাকা</th>
-              </tr>
-            </thead>{' '}
-            <tbody>
-              <tr>
-                <td>2024-01-05</td> <td>চারিত্রিক সনদ</td> <td>1</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+
     </div>
   );
 };

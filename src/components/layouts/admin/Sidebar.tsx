@@ -31,7 +31,7 @@ type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 const Sidebar = () => {
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
 
-  console.log(sonodInfo);
+
 
   const sidebarItems: SidebarItem[] = [
     {
