@@ -3,6 +3,7 @@ import Dhome from '@/pages/dashboard/Admin/Dhome';
 import HoldingAdd from '@/pages/dashboard/holding/HoldingAdd';
 import HoldingShow from '@/pages/dashboard/holding/HoldingShow';
 import HoldingTax from '@/pages/dashboard/holding/HoldingTax';
+import SingleHolding from '@/pages/dashboard/holding/SingleHolding';
 
 import SonodFee from '@/pages/dashboard/SonodFee';
 import EditSonod from '@/pages/dashboard/SonodManagement/EditSonod';
@@ -34,6 +35,10 @@ export const adminRoutes = [
   {
     path: '/dashboard/holding/list/add/:word',
     element: <HoldingAdd />,
+  },
+  {
+    path: '/dashboard/holding/list/view/:id',
+    element: <SingleHolding />,
   },
   {
     path: 'sonod/fee',

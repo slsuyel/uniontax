@@ -17,6 +17,14 @@ const userApi = apiSlice.injectEndpoints({
         method: "Post",
       }),
     }),
+
+    payTax: builder.mutation({
+      query: ({ id,data}) => ({
+        url: `/pay/holding/tax/${id}`,
+        method: "Post",
+        body:data
+      }),
+    }),
     unionInfo: builder.query({
       query: ({ unionName, token }) => ({
         url: `/global/uniouninfo?name=${unionName}`,
@@ -43,4 +51,5 @@ export const {
   useUnionInfoQuery,
   useTradeInfoQuery,
   useSonodSearchMutation,
+  usePayTaxMutation
 } = userApi;

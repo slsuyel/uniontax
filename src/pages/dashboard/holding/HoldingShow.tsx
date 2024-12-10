@@ -3,14 +3,13 @@ import Loader from "@/components/reusable/Loader";
 import { useAllHoldingQuery } from "@/redux/api/sonod/sonodApi";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
+
 export interface THolding {
     id: number;
     maliker_name: string;
     nid_no: string;
     mobile_no: string;
 }
-
-
 
 const HoldingShow = () => {
     const token = localStorage.getItem("token");
@@ -31,13 +30,11 @@ const HoldingShow = () => {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
+        // Reset to first page when a new search is performed
         setCurrentPage(1);
     };
 
-
-
     const holdings = data?.data?.data || [];
-
 
     return (
         <>
@@ -64,9 +61,8 @@ const HoldingShow = () => {
                                 </Link>
                             </div>
                         </div>
-                        <form onSubmit={handleSearch} className=" d-flex gap-4 my-4 align-items-center">
+                        <form onSubmit={handleSearch} className="d-flex gap-4 my-4 align-items-center">
                             <div className="form-group mt-0 w-50">
-
                                 <div className="d-flex">
                                     <input
                                         type="text"
@@ -116,7 +112,7 @@ const HoldingShow = () => {
                                                     এডিট
                                                 </Link>{" "}
                                                 <Link
-                                                    to={`/holding/view/${item.id}`}
+                                                    to={`/dashboard/holding/list/view/${item.id}`}
                                                     className="btn btn-info"
                                                 >
                                                     দেখুন
@@ -134,7 +130,6 @@ const HoldingShow = () => {
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </>
