@@ -103,8 +103,8 @@ const Sidebar = () => {
                 <>
                   {item.title}{" "}
                   <Badge
-                    className=" bg-danger rounded-circle p-1"
-                    style={{ marginLeft: "5px" }}
+                    className="bg-danger rounded-circle p-2"
+
                   >
                     {item.pendingCount}
                   </Badge>

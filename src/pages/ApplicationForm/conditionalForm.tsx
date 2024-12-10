@@ -48,17 +48,17 @@ const conditionalForm = (service: any) => {
           style={{ height: 40, width: "100%" }}
           className=""
         >
-          <Option value="permanent">স্থায়ী</Option>
-          <Option value="temporary">অস্থায়ী</Option>
+          <Option value="স্থায়ী">স্থায়ী</Option>
+          <Option value="অস্থায়ী">অস্থায়ী</Option>
         </Select>
       )}
 
       {service == "বিবিধ প্রত্যয়নপত্র" || service === "অনাপত্তি সনদপত্র"
         ? renderDynamicFormItem(
-            "আবেদনকৃত প্রত্যয়নের বিবরণ উল্লেখ করুন",
-            "prottoyon",
-            <TextArea style={{ height: 80 }} />
-          )
+          "আবেদনকৃত প্রত্যয়নের বিবরণ উল্লেখ করুন",
+          "prottoyon",
+          <TextArea style={{ height: 80 }} />
+        )
         : null}
 
       {service == "পারিবারিক সনদ" &&

@@ -23,8 +23,8 @@ const commonFields = () => {
             style={{ height: 40, width: "100%" }}
             className=""
           >
-            <Option value="male">পুরুষ</Option>
-            <Option value="female">মহিলা</Option>
+            <Option value="পুরুষ">পুরুষ</Option>
+            <Option value="মহিলা">মহিলা</Option>
           </Select>
         </Form.Item>
       </div>
@@ -116,7 +116,7 @@ const commonFields = () => {
         <Form.Item label="ছবি" name="image">
           <Input
             type="file"
-            // onChange={(e) => handleFileChange(e, setBackPreview)}
+          // onChange={(e) => handleFileChange(e, setBackPreview)}
           />
         </Form.Item>
       </div>

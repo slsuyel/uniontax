@@ -72,7 +72,7 @@ export const AddressFields = () => {
           <Form.Item
             name="current_division"
             label="বিভাগ"
-            // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
@@ -91,7 +91,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_present_district"
             label="জেলা"
-            // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="জেলা নির্বাচন করুন"
@@ -101,7 +101,7 @@ export const AddressFields = () => {
               onChange={handleDistrictChange}
             >
               {districts.map(district => (
-                <Option key={district.id} value={district.id}>
+                <Option key={district.id} value={district.bn_name}>
                   {district.bn_name}
                 </Option>
               ))}
@@ -110,7 +110,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_present_Upazila"
             label="উপজেলা/থানা"
-            // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="উপজেলা নির্বাচন করুন"
@@ -120,7 +120,7 @@ export const AddressFields = () => {
               onChange={handleUpazilaChange}
             >
               {upazilas.map(upazila => (
-                <Option key={upazila.id} value={upazila.id}>
+                <Option key={upazila.id} value={upazila.bn_name}>
                   {upazila.bn_name}
                 </Option>
               ))}
@@ -149,9 +149,9 @@ export const AddressFields = () => {
             <Checkbox> বর্তমান ঠিকানা ও স্থায়ী ঠিকানা একই হলে</Checkbox>
           </Form.Item>
           <Form.Item
-            name="applicant_permanent_village"
+            // name="applicant_permanent_division"
             label="বিভাগ"
-            // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
@@ -170,7 +170,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_permanent_district"
             label="জেলা"
-            // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="জেলা নির্বাচন করুন"
@@ -180,7 +180,7 @@ export const AddressFields = () => {
               onChange={handleDistrictChange}
             >
               {districts.map(district => (
-                <Option key={district.id} value={district.id}>
+                <Option key={district.id} value={district.bn_name}>
                   {district.bn_name}
                 </Option>
               ))}
@@ -189,7 +189,7 @@ export const AddressFields = () => {
           <Form.Item
             name="applicant_permanent_Upazila"
             label="উপজেলা/থানা"
-            // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="উপজেলা নির্বাচন করুন"
@@ -199,7 +199,7 @@ export const AddressFields = () => {
               onChange={handleUpazilaChange}
             >
               {upazilas.map(upazila => (
-                <Option key={upazila.id} value={upazila.id}>
+                <Option key={upazila.id} value={upazila.bn_name}>
                   {upazila.bn_name}
                 </Option>
               ))}

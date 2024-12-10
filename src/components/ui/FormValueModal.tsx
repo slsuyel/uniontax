@@ -130,7 +130,7 @@ const FormValueModal = ({
             <b>রোড/ব্লক/সেক্টর: </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>ওয়ার্ড নং: {data?.applicant_present_word_number}</b>4
+            <b>ওয়ার্ড নং: {data?.applicant_present_word_number}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
             <b>জেলা: {data?.applicant_present_district}</b>
@@ -151,7 +151,7 @@ const FormValueModal = ({
             <b>রোড/ব্লক/সেক্টর: </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>ওয়ার্ড নং: {data?.applicant_permanent_word_number} </b>6
+            <b>ওয়ার্ড নং: {data?.applicant_permanent_word_number} </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
             <b>জেলা: {data?.applicant_permanent_district} </b>
@@ -192,7 +192,11 @@ const FormValueModal = ({
           >
             <h3>
               আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
-              {service === "ট্রেড লাইসেন্স" ? tradeFee : sonod?.sonod_fees} টাকা
+
+              {service === "ট্রেড লাইসেন্স" ? (tradeFee ? Number(tradeFee) + (Number(sonod?.sonod_fees) * 1.15) : Number(sonod?.sonod_fees)) : sonod?.sonod_fees}
+              {' '}
+
+              টাকা
               ।
             </h3>
             <button
