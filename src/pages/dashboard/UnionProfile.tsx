@@ -1,33 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
-import { useUnionProfileQuery } from "@/redux/api/auth/authApi";
+import {
+  useUnionProfileQuery,
+  useUpdateUnionMutation,
+} from "@/redux/api/auth/authApi";
+import { TUnionInfo } from "@/types";
+import { message } from "antd";
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-
-interface TUnionInfo {
-  full_name: string;
-  short_name_b: string;
-  thana: string;
-  district: string;
-  c_name: string;
-  c_email: string;
-  socib_name: string;
-  socib_email: string;
-  u_code: string;
-  u_description: string;
-  u_notice: string;
-  google_map: string;
-  defaultColor: string;
-  web_logo: any;
-  sonod_logo: any;
-  c_signture: any;
-  socib_signture: any;
-  u_image: any;
-}
 
 const UnionProfile = () => {
   const token = localStorage.getItem("token");
   const { data, isLoading } = useUnionProfileQuery({ token });
+  const [updateUnion, { isLoading: updating }] = useUpdateUnionMutation();
+
   const [formData, setFormData] = useState<TUnionInfo>({
     full_name: "",
     short_name_b: "",
@@ -98,8 +84,16 @@ const UnionProfile = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    console.log(formData);
+    try {
+      const res = await updateUnion({ data: formData, token }).unwrap();
+      console.log(res.status_code);
+      if (res.status_code === 200) {
+        message.success("Union information updated successfully.");
+      }
+    } catch (error) {
+      console.error("Error updating union information:", error);
+      message.error("Failed to update union information. Please try again.");
+    }
   };
 
   if (isLoading) {
@@ -387,8 +381,12 @@ const UnionProfile = () => {
         </div>
         <div className=" pt-4">
           <div className="">
-            <button type="submit" className="btn btn-primary">
-              সাবমিট
+            <button
+              disabled={updating}
+              type="submit"
+              className="btn btn-primary"
+            >
+              {updating ? "Submitting" : "সাবমিট"}
             </button>
           </div>
         </div>

@@ -206,19 +206,27 @@ export interface TApplicantData {
   updated_at: string;
 }
 
+
 export interface TUnionInfo {
-  id: number;
-  short_name_e: string;
+  full_name: string;
   short_name_b: string;
   thana: string;
   district: string;
-  web_logo: string;
-  format: string;
-  google_map: string | null;
+  c_name: string;
+  c_email: string;
+  socib_name: string;
+  socib_email: string;
+  u_code: string;
+  u_description: string;
+  u_notice: string;
+  google_map: string;
   defaultColor: string;
-  payment_type: string;
-  nidServicestatus: number;
-  nidService: string;
+  web_logo: any;
+  sonod_logo: any;
+  c_signture: any;
+  socib_signture: any;
+  u_image: any;
+
 }
 
 export interface TTradeResponse {

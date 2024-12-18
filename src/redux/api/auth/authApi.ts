@@ -53,13 +53,13 @@ const authApi = apiSlice.injectEndpoints({
           authorization: `Bearer ${token}`,
         },
       }),
-      providesTags: ["profileUpdate", ] as any,
+      providesTags: ["profileUpdate",] as any,
     }),
 
-    updateProfile: builder.mutation({
+    updateUnion: builder.mutation({
       query: ({ token, data }) => ({
-        url: `/user/profile`,
-        method: "post",
+        url: `/user/union-info`,
+        method: "Post",
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -94,8 +94,8 @@ export const {
   useTokenCheckQuery,
   useResetPasswordMutation,
   useLogoutMutation,
-useUnionProfileQuery,
-  useUpdateProfileMutation,
+  useUnionProfileQuery,
+  useUpdateUnionMutation,
   useResetPassLinkMutation,
   useChangePasswordMutation,
 } = authApi;
