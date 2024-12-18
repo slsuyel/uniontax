@@ -226,7 +226,7 @@ export interface TUnionInfo {
   c_signture: any;
   socib_signture: any;
   u_image: any;
-
+  [key: string]: string | File | null;
 }
 
 export interface TTradeResponse {

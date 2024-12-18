@@ -87,15 +87,47 @@ const UnionProfile = () => {
     try {
       const res = await updateUnion({ data: formData, token }).unwrap();
       console.log(res.status_code);
-      if (res.status_code === 200) {
+      if (res.status_code == 200) {
         message.success("Union information updated successfully.");
+      }
+      if (
+        res.status_code !== 200 ||
+        res.status_code === 302 ||
+        res.status_code === 401
+      ) {
+        message.error("Failed to update union information.");
       }
     } catch (error) {
       console.error("failed updating union :", error);
       message.error("Failed to update union information. Please try again.");
     }
   };
-
+  /*  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  
+    // Create FormData object
+    const form = new FormData();
+    for (const key in formData) {
+      if (formData[key] !== null) {
+        form.append(key, formData[key]);
+      }
+    }
+  
+    try {
+      // Send the form data using your mutation or a fetch request
+      const res = await updateUnion({ data: form, token }).unwrap();
+  
+      console.log(res.status_code);
+      if (res.status_code === 200) {
+        message.success("Union information updated successfully.");
+      } else {
+        message.error("Failed to update union information.");
+      }
+    } catch (error) {
+      console.error("failed updating union:", error);
+      message.error("Failed to update union information. Please try again.");
+    }
+  }; */
   if (isLoading) {
     return <Loader />;
   }
