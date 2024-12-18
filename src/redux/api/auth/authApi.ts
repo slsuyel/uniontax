@@ -46,14 +46,14 @@ const authApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    myProfile: builder.query({
+    unionProfile: builder.query({
       query: ({ token }) => ({
-        url: `/user/profile`,
+        url: `/user/union-info`,
         headers: {
           authorization: `Bearer ${token}`,
         },
       }),
-      providesTags: ["profileUpdate", "profileCreate", "logout"] as any,
+      providesTags: ["profileUpdate", ] as any,
     }),
 
     updateProfile: builder.mutation({
@@ -94,8 +94,7 @@ export const {
   useTokenCheckQuery,
   useResetPasswordMutation,
   useLogoutMutation,
-  useMyProfileQuery,
-
+useUnionProfileQuery,
   useUpdateProfileMutation,
   useResetPassLinkMutation,
   useChangePasswordMutation,
