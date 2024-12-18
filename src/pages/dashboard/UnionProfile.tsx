@@ -28,7 +28,6 @@ interface TUnionInfo {
 const UnionProfile = () => {
   const token = localStorage.getItem("token");
   const { data, isLoading } = useUnionProfileQuery({ token });
-
   const [formData, setFormData] = useState<TUnionInfo>({
     full_name: "",
     short_name_b: "",
