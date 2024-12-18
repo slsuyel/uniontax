@@ -1,15 +1,7 @@
 // src/redux/slices/unionSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TUnionInfo } from "@/types/global";
+import { TSonod, TUnionInfo } from "@/types/global";
 
-interface TSonod {
-  id: number;
-  bnname: string;
-  enname: string;
-  icon: string;
-  sonod_fees: number;
-  pendingCount?: number;
-}
 
 interface UnionState {
   unionInfo: TUnionInfo | null;

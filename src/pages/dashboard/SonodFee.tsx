@@ -1,40 +1,72 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import Breadcrumbs from '@/components/reusable/Breadcrumbs';
-import { Form, Input, Button, Table } from 'antd';
+import Breadcrumbs from "@/components/reusable/Breadcrumbs";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
+import { TSonod } from "@/types";
+import { Form, Input, Button, Table } from "antd";
 
 interface FormData {
   [key: string]: number;
 }
 
 const SonodFee = () => {
+  // Fetch the sonod information from the state
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+  console.log(sonodInfo);
+
+  // Initialize the form data based on the sonod information
+  const initialValues: FormData = sonodInfo.reduce(
+    (acc: FormData, sonod: TSonod) => {
+      acc[sonod.bnname] = sonod.sonod_fees; // Set the fee value from sonodInfo
+      return acc;
+    },
+    {}
+  );
+
   const onFinish = (values: FormData) => {
-    console.log('Form data:', values);
+    console.log("Form data:", values);
   };
 
-  const initialValues: FormData = {
-    'নাগরিকত্ব সনদ': 1,
-    'ট্রেড লাইসেন্স': 1,
-    'ওয়ারিশান সনদ': 1,
-    'উত্তরাধিকারী সনদ': 1,
-    'বিবিধ প্রত্যয়নপত্র': 1,
-    'চারিত্রিক সনদ': 1,
-    'ভূমিহীন সনদ': 1,
-    'পারিবারিক সনদ': 1,
-    'অবিবাহিত সনদ': 1,
-    'পুনঃ বিবাহ না হওয়া সনদ': 1,
-    'বার্ষিক আয়ের প্রত্যয়ন': 1,
-    'একই নামের প্রত্যয়ন': 1,
-    'প্রতিবন্ধী সনদপত্র': 1,
-    'অনাপত্তি সনদপত্র': 1,
-    'আর্থিক অস্বচ্ছলতার সনদপত্র': 1,
-  };
-
-  const dataSource = Object.keys(initialValues).map(key => ({
-    key, // Adding key prop here
-    sonadName: key,
-    fee: initialValues[key],
+  // Prepare the dataSource for the table
+  const dataSource = sonodInfo.map((sonod) => ({
+    key: sonod.id,
+    sonadName: sonod.bnname,
+    fee: sonod.sonod_fees,
   }));
+
+  // Define table columns
+  const columns = [
+    {
+      title: "সনদের নাম",
+      dataIndex: "sonadName",
+      key: "sonadName",
+    },
+    {
+      title: "সনদের ফি",
+      dataIndex: "fee",
+      key: "fee",
+      render: (_: any, record: { sonadName: string }) => (
+        <Form.Item
+          className="col-8"
+          name={record.sonadName}
+          key={record.sonadName}
+          rules={[
+            {
+              required: true,
+              message: `Please input সনদের ফি for ${record.sonadName}!`,
+            },
+          ]}
+        >
+          <Input
+            className="text-center"
+            style={{ height: 40 }}
+            type="number"
+            placeholder="সনদের ফি"
+          />
+        </Form.Item>
+      ),
+    },
+  ];
 
   return (
     <div className="">
@@ -62,38 +94,5 @@ const SonodFee = () => {
     </div>
   );
 };
-
-const columns = [
-  {
-    title: 'সনদের নাম',
-    dataIndex: 'sonadName',
-    key: 'sonadName',
-  },
-  {
-    title: 'সনদের ফি',
-    dataIndex: 'fee',
-    key: 'fee',
-    render: (_: any, record: { sonadName: string }) => (
-      <Form.Item
-        className="col-8 "
-        name={record.sonadName}
-        key={record.sonadName}
-        rules={[
-          {
-            required: true,
-            message: `Please input সনদের ফি for ${record.sonadName}!`,
-          },
-        ]}
-      >
-        <Input
-          className="text-center"
-          style={{ height: 40 }}
-          type="number"
-          placeholder="সনদের ফি"
-        />
-      </Form.Item>
-    ),
-  },
-];
 
 export default SonodFee;

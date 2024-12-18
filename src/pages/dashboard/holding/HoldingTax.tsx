@@ -18,10 +18,19 @@ const HoldingTax = () => {
               {wards.map((ward) => (
                 <div key={ward} className="col-md-2 col-sm-3 my-4 col-4">
                   <Link
-                    className="align-item-center btn btn-info d-flex fs-4 justify-content-center text-center text-nowrap"
+                    className="align-item-center btn btn-primary w-100 text-white fs-4 "
                     to={`/dashboard/holding/tax/list/${ward}`}
                   >
-                    {`${ward} নং ওয়ার্ড`}
+                    <img
+                      className=""
+                      src="https://cdn-icons-png.flaticon.com/512/11008/11008490.png"
+                      width={50}
+                      height={50}
+                    />
+                    <span className=" d-flex justify-content-center text-center text-nowrap">
+                      {" "}
+                      {`${ward} নং ওয়ার্ড`}
+                    </span>
                   </Link>
                 </div>
               ))}

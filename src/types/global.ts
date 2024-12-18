@@ -288,3 +288,13 @@ export interface TSonodName {
   created_at: string | null;
   updated_at: string | null;
 }
+
+
+export interface TSonod {
+  id: number;
+  bnname: string;
+  enname: string;
+  icon: string;
+  sonod_fees: number;
+  pendingCount?: number;
+}
