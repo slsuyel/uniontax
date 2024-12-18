@@ -35,6 +35,7 @@ const HoldingAdd = () => {
     console.log("Form Submitted:", values);
     try {
       const res = await addHolding({ data: values, token }).unwrap();
+      console.log(res);
       if (res.status_code == 201) {
         message.success("Holding created successfully");
       }
@@ -52,6 +53,8 @@ const HoldingAdd = () => {
         onFinish={onFinish}
         initialValues={{
           word_no: word,
+          griher_barsikh_mullo: 0,
+          jomir_vara: 0,
         }}
       >
         <div className="row mx-auto">
@@ -219,7 +222,6 @@ const HoldingAdd = () => {
                     {
                       required: true,
                       type: "number",
-                      message: "The barsikh vara field must be a number.",
                     },
                   ]}
                 >
