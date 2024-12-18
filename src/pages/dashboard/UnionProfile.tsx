@@ -91,7 +91,7 @@ const UnionProfile = () => {
         message.success("Union information updated successfully.");
       }
     } catch (error) {
-      console.error("Error updating union information:", error);
+      console.error("failed updating union :", error);
       message.error("Failed to update union information. Please try again.");
     }
   };
