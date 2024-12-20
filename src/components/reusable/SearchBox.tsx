@@ -82,7 +82,7 @@ const SearchBox: React.FC = () => {
     <div className="d-flex justify-content-between align-items-center">
       <select
         name="division"
-        id="division"
+
         className="searchFrom form_control"
         value={selecteddivisions}
         onChange={handleDivChange}
@@ -95,7 +95,7 @@ const SearchBox: React.FC = () => {
       </select>
       <select
         name="district"
-        id="district"
+
         className="searchFrom form_control"
         value={selectedDistrict}
         onChange={handleDistrictChange}
@@ -109,7 +109,7 @@ const SearchBox: React.FC = () => {
       </select>
       <select
         name="thana"
-        id="thana"
+
         className="searchFrom form_control"
         value={selectedUpazila}
         onChange={handleUpazilaChange}
@@ -122,7 +122,7 @@ const SearchBox: React.FC = () => {
         ))}
       </select>
       <select
-        id="union"
+
         className="searchFrom form_control"
         onChange={handleUnionChange}
       >
