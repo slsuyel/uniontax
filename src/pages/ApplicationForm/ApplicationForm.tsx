@@ -18,6 +18,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTradeInfoQuery } from "@/redux/api/user/userApi";
 
 const ApplicationForm = () => {
+  const [form] = Form.useForm()
   const { service } = useParams<{ service: string }>();
   const [unionName, setUnionName] = useState("uniontax");
   const { data, isLoading } = useTradeInfoQuery(unionName, {
@@ -31,7 +32,6 @@ const ApplicationForm = () => {
   const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-
   useEffect(() => {
     const hostname = window.location.hostname;
     const union = hostname.split(".")[0];
@@ -57,7 +57,7 @@ const ApplicationForm = () => {
 
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
-      <Form layout="vertical" onFinish={onFinish}>
+      <Form form={form} layout="vertical" onFinish={onFinish}>
         <div
           className="panel-heading"
           style={{
@@ -87,7 +87,7 @@ const ApplicationForm = () => {
             {/* Corrected JSX component call */}
             {conditionalForm(service)}
           </div>
-          {addressFields()}
+          {addressFields({ form })}
           {attachmentForm()}
 
           {service === "ওয়ারিশান সনদ" &&

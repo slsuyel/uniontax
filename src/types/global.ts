@@ -1,12 +1,12 @@
 export type TDivision = {
   id: string;
-  naem: string;
+  name: string;
   bn_name: string;
 };
 export type TDistrict = {
   id: string;
   division_id: string;
-  naem: string;
+  name: string;
   bn_name: string;
 };
 export type TUpazila = {
@@ -25,7 +25,7 @@ export type TUnion = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface ScrollToTopProps {
   children?: ReactNode;
@@ -206,7 +206,6 @@ export interface TApplicantData {
   updated_at: string;
 }
 
-
 export interface TUnionInfo {
   full_name: string;
   short_name_b: string;
@@ -288,7 +287,6 @@ export interface TSonodName {
   created_at: string | null;
   updated_at: string | null;
 }
-
 
 export interface TSonod {
   id: number;
