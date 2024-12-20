@@ -1,96 +1,57 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
-import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
-import { TSonod } from "@/types";
-import { Form, Input, Button, Table } from "antd";
+import Loader from "@/components/reusable/Loader";
+import { useSonodFeesQuery } from "@/redux/api/sonod/sonodApi";
 
-interface FormData {
-  [key: string]: number;
+interface TSonodFee {
+  sonod_fees_id: number;
+  sonodnamelist_id: number;
+  service_id: string;
+  bnname: string;
+  template: string;
+  unioun: string;
+  fees: string;
 }
+
 
 const SonodFee = () => {
   // Fetch the sonod information from the state
-  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-  console.log(sonodInfo);
+  const token = localStorage.getItem('token');
+  const { data, isLoading } = useSonodFeesQuery({ token });
 
-  // Initialize the form data based on the sonod information
-  const initialValues: FormData = sonodInfo.reduce(
-    (acc: FormData, sonod: TSonod) => {
-      acc[sonod.bnname] = sonod.sonod_fees; // Set the fee value from sonodInfo
-      return acc;
-    },
-    {}
-  );
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  const onFinish = (values: FormData) => {
-    console.log("Form data:", values);
-  };
 
-  // Prepare the dataSource for the table
-  const dataSource = sonodInfo.map((sonod) => ({
-    key: sonod.id,
-    sonadName: sonod.bnname,
-    fee: sonod.sonod_fees,
+  const allsonod: TSonodFee[] = data?.data;
+
+  const dataSource = allsonod.map((d, index) => ({
+    key: index + 1,
+    bnname: d.bnname,
+    fees: d.fees,
   }));
 
-  // Define table columns
-  const columns = [
-    {
-      title: "সনদের নাম",
-      dataIndex: "sonadName",
-      key: "sonadName",
-    },
-    {
-      title: "সনদের ফি",
-      dataIndex: "fee",
-      key: "fee",
-      render: (_: any, record: { sonadName: string }) => (
-        <Form.Item
-          className="col-8"
-          name={record.sonadName}
-          key={record.sonadName}
-          rules={[
-            {
-              required: true,
-              message: `Please input সনদের ফি for ${record.sonadName}!`,
-            },
-          ]}
-        >
-          <Input
-            className="text-center"
-            style={{ height: 40 }}
-            type="number"
-            placeholder="সনদের ফি"
-          />
-        </Form.Item>
-      ),
-    },
-  ];
-
   return (
-    <div className="">
+    <div className="container">
       <Breadcrumbs current="সনদ ফি" />
-      <Form
-        name="sonod_fee_form"
-        initialValues={initialValues}
-        onFinish={onFinish}
-        layout="vertical"
-      >
-        <Table
-          dataSource={dataSource}
-          columns={columns}
-          pagination={false}
-          bordered
-          size="middle"
-        />
-
-        <Form.Item className="col-md-12 mt-4">
-          <Button type="primary" size="large" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Sl. No.</th>
+            <th>বাংলা নাম</th>
+            <th>ফি</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dataSource.map((item) => (
+            <tr key={item.key}>
+              <td>{item.key}</td>
+              <td>{item.bnname}</td>
+              <td>{item.fees}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

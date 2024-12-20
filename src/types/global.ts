@@ -292,6 +292,7 @@ export interface TSonod {
   id: number;
   bnname: string;
   enname: string;
+  fees: any;
   icon: string;
   sonod_fees: number;
   pendingCount?: number;

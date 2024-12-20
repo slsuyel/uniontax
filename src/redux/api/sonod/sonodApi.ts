@@ -1,57 +1,65 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import apiSlice from "../apiSlice";
+import apiSlice from '../apiSlice';
 
 const sonodApi = apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     allSonod: builder.query({
       query: ({ sonodName, stutus, token, sondId }) => ({
         url: `user/sonod/list?sonod_name=${sonodName}&stutus=${stutus}${
-          sondId ? `&sondId=${sondId}` : ""
+          sondId ? `&sondId=${sondId}` : ''
         }`,
-        method: "Get",
+        method: 'Get',
         headers: { Authorization: `Bearer ${token}` },
       }),
-      providesTags: ["sonod-action"],
+      providesTags: ['sonod-action'],
     }),
 
     allHolding: builder.query({
       query: ({ word, token, search }) => ({
         url: `/user/holdingtax?page=1&word=${word}${
-          search ? `&search=${search}` : ""
+          search ? `&search=${search}` : ''
         }`,
-        method: "Get",
+        method: 'Get',
         headers: { Authorization: `Bearer ${token}` },
       }),
-      providesTags: ["holding"],
+      providesTags: ['holding'],
+    }),
+    sonodFees: builder.query({
+      query: ({ token }) => ({
+        url: `/user/sonodnamelists/with-fees`,
+        method: 'Get',
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      providesTags: ['sonod-fee'],
     }),
 
     singleHolding: builder.query({
       query: ({ id, token }) => ({
         url: `/user/holdingtax/${id}`,
-        method: "Get",
+        method: 'Get',
         headers: { Authorization: `Bearer ${token}` },
       }),
-      providesTags: ["holding"],
+      providesTags: ['holding'],
     }),
 
     addHolding: builder.mutation({
       query: ({ data, token }) => ({
         url: `/user/holdingtax`,
-        method: "POST",
+        method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: data,
       }),
-      invalidatesTags: ["holding"],
+      invalidatesTags: ['holding'],
     }),
 
     sonodAction: builder.mutation({
       query: ({ id, token }) => ({
         url: `/user/sonod/action/${id}`,
-        method: "POST",
+        method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       }),
-      invalidatesTags: ["sonod-action"],
+      invalidatesTags: ['sonod-action'],
     }),
   }),
 });
@@ -62,4 +70,5 @@ export const {
   useAllHoldingQuery,
   useSingleHoldingQuery,
   useAddHoldingMutation,
+  useSonodFeesQuery,
 } = sonodApi;
