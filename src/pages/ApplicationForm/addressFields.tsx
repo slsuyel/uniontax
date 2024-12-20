@@ -68,16 +68,14 @@ export const AddressFields = () => {
         <div className="col-md-6">
           <div className="app-heading">বর্তমান ঠিকানা</div>
 
-          <Form.Item name=""></Form.Item>
-          <Form.Item
-            name="current_division"
-            label="বিভাগ"
-          // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
-          >
+          <Form.Item name="">
+            {/* Empty Form.Item */}
+          </Form.Item>
+
+          <Form.Item name="current_division" label="বিভাগ">
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
-              className=""
               value={selectedDivision}
               onChange={handleDivChange}
             >
@@ -88,50 +86,48 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item
-            name="applicant_present_district"
-            label="জেলা"
-          // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
-          >
+
+          <Form.Item name="applicant_present_district" label="জেলা">
             <Select
               placeholder="জেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
-              className=""
               value={selectedDistrict}
               onChange={handleDistrictChange}
             >
               {districts.map(district => (
-                <Option key={district.id} value={district.bn_name}>
+                <Option key={district.id} value={district.id}>
                   {district.bn_name}
                 </Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item
-            name="applicant_present_Upazila"
-            label="উপজেলা/থানা"
-          // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
-          >
+
+          <Form.Item name="applicant_present_Upazila" label="উপজেলা/থানা">
             <Select
               placeholder="উপজেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
-              className=""
               value={selectedUpazila}
               onChange={handleUpazilaChange}
             >
-              {upazilas.map(upazila => (
-                <Option key={upazila.id} value={upazila.bn_name}>
-                  {upazila.bn_name}
-                </Option>
-              ))}
+              {upazilas.length > 0 ? (
+                upazilas.map(upazila => (
+                  <Option key={upazila.id} value={upazila.id}>
+                    {upazila.bn_name}
+                  </Option>
+                ))
+              ) : (
+                <Option value="">কোনো উপজেলা নেই</Option>
+              )}
             </Select>
           </Form.Item>
+
           <Form.Item name="applicant_present_post_office" label="পোষ্ট অফিস">
             <Input className="form-control" />
           </Form.Item>
+
           <Form.Item name="applicant_present_word_number" label="ওয়ার্ড নং">
-            <Select style={{ height: 40, width: '100%' }}>
-              <Option value="">ওয়াড নং</Option>
+            <Select placeholder='ওয়ার্ড নির্বাচন করুন' style={{ height: 40, width: '100%' }}>
+
               {Array.from({ length: 9 }, (_, i) => (
                 <Option key={i + 1} value={i + 1}>
                   {i + 1}
@@ -139,24 +135,23 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
+
           <Form.Item name="applicant_present_village" label="গ্রাম/মহল্লা">
             <Input className="form-control" />
           </Form.Item>
         </div>
+
         <div className="col-md-6">
           <div className="app-heading">স্থায়ী ঠিকানা</div>
+
           <Form.Item name="same_address">
-            <Checkbox> বর্তমান ঠিকানা ও স্থায়ী ঠিকানা একই হলে</Checkbox>
+            <Checkbox>বর্তমান ঠিকানা ও স্থায়ী ঠিকানা একই হলে</Checkbox>
           </Form.Item>
-          <Form.Item
-            // name="applicant_permanent_division"
-            label="বিভাগ"
-          // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
-          >
+
+          <Form.Item name="applicant_permanent_division" label="বিভাগ">
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
-              className=""
               value={selectedDivision}
               onChange={handleDivChange}
             >
@@ -167,50 +162,48 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item
-            name="applicant_permanent_district"
-            label="জেলা"
-          // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
-          >
+
+          <Form.Item name="applicant_permanent_district" label="জেলা">
             <Select
               placeholder="জেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
-              className=""
               value={selectedDistrict}
               onChange={handleDistrictChange}
             >
               {districts.map(district => (
-                <Option key={district.id} value={district.bn_name}>
+                <Option key={district.id} value={district.id}>
                   {district.bn_name}
                 </Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item
-            name="applicant_permanent_Upazila"
-            label="উপজেলা/থানা"
-          // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
-          >
+
+          <Form.Item name="applicant_permanent_Upazila" label="উপজেলা/থানা">
             <Select
               placeholder="উপজেলা নির্বাচন করুন"
               style={{ height: 40, width: '100%' }}
-              className=""
               value={selectedUpazila}
               onChange={handleUpazilaChange}
             >
-              {upazilas.map(upazila => (
-                <Option key={upazila.id} value={upazila.bn_name}>
-                  {upazila.bn_name}
-                </Option>
-              ))}
+              {upazilas.length > 0 ? (
+                upazilas.map(upazila => (
+                  <Option key={upazila.id} value={upazila.id}>
+                    {upazila.bn_name}
+                  </Option>
+                ))
+              ) : (
+                <Option value="">কোনো উপজেলা নেই</Option>
+              )}
             </Select>
           </Form.Item>
+
           <Form.Item name="applicant_permanent_post_office" label="পোষ্ট অফিস">
             <Input className="form-control" />
           </Form.Item>
+
           <Form.Item name="applicant_permanent_word_number" label="ওয়ার্ড নং">
-            <Select style={{ height: 40, width: '100%' }}>
-              <Option value="">ওয়াড নং</Option>
+            <Select placeholder='ওয়ার্ড নির্বাচন করুন' style={{ height: 40, width: '100%' }}>
+
               {Array.from({ length: 9 }, (_, i) => (
                 <Option key={i + 1} value={i + 1}>
                   {i + 1}
@@ -218,6 +211,7 @@ export const AddressFields = () => {
               ))}
             </Select>
           </Form.Item>
+
           <Form.Item name="applicant_permanent_village" label="গ্রাম/মহল্লা">
             <Input className="form-control" />
           </Form.Item>

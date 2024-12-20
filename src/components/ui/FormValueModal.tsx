@@ -27,7 +27,7 @@ const FormValueModal = ({
   const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
 
-  console.log(tradeFee);
+  // console.log(tradeFee);
 
   const handleCancel = () => {
     onCancel();

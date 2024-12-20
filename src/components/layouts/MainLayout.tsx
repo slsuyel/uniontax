@@ -51,7 +51,7 @@ const MainLayout = () => {
     return <Loader />;
   }
 
-  console.log(data.data);
+
 
   return (
     <ScrollToTop>
