@@ -107,6 +107,7 @@ const HoldingAdd = () => {
               className="my-1"
             >
               <Select
+                placeholder='হোল্ডিং ট্যাক্স এর ধরণ নির্বাচন করুন'
                 style={{ height: 40 }}
                 onChange={handleTaxType}
                 value={category}
@@ -146,7 +147,7 @@ const HoldingAdd = () => {
               </div>
               <div className="col-md-6">
                 <Form.Item label="জমির ভাড়া" name="jomir_vara" className="my-1">
-                  <InputNumber type="number" style={{ height: 40 }} />
+                  <InputNumber type="number" style={{ height: 40, width: "100%" }} />
                 </Form.Item>
               </div>
 
@@ -193,7 +194,7 @@ const HoldingAdd = () => {
                   },
                 ]}
               >
-                <InputNumber type="number" style={{ height: 40 }} />
+                <InputNumber type="number" style={{ height: 40, width: "100%" }} />
               </Form.Item>
             </div>
           )}
@@ -334,6 +335,7 @@ const HoldingAdd = () => {
         <div className=" text-center">
           <Form.Item className="mt-4">
             <Button
+              size="large"
               disabled={isLoading}
               loading={isLoading}
               type="primary"
