@@ -25,6 +25,7 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       providesTags: ['holding'],
     }),
+
     sonodFees: builder.query({
       query: ({ token }) => ({
         url: `/user/sonodnamelists/with-fees`,
@@ -32,6 +33,15 @@ const sonodApi = apiSlice.injectEndpoints({
         headers: { Authorization: `Bearer ${token}` },
       }),
       providesTags: ['sonod-fee'],
+    }),
+    updateSonodFees: builder.mutation({
+      query: ({ token, data }) => ({
+        url: `/user/sonodfees`,
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}` },
+        body: data,
+      }),
+      invalidatesTags: ['sonod-fee'],
     }),
 
     singleHolding: builder.query({
@@ -71,4 +81,5 @@ export const {
   useSingleHoldingQuery,
   useAddHoldingMutation,
   useSonodFeesQuery,
+  useUpdateSonodFeesMutation,
 } = sonodApi;
