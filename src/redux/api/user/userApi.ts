@@ -52,7 +52,7 @@ const userApi = apiSlice.injectEndpoints({
     }),
     failedPayment: builder.query({
       query: ({ sonod_type, token, date }) => ({
-        url: `i/user/failed-payments?date=${date}&sonod_type=${sonod_type}`,
+        url: `/user/failed-payments?date=${date}&sonod_type=${sonod_type}`,
         method: 'Get',
         headers: {
           authorization: `Bearer ${token}`,

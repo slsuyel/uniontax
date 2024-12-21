@@ -297,3 +297,36 @@ export interface TSonod {
   sonod_fees: number;
   pendingCount?: number;
 }
+
+export interface THoldingTax {
+  id: number;
+  maliker_name: string;
+  gramer_name: string;
+  mobile_no: string;
+  holding_no: string;
+}
+
+export interface TTax {
+  id: number;
+  holdingTax_id: string;
+  year: string;
+  price: string;
+  payYear: string | null;
+  payOB: string | null;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TPaymentFailed {
+  id: number;
+  sonodId: string;
+  union: string;
+  trxId: string;
+  sonod_type: string;
+  date: string;
+  method: string;
+  sonods: null;
+  holding_tax: THoldingTax;
+  tax: TTax;
+}
