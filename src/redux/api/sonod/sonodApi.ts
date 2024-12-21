@@ -26,6 +26,16 @@ const sonodApi = apiSlice.injectEndpoints({
       providesTags: ['holding-create-update'],
     }),
 
+    allHoldingFrontend: builder.query({
+      query: ({ word, search, unioun }) => ({
+        url: `/holdingtax/search?page=1&word=${word}${
+          search ? `&search=${search}&unioun=${unioun}` : ''
+        }`,
+        method: 'GET',
+      }),
+      providesTags: ['holding-create-update'],
+    }),
+
     sonodFees: builder.query({
       query: ({ token }) => ({
         url: `/user/sonodnamelists/with-fees`,
@@ -82,4 +92,5 @@ export const {
   useAddHoldingMutation,
   useSonodFeesQuery,
   useUpdateSonodFeesMutation,
+  useAllHoldingFrontendQuery,
 } = sonodApi;

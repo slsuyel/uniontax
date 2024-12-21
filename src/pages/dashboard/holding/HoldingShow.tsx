@@ -30,7 +30,6 @@ const HoldingShow = () => {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        // Reset to first page when a new search is performed
         setCurrentPage(1);
     };
 
