@@ -181,6 +181,7 @@ const Sidebar = () => {
     },
     { key: "tax", title: "হোল্ডিং ট্যাক্স", slug: "/holding/tax/" },
     { key: "fee", title: "সনদ ফি", slug: "/sonod/fee" },
+    { key: "failed", title: "পেমেন্ট ফেইল্ড ", slug: "/payment-failed" },
     ...sonodInfo.map((sonod) => ({
       key: sonod.id.toString(),
       title: sonod.bnname,

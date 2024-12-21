@@ -4,6 +4,7 @@ import HoldingAdd from '@/pages/dashboard/holding/HoldingAdd';
 import HoldingShow from '@/pages/dashboard/holding/HoldingShow';
 import HoldingTax from '@/pages/dashboard/holding/HoldingTax';
 import SingleHolding from '@/pages/dashboard/holding/SingleHolding';
+import PaymentFailed from '@/pages/dashboard/PaymentFailed';
 
 import SonodFee from '@/pages/dashboard/SonodFee';
 import EditSonod from '@/pages/dashboard/SonodManagement/EditSonod';
@@ -27,6 +28,10 @@ export const adminRoutes = [
   {
     path: 'holding/tax/',
     element: <HoldingTax />,
+  },
+  {
+    path: 'payment-failed',
+    element: <PaymentFailed />,
   },
   {
     path: '/dashboard/holding/tax/list/:word',

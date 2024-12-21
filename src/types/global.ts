@@ -326,7 +326,7 @@ export interface TPaymentFailed {
   sonod_type: string;
   date: string;
   method: string;
-  sonods: null;
+  sonods: any;
   holding_tax: THoldingTax;
   tax: TTax;
 }
