@@ -24,10 +24,27 @@ const userApi = apiSlice.injectEndpoints({
         method: 'Post',
         body: data,
       }),
+      invalidatesTags: ['holding_pay'],
     }),
+
     createHolding: builder.mutation({
       query: ({ data }) => ({
         url: `/user/holdingtax`,
+        method: 'Post',
+        body: data,
+      }),
+      invalidatesTags: ['holding-create-update'],
+    }),
+    checkPayment: builder.mutation({
+      query: ({ trnx_id }) => ({
+        url: `/ekpay/check/payments/ipn`,
+        method: 'Post',
+        body: { trnx_id },
+      }),
+    }),
+    callipn: builder.mutation({
+      query: ({ data }) => ({
+        url: `/ekpay/ipn`,
         method: 'Post',
         body: data,
       }),
@@ -58,6 +75,7 @@ const userApi = apiSlice.injectEndpoints({
           authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: ['holding_pay'],
     }),
   }),
 });
@@ -70,4 +88,6 @@ export const {
   usePayTaxMutation,
   useCreateHoldingMutation,
   useFailedPaymentQuery,
+  useCheckPaymentMutation,
+  useCallipnMutation,
 } = userApi;

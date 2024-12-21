@@ -13,8 +13,9 @@ const apiSlice = createApi({
     'profileCreate',
     'profileUpdate',
     'sonod-action',
-    'holding',
+    'holding-create-update',
     'sonod-fee',
+    'holding_pay',
   ],
 });
 

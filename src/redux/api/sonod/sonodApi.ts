@@ -23,7 +23,7 @@ const sonodApi = apiSlice.injectEndpoints({
         method: 'Get',
         headers: { Authorization: `Bearer ${token}` },
       }),
-      providesTags: ['holding'],
+      providesTags: ['holding-create-update'],
     }),
 
     sonodFees: builder.query({
@@ -50,7 +50,7 @@ const sonodApi = apiSlice.injectEndpoints({
         method: 'Get',
         headers: { Authorization: `Bearer ${token}` },
       }),
-      providesTags: ['holding'],
+      providesTags: ['holding-create-update'],
     }),
 
     addHolding: builder.mutation({
@@ -60,7 +60,7 @@ const sonodApi = apiSlice.injectEndpoints({
         headers: { Authorization: `Bearer ${token}` },
         body: data,
       }),
-      invalidatesTags: ['holding'],
+      invalidatesTags: ['holding-create-update'],
     }),
 
     sonodAction: builder.mutation({

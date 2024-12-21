@@ -1,13 +1,64 @@
-import { useFailedPaymentQuery } from "@/redux/api/user/userApi";
+import { useCallipnMutation, useCheckPaymentMutation, useFailedPaymentQuery } from "@/redux/api/user/userApi";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { TPaymentFailed } from "@/types/global";
+import { Button, Modal } from "antd";
 import { SetStateAction, useState } from "react";
 import { Spinner } from "react-bootstrap";
+interface TPaymentData {
+    secure_token: string;
+    msg_code: string;
+    msg_det: string;
+    req_timestamp: string;
+    basic_Info: {
+        mer_reg_id: string;
+        ipn_info: string;
+        redirect_to: string;
+        dgtl_sign: string;
+        ord_desc: string;
+        remarks: string;
+    };
+    cust_info: {
+        cust_id: string;
+        cust_name: string;
+        cust_mobo_no: string;
+        cust_email: string;
+        cust_mail_addr: string;
+    };
+    scroll_no: string | null;
+    trnx_info: {
+        trnx_amt: string;
+        trnx_id: string;
+        mer_trnx_id: string;
+        curr: string;
+        pi_trnx_id: string;
+        pi_charge: string;
+        ekpay_charge: string;
+        pi_discount: string;
+        discount: string;
+        promo_discount: string;
+        total_ser_chrg: string;
+        total_pabl_amt: string;
+    };
+    pi_det_info: {
+        pay_timestamp: string;
+        pi_name: string;
+        pi_type: string;
+        pi_number: string;
+        pi_gateway: string;
+        card_holder_name: string | null;
+    };
+}
+
+
 
 const PaymentFailed = () => {
+    const [callIpn, { isLoading: chckingIpn }] = useCallipnMutation()
+    const [paymentData, setPaymentData] = useState<TPaymentData | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loadingTrxId, setLoadingTrxId] = useState<string | null>(null);
     const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-
+    const [checkPayment] = useCheckPaymentMutation()
     const [selectedService, setSelectedService] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
     const token = localStorage.getItem(`token`)
@@ -29,6 +80,31 @@ const PaymentFailed = () => {
 
     const failedResult: TPaymentFailed[] = data?.data
 
+    const handleCheckPayment = async (trx: string) => {
+        setLoadingTrxId(trx);
+        try {
+            const res = await checkPayment({ trnx_id: trx }).unwrap();
+            console.log(res.data.akpay);
+            setPaymentData(res.data.akpay);
+            setIsModalOpen(true);
+        } catch (error) {
+            console.error("Error checking payment:", error);
+        } finally {
+            setLoadingTrxId(null);
+        }
+    };
+
+    const handleRecallCheckPayment = async () => {
+        const res = await callIpn({ data: paymentData }).unwrap()
+        if (res.status_code == 200) {
+            refetch()
+            setIsModalOpen(false);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
 
     return (
@@ -93,6 +169,7 @@ const PaymentFailed = () => {
                                 <th>Gram</th>
                                 <th>Mobile No</th>
                                 <th>Holding No</th>
+                                <th>Action</th>
 
                             </tr>
                         </thead>
@@ -129,6 +206,17 @@ const PaymentFailed = () => {
                                             </>}
 
 
+                                        <td>
+                                            <Button
+                                                disabled={loadingTrxId !== null}
+                                                loading={loadingTrxId === item.trxId}
+                                                onClick={() => handleCheckPayment(item.trxId)}
+                                                className="btn btn-sm btn-primary"
+                                            >
+                                                {' '} চেক পেমেন্ট
+                                            </Button>
+
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
@@ -172,6 +260,17 @@ const PaymentFailed = () => {
                                         </>
                                     }
 
+                                    <td>
+                                        <Button
+                                            disabled={loadingTrxId !== null}
+                                            loading={loadingTrxId === item.trxId}
+                                            onClick={() => handleCheckPayment(item.trxId)}
+                                            className="btn btn-sm btn-primary"
+                                        >
+                                            {' '} চেক পেমেন্ট
+                                        </Button>
+
+                                    </td>
 
 
                                 </div>
@@ -186,6 +285,29 @@ const PaymentFailed = () => {
             </div>
 
 
+
+            <Modal
+                // loading={}
+                title="Payment Details"
+                open={isModalOpen}
+                onOk={handleCloseModal}
+                onCancel={handleCloseModal}
+                footer={[
+                    <Button key="close" type="primary" onClick={handleCloseModal}>
+                        Close
+                    </Button>,
+                ]}
+            >
+                <div>
+                    {paymentData?.msg_det}
+
+                    <div className=" mt-3">
+                        {paymentData?.msg_code == '1020' && <Button loading={chckingIpn} type="primary" key="recall" onClick={handleRecallCheckPayment}>
+                            Recall Payment
+                        </Button>}
+                    </div>
+                </div>
+            </Modal>
 
         </div>
     );
