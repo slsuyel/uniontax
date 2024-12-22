@@ -11,8 +11,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("upctest@gmail.com");
+  const [password, setPassword] = useState("uheba22");
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import FormValueModal from "../ui/FormValueModal";
 import { TApplicantData } from "@/types";
 import { useSonodActionMutation } from "@/redux/api/sonod/sonodApi";
 import { message } from "antd";
+import SingleSonodViewModal from "@/pages/dashboard/SonodManagement/SingleSonodViewModal";
 interface SonodActionBtnProps {
   sonodName: string | undefined;
   item: TApplicantData;
@@ -100,10 +100,11 @@ const SonodActionBtn = ({
       </div>
 
       {view && (
-        <FormValueModal
+        <SingleSonodViewModal
           onCancel={handleCancel}
           visible={view}
           key={0}
+          id={item.id}
           from="dashboard"
         />
       )}
