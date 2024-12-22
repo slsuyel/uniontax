@@ -11,8 +11,11 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
-  const [email, setEmail] = useState("upctest@gmail.com");
-  const [password, setPassword] = useState("uheba22");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // const [email, setEmail] = useState("upctest@gmail.com");
+  // const [password, setPassword] = useState("uheba22");
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -85,6 +88,11 @@ const Login = () => {
                 </button>
               </div>
             </form>
+            <div className="text-center mt-5">
+              <img width="50px" src="/bangladesh-govt.png" alt="" />{" "}
+              <h4 style={{ margin: "10px 0px 0px" }}>স্মার্ট বাংলাদেশ</h4>
+              ক্যাশ লেস , পেপার লেস সেবা সিস্টেম
+            </div>
           </div>
         </div>
       </div>
