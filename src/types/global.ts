@@ -25,7 +25,7 @@ export type TUnion = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface ScrollToTopProps {
   children?: ReactNode;
@@ -47,6 +47,7 @@ export interface TypeDataForm {
   current_address?: string;
   current_institution?: string;
   current_living?: string;
+  sonod_name?: string;
   dob?: any;
   education_level?: string;
   father_name?: string;
