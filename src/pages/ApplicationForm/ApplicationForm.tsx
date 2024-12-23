@@ -100,7 +100,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_birth_certificate_number:
             user?.applicant_birth_certificate_number,
           applicant_passport_number: user?.applicant_passport_number,
-          applicant_date_of_birth: user?.applicant_date_of_birth,
+
           family_name: user?.family_name,
           Annual_income: user?.Annual_income,
           Annual_income_text: user?.Annual_income_text,
@@ -175,7 +175,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
         <div className="form-pannel">
           <div className="row">
             {sonodName == "উত্তরাধিকারী সনদ" && InheritanceForm(sonodName)}
-            {sonodName == "ওয়ারিশান সনদ" && InheritanceForm(sonodName)}
+            {/* {sonodName == "উত্তরাধিকারী সনদ" && InheritanceForm(sonodName)} */}
             {sonodName == "ওয়ারিশান সনদ" && InheritanceForm(sonodName)}
             {sonodName == "বিবিধ প্রত্যয়নপত্র" && InheritanceForm(sonodName)}
             {sonodName == "একই নামের প্রত্যয়ন" && InheritanceForm(sonodName)}
