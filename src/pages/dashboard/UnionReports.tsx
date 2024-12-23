@@ -1,25 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-import Breadcrumbs from '@/components/reusable/Breadcrumbs';
-import { useAppSelector } from '@/redux/features/hooks';
-import { RootState } from '@/redux/features/store';
-
+import { useState } from "react";
+import Breadcrumbs from "@/components/reusable/Breadcrumbs";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const UnionReports = () => {
-
+  const token = localStorage.getItem("token");
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
 
-
   const [formData, setFormData] = useState({
-    sonod: '',
-    paymentType: '',
-    fromDate: '',
-    toDate: '',
+    sonod: "",
+    paymentType: "",
+    fromDate: "",
+    toDate: "",
   });
-
-
-
 
   const handleInputChange = (event: { target: { id: any; value: any } }) => {
     const { id, value } = event.target;
@@ -28,9 +23,9 @@ const UnionReports = () => {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    console.log('ফর্ম ডেটা:', formData);
-    const url = `https://api.uniontax.gov.bd/payment/report/download?union=${unionInfo?.short_name_e}&from=${formData.fromDate}&to=${formData.toDate}&sonod_type=${formData.sonod}`;
-    window.open(url, '_blank');
+    console.log("ফর্ম ডেটা:", formData);
+    const url = `https://api.uniontax.gov.bd/payment/report/download?union=${unionInfo?.short_name_e}&from=${formData.fromDate}&to=${formData.toDate}&sonod_type=${formData.sonod}&token=${token}`;
+    window.open(url, "_blank");
   };
 
   return (
@@ -38,10 +33,7 @@ const UnionReports = () => {
       <Breadcrumbs current="প্রতিবেদন" />
 
       <form onSubmit={handleSubmit}>
-        <div
-          className="row"
-
-        >
+        <div className="row">
           <div className="form-group col-md-3 my-1">
             <select
               id="sonod"
@@ -50,13 +42,14 @@ const UnionReports = () => {
               onChange={handleInputChange}
               value={formData.sonod}
             >
-
-
               <option value="">চিহ্নিত করুন</option>
               <option value="all">সকল</option>
               <option value="holdingtax">হোল্ডিং ট্যাক্স</option>
-              {sonodInfo.map((d) => <option key={d.id} value={d.bnname}>{d.bnname}</option>)}
-
+              {sonodInfo.map((d) => (
+                <option key={d.id} value={d.bnname}>
+                  {d.bnname}
+                </option>
+              ))}
             </select>
           </div>
           <div className="form-group col-md-3 my-1">
@@ -96,20 +89,13 @@ const UnionReports = () => {
             <button
               type="submit"
               className="btn_main mt-3"
-              style={{ fontSize: '22px', marginLeft: '10px' }}
+              style={{ fontSize: "22px", marginLeft: "10px" }}
             >
               ডাউনলোড
             </button>
           </div>
         </div>
       </form>
-
-
-
-
-
-
-
     </div>
   );
 };
