@@ -20,20 +20,15 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
   const [districts, setDistricts] = useState<TDistrict[]>([]);
   const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
 
-
   const [perDistricts, setPerDistricts] = useState<TDistrict[]>([]);
   const [perUpazilas, setPerUpazilas] = useState<TUpazila[]>([]);
-
-
 
   useEffect(() => {
     fetch("/divisions.json")
       .then((res) => res.json())
       .then((data: TDivision[]) => {
-        setDivisions(data)
-      }
-
-      )
+        setDivisions(data);
+      })
       .catch((error) => console.error("Error fetching divisions data:", error));
   }, []);
 
@@ -47,7 +42,9 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           );
           setDistricts(filteredDistricts);
         })
-        .catch((error) => console.error("Error fetching districts data:", error));
+        .catch((error) =>
+          console.error("Error fetching districts data:", error)
+        );
     }
     if (selectedPerDivision) {
       fetch("/districts.json")
@@ -58,10 +55,10 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           );
           setPerDistricts(filteredDistricts);
         })
-        .catch((error) => console.error("Error fetching districts data:", error));
+        .catch((error) =>
+          console.error("Error fetching districts data:", error)
+        );
     }
-
-
   }, [selectedDivision, selectedPerDivision]);
 
   useEffect(() => {
@@ -74,7 +71,9 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           );
           setUpazilas(filteredUpazilas);
         })
-        .catch((error) => console.error("Error fetching upazilas data:", error));
+        .catch((error) =>
+          console.error("Error fetching upazilas data:", error)
+        );
     }
     if (selectedPerDistrict) {
       fetch("/upazilas.json")
@@ -85,16 +84,16 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           );
           setPerUpazilas(filteredUpazilas);
         })
-        .catch((error) => console.error("Error fetching upazilas data:", error));
+        .catch((error) =>
+          console.error("Error fetching upazilas data:", error)
+        );
     }
   }, [selectedDistrict, selectedPerDistrict]);
-
 
   const handleDivChange = (value: string) => {
     setSelectedDivision(value);
     setSelectedDistrict("");
     setSelectedUpazila("");
-
 
     const filterDivition = divisions.find((d) => d.id === value);
     console.log(filterDivition?.bn_name);
@@ -116,8 +115,6 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     });
 
     console.log(form);
-
-
   };
 
   const handleUpazilaChange = (value: string) => {
@@ -131,8 +128,6 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     });
 
     console.log(form);
-
-
   };
 
   /* ------------------ */
@@ -161,8 +156,6 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     });
 
     console.log(form);
-
-
   };
 
   const handlePerUpazilaChange = (value: string) => {
@@ -176,28 +169,36 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     });
 
     console.log(form);
-
-
   };
 
   const handleSameAddressChange = (e: any) => {
     if (e.target.checked) {
       form.setFieldsValue({
         applicant_permanent_division: form.getFieldValue("current_division"),
-        applicant_permanent_district: form.getFieldValue("applicant_present_district"),
-        applicant_permanent_Upazila: form.getFieldValue("applicant_present_Upazila"),
-        applicant_permanent_word_number: form.getFieldValue("applicant_present_word_number"),
-        applicant_permanent_village: form.getFieldValue("applicant_present_village"),
-        applicant_permanent_post_office: form.getFieldValue("applicant_present_post_office"),
+        applicant_permanent_district: form.getFieldValue(
+          "applicant_present_district"
+        ),
+        applicant_permanent_Upazila: form.getFieldValue(
+          "applicant_present_Upazila"
+        ),
+        applicant_permanent_word_number: form.getFieldValue(
+          "applicant_present_word_number"
+        ),
+        applicant_permanent_village: form.getFieldValue(
+          "applicant_present_village"
+        ),
+        applicant_permanent_post_office: form.getFieldValue(
+          "applicant_present_post_office"
+        ),
       });
     } else {
       form.setFieldsValue({
         applicant_permanent_division: "",
         applicant_permanent_district: "",
         applicant_permanent_Upazila: "",
-        applicant_permanent_word_number: '',
-        applicant_permanent_village: '',
-        applicant_permanent_post_office: '',
+        applicant_permanent_word_number: "",
+        applicant_permanent_village: "",
+        applicant_permanent_post_office: "",
       });
     }
   };
@@ -208,7 +209,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
         <div className="col-md-6">
           <div className="app-heading">বর্তমান ঠিকানা</div>
 
-          <Form.Item name=""></Form.Item>
+          <Form.Item></Form.Item>
           <Form.Item name="current_division" label="বিভাগ">
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
@@ -258,7 +259,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
             <Input className="form-control" />
           </Form.Item>
           <Form.Item name="applicant_present_word_number" label="ওয়ার্ড নং">
-            <Select style={{ height: 40, width: '100%' }}>
+            <Select style={{ height: 40, width: "100%" }}>
               <Option value="">ওয়াড নং</Option>
               {Array.from({ length: 9 }, (_, i) => (
                 <Option key={i + 1} value={i + 1}>
@@ -270,32 +271,35 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           <Form.Item name="applicant_present_village" label="গ্রাম/মহল্লা">
             <Input className="form-control" />
           </Form.Item>
-
-
         </div>
 
         <div className="col-md-6">
           <div className="app-heading">স্থায়ী ঠিকানা</div>
 
-          <Form.Item name="permanent_address" >
+          <Form.Item name="permanent_address" valuePropName="checked">
             <Checkbox onChange={handleSameAddressChange}>
               বর্তমান ঠিকানার সাথে মিলিয়ে দিন
             </Checkbox>
           </Form.Item>
+          {/* <Form.Item name="permanent_address">
+            <Checkbox onChange={handleSameAddressChange}>
+              বর্তমান ঠিকানার সাথে মিলিয়ে দিন
+            </Checkbox>
+          </Form.Item> */}
 
           <Form.Item
             name="applicant_permanent_division"
             label="বিভাগ"
-          // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
-              style={{ height: 40, width: '100%' }}
+              style={{ height: 40, width: "100%" }}
               className=""
               value={selectedPerDivision}
               onChange={handlePerDivChange}
             >
-              {divisions.map(division => (
+              {divisions.map((division) => (
                 <Option key={division.id} value={division.id}>
                   {division.bn_name}
                 </Option>
@@ -305,16 +309,16 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           <Form.Item
             name="applicant_permanent_district"
             label="জেলা"
-          // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="জেলা নির্বাচন করুন"
-              style={{ height: 40, width: '100%' }}
+              style={{ height: 40, width: "100%" }}
               className=""
               value={selectedPerDistrict}
               onChange={handlePerDistrictChange}
             >
-              {perDistricts.map(district => (
+              {perDistricts.map((district) => (
                 <Option key={district.id} value={district.id}>
                   {district.bn_name}
                 </Option>
@@ -324,16 +328,16 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           <Form.Item
             name="applicant_permanent_Upazila"
             label="উপজেলা/থানা"
-          // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
+            // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="উপজেলা নির্বাচন করুন"
-              style={{ height: 40, width: '100%' }}
+              style={{ height: 40, width: "100%" }}
               className=""
               value={selectedPerUpazila}
               onChange={handlePerUpazilaChange}
             >
-              {perUpazilas.map(upazila => (
+              {perUpazilas.map((upazila) => (
                 <Option key={upazila.id} value={upazila.id}>
                   {upazila.bn_name}
                 </Option>
@@ -345,7 +349,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
             <Input className="form-control" />
           </Form.Item>
           <Form.Item name="applicant_permanent_word_number" label="ওয়ার্ড নং">
-            <Select style={{ height: 40, width: '100%' }}>
+            <Select style={{ height: 40, width: "100%" }}>
               <Option value="">ওয়াড নং</Option>
               {Array.from({ length: 9 }, (_, i) => (
                 <Option key={i + 1} value={i + 1}>

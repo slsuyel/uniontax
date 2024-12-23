@@ -116,7 +116,7 @@ const commonFields = () => {
         <Form.Item label="ছবি" name="image">
           <Input
             type="file"
-          // onChange={(e) => handleFileChange(e, setBackPreview)}
+            // onChange={(e) => handleFileChange(e, setBackPreview)}
           />
         </Form.Item>
       </div>

@@ -1,7 +1,7 @@
 import Loader from "@/components/reusable/Loader";
 import ApplicationForm from "@/pages/ApplicationForm/ApplicationForm";
 import { useSingleSonodQuery } from "@/redux/api/sonod/sonodApi";
-import { TypeDataForm } from "@/types/global";
+import { TApplicantData } from "@/types/global";
 import { useParams } from "react-router-dom";
 
 const EditSonod = () => {
@@ -17,11 +17,11 @@ const EditSonod = () => {
     return <Loader />;
   }
 
-  const user: TypeDataForm = data?.data;
+  const user: TApplicantData = data?.data;
   console.log(user);
   return (
     <>
-      <ApplicationForm />
+      <ApplicationForm user={user} />
     </>
   );
 };

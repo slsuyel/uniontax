@@ -64,9 +64,11 @@ const userApi = apiSlice.injectEndpoints({
     tradeInfo: builder.query({
       query: ({ unionName }) => ({
         url: `/global/uniouninfo?name=${unionName}&type=TradeLicenseKhat`,
-        method: 'Get',
       }),
     }),
+
+
+
     failedPayment: builder.query({
       query: ({ sonod_type, token, date }) => ({
         url: `/user/failed-payments?date=${date}&sonod_type=${sonod_type}`,
