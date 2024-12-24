@@ -79,16 +79,14 @@ const PaymentSuccessPage: React.FC = () => {
 
     try {
       const response: any = await checkPayment({ trnx_id: transId }).unwrap();
-
+      SetSonodId(response.data.myserver.sonodId)
       if (response.data.myserver.status !== 'Paid') {
         if (response.data.akpay.msg_code == '1020') {
-
+          SetShowDetails(false)
           setPaymentData(response?.data?.akpay);
         }
       }
       else {
-
-        SetSonodId(response.data.myserver.sonodId)
         SetShowDetails(true)
       }
 
@@ -118,43 +116,46 @@ const PaymentSuccessPage: React.FC = () => {
   const handleRecallCheckPayment = async () => {
     const res = await callIpn({ data: paymentData }).unwrap()
     if (res.status_code == 200) {
-      console.log('');
+      SetShowDetails(true)
     }
   };
+  console.log(sonodId);
+
 
   return (
     <div className="container " >
-      {!showDetails && <div style={{ height: '50vh' }} className="d-flex justify-content-center align-items-center">
-        <Card
-          className="text-center p-3 shadow"
-          style={{
-            borderRadius: "10px",
-            backgroundColor: "#f5f5f5",
-            maxWidth: "400px",
-            width: "100%",
-          }}
-        >
-          <h1
+      {!showDetails && paymentData?.msg_code !== '1020' &&
+        <div style={{ height: '50vh' }} className="d-flex justify-content-center align-items-center">
+          <Card
+            className="text-center p-3 shadow"
             style={{
-              fontSize: "3rem",
-              fontWeight: "bold",
-              color: count > 0 ? "#1890ff" : "#ff4d4f",
+              borderRadius: "10px",
+              backgroundColor: "#f5f5f5",
+              maxWidth: "400px",
+              width: "100%",
             }}
           >
-            {count > 0 ? count : ""}
-          </h1>
-          {isLoading &&
-            <div>
-              <Spinner />
+            <h1
+              style={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                color: count > 0 ? "#1890ff" : "#ff4d4f",
+              }}
+            >
+              {count > 0 ? count : ""}
+            </h1>
+            {isLoading &&
+              <div>
+                <Spinner />
 
-              <p>
-                অনুগ্রহ করে অপেক্ষা করুন, আপনার পেমেন্টটি যাচাই করা হচ্ছে।
-              </p>
+                <p>
+                  অনুগ্রহ করে অপেক্ষা করুন, আপনার পেমেন্টটি যাচাই করা হচ্ছে।
+                </p>
 
-            </div>}
-        </Card>
+              </div>}
+          </Card>
 
-      </div>}
+        </div>}
 
       {
         showDetails && <div>
@@ -183,14 +184,29 @@ const PaymentSuccessPage: React.FC = () => {
       }
 
 
-      <div className=" mt-3">
-        {paymentData?.msg_code == '1020' && <Button loading={chckingIpn} type="primary" key="recall" onClick={handleRecallCheckPayment}>
-          Recall Payment
-        </Button>}
-      </div>
+      {paymentData?.msg_code == '1020' && (
+        <div style={{ height: '50vh' }} className="d-flex justify-content-center align-items-center">
+          <Card
+            className="text-center p-3 shadow border-danger"
+            style={{
+              borderRadius: "10px",
+              backgroundColor: "#f5f5f5",
+              maxWidth: "400px",
+              width: "100%",
+            }}
+          >
+            <h3 className="fw-bold text-danger">Payment Failed</h3>
+            <p className=" ">আপনার পেমেন্ট টি সঠিক ভাবে যাচাই হয়নি, দয়া করে নিচের পেমেন্ট যাচাই বাটনে ক্লিক দিয়ে আবার যাচাই করুন। ধন্যবাদ</p>
+
+            <Button loading={chckingIpn} danger className=" bg-danger text-white" size="large" key="recall" onClick={handleRecallCheckPayment}>
+              পেমেন্ট যাচাই করুন
+            </Button>
+          </Card>
+        </div>
+      )}
 
 
-    </div>
+    </div >
   );
 };
 
