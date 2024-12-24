@@ -1,4 +1,5 @@
-import { useCallipnMutation, useCheckPaymentMutation, useFailedPaymentQuery } from "@/redux/api/user/userApi";
+import { useCallipnMutation } from "@/redux/api/payment/paymentApi";
+import { useCheckPaymentMutation, useFailedPaymentQuery } from "@/redux/api/user/userApi";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { TPaymentFailed } from "@/types/global";

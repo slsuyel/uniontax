@@ -42,13 +42,13 @@ const userApi = apiSlice.injectEndpoints({
         body: { trnx_id },
       }),
     }),
-    callipn: builder.mutation({
-      query: ({ data }) => ({
-        url: `/ekpay/ipn`,
-        method: 'Post',
-        body: data,
-      }),
-    }),
+    // callipn: builder.mutation({
+    //   query: ({ data }) => ({
+    //     url: `/ekpay/ipn`,
+    //     method: 'Post',
+    //     body: data,
+    //   }),
+    // }),
 
     unionInfo: builder.query({
       query: ({ unionName, token }) => ({
@@ -66,8 +66,6 @@ const userApi = apiSlice.injectEndpoints({
         url: `/global/uniouninfo?name=${unionName}&type=TradeLicenseKhat`,
       }),
     }),
-
-
 
     failedPayment: builder.query({
       query: ({ sonod_type, token, date }) => ({
@@ -91,5 +89,5 @@ export const {
   useCreateHoldingMutation,
   useFailedPaymentQuery,
   useCheckPaymentMutation,
-  useCallipnMutation,
+  // useCallipnMutation,
 } = userApi;
