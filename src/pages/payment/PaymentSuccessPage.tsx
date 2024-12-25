@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useCallback } from "react";
 import { Button, Card } from "antd";
-import { useCallipnMutation, useCheckPaymentMutation } from "@/redux/api/payment/paymentApi";
+import {
+  useCallipnMutation,
+  useCheckPaymentMutation,
+} from "@/redux/api/payment/paymentApi";
 import { Link, useLocation } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-const succes = '/pay-success.png'
-
-
+import FailedContact from "./FailedContact";
+const succes = "/pay-success.png";
 
 interface TPaymentData {
   secure_token: string;
@@ -53,20 +55,17 @@ interface TPaymentData {
   };
 }
 
-
-
-
 const PaymentSuccessPage: React.FC = () => {
-  const [showDetails, SetShowDetails] = useState(false)
-
-  const [sonodId, SetSonodId] = useState('')
+  const [failedPage, setFailedPage] = useState(false);
+  const [showDetails, SetShowDetails] = useState(false);
+  const [sonodId, SetSonodId] = useState("");
   const [paymentData, setPaymentData] = useState<TPaymentData | null>(null);
-  const [callIpn, { isLoading: chckingIpn }] = useCallipnMutation()
+  const [callIpn, { isLoading: chckingIpn }] = useCallipnMutation();
   const [checkPayment, { isLoading }] = useCheckPaymentMutation();
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const transId = params.get("transId");
+  const transId = params.get("transId") || "";
 
   const [count, setCount] = useState(10);
   const [hasCalledApi, setHasCalledApi] = useState(false);
@@ -79,18 +78,19 @@ const PaymentSuccessPage: React.FC = () => {
 
     try {
       const response: any = await checkPayment({ trnx_id: transId }).unwrap();
-      SetSonodId(response.data.myserver.sonodId)
-      if (response.data.myserver.status !== 'Paid') {
-        if (response.data.akpay.msg_code == '1020') {
-          SetShowDetails(false)
+      SetSonodId(response.data.myserver.sonodId);
+      if (response.data.myserver.status !== "Paid") {
+        if (response.data.akpay.msg_code == "1020") {
+          SetShowDetails(false);
           setPaymentData(response?.data?.akpay);
+        } else {
+          setFailedPage(true);
         }
+      } else {
+        console.log(response);
       }
-      else {
-        SetShowDetails(true)
-      }
-
     } catch (error) {
+      setFailedPage(true);
       console.error("Error fetching payment details:", error);
     }
   }, [transId, checkPayment]);
@@ -112,101 +112,137 @@ const PaymentSuccessPage: React.FC = () => {
     }
   }, [count, transId, hasCalledApi, fetchPaymentDetails]);
 
-
   const handleRecallCheckPayment = async () => {
-    const res = await callIpn({ data: paymentData }).unwrap()
+    const res = await callIpn({ data: paymentData }).unwrap();
     if (res.status_code == 200) {
-      SetShowDetails(true)
+      SetShowDetails(true);
     }
   };
-  console.log(sonodId);
-
 
   return (
-    <div className="container " >
-      {!showDetails && paymentData?.msg_code !== '1020' &&
-        <div style={{ height: '50vh' }} className="d-flex justify-content-center align-items-center">
-          <Card
-            className="text-center p-3 shadow"
-            style={{
-              borderRadius: "10px",
-              backgroundColor: "#f5f5f5",
-              maxWidth: "400px",
-              width: "100%",
-            }}
-          >
-            <h1
-              style={{
-                fontSize: "3rem",
-                fontWeight: "bold",
-                color: count > 0 ? "#1890ff" : "#ff4d4f",
-              }}
-            >
-              {count > 0 ? count : ""}
-            </h1>
-            {isLoading &&
-              <div>
-                <Spinner />
+    <div className="container">
+      {failedPage && <FailedContact sonodId={sonodId} transId={transId} />}
 
-                <p>
-                  অনুগ্রহ করে অপেক্ষা করুন, আপনার পেমেন্টটি যাচাই করা হচ্ছে।
+      {!failedPage && (
+        <>
+          {!showDetails && paymentData?.msg_code !== "1020" && (
+            <div
+              style={{ height: "50vh" }}
+              className="d-flex justify-content-center align-items-center"
+            >
+              <Card
+                className="text-center p-3 shadow"
+                style={{
+                  borderRadius: "10px",
+                  backgroundColor: "#f5f5f5",
+                  maxWidth: "400px",
+                  width: "100%",
+                }}
+              >
+                <div>
+                  {count > 0 && (
+                    <p className="text-center">{count} সেকেন্ড অপেক্ষা করুন</p>
+                  )}
+                  <h1
+                    style={{
+                      fontSize: "3rem",
+                      fontWeight: "bold",
+                      color: count > 0 ? "#1890ff" : "#ff4d4f",
+                    }}
+                  >
+                    {count > 0 ? count : ""}
+                  </h1>
+                </div>
+                {isLoading && (
+                  <div>
+                    <Spinner />
+                    <p>
+                      অনুগ্রহ করে অপেক্ষা করুন, আপনার পেমেন্টটি যাচাই করা হচ্ছে।
+                    </p>
+                  </div>
+                )}
+              </Card>
+            </div>
+          )}
+
+          {showDetails && (
+            <div>
+              <div className="col-sm-6 my-5 py-5 text-center w-100">
+                <h2 style={{ color: "#0fad00" }}>Success</h2>
+                <img width={150} src={succes} alt="Success" />
+                <div className="my-3">
+                  <h3>জনাব,</h3>
+                  <p
+                    style={{ fontSize: "20px", color: "#5C5C5C" }}
+                    className="mb-0"
+                  >
+                    আপনার আবেদন ও পেমেন্ট সফলভাবে গৃহীত হয়েছে।
+                  </p>
+                  <p style={{ fontSize: "20px", color: "#5C5C5C" }}>
+                    আবেদন কপি ও পেমেন্ট রশিদ প্রিন্ট করে সংরক্ষণ করুন
+                  </p>
+                </div>
+                <div className="d-flex gap-3 justify-content-center">
+                  <Link to="/" className="btn btn-danger">
+                    Back to Home
+                  </Link>
+                  <a
+                    href={`https://api.uniontax.gov.bd/applicant/copy/download/${sonodId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-success"
+                  >
+                    Applicant Copy
+                  </a>
+                  <a
+                    href={`https://api.uniontax.gov.bd/sonod/invoice/download/${sonodId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-success"
+                  >
+                    Invoice
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {paymentData?.msg_code === "1020" && (
+            <div
+              style={{ height: "50vh" }}
+              className="d-flex justify-content-center align-items-center"
+            >
+              <Card
+                className="text-center p-3 shadow border-danger"
+                style={{
+                  borderRadius: "10px",
+                  backgroundColor: "#f5f5f5",
+                  maxWidth: "400px",
+                  width: "100%",
+                }}
+              >
+                <h3 className="fw-bold text-danger">Payment Failed</h3>
+                <p className="">
+                  আপনার পেমেন্ট টি সঠিক ভাবে যাচাই হয়নি, দয়া করে নিচের পেমেন্ট
+                  যাচাই বাটনে ক্লিক দিয়ে আবার যাচাই করুন। ধন্যবাদ
                 </p>
 
-              </div>}
-          </Card>
-
-        </div>}
-
-      {
-        showDetails && <div>
-          <div className="col-sm-6 my-5 py-5 text-center w-100">
-
-            <h2 style={{ color: '#0fad00' }}>Success</h2>
-            <img width={150} src={succes} />
-            <div className=" my-3">
-              <h3>জনাব,</h3>
-              <p style={{ fontSize: '20px', color: '#5C5C5C' }} className=" mb-0">
-                আপনার আবেদন ও পেমেন্ট সফলভাবে গৃহীত হয়েছে।
-              </p>
-              <p style={{ fontSize: '20px', color: '#5C5C5C' }}>
-
-                আবেদন কপি ও পেমেন্ট রশিদ প্রিন্ট করে সংরক্ষণ করুন</p>
+                <Button
+                  loading={chckingIpn}
+                  danger
+                  className="bg-danger text-white"
+                  size="large"
+                  key="recall"
+                  onClick={handleRecallCheckPayment}
+                >
+                  পেমেন্ট যাচাই করুন
+                </Button>
+              </Card>
             </div>
-            <div className=" d-flex gap-3 justify-content-center">
-              <Link to="/" className="btn btn-danger">Back to Home</Link>
-              <a href={`https://api.uniontax.gov.bd/applicant/copy/download/${sonodId}`} target="_blank" className="btn btn-success">Applicant Copy</a>
-              <a href={`https://api.uniontax.gov.bd/sonod/invoice/download/${sonodId}`} target="_blank" className="btn btn-success">Invoice</a>
-            </div>
-
-          </div>
-
-        </div>
-      }
-
-
-      {paymentData?.msg_code == '1020' && (
-        <div style={{ height: '50vh' }} className="d-flex justify-content-center align-items-center">
-          <Card
-            className="text-center p-3 shadow border-danger"
-            style={{
-              borderRadius: "10px",
-              backgroundColor: "#f5f5f5",
-              maxWidth: "400px",
-              width: "100%",
-            }}
-          >
-            <h3 className="fw-bold text-danger">Payment Failed</h3>
-            <p className=" ">আপনার পেমেন্ট টি সঠিক ভাবে যাচাই হয়নি, দয়া করে নিচের পেমেন্ট যাচাই বাটনে ক্লিক দিয়ে আবার যাচাই করুন। ধন্যবাদ</p>
-
-            <Button loading={chckingIpn} danger className=" bg-danger text-white" size="large" key="recall" onClick={handleRecallCheckPayment}>
-              পেমেন্ট যাচাই করুন
-            </Button>
-          </Card>
-        </div>
+          )}
+        </>
       )}
-
-
-    </div >
+    </div>
   );
 };
 

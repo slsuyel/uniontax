@@ -13,6 +13,10 @@ body {
 .defaltTextColor {
   color: var(--defaultColor) !important;
 }
+.form-control{
+  font-family: 'Kalpurush', sans-serif;
+}
+
 
 label {
   color: #493eff !important;
