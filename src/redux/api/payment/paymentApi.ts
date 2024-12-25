@@ -19,7 +19,26 @@ const paymentApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    failedPayment: builder.query({
+      query: ({ sonod_type, token, date }) => ({
+        url: `/user/failed-payments?date=${date}&sonod_type=${sonod_type}`,
+        method: 'Get',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ['holding_pay'],
+    }),
+    payTax: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/pay/holding/tax/${id}`,
+        method: 'Post',
+        body: data,
+      }),
+      invalidatesTags: ['holding_pay'],
+    }),
   }),
 });
 
-export const { useCallipnMutation, useCheckPaymentMutation } = paymentApi;
+export const { useCallipnMutation, useCheckPaymentMutation, useFailedPaymentQuery, usePayTaxMutation } = paymentApi;

@@ -18,14 +18,14 @@ const userApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    payTax: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/pay/holding/tax/${id}`,
-        method: 'Post',
-        body: data,
-      }),
-      invalidatesTags: ['holding_pay'],
-    }),
+    // payTax: builder.mutation({
+    //   query: ({ id, data }) => ({
+    //     url: `/pay/holding/tax/${id}`,
+    //     method: 'Post',
+    //     body: data,
+    //   }),
+    //   invalidatesTags: ['holding_pay'],
+    // }),
 
     createHolding: builder.mutation({
       query: ({ data }) => ({
@@ -35,20 +35,14 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['holding-create-update'],
     }),
-    checkPayment: builder.mutation({
-      query: ({ trnx_id }) => ({
-        url: `/ekpay/check/payments/ipn`,
-        method: 'Post',
-        body: { trnx_id },
-      }),
-    }),
-    // callipn: builder.mutation({
-    //   query: ({ data }) => ({
-    //     url: `/ekpay/ipn`,
+    // checkPayment: builder.mutation({
+    //   query: ({ trnx_id }) => ({
+    //     url: `/ekpay/check/payments/ipn`,
     //     method: 'Post',
-    //     body: data,
+    //     body: { trnx_id },
     //   }),
     // }),
+
 
     unionInfo: builder.query({
       query: ({ unionName, token }) => ({
@@ -67,16 +61,16 @@ const userApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    failedPayment: builder.query({
-      query: ({ sonod_type, token, date }) => ({
-        url: `/user/failed-payments?date=${date}&sonod_type=${sonod_type}`,
-        method: 'Get',
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }),
-      providesTags: ['holding_pay'],
-    }),
+    // failedPayment: builder.query({
+    //   query: ({ sonod_type, token, date }) => ({
+    //     url: `/user/failed-payments?date=${date}&sonod_type=${sonod_type}`,
+    //     method: 'Get',
+    //     headers: {
+    //       authorization: `Bearer ${token}`,
+    //     },
+    //   }),
+    //   providesTags: ['holding_pay'],
+    // }),
   }),
 });
 
@@ -85,9 +79,7 @@ export const {
   useUnionInfoQuery,
   useTradeInfoQuery,
   useSonodSearchMutation,
-  usePayTaxMutation,
+  // usePayTaxMutation,
   useCreateHoldingMutation,
-  useFailedPaymentQuery,
-  useCheckPaymentMutation,
-  // useCallipnMutation,
+  // useFailedPaymentQuery,
 } = userApi;

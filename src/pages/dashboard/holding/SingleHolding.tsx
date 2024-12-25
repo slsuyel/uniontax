@@ -1,6 +1,6 @@
 import Loader from "@/components/reusable/Loader";
+import { usePayTaxMutation } from "@/redux/api/payment/paymentApi";
 import { useSingleHoldingQuery } from "@/redux/api/sonod/sonodApi";
-import { usePayTaxMutation } from "@/redux/api/user/userApi";
 import { useParams } from "react-router-dom";
 
 export interface THolding {
