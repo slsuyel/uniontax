@@ -31,14 +31,14 @@ const SearchTimeline = ({ data }: any) => {
 
   // Determine the current active step index
   const activeStep = (() => {
-    if (sonod.stutus === "approved") return 4;
-    if (sonod.stutus === "approved") return 3;
-    if (sonod.stutus === "sec_approved") return 2;
-    if (sonod.payment_status === "Paid") return 1;
-    return 0;
+    if (sonod.stutus === "approved") return 5; // কমপ্লিট
+    if (sonod.stutus === "chairman_approved") return 4; // চেয়ারম্যান
+    if (sonod.stutus === "sec_approved") return 3; // সেক্রেটারি
+    if (sonod.payment_status === "Paid") return 2; // পেমেন্ট
+    return 1; // আবেদন জমা হয়েছে
   })();
 
-  // console.log(sonod);
+
 
   return (
     <div>
