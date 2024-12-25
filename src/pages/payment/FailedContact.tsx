@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { usePaymentFailedTicketMutation } from "@/redux/api/support/supportApi";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, message, Select } from "antd";
 import React, { useState } from "react";
 
 const { Option } = Select;
@@ -12,21 +13,33 @@ interface FailedContactProps {
 }
 
 const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
+  const [paymentFailedTicket, { isLoading }] = usePaymentFailedTicketMutation();
+
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<string>("বিকাশ");
 
-  const onFinish = (values: any) => {
-    const submissionData = {
-      ...values,
-      transId,
-      sonod_id: sonodId,
-    };
-    console.log(submissionData);
-  };
-
   const handlePaymentMethodChange = (value: string) => {
     setSelectedPaymentMethod(value);
+  };
+  const onFinish = async (values: any) => {
+    try {
+      const submissionData = {
+        ...values,
+        transId,
+        sonod_id: sonodId,
+      };
+
+      const res = await paymentFailedTicket({ data: submissionData }).unwrap();
+      if (res.status_code === "201") {
+        message.success("আপনার তথ্যগুলো সফলভাবে জমা হয়েছে");
+      } else {
+        message.error("তথ্য জমা করতে সমস্যা হয়েছে");
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      message.error("তথ্য জমা করতে সমস্যা হয়েছে");
+    }
   };
 
   return (
@@ -136,7 +149,7 @@ const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
         </Form.Item>
 
         <Form.Item className="mb-1 mt-2">
-          <Button type="primary" htmlType="submit">
+          <Button loading={isLoading} type="primary" htmlType="submit">
             জমা দিন
           </Button>
         </Form.Item>

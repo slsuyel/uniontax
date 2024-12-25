@@ -1,11 +1,10 @@
-
-import RightSidebar from '../Home/RightSidebar';
-import { Link } from 'react-router-dom';
-import { useAllHoldingFrontendQuery } from '@/redux/api/sonod/sonodApi';
-import { useState } from 'react';
-import { THolding } from '../dashboard/holding/HoldingShow';
-import { useAppSelector } from '@/redux/features/hooks';
-import { RootState } from '@/redux/features/store';
+import RightSidebar from "../Home/RightSidebar";
+import { Link } from "react-router-dom";
+import { useAllHoldingFrontendQuery } from "@/redux/api/sonod/sonodApi";
+import { useState } from "react";
+import { THolding } from "../dashboard/holding/HoldingShow";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const Holding = () => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
@@ -14,21 +13,18 @@ const Holding = () => {
   const [selectedWord, setSelectedWord] = useState("1");
   const [triggerSearch, setTriggerSearch] = useState(false);
 
-
   console.log(unionInfo?.short_name_e);
-  const { data, isLoading } = useAllHoldingFrontendQuery({
-    word: selectedWord,
-    search: searchTerm,
-    page: currentPage,
-    unioun: unionInfo?.short_name_e
-
-  }, {
-    skip: !triggerSearch,
-  });
-
-
-
-
+  const { data, isLoading, isFetching } = useAllHoldingFrontendQuery(
+    {
+      word: selectedWord,
+      search: searchTerm,
+      page: currentPage,
+      unioun: unionInfo?.short_name_e,
+    },
+    {
+      skip: !triggerSearch,
+    }
+  );
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +39,10 @@ const Holding = () => {
       <div className="mainBody col-md-9 mt-3">
         <div className="card">
           <div className="card-header">
-            <form onSubmit={handleSearch} className="d-flex gap-4 my-4 align-items-center">
+            <form
+              onSubmit={handleSearch}
+              className="d-flex gap-4 my-4 align-items-center"
+            >
               <div className="form-group mt-0 w-25">
                 <select
                   className="form-select"
@@ -70,10 +69,11 @@ const Holding = () => {
               <div className="form-group text-center mt-0">
                 <button
                   type="submit"
+                  disabled={isFetching}
                   className="btn btn-info text-center"
                   style={{ fontSize: "20px", padding: "5px 23px" }}
                 >
-                  খুঁজুন
+                  {isFetching ? "অপেক্ষা করুন" : "খুঁজুন"}
                 </button>
               </div>
             </form>
@@ -93,7 +93,10 @@ const Holding = () => {
                 {isLoading ? (
                   <tr>
                     <td colSpan={5} className="text-center">
-                      <div className="spinner-border text-primary" role="status">
+                      <div
+                        className="spinner-border text-primary"
+                        role="status"
+                      >
                         <span className="visually-hidden">Loading...</span>
                       </div>
                     </td>
@@ -107,7 +110,7 @@ const Holding = () => {
                       <td>{item.mobile_no}</td>
                       <td>
                         <Link
-                          to={`/dashboard/holding/list/view/${item.id}`}
+                          to={`/holding/list/view/${item.id}`}
                           className="btn btn-info"
                         >
                           দেখুন
@@ -123,7 +126,6 @@ const Holding = () => {
                   </tr>
                 )}
               </tbody>
-
             </table>
           </div>
         </div>

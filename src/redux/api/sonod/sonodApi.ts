@@ -6,9 +6,8 @@ const sonodApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     allSonod: builder.query({
       query: ({ sonodName, stutus, token, sondId }) => ({
-        url: `user/sonod/list?sonod_name=${sonodName}&stutus=${stutus}${
-          sondId ? `&sondId=${sondId}` : ""
-        }`,
+        url: `/user/sonod/list?sonod_name=${sonodName}&stutus=${stutus}${sondId ? `&sondId=${sondId}` : ""
+          }`,
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
@@ -26,9 +25,8 @@ const sonodApi = apiSlice.injectEndpoints({
 
     allHolding: builder.query({
       query: ({ word, token, search }) => ({
-        url: `/user/holdingtax?page=1&word=${word}${
-          search ? `&search=${search}` : ""
-        }`,
+        url: `/user/holdingtax?page=1&word=${word}${search ? `&search=${search}` : ""
+          }`,
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
@@ -37,9 +35,8 @@ const sonodApi = apiSlice.injectEndpoints({
 
     allHoldingFrontend: builder.query({
       query: ({ word, search, unioun }) => ({
-        url: `/holdingtax/search?page=1&word=${word}${
-          search ? `&search=${search}&unioun=${unioun}` : ""
-        }`,
+        url: `/holdingtax/search?page=1&word=${word}${search ? `&search=${search}&unioun=${unioun}` : ""
+          }`,
         method: "GET",
       }),
       providesTags: ["holding-create-update"],

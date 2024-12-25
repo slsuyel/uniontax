@@ -65,7 +65,7 @@ const SonodSearch = () => {
           <div className="form-group my-2">
             <label className="defaltTextColor">ইস্যুকৃত সনদ নম্বর লিখুন</label>
             <input
-              type="text"
+              type="number"
               id="sonodNo"
               className="form-control"
               value={sonodNo}
