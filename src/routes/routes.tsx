@@ -70,6 +70,10 @@ const router = createBrowserRouter([
         path: "/payment-success",
         element: <PaymentSuccessPage />,
       },
+      {
+        path: "/payment-cancel",
+        element: <PaymentSuccessPage />,
+      },
 
       /* application */
       {
