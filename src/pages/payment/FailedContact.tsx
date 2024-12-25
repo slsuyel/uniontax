@@ -4,6 +4,7 @@ import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { Button, Form, Input, message, Select } from "antd";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -14,7 +15,7 @@ interface FailedContactProps {
 
 const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
   const [paymentFailedTicket, { isLoading }] = usePaymentFailedTicketMutation();
-
+  const navigate = useNavigate();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<string>("বিকাশ");
@@ -32,6 +33,7 @@ const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
 
       const res = await paymentFailedTicket({ data: submissionData }).unwrap();
       if (res.status_code === "201") {
+        navigate("/");
         message.success("আপনার তথ্যগুলো সফলভাবে জমা হয়েছে");
       } else {
         message.error("তথ্য জমা করতে সমস্যা হয়েছে");
