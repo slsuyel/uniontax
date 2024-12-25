@@ -1,30 +1,123 @@
 import RightSidebar from "../Home/RightSidebar";
 import { Link } from "react-router-dom";
 import { useAllHoldingFrontendQuery } from "@/redux/api/sonod/sonodApi";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { THolding } from "../dashboard/holding/HoldingShow";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { TDistrict, TDivision, TUnion, TUpazila } from "@/types";
 
 const Holding = () => {
+  const [selectedUnion, setSelectedUnion] = useState<TUnion | null>(null);
+  const [selectedDivision, setSelectedDivision] = useState<TDivision | null>(
+    null
+  );
+  const [selectedDistrict, setSelectedDistrict] = useState<TDistrict | null>(
+    null
+  );
+  const [selectedUpazila, setSelectedUpazila] = useState<TUpazila | null>(null);
+  const [divisions, setDivisions] = useState<TDivision[]>([]);
+  const [districts, setDistricts] = useState<TDistrict[]>([]);
+  const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
+  const [unions, setUnions] = useState<TUnion[]>([]);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedWord, setSelectedWord] = useState("1");
   const [triggerSearch, setTriggerSearch] = useState(false);
-
-  console.log(unionInfo?.short_name_e);
+  const smallUnion = `${selectedUnion?.name}`.replace(/\s+/g, "").toLowerCase();
   const { data, isLoading, isFetching } = useAllHoldingFrontendQuery(
     {
       word: selectedWord,
       search: searchTerm,
       page: currentPage,
-      unioun: unionInfo?.short_name_e,
+      unioun:
+        unionInfo && unionInfo.short_name_e == "uniontax"
+          ? smallUnion
+          : unionInfo && unionInfo.short_name_e,
     },
     {
       skip: !triggerSearch,
     }
   );
+
+  useEffect(() => {
+    fetch("/divisions.json")
+      .then((res) => res.json())
+      .then((data: TDivision[]) => {
+        setDivisions(data);
+      })
+      .catch((error) => console.error("Error fetching divisions data:", error));
+  }, []);
+
+  useEffect(() => {
+    if (selectedDivision) {
+      fetch("/districts.json")
+        .then((response) => response.json())
+        .then((data: TDistrict[]) => {
+          const filteredDistricts = data.filter(
+            (d) => d?.division_id === selectedDivision.id
+          );
+          setDistricts(filteredDistricts);
+        })
+        .catch((error) =>
+          console.error("Error fetching districts data:", error)
+        );
+    }
+  }, [selectedDivision]);
+
+  useEffect(() => {
+    if (selectedDistrict) {
+      fetch("/upazilas.json")
+        .then((response) => response.json())
+        .then((data: TUpazila[]) => {
+          const filteredUpazilas = data.filter(
+            (upazila) => upazila.district_id === selectedDistrict.id
+          );
+          setUpazilas(filteredUpazilas);
+        })
+        .catch((error) =>
+          console.error("Error fetching upazilas data:", error)
+        );
+    }
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    if (selectedUpazila) {
+      fetch("/unions.json")
+        .then((response) => response.json())
+        .then((data: TUnion[]) => {
+          const filteredUnions = data.filter(
+            (union) => union.upazilla_id === selectedUpazila.id
+          );
+          setUnions(filteredUnions);
+        })
+        .catch((error) => console.error("Error fetching unions data:", error));
+    }
+  }, [selectedUpazila]);
+
+  const handleDivisionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const division = divisions.find((d) => d?.id === event.target.value);
+    setSelectedDivision(division || null);
+    setSelectedDistrict(null);
+    setSelectedUpazila(null);
+  };
+
+  const handleDistrictChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const district = districts.find((d) => d?.id === event.target.value);
+    setSelectedDistrict(district || null);
+    setSelectedUpazila(null);
+  };
+
+  const handleUpazilaChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const upazila = upazilas.find((u) => u?.id === event.target.value);
+    setSelectedUpazila(upazila || null);
+  };
+
+  const handleUnionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const union = unions.find((u) => u?.id === event.target.value);
+    setSelectedUnion(union || null);
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +131,88 @@ const Holding = () => {
     <div className="row mx-auto container my-3">
       <div className="mainBody col-md-9 mt-3">
         <div className="card">
+          {unionInfo && unionInfo.short_name_e !== "uniontax" ? (
+            ""
+          ) : (
+            <>
+              <form>
+                <div className="row mx-auto mb-4">
+                  <div className="col-md-3">
+                    <label htmlFor="division">বিভাগ নির্বাচন করুন</label>
+                    <select
+                      required
+                      id="division"
+                      className="form-control"
+                      value={selectedDivision?.id || ""}
+                      onChange={handleDivisionChange}
+                    >
+                      <option value="">বিভাগ নির্বাচন করুন</option>
+                      {divisions?.map((d) => (
+                        <option key={d?.id} value={d?.id}>
+                          {d?.bn_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-3">
+                    <label htmlFor="district">জেলা নির্বাচন করুন</label>
+                    <select
+                      required
+                      id="district"
+                      className="form-control"
+                      value={selectedDistrict?.id || ""}
+                      onChange={handleDistrictChange}
+                    >
+                      <option value="">জেলা নির্বাচন করুন</option>
+                      {districts?.map((d) => (
+                        <option key={d?.id} value={d?.id}>
+                          {d?.bn_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-3">
+                    <label htmlFor="upazila">উপজেলা নির্বাচন করুন</label>
+                    <select
+                      required
+                      id="upazila"
+                      className="form-control"
+                      value={selectedUpazila?.id || ""}
+                      onChange={handleUpazilaChange}
+                    >
+                      <option value="">উপজেলা নির্বাচন করুন</option>
+                      {upazilas?.map((u) => (
+                        <option key={u?.id} value={u?.id}>
+                          {u?.bn_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-3">
+                    <label htmlFor="union">ইউনিয়ন নির্বাচন করুন</label>
+                    <select
+                      required
+                      id="union"
+                      className="form-control"
+                      value={selectedUnion?.id || ""}
+                      onChange={handleUnionChange}
+                    >
+                      <option value="">ইউনিয়ন নির্বাচন করুন</option>
+                      {unions?.map((u) => (
+                        <option key={u?.id} value={u?.id}>
+                          {u?.bn_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </>
+          )}
+
           <div className="card-header">
             <form
               onSubmit={handleSearch}
