@@ -120,13 +120,13 @@ const SingleHoldingPublic = () => {
                             >
                               রশিদ
                             </a>
-                            <a
+                            {/* <a
                               target="_blank"
                               href={bokeya?.certificate_of_honor_url}
                               className="btn btn-info"
                             >
                               সম্মাননাপত্র
-                            </a>
+                            </a> */}
                           </div>
                         )}
                       </td>
