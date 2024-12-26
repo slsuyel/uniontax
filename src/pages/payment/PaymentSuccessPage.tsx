@@ -87,6 +87,7 @@ const PaymentSuccessPage: React.FC = () => {
           setFailedPage(true);
         }
       } else {
+        SetShowDetails(true);
         console.log(response);
       }
     } catch (error) {
