@@ -19,6 +19,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { adminRoutes } from "./adminRoutes";
 import AuthProvider from "@/Providers/AuthProvider";
 import PaymentSuccessPage from "@/pages/payment/PaymentSuccessPage";
+import SingleHoldingPublic from "@/pages/Holding/SingleHoldingPublic";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/holding/tax",
         element: <Holding />,
+      },
+      {
+        path: "/holding/list/view/:id",
+        element: <SingleHoldingPublic />,
       },
       {
         path: "/citizens_corner",

@@ -32,6 +32,7 @@ const paymentApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["holding_pay"],
     }),
+
     payTax: builder.mutation({
       query: ({ id, data }) => ({
         url: `/pay/holding/tax/${id}`,
