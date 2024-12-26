@@ -1,3 +1,5 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSonodApplyMutation } from "@/redux/api/user/userApi";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
@@ -9,7 +11,7 @@ import { useParams } from "react-router-dom";
 
 interface FormValueModalProps {
   visible: boolean;
-  data?: TApplicantData;
+  data?: TApplicantData & { [key: string]: any };
   onCancel: () => void;
   from?: string;
 }
@@ -56,6 +58,32 @@ const FormValueModal = ({
     }
   };
 
+  const getSuccessorList = () => {
+    const successors = [];
+    let index = 0;
+
+    while (true) {
+      const name = data?.[`successor_list[${index}].w_name`];
+      const relation = data?.[`successor_list[${index}].w_relation`];
+      const dob = data?.[`successor_list[${index}].w_dob`];
+      const nid = data?.[`successor_list[${index}].w_nid`];
+
+      if (!name) break;
+
+      successors.push({
+        w_name: name,
+        w_relation: relation,
+        w_dob: dob,
+        w_nid: nid,
+      });
+
+      index++;
+    }
+
+    return successors;
+  };
+
+  const successorList = getSuccessorList();
   return (
     <Modal
       width={800}
@@ -183,6 +211,34 @@ const FormValueModal = ({
           <div className="col-md-4 col-6 mt-3">
             <span>জন্ম নিবন্ধন</span> <br /> <img width="100%" alt="" />
           </div>
+          <hr />
+
+          <div className="row mx-auto">
+            <div className="col-md-12">
+              <div className="app-heading">ওয়ারিশগণের তালিকা</div>
+            </div>
+            {successorList.map((successor, index) => (
+              <div key={index} className="col-md-12 mt-3">
+                <div className="row">
+                  <div className="col-md-3">
+                    <b>নাম: {successor.w_name}</b>
+                  </div>
+                  <div className="col-md-3">
+                    <b>সম্পর্ক: {successor.w_relation}</b>
+                  </div>
+                  <div className="col-md-3">
+                    <b>
+                      জন্ম তারিখ:{" "}
+                      {new Date(successor.w_dob).toLocaleDateString()}
+                    </b>
+                  </div>
+                  <div className="col-md-3">
+                    <b>জাতীয় পরিচয়পত্র /জন্মনিবন্ধন: {successor.w_nid}</b>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <br /> <br />
         {from !== "dashboard" && (
@@ -192,12 +248,12 @@ const FormValueModal = ({
           >
             <h3>
               আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
-
-              {service === "ট্রেড লাইসেন্স" ? (tradeFee ? Number(tradeFee) + (Number(sonod?.sonod_fees) * 1.15) : Number(sonod?.sonod_fees)) : sonod?.sonod_fees}
-              {' '}
-
-              টাকা
-              ।
+              {service === "ট্রেড লাইসেন্স"
+                ? tradeFee
+                  ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
+                  : Number(sonod?.sonod_fees)
+                : sonod?.sonod_fees}{" "}
+              টাকা ।
             </h3>
             <button
               disabled={isLoading}
