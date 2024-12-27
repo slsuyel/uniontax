@@ -50,7 +50,7 @@ const FormValueModal = ({
     };
     const updatedData = { ...data, ...additionalData };
     try {
-      const response = await sonodApply(updatedData).unwrap();
+      const response = await sonodApply({ bn: updatedData }).unwrap();
       console.log(response);
       if (response.status_code === 200) {
         message.success("You are redirect to payment gateway");
@@ -62,8 +62,7 @@ const FormValueModal = ({
   };
 
   const handleEnglishSonod = () => {
-    const userData = data
-    navigate(`/application-english/${service}`, { state: userData });
+    navigate(`/application-english/${service}`, { state: { userData: data } });
   };
 
   const getSuccessorList = () => {
@@ -252,6 +251,16 @@ const FormValueModal = ({
         </div>
         <br /> <br />
 
+
+        {/* <h3>
+          আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
+          {service === "ট্রেড লাইসেন্স"
+            ? tradeFee
+              ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
+              : Number(sonod?.sonod_fees)
+            : sonod?.sonod_fees}{" "}
+          টাকা ।
+        </h3> */}
 
         <div>
           {!banglaSonod &&

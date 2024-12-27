@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 interface EnglishFormValueModalProps {
     visible: boolean;
     data?: TApplicantData & { [key: string]: any };
+    bn?: TApplicantData & { [key: string]: any };
     onCancel: () => void;
     from?: string;
 }
@@ -19,6 +20,7 @@ interface EnglishFormValueModalProps {
 const EnglishFormValueModal = ({
     visible,
     data,
+    bn,
     onCancel,
     from,
 }: EnglishFormValueModalProps) => {
@@ -43,9 +45,18 @@ const EnglishFormValueModal = ({
             f_uri: window.origin + "/payment-failed",
             c_uri: window.origin + "/payment-cancel",
         };
-        const updatedData = { ...data, ...additionalData };
+        // const updatedData = { ...data, ...additionalData };
+
+        const payload = {
+            bn,
+            en:
+                { ...data, ...additionalData }
+
+        };
+
+
         try {
-            const response = await sonodApply(updatedData).unwrap();
+            const response = await sonodApply(payload).unwrap();
             console.log(response);
             if (response.status_code === 200) {
                 message.success("You are redirect to payment gateway");
@@ -80,8 +91,11 @@ const EnglishFormValueModal = ({
 
         return successors;
     };
-
     const successorList = getSuccessorList();
+
+    const fees = service === "ট্রেড লাইসেন্স" ? (tradeFee ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15 : Number(sonod?.sonod_fees)) : Number(sonod?.sonod_fees);
+
+
     return (
         <Modal
             width={800}
@@ -239,18 +253,19 @@ const EnglishFormValueModal = ({
                     </div>
                 </div>
                 <br /> <br />
+
+
+
+                {/* {fees} */}
+
                 {from !== "dashboard" && (
                     <div
-                        className="text-center"
-                        style={{ width: "50%", margin: "0px auto" }}
+                        className="text-center col-md-7 mx-auto"
+
                     >
                         <h3>
-                            Please pay the fee to complete your application. The fee for {service} is{" "}
-                            {service === "Trade License"
-                                ? tradeFee
-                                    ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
-                                    : Number(sonod?.sonod_fees)
-                                : sonod?.sonod_fees}{" "}
+                            Please pay the fee to complete your application. The fee for {service} is
+                            {' '}{fees * 2} {' '}
                             Taka.
                         </h3>
                         <button

@@ -24,9 +24,8 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
     const { service } = useParams<{ service: string }>();
     const [sonodName, setSonodName] = useState(service);
     const location = useLocation();
-    const { userData } = location.state;
-
-    console.log(userData);
+    const { state } = location || {};
+    const bn = state?.userData;
 
     const { data, isLoading } = useTradeInfoQuery(
         { unionName: unionInfo?.short_name_e },
@@ -50,7 +49,6 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
             setSonodName(service);
         }
     }, [isDashboard, user?.sonod_name, service]);
-
 
 
     const onFinish = async (values: any) => {
@@ -204,6 +202,7 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
             <EnglishFormValueModal
                 visible={modalVisible}
                 data={userDta}
+                bn={bn}
                 onCancel={handleCancel}
             />
         </div>
