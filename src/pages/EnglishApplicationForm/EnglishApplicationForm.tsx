@@ -24,9 +24,9 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
     const { service } = useParams<{ service: string }>();
     const [sonodName, setSonodName] = useState(service);
     const location = useLocation();
-    const { bn } = location.state;
-    console.log({ bn });
+    const { userData } = location.state;
 
+    console.log(userData);
 
     const { data, isLoading } = useTradeInfoQuery(
         { unionName: unionInfo?.short_name_e },

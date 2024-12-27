@@ -7,7 +7,8 @@ import { RootState } from "@/redux/features/store";
 import { TApplicantData } from "@/types";
 import { getFormattedDate } from "@/utils/getFormattedDate";
 import { Button, message, Modal } from "antd";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface FormValueModalProps {
   visible: boolean;
@@ -22,6 +23,8 @@ const FormValueModal = ({
   onCancel,
   from,
 }: FormValueModalProps) => {
+  const [banglaSonod, setBanglaSonod] = useState(false)
+  const navigate = useNavigate()
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const sonodList = useAppSelector((state: RootState) => state.union.sonodList);
   const { service } = useParams<{ service: string }>();
@@ -29,7 +32,7 @@ const FormValueModal = ({
   const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
 
-  // console.log(tradeFee);
+
 
   const handleCancel = () => {
     onCancel();
@@ -58,6 +61,11 @@ const FormValueModal = ({
     }
   };
 
+  const handleEnglishSonod = () => {
+    const userData = data
+    navigate(`/application-english/${service}`, { state: userData });
+  };
+
   const getSuccessorList = () => {
     const successors = [];
     let index = 0;
@@ -84,6 +92,8 @@ const FormValueModal = ({
   };
 
   const successorList = getSuccessorList();
+
+
   return (
     <Modal
       width={800}
@@ -241,30 +251,47 @@ const FormValueModal = ({
           </div>
         </div>
         <br /> <br />
-        {from !== "dashboard" && (
-          <div
-            className="text-center"
-            style={{ width: "50%", margin: "0px auto" }}
-          >
-            <h3>
-              আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
-              {service === "ট্রেড লাইসেন্স"
-                ? tradeFee
-                  ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
-                  : Number(sonod?.sonod_fees)
-                : sonod?.sonod_fees}{" "}
-              টাকা ।
-            </h3>
-            <button
-              disabled={isLoading}
-              onClick={handlePayment}
-              type="submit"
-              className="border-1 btn_main text-nowrap w-100"
-            >
-              {isLoading ? "Please wait" : "Pay And Submit"}
-            </button>
-          </div>
-        )}
+
+
+        <div>
+          {!banglaSonod &&
+            <div className="text-center">
+              <h4>আপনি কি ইংরেজি সনদের জন্য আবেদন করতে চান?</h4>
+              <div className="d-flex gap-3 justify-content-center">
+                <button style={{ width: 100 }} className="btn btn-primary" onClick={handleEnglishSonod}>হ্যাঁ </button>
+                <button style={{ width: 100 }} className="btn btn-danger" onClick={() => setBanglaSonod(true)}>না</button>
+              </div>
+            </div>}
+
+
+          {banglaSonod && <>
+            {from !== "dashboard" && (
+              <div className="text-center col-md-7 mx-auto" >
+                <h3>
+                  আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
+                  {service === "ট্রেড লাইসেন্স"
+                    ? tradeFee
+                      ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
+                      : Number(sonod?.sonod_fees)
+                    : sonod?.sonod_fees}{" "}
+                  টাকা ।
+                </h3>
+                <button
+                  disabled={isLoading}
+                  onClick={handlePayment}
+                  type="submit"
+                  className="border-1 btn_main text-nowrap w-100"
+                >
+                  {isLoading ? "Please wait" : "Pay And Submit"}
+                </button>
+              </div>
+            )}
+          </>}
+
+
+        </div>
+
+
       </div>
     </Modal>
   );
