@@ -249,7 +249,7 @@ const FormValueModal = ({
             ))}
           </div>
         </div>
-        <br /> <br />
+        <br />
 
 
         {/* <h3>
@@ -276,6 +276,7 @@ const FormValueModal = ({
           {banglaSonod && <>
             {from !== "dashboard" && (
               <div className="text-center col-md-7 mx-auto" >
+
                 <h3>
                   আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
                   {service === "ট্রেড লাইসেন্স"
@@ -293,6 +294,15 @@ const FormValueModal = ({
                 >
                   {isLoading ? "Please wait" : "Pay And Submit"}
                 </button>
+
+
+                <div className="align-items-center d-flex gap-2 justify-content-end justify-content-start mb-2 mt-2 text-info-emphasis">
+                  <span>ইংরেজি সনদ নিতে  </span>
+                  <button onClick={handleEnglishSonod} className="btn btn-sm btn-info">
+
+                    এখানে ক্লিক
+                  </button> <span>করুন</span></div>
+
               </div>
             )}
           </>}
