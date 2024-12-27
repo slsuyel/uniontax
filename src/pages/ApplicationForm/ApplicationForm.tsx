@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Form, Button, message } from "antd";
+import { Form, Button, message, Modal } from "antd";
 import addressFields from "./addressFields";
 import attachmentForm from "./attachmentForm";
 
@@ -13,19 +13,17 @@ import inheritanceList from "./inheritanceList";
 import conditionalForm from "./conditionalForm";
 
 import FormValueModal from "@/components/ui/FormValueModal";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTradeInfoQuery } from "@/redux/api/user/userApi";
 import { TApplicantData } from "@/types";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
-
+const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const [form] = Form.useForm();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
   const [sonodName, setSonodName] = useState(service);
-
-  console.log(unionInfo);
   const { data, isLoading } = useTradeInfoQuery(
     { unionName: unionInfo?.short_name_e },
     {
@@ -39,14 +37,8 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+  const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   const hostname = window.location.hostname;
-  //   const union = hostname.split(".")[0];
-  //   if (union !== "localhost") {
-  //     setUnionName(union);
-  //   }
-  // }, []);
 
   useEffect(() => {
     if (isDashboard && user?.sonod_name) {
@@ -56,31 +48,38 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     }
   }, [isDashboard, user?.sonod_name, service]);
 
-  const onFinish = async (values: any) => {
-    setUserData(values);
-
-    if (isDashboard) {
-      console.log("Submitted values:", values);
-      message.success("Form submitted from dashboard successfully");
-    } else {
-      setModalVisible(true);
-    }
+  const handleSubmitForm = async (values: any) => {
+    confirm({
+      title: 'আপনি কি ইংরেজি সনদের জন্য আবেদন করতে চান?',
+      okText: 'হ্যাঁ',
+      cancelText: 'না',
+      onOk() {
+        navigate(`/application-english/${service}`, { state: { bn: values } });
+        return;
+      },
+      onCancel() {
+        console.log('No clicked');
+        setUserData(values);
+        if (isDashboard) {
+          console.log("Submitted values:", values);
+          message.success("Form submitted from dashboard successfully");
+        } else {
+          setModalVisible(true);
+        }
+      },
+    });
   };
 
   const handleCancel = () => {
     setModalVisible(false);
   };
 
-  console.log(isDashboard);
-
-  console.log(sonodName);
-
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form
         form={form}
         layout="vertical"
-        onFinish={onFinish}
+        onFinish={handleSubmitForm}
         initialValues={{
           unioun_name: user?.unioun_name,
           sonod_name: user?.sonod_name,

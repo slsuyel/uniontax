@@ -20,6 +20,7 @@ import { adminRoutes } from "./adminRoutes";
 import AuthProvider from "@/Providers/AuthProvider";
 import PaymentSuccessPage from "@/pages/payment/PaymentSuccessPage";
 import SingleHoldingPublic from "@/pages/Holding/SingleHoldingPublic";
+import EnglishApplicationForm from "@/pages/EnglishApplicationForm/EnglishApplicationForm";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "/application/:service",
         element: <ApplicationForm />,
+      },
+      {
+        path: "/application-english/:service",
+        element: <EnglishApplicationForm />,
       },
     ],
   },
