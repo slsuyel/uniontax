@@ -128,7 +128,11 @@ const UnionProfile = () => {
           <div className="row">
             <div className="col-md-4">
               <Form.Item label="ইউনিয়নের পুরো নাম (বাংলা)" name="full_name">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
@@ -136,7 +140,11 @@ const UnionProfile = () => {
                 label="ইউনিয়নের পুরো নাম (ইংরেজি)"
                 name="full_name_en"
               >
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
@@ -144,47 +152,83 @@ const UnionProfile = () => {
                 label="ইউনিয়নের সংক্ষিপ্ত নাম (বাংলা)"
                 name="short_name_b"
               >
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="উপজেলা (বাংলা)" name="thana">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="উপজেলা (ইংরেজি)" name="thana_en">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="জেলা (বাংলা)" name="district">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="জেলা (ইংরেজি)" name="district_en">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="চেয়ারম্যানের নাম (বাংলা)" name="c_name">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="চেয়ারম্যানের নাম (ইংরেজি)" name="c_name_en">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="সচিবের নাম (বাংলা)" name="socib_name">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="সচিবের নাম (ইংরেজি)" name="socib_name_en">
-                <Input style={{ height: 40 }} onChange={handleChange} />
+                <Input
+                  style={{ height: 40 }}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
@@ -193,6 +237,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   type="email"
                   onChange={handleChange}
+                  className="form-control"
                 />
               </Form.Item>
             </div>
@@ -202,23 +247,36 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   type="email"
                   onChange={handleChange}
+                  className="form-control"
                 />
               </Form.Item>
             </div>
 
             <div className="col-md-4">
               <Form.Item label="ইউনিয়নের বিবরন (বাংলা)" name="u_description">
-                <Input.TextArea rows={6} onChange={handleChange} />
+                <Input.TextArea
+                  rows={6}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="ইউনিয়নের নোটিশ (বাংলা)" name="u_notice">
-                <Input.TextArea rows={6} onChange={handleChange} />
+                <Input.TextArea
+                  rows={6}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
               <Form.Item label="ইউনিয়নের ম্যাপ" name="google_map">
-                <Input.TextArea rows={6} onChange={handleChange} />
+                <Input.TextArea
+                  rows={6}
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </Form.Item>
             </div>
             <div className="col-md-4">
@@ -227,6 +285,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   type="color"
                   onChange={handleChange}
+                  className="form-control"
                 />
               </Form.Item>
             </div>
@@ -234,7 +293,7 @@ const UnionProfile = () => {
               <Form.Item label="ওয়েবসাইট এর লোগো" name="web_logo">
                 {/* <Upload
                   beforeUpload={() => false}
-                  onChange={handleChange}
+                  onChange={handleChange} className="form-control"
                   showUploadList={false}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
@@ -254,7 +313,7 @@ const UnionProfile = () => {
               <Form.Item label="সনদ এর লোগো" name="sonod_logo">
                 {/* <Upload
                   beforeUpload={() => false}
-                  onChange={handleChange}
+                  onChange={handleChange} className="form-control"
                   showUploadList={false}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
@@ -274,7 +333,7 @@ const UnionProfile = () => {
               <Form.Item label="চেয়ারম্যানের স্বাক্ষর" name="c_signture">
                 {/* <Upload
                   beforeUpload={() => false}
-                  onChange={handleChange}
+                  onChange={handleChange} className="form-control"
                   showUploadList={false}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
@@ -294,7 +353,7 @@ const UnionProfile = () => {
               <Form.Item label="সচিবের স্বাক্ষর" name="socib_signture">
                 {/* <Upload
                   beforeUpload={() => false}
-                  onChange={handleChange}
+                  onChange={handleChange} className="form-control"
                   showUploadList={false}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
@@ -314,7 +373,7 @@ const UnionProfile = () => {
               <Form.Item label="ইউনিয়নের ছবি" name="u_image">
                 {/* <Upload
                   beforeUpload={() => false}
-                  onChange={handleChange}
+                  onChange={handleChange} className="form-control"
                   showUploadList={false}
                 >
                   <Button icon={<UploadOutlined />}>Upload</Button>
