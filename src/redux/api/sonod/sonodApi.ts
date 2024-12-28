@@ -6,14 +6,26 @@ const sonodApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     allSonod: builder.query({
       query: ({ sonodName, stutus, token, sondId }) => ({
-        url: `/user/sonod/list?sonod_name=${sonodName}&stutus=${stutus}${
-          sondId ? `&sondId=${sondId}` : ""
-        }`,
+        url: `/user/sonod/list?sonod_name=${sonodName}&stutus=${stutus}${sondId ? `&sondId=${sondId}` : ""
+          }`,
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
       providesTags: ["sonod-action"],
     }),
+
+    sonodUpdate: builder.mutation({
+      query: ({ id, data, token }) => ({
+        url: `/user/sonod/update/${id}`,
+        method: 'PUT',
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['sonod-action'],
+    }),
+
 
     singleSonod: builder.query({
       query: ({ token, id }) => ({
@@ -26,9 +38,8 @@ const sonodApi = apiSlice.injectEndpoints({
 
     allHolding: builder.query({
       query: ({ word, token, search }) => ({
-        url: `/user/holdingtax?page=1&word=${word}${
-          search ? `&search=${search}` : ""
-        }`,
+        url: `/user/holdingtax?page=1&word=${word}${search ? `&search=${search}` : ""
+          }`,
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
@@ -37,9 +48,8 @@ const sonodApi = apiSlice.injectEndpoints({
 
     allHoldingFrontend: builder.query({
       query: ({ word, search, unioun }) => ({
-        url: `/holdingtax/search?page=1&word=${word}${
-          search ? `&search=${search}&unioun=${unioun}` : ""
-        }`,
+        url: `/holdingtax/search?page=1&word=${word}${search ? `&search=${search}&unioun=${unioun}` : ""
+          }`,
         method: "GET",
       }),
       providesTags: ["holding-create-update"],
@@ -102,6 +112,7 @@ const sonodApi = apiSlice.injectEndpoints({
 
 export const {
   useAllSonodQuery,
+  useSonodUpdateMutation,
   useSonodActionMutation,
   useAllHoldingQuery,
   useSingleHoldingQuery,

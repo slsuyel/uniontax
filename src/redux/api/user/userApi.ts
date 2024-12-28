@@ -10,6 +10,8 @@ const userApi = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['sonod-action'],
+
     }),
     sonodSearch: builder.mutation({
       query: ({ sonodType, sonodNo }) => ({

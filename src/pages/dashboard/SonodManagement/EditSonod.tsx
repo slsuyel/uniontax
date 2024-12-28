@@ -18,7 +18,7 @@ const EditSonod = () => {
   }
 
   const user: TApplicantData = data?.data;
-  console.log(user);
+  // console.log(user);
   return (
     <>
       <ApplicationForm user={user} />

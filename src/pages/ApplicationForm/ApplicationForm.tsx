@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Form, Button, message, /* Modal */ } from "antd";
+import { Form, Button, message /* Modal */ } from "antd";
 import addressFields from "./addressFields";
 import attachmentForm from "./attachmentForm";
 
@@ -18,19 +18,22 @@ import { useTradeInfoQuery } from "@/redux/api/user/userApi";
 import { TApplicantData } from "@/types";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { useSonodUpdateMutation } from "@/redux/api/sonod/sonodApi";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
+  const { id } = useParams();
   const [form] = Form.useForm();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
   const [sonodName, setSonodName] = useState(service);
+  const [updateSonod, { isLoading: updating }] = useSonodUpdateMutation();
   const { data, isLoading } = useTradeInfoQuery(
     { unionName: unionInfo?.short_name_e },
     {
       skip: !unionInfo?.short_name_e || sonodName !== "ট্রেড লাইসেন্স",
     }
   );
-
+  const token = localStorage.getItem(`token`);
   const location = useLocation();
   const pathname = location.pathname;
   const isDashboard = pathname.includes("dashboard");
@@ -38,7 +41,6 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   // const navigate = useNavigate()
-
 
   useEffect(() => {
     if (isDashboard && user?.sonod_name) {
@@ -70,19 +72,31 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   //   });
   // };
   const handleSubmitForm = async (values: any) => {
-    setUserData(values);
-    if (isDashboard) {
-      console.log("Submitted values:", values);
-      message.success("Form submitted from dashboard successfully");
-    } else {
-      setModalVisible(true);
+    try {
+      setUserData(values);
+      if (isDashboard) {
+        console.log("Submitted values:", values);
+        const res = await updateSonod({ data: values, id, token }).unwrap();
+        if (res.status_code === 200) {
+          message.success("সনদটি সফলভাবে আপডেট করা হয়েছে।");
+        } else {
+          message.error("সনদটি আপডেট করতে ব্যর্থ হয়েছে,আবার চেষ্টা করুন");
+        }
+      } else {
+        setModalVisible(true);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      message.error(
+        "An error occurred while submitting the form. Please try again later."
+      );
     }
   };
 
   const handleCancel = () => {
     setModalVisible(false);
   };
-
+  console.log(id);
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form
@@ -207,7 +221,13 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             inheritanceList(inherList, setInherList)}
 
           <div style={{ textAlign: "center" }}>
-            <Button type="primary" htmlType="submit" size="large">
+            <Button
+              loading={updating}
+              disabled={updating}
+              type="primary"
+              htmlType="submit"
+              size="large"
+            >
               সাবমিট
             </Button>
           </div>
