@@ -152,14 +152,18 @@ export interface TApplicantData {
 
 export interface TUnionInfo {
   full_name: string;
+  full_name_en: string;
   short_name_b: string;
   thana: string;
+  thana_en: string;
   district: string;
+  district_en: string;
   c_name: string;
+  c_name_en: string;
   c_email: string;
   socib_name: string;
+  socib_name_en: string;
   socib_email: string;
-  u_code: string;
   u_description: string;
   u_notice: string;
   google_map: string;

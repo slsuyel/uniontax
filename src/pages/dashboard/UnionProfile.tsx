@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
 import {
@@ -6,24 +7,31 @@ import {
   useUpdateUnionMutation,
 } from "@/redux/api/auth/authApi";
 import { TUnionInfo } from "@/types";
-import { message } from "antd";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { message, Form, Input, Button } from "antd";
+import { useState, ChangeEvent, useEffect } from "react";
+// import { UploadOutlined } from "@ant-design/icons";
 
 const UnionProfile = () => {
   const token = localStorage.getItem("token");
   const { data, isLoading } = useUnionProfileQuery({ token });
   const [updateUnion, { isLoading: updating }] = useUpdateUnionMutation();
+  const [form] = Form.useForm();
 
   const [formData, setFormData] = useState<TUnionInfo>({
     full_name: "",
+    full_name_en: "",
     short_name_b: "",
     thana: "",
     district: "",
+    thana_en: "",
+    district_en: "",
     c_name: "",
+    c_name_en: "",
     c_email: "",
     socib_name: "",
+    socib_name_en: "",
     socib_email: "",
-    u_code: "",
+
     u_description: "",
     u_notice: "",
     google_map: "",
@@ -40,14 +48,19 @@ const UnionProfile = () => {
     if (data?.data) {
       setFormData({
         full_name: unionInfo.full_name,
+        full_name_en: unionInfo.full_name_en,
         short_name_b: unionInfo.short_name_b,
         thana: unionInfo.thana,
         district: unionInfo.district,
+        thana_en: unionInfo.thana_en,
+        district_en: unionInfo.district_en,
         c_name: unionInfo.c_name,
+        c_name_en: unionInfo.c_name_en,
         c_email: unionInfo.c_email,
         socib_name: unionInfo.socib_name,
+        socib_name_en: unionInfo.socib_name,
         socib_email: unionInfo.socib_email,
-        u_code: unionInfo.u_code,
+
         u_description: unionInfo.u_description,
         u_notice: unionInfo.u_notice,
         google_map: unionInfo.google_map,
@@ -58,8 +71,9 @@ const UnionProfile = () => {
         socib_signture: unionInfo.socib_signture,
         u_image: unionInfo.u_image,
       });
+      form.setFieldsValue(unionInfo);
     }
-  }, [data]);
+  }, [data, form]);
 
   const handleChange = (
     event: ChangeEvent<
@@ -82,10 +96,9 @@ const UnionProfile = () => {
     }
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (values: TUnionInfo) => {
     try {
-      const res = await updateUnion({ data: formData, token }).unwrap();
+      const res = await updateUnion({ data: values, token }).unwrap();
       console.log(res.status_code);
       if (res.status_code == 200) {
         message.success("Union information updated successfully.");
@@ -102,32 +115,7 @@ const UnionProfile = () => {
       message.error("Failed to update union information. Please try again.");
     }
   };
-  /*  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  
-    // Create FormData object
-    const form = new FormData();
-    for (const key in formData) {
-      if (formData[key] !== null) {
-        form.append(key, formData[key]);
-      }
-    }
-  
-    try {
-      // Send the form data using your mutation or a fetch request
-      const res = await updateUnion({ data: form, token }).unwrap();
-  
-      console.log(res.status_code);
-      if (res.status_code === 200) {
-        message.success("Union information updated successfully.");
-      } else {
-        message.error("Failed to update union information.");
-      }
-    } catch (error) {
-      console.error("failed updating union:", error);
-      message.error("Failed to update union information. Please try again.");
-    }
-  }; */
+
   if (isLoading) {
     return <Loader />;
   }
@@ -135,181 +123,122 @@ const UnionProfile = () => {
   return (
     <div>
       <Breadcrumbs current="ইউনিয়ন প্রোফাইল" />
-      <form className="form-horizontal" onSubmit={handleSubmit}>
+      <Form form={form} onFinish={handleSubmit} layout="vertical">
         <div className="card-body">
           <div className="row">
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ইউনিয়নের পুরো নাম
-                </label>
-                <input
-                  type="text"
-                  id="full_name"
-                  className="form-control"
-                  value={formData.full_name}
-                  onChange={handleChange}
-                />
-              </div>
+              <Form.Item label="ইউনিয়নের পুরো নাম (বাংলা)" name="full_name">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ইউনিয়নের সংক্ষিপ্ত নাম (বাংলা)
-                </label>
-                <input
-                  type="text"
-                  id="short_name_b"
-                  className="form-control"
-                  value={formData.short_name_b}
-                  onChange={handleChange}
-                />
-              </div>
+              <Form.Item
+                label="ইউনিয়নের পুরো নাম (ইংরেজি)"
+                name="full_name_en"
+              >
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  উপজেলা (বাংলা)
-                </label>
-                <input
-                  type="text"
-                  id="thana"
-                  className="form-control"
-                  value={formData.thana}
-                  onChange={handleChange}
-                />
-              </div>
+              <Form.Item
+                label="ইউনিয়নের সংক্ষিপ্ত নাম (বাংলা)"
+                name="short_name_b"
+              >
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  জেলা (বাংলা)
-                </label>
-                <input
-                  type="text"
-                  id="district"
-                  className="form-control"
-                  value={formData.district}
-                  onChange={handleChange}
-                />
-              </div>
+              <Form.Item label="উপজেলা (বাংলা)" name="thana">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  চেয়ারম্যানের নাম (বাংলা)
-                </label>
-                <input
-                  type="text"
-                  id="c_name"
-                  className="form-control"
-                  value={formData.c_name}
-                  onChange={handleChange}
-                />
-              </div>
+              <Form.Item label="উপজেলা (ইংরেজি)" name="thana_en">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  চেয়ারম্যানের ইমেইল
-                </label>
-                <input
+              <Form.Item label="জেলা (বাংলা)" name="district">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
+            </div>
+            <div className="col-md-4">
+              <Form.Item label="জেলা (ইংরেজি)" name="district_en">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
+            </div>
+            <div className="col-md-4">
+              <Form.Item label="চেয়ারম্যানের নাম (বাংলা)" name="c_name">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
+            </div>
+            <div className="col-md-4">
+              <Form.Item label="চেয়ারম্যানের নাম (ইংরেজি)" name="c_name_en">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
+            </div>
+            <div className="col-md-4">
+              <Form.Item label="সচিবের নাম (বাংলা)" name="socib_name">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
+            </div>
+            <div className="col-md-4">
+              <Form.Item label="সচিবের নাম (ইংরেজি)" name="socib_name_en">
+                <Input style={{ height: 40 }} onChange={handleChange} />
+              </Form.Item>
+            </div>
+            <div className="col-md-4">
+              <Form.Item label="চেয়ারম্যানের ইমেইল" name="c_email">
+                <Input
+                  style={{ height: 40 }}
                   type="email"
-                  id="c_email"
-                  className="form-control"
-                  value={formData.c_email}
                   onChange={handleChange}
                 />
-              </div>
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ইউনিয়নের কোড (English)
-                </label>
-                <input
-                  type="text"
-                  id="u_code"
-                  className="form-control"
-                  value={formData.u_code}
+              <Form.Item label="সচিবের ইমেইল" name="socib_email">
+                <Input
+                  style={{ height: 40 }}
+                  type="email"
                   onChange={handleChange}
                 />
-              </div>
+              </Form.Item>
+            </div>
+
+            <div className="col-md-4">
+              <Form.Item label="ইউনিয়নের বিবরন (বাংলা)" name="u_description">
+                <Input.TextArea rows={6} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ইউনিয়নের বিবরন (বাংলা)
-                </label>
-                <textarea
-                  id="u_description"
-                  cols={30}
-                  rows={6}
-                  className="form-control"
-                  style={{ resize: "none", height: "120px" }}
-                  value={formData.u_description}
-                  onChange={handleChange}
-                />
-              </div>
+              <Form.Item label="ইউনিয়নের নোটিশ (বাংলা)" name="u_notice">
+                <Input.TextArea rows={6} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ইউনিয়নের নোটিশ (বাংলা)
-                </label>
-                <textarea
-                  id="u_notice"
-                  cols={30}
-                  rows={6}
-                  className="form-control"
-                  style={{ resize: "none", height: "120px" }}
-                  value={formData.u_notice}
-                  onChange={handleChange}
-                />
-              </div>
+              <Form.Item label="ইউনিয়নের ম্যাপ" name="google_map">
+                <Input.TextArea rows={6} onChange={handleChange} />
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ইউনিয়নের ম্যাপ
-                </label>
-                <textarea
-                  id="google_map"
-                  cols={30}
-                  rows={6}
-                  className="form-control"
-                  style={{ resize: "none", height: "120px" }}
-                  value={formData.google_map}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ওয়েবসাইট কালার
-                </label>
-                <input
-                  style={{ height: 50 }}
+              <Form.Item label="ওয়েবসাইট কালার" name="defaultColor">
+                <Input
+                  style={{ height: 40 }}
                   type="color"
-                  id="defaultColor"
-                  className="form-control"
-                  value={formData.defaultColor}
                   onChange={handleChange}
                 />
-              </div>
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ওয়েবসাইট এর লোগো
-                </label>
-                <input
-                  type="file"
-                  id="web_logo"
-                  className="form-control"
+              <Form.Item label="ওয়েবসাইট এর লোগো" name="web_logo">
+                {/* <Upload
+                  beforeUpload={() => false}
                   onChange={handleChange}
-                />
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload> */}
                 {formData.web_logo && (
                   <img
                     width={250}
@@ -319,19 +248,17 @@ const UnionProfile = () => {
                     style={{ marginTop: "10px" }}
                   />
                 )}
-              </div>
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  সনদ এর লোগো
-                </label>
-                <input
-                  type="file"
-                  id="sonod_logo"
-                  className="form-control"
+              <Form.Item label="সনদ এর লোগো" name="sonod_logo">
+                {/* <Upload
+                  beforeUpload={() => false}
                   onChange={handleChange}
-                />
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload> */}
                 {formData.sonod_logo && (
                   <img
                     width={250}
@@ -341,19 +268,17 @@ const UnionProfile = () => {
                     style={{ marginTop: "10px" }}
                   />
                 )}
-              </div>
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  চেয়ারম্যানের স্বাক্ষর
-                </label>
-                <input
-                  type="file"
-                  id="c_signture"
-                  className="form-control"
+              <Form.Item label="চেয়ারম্যানের স্বাক্ষর" name="c_signture">
+                {/* <Upload
+                  beforeUpload={() => false}
                   onChange={handleChange}
-                />
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload> */}
                 {formData.c_signture && (
                   <img
                     width={250}
@@ -363,19 +288,17 @@ const UnionProfile = () => {
                     style={{ marginTop: "10px" }}
                   />
                 )}
-              </div>
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  সচিবের স্বাক্ষর
-                </label>
-                <input
-                  type="file"
-                  id="socib_signture"
-                  className="form-control"
+              <Form.Item label="সচিবের স্বাক্ষর" name="socib_signture">
+                {/* <Upload
+                  beforeUpload={() => false}
                   onChange={handleChange}
-                />
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload> */}
                 {formData.socib_signture && (
                   <img
                     width={250}
@@ -385,19 +308,17 @@ const UnionProfile = () => {
                     style={{ marginTop: "10px" }}
                   />
                 )}
-              </div>
+              </Form.Item>
             </div>
             <div className="col-md-4">
-              <div className="form-group">
-                <label className="control-label col-form-label">
-                  ইউনিয়নের ছবি
-                </label>
-                <input
-                  type="file"
-                  id="u_image"
-                  className="form-control"
+              <Form.Item label="ইউনিয়নের ছবি" name="u_image">
+                {/* <Upload
+                  beforeUpload={() => false}
                   onChange={handleChange}
-                />
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload> */}
                 {formData.u_image && (
                   <img
                     width={250}
@@ -407,22 +328,18 @@ const UnionProfile = () => {
                     style={{ marginTop: "10px" }}
                   />
                 )}
-              </div>
+              </Form.Item>
             </div>
           </div>
         </div>
-        <div className=" pt-4">
+        <div className="pt-4">
           <div className="">
-            <button
-              disabled={updating}
-              type="submit"
-              className="btn btn-primary"
-            >
+            <Button disabled={updating} type="primary" htmlType="submit">
               {updating ? "Submitting" : "সাবমিট"}
-            </button>
+            </Button>
           </div>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };
