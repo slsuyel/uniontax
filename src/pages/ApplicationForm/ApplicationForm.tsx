@@ -13,7 +13,7 @@ import inheritanceList from "./inheritanceList";
 import conditionalForm from "./conditionalForm";
 
 import FormValueModal from "@/components/ui/FormValueModal";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTradeInfoQuery } from "@/redux/api/user/userApi";
 import { TApplicantData } from "@/types";
 import { useAppSelector } from "@/redux/features/hooks";
@@ -26,6 +26,8 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
   const [sonodName, setSonodName] = useState(service);
+  const navigate = useNavigate();
+
   const [updateSonod, { isLoading: updating }] = useSonodUpdateMutation();
   const { data, isLoading } = useTradeInfoQuery(
     { unionName: unionInfo?.short_name_e },
@@ -50,27 +52,6 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     }
   }, [isDashboard, user?.sonod_name, service]);
 
-  // const handleSubmitForm = async (values: any) => {
-  //   confirm({
-  //     title: 'আপনি কি ইংরেজি সনদের জন্য আবেদন করতে চান?',
-  //     okText: 'হ্যাঁ',
-  //     cancelText: 'না',
-  //     onOk() {
-  //       navigate(`/application-english/${service}`, { state: { userData: values } });
-  //       return;
-  //     },
-  //     onCancel() {
-  //       console.log('No clicked');
-  //       setUserData(values);
-  //       if (isDashboard) {
-  //         console.log("Submitted values:", values);
-  //         message.success("Form submitted from dashboard successfully");
-  //       } else {
-  //         setModalVisible(true);
-  //       }
-  //     },
-  //   });
-  // };
   const handleSubmitForm = async (values: any) => {
     try {
       setUserData(values);
@@ -78,6 +59,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
         console.log("Submitted values:", values);
         const res = await updateSonod({ data: values, id, token }).unwrap();
         if (res.status_code === 200) {
+          navigate(-1);
           message.success("সনদটি সফলভাবে আপডেট করা হয়েছে।");
         } else {
           message.error("সনদটি আপডেট করতে ব্যর্থ হয়েছে,আবার চেষ্টা করুন");
@@ -137,6 +119,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           organization_address: user?.organization_address,
           applicant_name: user?.applicant_name,
           utname: user?.utname,
+          orthoBchor: user?.orthoBchor,
           ut_religion: user?.ut_religion,
           alive_status: user?.alive_status,
           applicant_gender: user?.applicant_gender,
