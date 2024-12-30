@@ -20,7 +20,7 @@ const Navbar = () => {
     },
     {
       label: "Log Out",
-      key: "2", // Use a unique key for each menu item
+      key: "2",
       icon: <LogoutOutlined />,
       onClick: handleLogoutClick,
     },

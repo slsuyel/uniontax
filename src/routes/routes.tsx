@@ -21,6 +21,8 @@ import AuthProvider from "@/Providers/AuthProvider";
 import PaymentSuccessPage from "@/pages/payment/PaymentSuccessPage";
 import SingleHoldingPublic from "@/pages/Holding/SingleHoldingPublic";
 import EnglishApplicationForm from "@/pages/EnglishApplicationForm/EnglishApplicationForm";
+import UddoktaLayout from "./../components/layouts/uddokta/UddoktaLayout";
+import { uddoktaRoutes } from "./uddoktaRoutes";
 
 const router = createBrowserRouter([
   {
@@ -103,12 +105,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: adminRoutes,
   },
-  // {
-  //   path: "uddokta",
-  //   element: ,
-  //   errorElement: <ErrorPage />,
-  //   children: adminRoutes,
-  // },
+  {
+    path: "uddokta",
+    element: <UddoktaLayout />,
+    errorElement: <ErrorPage />,
+    children: uddoktaRoutes,
+  },
 ]);
 
 export default router;

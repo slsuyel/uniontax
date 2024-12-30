@@ -161,7 +161,7 @@ type SidebarItemWithoutSubmenu = SidebarItemBase & {
   submenu?: never;
 };
 
-type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
+export type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 
 const Sidebar = () => {
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);

@@ -32,7 +32,6 @@ const UserLayout = () => {
             display: "flex",
             alignItems: "center",
             position: "fixed",
-            // justifyContent: 'end',
             width: "100%",
             zIndex: 1000,
             backgroundColor: !theme
