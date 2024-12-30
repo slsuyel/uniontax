@@ -5,4 +5,8 @@ export const uddoktaRoutes = [
     path: "",
     element: <UddoktaDashboardHome />,
   },
+  {
+    path: "application/:service",
+    element: <UddoktaDashboardHome />,
+  },
 ];

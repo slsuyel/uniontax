@@ -2,7 +2,7 @@ import { Layout, Menu } from "antd";
 import { Outlet } from "react-router-dom";
 import Navbar from "../admin/Navbar";
 
-const { Sider, Content, Header } = Layout;
+const { Sider, Content, Header, Footer } = Layout;
 
 const UddoktaLayout = () => {
   const theme = false;
@@ -86,6 +86,14 @@ const UddoktaLayout = () => {
             <Outlet />
           </div>
         </Content>
+
+        <Footer className={`${!theme ? "dark border-top" : ""}`}>
+          <footer>
+            <div className="float-right d-none d-sm-inline">Version 1.0.0 </div>
+            <strong>Copyright © 2023-2024 সফটওয়েব সিস্টেম সল্যুশন</strong>
+            {""} || All rights reserved.
+          </footer>
+        </Footer>
       </Layout>
     </Layout>
   );

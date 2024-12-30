@@ -1,13 +1,20 @@
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { useNavigate } from "react-router-dom";
 
 const UddoktaDashboardHome = () => {
+  const navigate = useNavigate();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-  console.log(sonodInfo);
+
+  const handleService = (service: string) => {
+    navigate(`/uddokta/application/${service}`);
+  };
+
   return (
-    <div className=" container mx-auto">
+    <div className="container mx-auto">
       {sonodInfo.map((service, index) => (
         <button
+          onClick={() => handleService(service.bnname)}
           key={index}
           className="col-lg-2 col-md-3 col-sm-4 col-6 my-3 text-center border-0 bg-transparent"
         >
