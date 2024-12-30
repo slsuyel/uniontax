@@ -157,8 +157,12 @@ export interface TUnionInfo {
   thana_en: string;
   district: string;
   district_en: string;
+
   c_name: string;
   c_name_en: string;
+  c_type: string;
+  c_type_en: string;
+
   c_email: string;
   socib_name: string;
   socib_name_en: string;

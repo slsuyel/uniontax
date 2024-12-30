@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
@@ -7,7 +8,7 @@ import {
   useUpdateUnionMutation,
 } from "@/redux/api/auth/authApi";
 import { TUnionInfo } from "@/types";
-import { message, Form, Input, Button } from "antd";
+import { message, Form, Input, Button, Select } from "antd";
 import { useState, ChangeEvent, useEffect } from "react";
 // import { UploadOutlined } from "@ant-design/icons";
 
@@ -27,6 +28,8 @@ const UnionProfile = () => {
     district_en: "",
     c_name: "",
     c_name_en: "",
+    c_type: "",
+    c_type_en: "",
     c_email: "",
     socib_name: "",
     socib_name_en: "",
@@ -56,6 +59,8 @@ const UnionProfile = () => {
         district_en: unionInfo.district_en,
         c_name: unionInfo.c_name,
         c_name_en: unionInfo.c_name_en,
+        c_type: unionInfo.c_name,
+        c_type_en: unionInfo.c_name_en,
         c_email: unionInfo.c_email,
         socib_name: unionInfo.socib_name,
         socib_name_en: unionInfo.socib_name,
@@ -75,10 +80,39 @@ const UnionProfile = () => {
     }
   }, [data, form]);
 
+  // const handleChange = (
+  //   event: ChangeEvent<
+  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  //   >
+  // ) => {
+  //   const { id, value, type } = event.target;
+
+  //   if (type === "file") {
+  //     const files = (event.target as HTMLInputElement).files;
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [id]: files ? files[0] : null,
+  //     }));
+  //   } else {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [id]: value,
+  //     }));
+  //   }
+  // };
+  const cTypeOptions = [
+    { bn: "চেয়ারম্যান", en: "Chairman" },
+    { bn: "প্যানেল চেয়ারম্যান ১", en: "Panel Chairman 1" },
+    { bn: "প্যানেল চেয়ারম্যান ২", en: "Panel Chairman 2" },
+    { bn: "প্যানেল চেয়ারম্যান ৩", en: "Panel Chairman 3" },
+    { bn: "প্রশাসক", en: "Deputy Commissioner" },
+    { bn: "সদস্য/সদস্যা", en: "Member" },
+  ];
+
   const handleChange = (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    event:
+      | ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+      | any
   ) => {
     const { id, value, type } = event.target;
 
@@ -95,8 +129,19 @@ const UnionProfile = () => {
       }));
     }
   };
-
+  const handleCTypeChange = (value: string) => {
+    const selectedOption = cTypeOptions.find((option) => option.bn === value);
+    if (selectedOption) {
+      setFormData((prevData) => ({
+        ...prevData,
+        c_type: value,
+        c_type_en: selectedOption.en,
+      }));
+      form.setFieldsValue({ c_type: value, c_type_en: selectedOption.en }); // Update form fields
+    }
+  };
   const handleSubmit = async (values: TUnionInfo) => {
+    console.log(values);
     try {
       const res = await updateUnion({ data: values, token }).unwrap();
       console.log(res.status_code);
@@ -213,6 +258,28 @@ const UnionProfile = () => {
                 />
               </Form.Item>
             </div>
+
+            <div className="col-md-4">
+              <Form.Item label="চেয়ারম্যানের ধরন (বাংলা)" name="c_type">
+                <Select style={{ height: 40 }} onChange={handleCTypeChange}>
+                  {cTypeOptions.map((option) => (
+                    <Select.Option key={option.bn} value={option.bn}>
+                      {option.bn}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </div>
+            <div className="col-md-4 d-none">
+              <Form.Item label="চেয়ারম্যানের ধরন (ইংরেজি)" name="c_type_en">
+                <Input
+                  style={{ height: 40 }}
+                  readOnly
+                  className="form-control"
+                />
+              </Form.Item>
+            </div>
+
             <div className="col-md-4">
               <Form.Item label="সচিবের নাম (বাংলা)" name="socib_name">
                 <Input
