@@ -1,5 +1,5 @@
 import { Layout, Menu } from "antd";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import Navbar from "../admin/Navbar";
 
 const { Sider, Content, Header, Footer } = Layout;
@@ -9,21 +9,36 @@ const UddoktaLayout = () => {
 
   const sidebarItems = [
     {
-      key: "dashboard",
-      label: "ড্যাশবোর্ড",
+      key: "/uddokta",
+      label: (
+        <Link className="text-decoration-none" to="/uddokta">
+          ড্যাশবোর্ড
+        </Link>
+      ),
     },
     {
       key: "make-payment",
-      label: "পেমেন্ট করুন",
+      label: (
+        <Link className="text-decoration-none" to="/make-payment">
+          পেমেন্ট করুন
+        </Link>
+      ),
     },
     {
       key: "new-application",
-      label: "নতুন আবেদন",
+      label: (
+        <Link className="text-decoration-none" to="/new-application">
+          নতুন আবেদন
+        </Link>
+      ),
     },
-
     {
       key: "settings",
-      label: "সেটিংস",
+      label: (
+        <Link className="text-decoration-none" to="/settings">
+          সেটিংস
+        </Link>
+      ),
     },
   ];
 

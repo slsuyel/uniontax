@@ -1,3 +1,4 @@
+import ApplicationForm from "@/pages/ApplicationForm/ApplicationForm";
 import UddoktaDashboardHome from "@/pages/UddoktaDashboard/UddoktaDashboardHome";
 
 export const uddoktaRoutes = [
@@ -7,6 +8,6 @@ export const uddoktaRoutes = [
   },
   {
     path: "application/:service",
-    element: <UddoktaDashboardHome />,
+    element: <ApplicationForm />,
   },
 ];

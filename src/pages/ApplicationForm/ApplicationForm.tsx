@@ -78,7 +78,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const handleCancel = () => {
     setModalVisible(false);
   };
-  console.log(id);
+  console.log(sonodName);
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form
