@@ -14,9 +14,17 @@ const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ["profileCreate"] as any,
     }),
 
+    // userLogin: builder.mutation({
+    //   query: ({ email, password, endpoint }) => ({
+    //     url: `/auth/user/login`,
+    //     method: "POST",
+    //     body: { email, password },
+    //   }),
+    //   invalidatesTags: ["profileCreate"] as any,
+    // }),
     userLogin: builder.mutation({
-      query: ({ email, password }) => ({
-        url: `/auth/user/login`,
+      query: ({ email, password, endpoint }) => ({
+        url: `/auth/${endpoint}`,
         method: "POST",
         body: { email, password },
       }),
@@ -53,7 +61,7 @@ const authApi = apiSlice.injectEndpoints({
           authorization: `Bearer ${token}`,
         },
       }),
-      providesTags: ["profileUpdate",] as any,
+      providesTags: ["profileUpdate"] as any,
     }),
 
     updateUnion: builder.mutation({

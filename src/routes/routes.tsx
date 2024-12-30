@@ -103,6 +103,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: adminRoutes,
   },
+  // {
+  //   path: "uddokta",
+  //   element: ,
+  //   errorElement: <ErrorPage />,
+  //   children: adminRoutes,
+  // },
 ]);
 
 export default router;
