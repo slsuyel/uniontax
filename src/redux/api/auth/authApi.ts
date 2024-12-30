@@ -38,6 +38,13 @@ const authApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    uddoktaTokenCheck: builder.query({
+      query: ({ token }) => ({
+        url: `/auth/uddokta/check-token`,
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+    }),
+
     resetPassLink: builder.mutation({
       query: ({ data }) => ({
         url: `/user/password/email`,
@@ -106,4 +113,5 @@ export const {
   useUpdateUnionMutation,
   useResetPassLinkMutation,
   useChangePasswordMutation,
+  useUddoktaTokenCheckQuery,
 } = authApi;

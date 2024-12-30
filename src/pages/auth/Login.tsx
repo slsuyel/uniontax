@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // // /* eslint-disable @typescript-eslint/no-unused-vars */
 // // import { useState } from "react";
 // // import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -225,7 +226,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Input, Checkbox, Tabs } from "antd";
+import { Input, Checkbox, Tabs, message } from "antd";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 
 const { TabPane } = Tabs;
@@ -276,6 +277,7 @@ const Login = () => {
         password,
         endpoint: loginConfig[loginType].endpoint,
       }).unwrap();
+
       if (res.status_code === 200) {
         localStorage.setItem("token", res.data.token);
         if (rememberMe) {
@@ -285,13 +287,26 @@ const Login = () => {
           localStorage.removeItem("rememberedEmail");
           localStorage.removeItem("rememberedPassword");
         }
-        console.log(`${loginType} login successful`);
-        navigate(from);
+        if (res.data.uddokta) {
+          navigate(`/uddokta`);
+        } else {
+          navigate(from);
+        }
       } else {
-        console.error("Login failed");
+        if (res.status_code === 401) {
+          message.error("Unauthorized: Please check your email and password.");
+        } else {
+          console.error("Login error");
+          message.error(`Login failed`);
+        }
+        console.error("Login failed", res);
       }
-    } catch (error) {
-      console.error("Login error:", error);
+    } catch (error: any) {
+      if (error.status === 401) {
+        message.error("Unauthorized: Please check your email and password.");
+      } else {
+        console.error("Login error:", error);
+      }
     }
   };
 
@@ -310,9 +325,9 @@ const Login = () => {
                 defaultActiveKey="chairman"
                 onChange={handleTabChange}
               >
+                <TabPane tab="সচিব লগইন" key="secretary" />
                 <TabPane tab="চেয়ারম্যান লগইন" key="chairman" />
                 <TabPane tab="উদ্যোক্তা লগইন" key="entrepreneur" />
-                <TabPane tab="সচিব লগইন" key="secretary" />
               </Tabs>
             </div>
             <form onSubmit={handleSubmit} className="px-3">

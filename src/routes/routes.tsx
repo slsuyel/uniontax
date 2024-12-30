@@ -23,6 +23,7 @@ import SingleHoldingPublic from "@/pages/Holding/SingleHoldingPublic";
 import EnglishApplicationForm from "@/pages/EnglishApplicationForm/EnglishApplicationForm";
 import UddoktaLayout from "./../components/layouts/uddokta/UddoktaLayout";
 import { uddoktaRoutes } from "./uddoktaRoutes";
+import UddoktaAuthProvider from "@/Providers/UddoktaAuthProvider";
 
 const router = createBrowserRouter([
   {
@@ -107,7 +108,11 @@ const router = createBrowserRouter([
   },
   {
     path: "uddokta",
-    element: <UddoktaLayout />,
+    element: (
+      <UddoktaAuthProvider>
+        <UddoktaLayout />
+      </UddoktaAuthProvider>
+    ),
     errorElement: <ErrorPage />,
     children: uddoktaRoutes,
   },
