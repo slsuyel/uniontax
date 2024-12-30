@@ -23,16 +23,14 @@ const FormValueModal = ({
   onCancel,
   from,
 }: FormValueModalProps) => {
-  const [banglaSonod, setBanglaSonod] = useState(false)
-  const navigate = useNavigate()
+  const [banglaSonod, setBanglaSonod] = useState(false);
+  const navigate = useNavigate();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const sonodList = useAppSelector((state: RootState) => state.union.sonodList);
   const { service } = useParams<{ service: string }>();
   const sonod = sonodList.find((d) => d.bnname == service);
   const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
-
-
 
   const handleCancel = () => {
     onCancel();
@@ -91,7 +89,6 @@ const FormValueModal = ({
   };
 
   const successorList = getSuccessorList();
-
 
   return (
     <Modal
@@ -251,7 +248,6 @@ const FormValueModal = ({
         </div>
         <br />
 
-
         {/* <h3>
           আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
           {service === "ট্রেড লাইসেন্স"
@@ -263,54 +259,66 @@ const FormValueModal = ({
         </h3> */}
 
         <div>
-          {!banglaSonod &&
+          {!banglaSonod && (
             <div className="text-center">
               <h4>আপনি কি ইংরেজি সনদের জন্য আবেদন করতে চান?</h4>
               <div className="d-flex gap-3 justify-content-center">
-                <button style={{ width: 100 }} className="btn btn-primary" onClick={handleEnglishSonod}>হ্যাঁ </button>
-                <button style={{ width: 100 }} className="btn btn-danger" onClick={() => setBanglaSonod(true)}>না</button>
-              </div>
-            </div>}
-
-
-          {banglaSonod && <>
-            {from !== "dashboard" && (
-              <div className="text-center col-md-7 mx-auto" >
-
-                <h3>
-                  আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service} এর ফি{" "}
-                  {service === "ট্রেড লাইসেন্স"
-                    ? tradeFee
-                      ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
-                      : Number(sonod?.sonod_fees)
-                    : sonod?.sonod_fees}{" "}
-                  টাকা ।
-                </h3>
                 <button
-                  disabled={isLoading}
-                  onClick={handlePayment}
-                  type="submit"
-                  className="border-1 btn_main text-nowrap w-100"
+                  style={{ width: 100 }}
+                  className="btn btn-primary"
+                  onClick={handleEnglishSonod}
                 >
-                  {isLoading ? "Please wait" : "Pay And Submit"}
+                  হ্যাঁ{" "}
                 </button>
-
-
-                <div className="align-items-center d-flex gap-2 justify-content-end justify-content-start mb-2 mt-2 text-info-emphasis">
-                  <span>ইংরেজি সনদ নিতে  </span>
-                  <button onClick={handleEnglishSonod} className="btn btn-sm btn-info">
-
-                    এখানে ক্লিক
-                  </button> <span>করুন</span></div>
-
+                <button
+                  style={{ width: 100 }}
+                  className="btn btn-danger"
+                  onClick={() => setBanglaSonod(true)}
+                >
+                  না
+                </button>
               </div>
-            )}
-          </>}
+            </div>
+          )}
 
+          {banglaSonod && (
+            <>
+              {from !== "dashboard" && (
+                <div className="text-center col-md-7 mx-auto">
+                  <h3>
+                    আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service}{" "}
+                    এর ফি{" "}
+                    {service === "ট্রেড লাইসেন্স"
+                      ? tradeFee
+                        ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
+                        : Number(sonod?.sonod_fees)
+                      : sonod?.sonod_fees}{" "}
+                    টাকা ।
+                  </h3>
+                  <button
+                    disabled={isLoading}
+                    onClick={handlePayment}
+                    type="submit"
+                    className="border-1 btn_main text-nowrap w-100"
+                  >
+                    {isLoading ? "Please wait" : "Pay And Submit"}
+                  </button>
 
+                  <div className="align-items-center d-flex gap-2 justify-content-end justify-content-start mb-2 mt-2 text-info-emphasis">
+                    <span>ইংরেজি সনদ নিতে </span>
+                    <button
+                      onClick={handleEnglishSonod}
+                      className="btn btn-sm btn-info"
+                    >
+                      এখানে ক্লিক
+                    </button>{" "}
+                    <span>করুন</span>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
-
-
       </div>
     </Modal>
   );

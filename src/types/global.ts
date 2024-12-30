@@ -31,8 +31,6 @@ export interface ScrollToTopProps {
   children?: ReactNode;
 }
 
-
-
 export type TService = {
   title: string;
   link: string;
@@ -40,6 +38,7 @@ export type TService = {
 
 export interface TApplicantData {
   unioun_name?: string;
+  hasEnData?: 0 | 1;
   applicant_name?: string;
   applicant_gender?: string;
   applicant_father_name?: string;

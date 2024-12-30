@@ -38,6 +38,8 @@ const SonodActionBtn = ({
     }
   };
 
+  console.log(item.hasEnData);
+
   return (
     <>
       <div
@@ -83,13 +85,24 @@ const SonodActionBtn = ({
         </Link>
 
         {condition == "approved" && (
-          <Link
-            target="_blank"
-            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
-            className="btn btn-success btn-sm mr-1"
-          >
-            সনদ
-          </Link>
+          <>
+            <Link
+              target="_blank"
+              to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+              className="btn btn-success btn-sm mr-1"
+            >
+              বাংলা সনদ
+            </Link>
+            {item.hasEnData == 1 && (
+              <Link
+                target="_blank"
+                to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
+                className="btn btn-success btn-sm mr-1"
+              >
+                ইংরেজি সনদ
+              </Link>
+            )}
+          </>
         )}
 
         {condition == "new" && (
