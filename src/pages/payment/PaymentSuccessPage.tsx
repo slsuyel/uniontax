@@ -79,10 +79,20 @@ const PaymentSuccessPage: React.FC = () => {
     try {
       const response: any = await checkPayment({ trnx_id: transId }).unwrap();
       SetSonodId(response.data.myserver.sonodId);
+
       if (response.data.myserver.status !== "Paid") {
-        if (response.data.akpay.msg_code == "1020") {
+        if (response.data.akpay.msg_code === "1020") {
           SetShowDetails(false);
           setPaymentData(response?.data?.akpay);
+
+          // Ensure paymentData is updated before calling callIpn
+          const updatedPaymentData = response?.data?.akpay;
+          setPaymentData(updatedPaymentData);
+
+          const res = await callIpn({ data: updatedPaymentData }).unwrap();
+          if (res.status_code === 200) {
+            SetShowDetails(true);
+          }
         } else {
           setFailedPage(true);
         }
@@ -94,7 +104,7 @@ const PaymentSuccessPage: React.FC = () => {
       setFailedPage(true);
       console.error("Error fetching payment details:", error);
     }
-  }, [transId, checkPayment]);
+  }, [transId, checkPayment, callIpn]);
 
   useEffect(() => {
     if (!transId) {
@@ -112,13 +122,6 @@ const PaymentSuccessPage: React.FC = () => {
       fetchPaymentDetails();
     }
   }, [count, transId, hasCalledApi, fetchPaymentDetails]);
-
-  const handleRecallCheckPayment = async () => {
-    const res = await callIpn({ data: paymentData }).unwrap();
-    if (res.status_code == 200) {
-      SetShowDetails(true);
-    }
-  };
 
   return (
     <div className="container">
@@ -208,7 +211,7 @@ const PaymentSuccessPage: React.FC = () => {
             </div>
           )}
 
-          {paymentData?.msg_code === "1020" && (
+          {!showDetails && paymentData?.msg_code === "1020" && (
             <div
               style={{ height: "50vh" }}
               className="d-flex justify-content-center align-items-center"
@@ -224,8 +227,8 @@ const PaymentSuccessPage: React.FC = () => {
               >
                 <h3 className="fw-bold text-danger">Payment Failed</h3>
                 <p className="">
-                  আপনার পেমেন্ট টি সঠিক ভাবে যাচাই হয়নি, দয়া করে নিচের পেমেন্ট
-                  যাচাই বাটনে ক্লিক দিয়ে আবার যাচাই করুন। ধন্যবাদ
+                  আপনার পেমেন্ট টি সঠিক ভাবে যাচাই হয়নি, দয়া করে অপেক্ষা করুন।
+                  ধন্যবাদ
                 </p>
 
                 <Button
@@ -234,9 +237,8 @@ const PaymentSuccessPage: React.FC = () => {
                   className="bg-danger text-white"
                   size="large"
                   key="recall"
-                  onClick={handleRecallCheckPayment}
                 >
-                  পেমেন্ট যাচাই করুন
+                  পেমেন্টটি আবার যাচাই করা হচ্ছে।
                 </Button>
               </Card>
             </div>
