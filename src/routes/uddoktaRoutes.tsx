@@ -1,4 +1,6 @@
-import ApplicationForm from "@/pages/ApplicationForm/ApplicationForm";
+import UnderConstruction from "@/components/reusable/UnderConstruction";
+
+import UddoktaApplicationForm from "@/pages/UddoktaDashboard/UddoktaApplicationForm";
 import UddoktaDashboardHome from "@/pages/UddoktaDashboard/UddoktaDashboardHome";
 
 export const uddoktaRoutes = [
@@ -8,6 +10,10 @@ export const uddoktaRoutes = [
   },
   {
     path: "application/:service",
-    element: <ApplicationForm />,
+    element: <UddoktaApplicationForm />,
+  },
+  {
+    path: "settings",
+    element: <UnderConstruction />,
   },
 ];

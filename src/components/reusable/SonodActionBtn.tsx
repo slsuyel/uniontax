@@ -60,6 +60,7 @@ const SonodActionBtn = ({
         >
           প্রাপ্তী স্বীকারপত্র
         </Link>
+
         <button
           onClick={handleView}
           type="button"
@@ -67,6 +68,7 @@ const SonodActionBtn = ({
         >
           আবেদনপত্র দেখুন
         </button>
+
         {condition !== "cancel" && condition !== "approved" && (
           <button
             onClick={handleApproved}
