@@ -16,14 +16,14 @@ const UddoktaLayout = () => {
     //     </Link>
     //   ),
     // },
-    {
-      key: "make-payment",
-      label: (
-        <Link className="text-decoration-none" to="/make-payment">
-          পেমেন্ট করুন
-        </Link>
-      ),
-    },
+    // {
+    //   key: "make-payment",
+    //   label: (
+    //     <Link className="text-decoration-none" to="/make-payment">
+    //       পেমেন্ট করুন
+    //     </Link>
+    //   ),
+    // },
     {
       key: "new-application",
       label: (

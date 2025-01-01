@@ -9,7 +9,7 @@ import { SetStateAction, useState } from "react";
 import FormValueModal from "@/components/ui/FormValueModal";
 import { useParams } from "react-router-dom";
 import { useTradeInfoQuery } from "@/redux/api/user/userApi";
-import { useAppSelector } from "@/redux/features/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import inheritanceList from "../ApplicationForm/inheritanceList";
 import conditionalForm from "../ApplicationForm/conditionalForm";
@@ -21,6 +21,7 @@ import TradeLicenseForm from "../ApplicationForm/tradeLicenseForm";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import { TApplicantData, TPersonalInformation } from "@/types/global";
+import { setApplicantInfo } from "@/redux/features/application/applicantSlice";
 const { Option } = Select
 
 const UddoktaApplicationForm = () => {
@@ -36,6 +37,7 @@ const UddoktaApplicationForm = () => {
       skip: !unionInfo?.short_name_e || service !== "ট্রেড লাইসেন্স",
     }
   );
+  const dispatch = useAppDispatch();
   const [loader, setLoader] = useState(false);
   const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
@@ -81,6 +83,7 @@ const UddoktaApplicationForm = () => {
       };
       const res = await axios.post(`https://uniontax.xyz/api/citizen/information/nid`, payload);
       const info: TPersonalInformation = res?.data?.informations
+      dispatch(setApplicantInfo(info));
       form.setFieldsValue({
         applicant_name: info?.fullNameBN,
         applicant_gender: info?.gender == 'male' ? 'পুরুষ' : 'মহিলা',
@@ -97,7 +100,6 @@ const UddoktaApplicationForm = () => {
         unioun_name: info.permanentUnion,
         applicant_present_village: info.presentVillage,
         applicant_permanent_village: info.permanentVillage,
-
       });
     } catch (error) {
       console.error('Error:', error);

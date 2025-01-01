@@ -20,6 +20,8 @@ import EnglishFormValueModal from "../EnglishApplicationForm/EnglishFormValueMod
 
 
 const UddoktaEnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
+    const applicantInfo = useAppSelector((state) => state.applicant.applicantInfo);
+    const info = applicantInfo
     const [form] = Form.useForm();
     const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
     const { service } = useParams<{ service: string }>();
@@ -41,6 +43,9 @@ const UddoktaEnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
     const [inherList, setInherList] = useState(1);
     const [userDta, setUserData] = useState();
     const [modalVisible, setModalVisible] = useState(false);
+
+    console.log(applicantInfo);
+
 
 
     useEffect(() => {
@@ -68,13 +73,30 @@ const UddoktaEnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
         setModalVisible(false);
     };
 
-
+    console.log(info);
     return (
         <div className={`${!isDashboard ? "container my-3" : ""}`}>
             <Form
                 form={form}
                 layout="vertical"
                 onFinish={onFinish}
+                initialValues={{
+                    applicant_name: info?.fullNameEN,
+                    applicant_gender: info?.gender,
+                    applicant_father_name: info?.fathersNameEN,
+                    applicant_mother_name: info?.mothersNameEN,
+                    applicant_national_id_number: info?.nationalIdNumber,
+                    applicant_birth_certificate_number: info?.birthRegistrationNumber,
+                    applicant_permanent_district: info?.permanentDistrictEN,
+                    applicant_present_district: info?.presentDistrictEN,
+                    applicant_present_Upazila: info?.presentThanaEN,
+                    applicant_permanent_Upazila: info?.permanentThanaEN,
+                    applicant_present_post_office: info?.presentPostEN,
+                    applicant_permanent_post_office: info?.permanentPostEN,
+                    unioun_name: info?.permanentUnionEN,
+                    applicant_present_village: info?.presentVillageEN,
+                    applicant_permanent_village: info?.permanentVillageEN,
+                }}
 
             >
                 <div
