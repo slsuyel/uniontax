@@ -8,14 +8,14 @@ const UddoktaLayout = () => {
   const theme = false;
 
   const sidebarItems = [
-    {
-      key: "/uddokta",
-      label: (
-        <Link className="text-decoration-none" to="/uddokta">
-          ড্যাশবোর্ড
-        </Link>
-      ),
-    },
+    // {
+    //   key: "/uddokta",
+    //   label: (
+    //     <Link className="text-decoration-none" to="/uddokta">
+    //       ড্যাশবোর্ড
+    //     </Link>
+    //   ),
+    // },
     {
       key: "make-payment",
       label: (
@@ -27,7 +27,7 @@ const UddoktaLayout = () => {
     {
       key: "new-application",
       label: (
-        <Link className="text-decoration-none" to="/new-application">
+        <Link className="text-decoration-none" to="/uddokta/">
           নতুন আবেদন
         </Link>
       ),

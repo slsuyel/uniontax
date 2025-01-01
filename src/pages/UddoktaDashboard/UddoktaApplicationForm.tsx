@@ -1,19 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
-  Form, Button, message, /* Modal */
-  Input
+  Form, Button, message,
+  Input,
+  Select
 } from "antd";
-
-import { useState } from "react";
-
+import { SetStateAction, useState } from "react";
 import FormValueModal from "@/components/ui/FormValueModal";
 import { useParams } from "react-router-dom";
 import { useTradeInfoQuery } from "@/redux/api/user/userApi";
-
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
-
 import inheritanceList from "../ApplicationForm/inheritanceList";
 import conditionalForm from "../ApplicationForm/conditionalForm";
 import commonFields from "../ApplicationForm/commonFields";
@@ -21,21 +18,23 @@ import InheritanceForm from "../ApplicationForm/inheritanceForm";
 import addressFields from "../ApplicationForm/addressFields";
 import attachmentForm from "../ApplicationForm/attachmentForm";
 import TradeLicenseForm from "../ApplicationForm/tradeLicenseForm";
-// const { confirm } = Modal;
-const UddoktaApplicationForm = () => {
+import DatePicker from "react-datepicker";
+import axios from "axios";
+const { Option } = Select
 
+const UddoktaApplicationForm = () => {
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
   const [form] = Form.useForm();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
-
-
+  const [selectedIdType, setSelectedIdType] = useState('nid');
   const { data, isLoading } = useTradeInfoQuery(
     { unionName: unionInfo?.short_name_e },
     {
       skip: !unionInfo?.short_name_e || service !== "ট্রেড লাইসেন্স",
     }
   );
-
+  const [loader, setLoader] = useState(false);
   const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
@@ -55,21 +54,89 @@ const UddoktaApplicationForm = () => {
   const handleCancel = () => {
     setModalVisible(false);
   };
+
+  const handleIdTypeChange = (value: SetStateAction<string>) => {
+    setSelectedIdType(value);
+  };
+
+
+  const handleCheckNid = async (values: any) => {
+    setLoader(true); // Start loading
+    try {
+      // Step 1: Get the token
+      const tokenResponse = await axios.get(`https://uniontax.xyz/api/token/genarate`);
+      const sToken = tokenResponse.data.apitoken;
+      console.log(sToken);
+      const payload = {
+        nidNumber: values.nidNumber,
+        dateOfBirth: values.dateOfBirth,
+        sToken: sToken
+      };
+
+      const res = await axios.post(`https://uniontax.xyz/api/citizen/information/nid`, payload);
+      console.log(res.data);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoader(false); // Stop loading
+    }
+  };
+
+
   return (
     <div className={`container my-3`}>
 
-      <div className="col-md-4">
-        <Form.Item
-          label="ট্রান্সজেকশন"
-          name="tranc"
-          rules={[{ required: true, message: "Please enter your name" }]}
-        >
-          <Input
-            style={{ height: 40, width: "100%" }}
-            className="form-control"
-          />
-        </Form.Item>
-      </div>
+      <Form layout="vertical" onFinish={handleCheckNid} className=" border rounded p-3">
+        <div className=" row">
+          <Form.Item
+            className="col-md-4"
+            label="আইডির ধরণ"
+            name="idType"
+            initialValue="nid"
+            rules={[{ required: true, message: "Please select the ID type" }]}
+          >
+            <Select style={{ height: 40, width: "100%" }} placeholder="Select ID Type" onChange={handleIdTypeChange}>
+              <Option value="nid">জাতীয় পরিচয়পত্র (NID)</Option>
+              <Option value="birthCertificate">জন্ম নিবন্ধন (Birth Certificate)</Option>
+            </Select>
+          </Form.Item>
+        </div>
+
+        {/* Date of Birth and Submit Button */}
+        <div className="align-items-end d-flex gap-3">
+          <div className="">
+            <Form.Item
+              label={`${selectedIdType == 'birthCertificate' ? 'জন্ম নিবন্ধন ' : 'জাতীয় পরিচয়পত্র'} নাম্বার`}
+              name="nidNumber"
+              rules={[{ required: true, message: "Please enter your number" }]}
+            >
+              <Input
+                type="number"
+                style={{ height: 40, width: "100%" }}
+                className="form-control"
+              />
+            </Form.Item>
+          </div>
+          <div className="align-items-end d-flex gap-3">
+            <Form.Item
+              label="জন্ম তারিখ"
+              name="dateOfBirth"
+              rules={[{ required: true, message: "Please enter your date of birth" }]}
+            >
+              <DatePicker
+                className="form-control w-100"
+                selected={dateOfBirth}
+                onChange={(date) => setDateOfBirth(date)}
+              />
+            </Form.Item>
+            <Form.Item label=''>
+              <Button loading={loader} disabled={loader} size="large" type="primary" htmlType="submit">
+                খুজুন
+              </Button>
+            </Form.Item>
+          </div>
+        </div>
+      </Form>
 
 
       <Form form={form} layout="vertical" onFinish={handleSubmitForm}>
