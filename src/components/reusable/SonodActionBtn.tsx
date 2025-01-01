@@ -1,15 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TApplicantData } from "@/types";
 import { useSonodActionMutation } from "@/redux/api/sonod/sonodApi";
-import { message } from "antd";
+import { message, Dropdown, Menu, Button } from "antd";
 import SingleSonodViewModal from "@/pages/dashboard/SonodManagement/SingleSonodViewModal";
+
 interface SonodActionBtnProps {
   sonodName: string | undefined;
   item: TApplicantData;
   condition: string | undefined;
 }
+
 const SonodActionBtn = ({
   sonodName,
   item,
@@ -17,12 +18,12 @@ const SonodActionBtn = ({
 }: SonodActionBtnProps) => {
   const token = localStorage.getItem("token");
   const [sonodAction, { isLoading }] = useSonodActionMutation();
-
   const [view, setView] = useState(false);
 
   const handleView = () => {
     setView(true);
   };
+
   const handleCancel = () => {
     setView(false);
   };
@@ -38,65 +39,78 @@ const SonodActionBtn = ({
     }
   };
 
-  console.log(item.hasEnData);
-
-  return (
-    <>
-      <div
-        className="d-flex justify-content-center flex-wrap gap-2"
-        role="group"
-        aria-label="Actions"
-      >
+  const menu = (
+    <Menu>
+      <Menu.Item className="border my-1 border-info" key="edit">
         <Link
+          className="text-decoration-none"
           to={`/dashboard/sonod/${sonodName}/action/edit/${item.id}`}
-          className="btn btn-info btn-sm mr-1"
         >
           এডিট করুন
         </Link>
+      </Menu.Item>
+      <Menu.Item className="border my-1 border-success" key="receipt">
         <Link
+          className="text-decoration-none text-success "
           to={`https://api.uniontax.gov.bd/applicant/copy/download/${item.id}`}
-          className="btn btn-success btn-sm mr-1"
           target="_blank"
         >
           প্রাপ্তী স্বীকারপত্র
         </Link>
-
-        <button
-          onClick={handleView}
-          type="button"
-          className="btn btn-info btn-sm mr-1"
+      </Menu.Item>
+      <Menu.Item
+        className="border my-1 border-info"
+        key="view"
+        onClick={handleView}
+      >
+        আবেদনপত্র দেখুন
+      </Menu.Item>
+      {condition !== "cancel" && condition !== "approved" && (
+        <Menu.Item
+          className="border text-success border-warning my-1"
+          key="approve"
+          onClick={handleApproved}
         >
-          আবেদনপত্র দেখুন
-        </button>
-
-        {condition !== "cancel" && condition !== "approved" && (
-          <button
-            onClick={handleApproved}
-            type="button"
-            className="btn btn-success btn-sm mr-1"
-          >
-            {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
-          </button>
-        )}
+          {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
+        </Menu.Item>
+      )}
+      <Menu.Item className="border my-1 border-success" key="invoice">
         <Link
+          className="text-decoration-none"
           to={`https://api.uniontax.gov.bd/sonod/invoice/download/${item.id}`}
-          className="btn btn-info btn-sm mr-1"
           target="_blank"
         >
           রশিদ প্রিন্ট
         </Link>
+      </Menu.Item>
+      {condition === "new" && (
+        <Menu.Item className="border my-1" key="cancel">
+          <Button type="link" danger>
+            বাতিল করুন
+          </Button>
+        </Menu.Item>
+      )}
+    </Menu>
+  );
 
-        {condition == "approved" && (
+  return (
+    <>
+      <div className="d-flex justify-content-center flex-wrap gap-2">
+        <Dropdown overlay={menu} placement="bottomLeft" arrow>
+          <Button type="primary">Actions</Button>
+        </Dropdown>
+
+        {/* {condition === "approved" && (
           <>
-            <Link
+            <Link className="text-decoration-none"
               target="_blank"
               to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
               className="btn btn-success btn-sm mr-1"
             >
               বাংলা সনদ
             </Link>
-            {item.hasEnData == 1 && (
-              <Link
+            {item.hasEnData === 1 && (
+              <Link className="text-decoration-none"
                 target="_blank"
                 to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
                 className="btn btn-success btn-sm mr-1"
@@ -105,13 +119,7 @@ const SonodActionBtn = ({
               </Link>
             )}
           </>
-        )}
-
-        {condition == "new" && (
-          <button type="button" className="btn btn-danger btn-sm mr-1">
-            বাতিল করুন
-          </button>
-        )}
+        )} */}
       </div>
 
       {view && (

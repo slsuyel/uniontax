@@ -166,7 +166,7 @@ const UnionProfile = () => {
   }
 
   return (
-    <div>
+    <div className="card p-3 border-0">
       <Breadcrumbs current="ইউনিয়ন প্রোফাইল" />
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <div className="card-body">

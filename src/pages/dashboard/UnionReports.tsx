@@ -29,7 +29,7 @@ const UnionReports = () => {
   };
 
   return (
-    <div>
+    <div className="card p-4 border-0">
       <Breadcrumbs current="প্রতিবেদন" />
 
       <form onSubmit={handleSubmit}>

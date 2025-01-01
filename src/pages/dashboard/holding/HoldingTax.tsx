@@ -6,7 +6,7 @@ const HoldingTax = () => {
   const wards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
-    <div>
+    <div className="card p-3 border-0">
       <Breadcrumbs current="হোল্ডিং ট্যাক্স" />
       <Card>
         <div className="card-body">

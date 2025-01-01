@@ -111,9 +111,9 @@ const PaymentFailed = () => {
   };
 
   return (
-    <div>
+    <div className="card p-3 border-0">
       <div className=" mt-5">
-        <h6>পেমেন্ট Failed তালিকাঃ</h6>
+        <h4>পেমেন্ট Failed তালিকাঃ</h4>
         <div className="row ">
           <div className="form-group col-md-3 my-1">
             <select

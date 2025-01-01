@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Form, Input, Button, Card } from "antd";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import useAllServices from "@/hooks/useAllServices";
@@ -56,11 +56,10 @@ const SonodManagement = () => {
   console.log(allSonod);
 
   return (
-    <div>
+    <div className="card p-3 border-0">
       <Breadcrumbs page={s_name} current={condition_bn} />
-
-      <Form layout="inline" className="my-2 ps-2 py-4 rounded-1 bg-white">
-        <Form.Item>
+      <Form layout="inline" className="my-2 ps-2  rounded-1 bg-white">
+        <Form.Item className=" my-1">
           <Input
             allowClear
             style={{ height: 36 }}
@@ -69,7 +68,7 @@ const SonodManagement = () => {
             onChange={handleInputChange}
           />
         </Form.Item>
-        <Form.Item>
+        <Form.Item className=" my-1">
           <Button
             onClick={handleSearch}
             type="primary"
@@ -131,15 +130,16 @@ const SonodManagement = () => {
             </Card>
           ) : (
             <div className="table-responsive">
-              <table className="table table-bordered">
+              <table className="table table-bordered table-striped">
                 <thead>
                   <tr className="text-center">
                     <th scope="col">সনদ নাম্বার</th>
                     <th scope="col">নাম</th>
                     <th scope="col">পিতার/স্বামীর নাম</th>
-                    <th scope="col">গ্রাম/মহল্লা</th>
+                    <th scope="col">গ্রাম/মহল্লা/ওয়ার্ড নং</th>
                     <th scope="col">আবেদনের তারিখ</th>
                     <th scope="col">ফি</th>
+                    {condition === "approved" && <th scope="col">সনদ</th>}
                     <th scope="col">কার্যক্রম</th>
                   </tr>
                 </thead>
@@ -150,7 +150,7 @@ const SonodManagement = () => {
                       <td>{item.applicant_name}</td>
                       <td>{item.applicant_father_name}</td>
                       <td>{item.applicant_present_word_number}</td>
-                      <td>{item.created_at}</td>
+                      <td>{new Date(item.created_at).toLocaleString()}</td>
                       <td
                         className={` fs-6 text-white ${
                           item.payment_status === "Paid"
@@ -159,12 +159,31 @@ const SonodManagement = () => {
                         }`}
                       >
                         {item.payment_status}
-                      </td>
+                      </td>{" "}
+                      {condition === "approved" && (
+                        <td>
+                          <Link
+                            target="_blank"
+                            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+                            className="btn btn-success btn-sm me-1"
+                          >
+                            বাংলা সনদ
+                          </Link>
+                          {item.hasEnData === 1 && (
+                            <Link
+                              target="_blank"
+                              to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
+                              className="btn btn-success btn-sm mr-1"
+                            >
+                              ইংরেজি সনদ
+                            </Link>
+                          )}
+                        </td>
+                      )}
                       <td>
                         <SonodActionBtn
                           condition={condition}
                           item={item}
-                          // hasEnData={hasEnData}
                           sonodName={sonodName}
                         />
                       </td>

@@ -1,10 +1,10 @@
-import MonthlyCart from './MonthlyCart';
-import Summary from './Summary';
-import SummaryChart from './SummaryChart';
+import MonthlyCart from "./MonthlyCart";
+import Summary from "./Summary";
+import SummaryChart from "./SummaryChart";
 
 const Dhome = () => {
   return (
-    <div>
+    <div className="card p-2 border-0">
       <div className="row mx-auto my-2 ">
         <SummaryChart />
         <MonthlyCart />

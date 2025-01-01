@@ -1,6 +1,9 @@
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
-import { useSonodFeesQuery, useUpdateSonodFeesMutation } from "@/redux/api/sonod/sonodApi";
+import {
+  useSonodFeesQuery,
+  useUpdateSonodFeesMutation,
+} from "@/redux/api/sonod/sonodApi";
 import { message } from "antd";
 import { useState, useEffect } from "react";
 
@@ -16,13 +19,10 @@ interface TSonodFee {
 
 const SonodFee = () => {
   // Fetch the sonod information from the state
-  const token = localStorage.getItem('token');
-  const { data, isLoading, } = useSonodFeesQuery({ token });
-  const [updateSonod, { isLoading: updating, }] = useUpdateSonodFeesMutation();
+  const token = localStorage.getItem("token");
+  const { data, isLoading } = useSonodFeesQuery({ token });
+  const [updateSonod, { isLoading: updating }] = useUpdateSonodFeesMutation();
   const [feesData, setFeesData] = useState<TSonodFee[]>([]);
-
-
-
 
   // Update feesData when the data changes
   useEffect(() => {
@@ -35,7 +35,6 @@ const SonodFee = () => {
     return <Loader />;
   }
 
-
   // Handler to update fees value
   const handleFeeChange = (index: number, value: string) => {
     setFeesData((prevFeesData) => {
@@ -46,7 +45,9 @@ const SonodFee = () => {
   };
 
   const handleSave = async () => {
-    const formInputs = Array.from(document.querySelectorAll("input[type='number']")) as HTMLInputElement[];
+    const formInputs = Array.from(
+      document.querySelectorAll("input[type='number']")
+    ) as HTMLInputElement[];
 
     const payload = {
       fees_data: feesData.map((d, index) => ({
@@ -60,16 +61,15 @@ const SonodFee = () => {
     try {
       const res = await updateSonod({ data: payload, token }).unwrap();
       if (res.status_code == 200) {
-        message.success('SonodFees updated successfully')
+        message.success("SonodFees updated successfully");
       }
       if (res.status_code !== 200) {
-        message.success('SonodFees updated failed')
+        message.success("SonodFees updated failed");
       }
     } catch (error) {
       console.error("Error updating fees:", error);
     }
   };
-
 
   const dataSource = feesData.map((d, index) => ({
     key: index + 1,
@@ -78,7 +78,7 @@ const SonodFee = () => {
   }));
 
   return (
-    <div className="container">
+    <div className="container card p-3 border-0">
       <Breadcrumbs current="সনদ ফি" />
       <table className="table table-striped">
         <thead>
@@ -96,11 +96,11 @@ const SonodFee = () => {
               <td>
                 <input
                   type="number"
+                  min={1}
                   value={feesData[index]?.fees || ""}
                   onChange={(e) => handleFeeChange(index, e.target.value)}
                   className="form-control"
                 />
-
               </td>
             </tr>
           ))}
@@ -114,8 +114,6 @@ const SonodFee = () => {
       >
         {updating ? "Saving..." : "Save Changes"}
       </button>
-
-
     </div>
   );
 };
