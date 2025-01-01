@@ -66,10 +66,15 @@ const UddoktaApplicationForm = () => {
       // Step 1: Get the token
       const tokenResponse = await axios.get(`https://uniontax.xyz/api/token/genarate`);
       const sToken = tokenResponse.data.apitoken;
-      console.log(sToken);
+      const date = new Date(values.dateOfBirth);
+      const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const formattedDate = `${localDate.getFullYear()}-${(localDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${localDate.getDate().toString().padStart(2, "0")}`;
+
       const payload = {
         nidNumber: values.nidNumber,
-        dateOfBirth: values.dateOfBirth,
+        dateOfBirth: formattedDate,
         sToken: sToken
       };
 
@@ -126,7 +131,13 @@ const UddoktaApplicationForm = () => {
               <DatePicker
                 className="form-control w-100"
                 selected={dateOfBirth}
-                onChange={(date) => setDateOfBirth(date)}
+                onChange={(date) => {
+                  if (date) {
+                    setDateOfBirth(new Date(date));
+                  } else {
+                    setDateOfBirth(null);
+                  }
+                }}
               />
             </Form.Item>
             <Form.Item label=''>
