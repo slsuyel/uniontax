@@ -20,11 +20,13 @@ import attachmentForm from "../ApplicationForm/attachmentForm";
 import TradeLicenseForm from "../ApplicationForm/tradeLicenseForm";
 import DatePicker from "react-datepicker";
 import axios from "axios";
+import { TApplicantData, TPersonalInformation } from "@/types/global";
 const { Option } = Select
 
 const UddoktaApplicationForm = () => {
+  // const [info, setInfo] = useState<TPersonalInformation>()
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<TApplicantData>();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
   const [selectedIdType, setSelectedIdType] = useState('nid');
@@ -77,13 +79,30 @@ const UddoktaApplicationForm = () => {
         dateOfBirth: formattedDate,
         sToken: sToken
       };
-
       const res = await axios.post(`https://uniontax.xyz/api/citizen/information/nid`, payload);
-      console.log(res.data);
+      const info: TPersonalInformation = res?.data?.informations
+      form.setFieldsValue({
+        applicant_name: info?.fullNameBN,
+        applicant_gender: info?.gender,
+        applicant_father_name: info?.fathersNameBN,
+        applicant_mother_name: info?.mothersNameBN,
+        applicant_national_id_number: info?.nationalIdNumber,
+        applicant_birth_certificate_number: info?.birthRegistrationNumber,
+        applicant_permanent_district: info.permanentDistrict,
+        applicant_present_district: info.presentDistrict,
+        applicant_present_Upazila: info.presentThana,
+        applicant_permanent_Upazila: info.permanentThana,
+        applicant_present_post_office: info.presentPost,
+        applicant_permanent_post_office: info.permanentPost,
+        unioun_name: info.permanentUnion,
+        applicant_present_village: info.presentVillage,
+        applicant_permanent_village: info.permanentVillage,
+
+      });
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      setLoader(false); // Stop loading
+      setLoader(false);
     }
   };
 
@@ -91,7 +110,10 @@ const UddoktaApplicationForm = () => {
   return (
     <div className={`container my-3`}>
 
-      <Form layout="vertical" onFinish={handleCheckNid} className=" border rounded p-3">
+      <Form layout="vertical" onFinish={handleCheckNid}
+
+
+        className=" border rounded p-3">
         <div className=" row">
           <Form.Item
             className="col-md-4"
