@@ -124,7 +124,7 @@ const EnglishFormValueModal = ({
             <b>Father's/Husband's Name: {data?.applicant_father_name}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Mother's Name: </b>
+            <b>Mother's Name: {data?.applicant_mother_name}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
             <b>National ID: {data?.applicant_national_id_number}</b>
