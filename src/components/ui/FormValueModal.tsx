@@ -60,7 +60,11 @@ const FormValueModal = ({
   };
 
   const handleEnglishSonod = () => {
-    navigate(`/application-english/${service}`, { state: { userData: data } });
+    console.log(from);
+    if (from == 'uddokta') {
+      navigate(`/uddokta/application-english/${service}`, { state: { userData: data } });
+    }
+    else navigate(`/application-english/${service}`, { state: { userData: data } });
   };
 
   const getSuccessorList = () => {
@@ -90,6 +94,9 @@ const FormValueModal = ({
 
   const successorList = getSuccessorList();
 
+  console.log(from);
+
+
   return (
     <Modal
       width={800}
@@ -117,7 +124,7 @@ const FormValueModal = ({
             <b>পিতা/স্বামীর নাম : {data?.applicant_father_name}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>মাতার নাম : </b>
+            <b>মাতার নাম :{data?.applicant_mother_name} </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
             <b>ন্যাশনাল আইডি : {data?.applicant_national_id_number}</b>

@@ -228,6 +228,7 @@ const UddoktaApplicationForm = () => {
       <FormValueModal
         visible={modalVisible}
         data={userDta}
+        from="uddokta"
         onCancel={handleCancel}
       />
     </div>
