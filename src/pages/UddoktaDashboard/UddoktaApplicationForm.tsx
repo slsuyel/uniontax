@@ -83,7 +83,7 @@ const UddoktaApplicationForm = () => {
       const info: TPersonalInformation = res?.data?.informations
       form.setFieldsValue({
         applicant_name: info?.fullNameBN,
-        applicant_gender: info?.gender,
+        applicant_gender: info?.gender == 'male' ? 'পুরুষ' : 'মহিলা',
         applicant_father_name: info?.fathersNameBN,
         applicant_mother_name: info?.mothersNameBN,
         applicant_national_id_number: info?.nationalIdNumber,

@@ -335,10 +335,3 @@ export interface TPersonalInformation {
   spouseNameEN: string | null;
   updated_at: string;
 }
-
-export interface TNIDResponse {
-  informations: TPersonalInformation;
-  type: string;
-  message: string;
-  status: number;
-}
