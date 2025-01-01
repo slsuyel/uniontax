@@ -25,7 +25,7 @@ export type TUnion = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface ScrollToTopProps {
   children?: ReactNode;
@@ -280,4 +280,51 @@ export interface TPaymentFailed {
   sonods: any;
   holding_tax: THoldingTax;
   tax: TTax;
+}
+
+export interface TAddress {
+  holding: string;
+  village: string;
+  union: string;
+  post: string;
+  postCode: string;
+  thana: string;
+  district: string;
+}
+
+export interface TPersonalInformation {
+  id: number;
+  fullNameEN: string;
+  fathersNameEN: string;
+  mothersNameEN: string;
+  spouseNameEN: string | null;
+  presentAddressEN: string;
+  permenantAddressEN: string;
+  fullNameBN: string;
+  fathersNameBN: string;
+  mothersNameBN: string;
+  spouseNameBN: string;
+  presentAddressBN: TAddress;
+  permanentAddressBN: TAddress;
+  gender: string;
+  profession: string;
+  dateOfBirth: string;
+  birthPlaceBN: string | null;
+  mothersNationalityBN: string | null;
+  mothersNationalityEN: string | null;
+  fathersNationalityBN: string | null;
+  fathersNationalityEN: string | null;
+  birthRegistrationNumber: string | null;
+  nationalIdNumber: string;
+  oldNationalIdNumber: string;
+  photoUrl: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TNIDResponse {
+  informations: TPersonalInformation;
+  type: string;
+  message: string;
+  status: number;
 }
