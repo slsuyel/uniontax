@@ -67,35 +67,23 @@ const FormValueModal = ({
     else navigate(`/application-english/${service}`, { state: { userData: data } });
   };
 
-  const getSuccessorList = () => {
-    const successors = [];
-    let index = 0;
 
-    while (true) {
-      const name = data?.[`successor_list[${index}].w_name`];
-      const relation = data?.[`successor_list[${index}].w_relation`];
-      const dob = data?.[`successor_list[${index}].w_dob`];
-      const nid = data?.[`successor_list[${index}].w_nid`];
 
-      if (!name) break;
-
-      successors.push({
-        w_name: name,
-        w_relation: relation,
-        w_dob: dob,
-        w_nid: nid,
-      });
-
-      index++;
+/* [
+    {
+        "name": "cxvbcxvb",
+        "relation": "mother",
+        "birth_date": "2025-01-05T18:00:00.000Z",
+        "nid": "xcvbvcb"
+    },
+    {
+        "name": "vv",
+        "relation": "sibling",
+        "birth_date": "2025-01-25T18:00:00.000Z",
+        "nid": "vcb"
     }
-
-    return successors;
-  };
-
-  const successorList = getSuccessorList();
-
-  console.log(from);
-
+] */
+ 
 
   return (
     <Modal
@@ -230,27 +218,27 @@ const FormValueModal = ({
             <div className="col-md-12">
               <div className="app-heading">ওয়ারিশগণের তালিকা</div>
             </div>
-            {successorList.map((successor, index) => (
-              <div key={index} className="col-md-12 mt-3">
-                <div className="row">
-                  <div className="col-md-3">
-                    <b>নাম: {successor.w_name}</b>
-                  </div>
-                  <div className="col-md-3">
-                    <b>সম্পর্ক: {successor.w_relation}</b>
-                  </div>
-                  <div className="col-md-3">
-                    <b>
-                      জন্ম তারিখ:{" "}
-                      {new Date(successor.w_dob).toLocaleDateString()}
-                    </b>
-                  </div>
-                  <div className="col-md-3">
-                    <b>জাতীয় পরিচয়পত্র /জন্মনিবন্ধন: {successor.w_nid}</b>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <table className="table table-bordered mt-3">
+  <thead>
+    <tr>
+      <th>নাম</th>
+      <th>সম্পর্ক</th>
+      <th>জন্ম তারিখ</th>
+      <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
+    </tr>
+  </thead>
+  <tbody>
+    {data?.successor_list?.map((successor:any, index:number) => (
+      <tr key={index}>
+        <td>{successor.name}</td>
+        <td>{successor.relation}</td>
+        <td>{new Date(successor.birth_date).toLocaleDateString()}</td>
+        <td>{successor.nid}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
           </div>
         </div>
         <br />

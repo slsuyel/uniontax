@@ -115,7 +115,7 @@ export interface TApplicantData {
 
   applicant_permanent_road_block_sector: string | null;
 
-  successor_list: string | undefined;
+  successor_list: any;
   khat: string;
   last_years_money: string | undefined;
   currently_paid_money: string | undefined;

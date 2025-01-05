@@ -9,7 +9,7 @@ import TradeLicenseForm from "./tradeLicenseForm";
 
 import InheritanceForm from "./inheritanceForm";
 import commonFields from "./commonFields";
-import inheritanceList from "./inheritanceList";
+
 import conditionalForm from "./conditionalForm";
 
 import FormValueModal from "@/components/ui/FormValueModal";
@@ -19,6 +19,7 @@ import { TApplicantData } from "@/types";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { useSonodUpdateMutation } from "@/redux/api/sonod/sonodApi";
+import InheritanceList from "./inheritanceList";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const { id } = useParams();
@@ -39,7 +40,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const location = useLocation();
   const pathname = location.pathname;
   const isDashboard = pathname.includes("dashboard");
-  const [inherList, setInherList] = useState(1);
+  // const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   // const navigate = useNavigate()
@@ -56,7 +57,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     try {
       setUserData(values);
       if (isDashboard) {
-        console.log("Submitted values:", values);
+        
         const res = await updateSonod({ data: values, id, token }).unwrap();
         if (res.status_code === 200) {
           navigate(-1);
@@ -65,6 +66,8 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           message.error("সনদটি আপডেট করতে ব্যর্থ হয়েছে,আবার চেষ্টা করুন");
         }
       } else {
+        
+        // return
         setModalVisible(true);
       }
     } catch (error) {
@@ -78,7 +81,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const handleCancel = () => {
     setModalVisible(false);
   };
-  console.log(sonodName);
+  
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form
@@ -152,7 +155,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_permanent_Upazila: user?.applicant_permanent_Upazila,
           applicant_permanent_post_office:
             user?.applicant_permanent_post_office,
-          successor_list: user?.successor_list,
+          successor_list: user?.successor_list || [{}],
           applicant_mobile: user?.applicant_mobile,
           applicant_email: user?.applicant_email,
           applicant_phone: user?.applicant_phone,
@@ -163,6 +166,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_birth_certificate_attachment:
             user?.applicant_birth_certificate_attachment,
           prottoyon: user?.prottoyon,
+      
         }}
       >
         <div
@@ -198,10 +202,10 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           {attachmentForm()}
 
           {sonodName === "ওয়ারিশান সনদ" &&
-            inheritanceList(inherList, setInherList)}
+            <InheritanceList/> }
 
           {sonodName === "উত্তরাধিকারী সনদ" &&
-            inheritanceList(inherList, setInherList)}
+          <InheritanceList/> }
 
           <div style={{ textAlign: "center" }}>
             <Button
