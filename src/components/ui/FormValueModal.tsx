@@ -61,15 +61,17 @@ const FormValueModal = ({
 
   const handleEnglishSonod = () => {
     console.log(from);
-    if (from == 'uddokta') {
-      navigate(`/uddokta/application-english/${service}`, { state: { userData: data } });
-    }
-    else navigate(`/application-english/${service}`, { state: { userData: data } });
+    if (from == "uddokta") {
+      navigate(`/uddokta/application-english/${service}`, {
+        state: { userData: data },
+      });
+    } else
+      navigate(`/application-english/${service}`, {
+        state: { userData: data },
+      });
   };
 
-
-
-/* [
+  /* [
     {
         "name": "cxvbcxvb",
         "relation": "mother",
@@ -83,7 +85,6 @@ const FormValueModal = ({
         "nid": "vcb"
     }
 ] */
- 
 
   return (
     <Modal
@@ -219,26 +220,27 @@ const FormValueModal = ({
               <div className="app-heading">ওয়ারিশগণের তালিকা</div>
             </div>
             <table className="table table-bordered mt-3">
-  <thead>
-    <tr>
-      <th>নাম</th>
-      <th>সম্পর্ক</th>
-      <th>জন্ম তারিখ</th>
-      <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
-    </tr>
-  </thead>
-  <tbody>
-    {data?.successor_list?.map((successor:any, index:number) => (
-      <tr key={index}>
-        <td>{successor.name}</td>
-        <td>{successor.relation}</td>
-        <td>{new Date(successor.birth_date).toLocaleDateString()}</td>
-        <td>{successor.nid}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-
+              <thead>
+                <tr>
+                  <th>নাম</th>
+                  <th>সম্পর্ক</th>
+                  <th>জন্ম তারিখ</th>
+                  <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.successor_list?.map((successor: any, index: number) => (
+                  <tr key={index}>
+                    <td>{successor.name}</td>
+                    <td>{successor.relation}</td>
+                    <td>
+                      {new Date(successor.birth_date).toLocaleDateString()}
+                    </td>
+                    <td>{successor.nid}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
         <br />

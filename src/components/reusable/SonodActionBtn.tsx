@@ -19,8 +19,13 @@ const SonodActionBtn = ({
   const token = localStorage.getItem("token");
   const [sonodAction, { isLoading }] = useSonodActionMutation();
   const [view, setView] = useState(false);
+  const [viewEn, setViewEn] = useState(false);
 
   const handleView = () => {
+    setView(true);
+  };
+  const handleViewEn = () => {
+    setViewEn(true);
     setView(true);
   };
 
@@ -65,6 +70,15 @@ const SonodActionBtn = ({
       >
         আবেদনপত্র দেখুন
       </Menu.Item>
+      {item.hasEnData && (
+        <Menu.Item
+          className="border my-1 border-info"
+          key="view_en"
+          onClick={handleViewEn}
+        >
+          ইংরেজি আবেদনপত্র দেখুন
+        </Menu.Item>
+      )}
       {condition !== "cancel" && condition !== "approved" && (
         <Menu.Item
           className="border text-success border-warning my-1"
@@ -96,6 +110,15 @@ const SonodActionBtn = ({
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap gap-2">
+        {condition !== "cancel" && condition !== "approved" && (
+          <button
+            className="border border-warning btn btn-sm btn-success"
+            key="approve"
+            onClick={handleApproved}
+          >
+            {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
+          </button>
+        )}
         <Dropdown overlay={menu} placement="bottomLeft" arrow>
           <Button type="primary">Actions</Button>
         </Dropdown>
@@ -127,6 +150,7 @@ const SonodActionBtn = ({
           onCancel={handleCancel}
           visible={view}
           key={0}
+          en={viewEn}
           id={item.id}
           from="dashboard"
         />

@@ -57,7 +57,6 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     try {
       setUserData(values);
       if (isDashboard) {
-        
         const res = await updateSonod({ data: values, id, token }).unwrap();
         if (res.status_code === 200) {
           navigate(-1);
@@ -66,7 +65,6 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           message.error("সনদটি আপডেট করতে ব্যর্থ হয়েছে,আবার চেষ্টা করুন");
         }
       } else {
-        
         // return
         setModalVisible(true);
       }
@@ -81,7 +79,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const handleCancel = () => {
     setModalVisible(false);
   };
-  
+
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form
@@ -166,7 +164,6 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_birth_certificate_attachment:
             user?.applicant_birth_certificate_attachment,
           prottoyon: user?.prottoyon,
-      
         }}
       >
         <div
@@ -201,11 +198,9 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           {addressFields({ form })}
           {attachmentForm()}
 
-          {sonodName === "ওয়ারিশান সনদ" &&
-            <InheritanceList/> }
+          {sonodName === "ওয়ারিশান সনদ" && <InheritanceList />}
 
-          {sonodName === "উত্তরাধিকারী সনদ" &&
-          <InheritanceList/> }
+          {sonodName === "উত্তরাধিকারী সনদ" && <InheritanceList />}
 
           <div style={{ textAlign: "center" }}>
             <Button

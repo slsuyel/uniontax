@@ -5,6 +5,7 @@ import { TApplicantData } from "@/types";
 import { Button, Modal } from "antd";
 
 interface FormValueModalProps {
+  en?: boolean;
   visible: boolean;
   data?: TApplicantData;
   onCancel: () => void;
@@ -14,6 +15,7 @@ interface FormValueModalProps {
 
 const SingleSonodViewModal = ({
   visible,
+  en,
   onCancel,
   id,
 }: FormValueModalProps) => {
@@ -22,6 +24,7 @@ const SingleSonodViewModal = ({
   const { data: singleS, isLoading: getingSonod } = useSingleSonodQuery({
     id,
     token,
+    en,
   });
 
   const handleCancel = () => {

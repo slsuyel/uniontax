@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input, Checkbox, Tabs, message } from "antd";
@@ -99,7 +98,7 @@ const Login = () => {
             <div className="d-flex justify-content-center w-100">
               <Tabs
                 className=""
-                defaultActiveKey="chairman"
+                defaultActiveKey="secretary"
                 onChange={handleTabChange}
               >
                 <TabPane tab="সচিব লগইন" key="secretary" />
@@ -117,7 +116,6 @@ const Login = () => {
                 </label>
                 <Input
                   required
-
                   id="loginEmail"
                   placeholder="ইমেইল লিখুন"
                   style={{ height: 40 }}
@@ -134,7 +132,6 @@ const Login = () => {
                 </label>
                 <Input.Password
                   required
-
                   id="loginPassword"
                   placeholder="পাসওয়ার্ড দিন"
                   style={{ height: 40 }}
