@@ -53,28 +53,29 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
-import { configureStore } from '@reduxjs/toolkit';
-import userSlice from './user/userSlice';
-import apiSlice from '../api/apiSlice';
-import storage from 'redux-persist/lib/storage';
-import unionSlice from './union/unionSlice';
-import applicantReducer from './application/applicantSlice';
+} from "redux-persist";
+import { configureStore } from "@reduxjs/toolkit";
+import userSlice from "./user/userSlice";
+import apiSlice from "../api/apiSlice";
+import storage from "redux-persist/lib/storage";
+import unionSlice from "./union/unionSlice";
+import applicantReducer from "./application/applicantSlice";
+import informationsReducer from "./nidInfo/informationsSlice";
 
 // Persist configuration for auth and union
 const authPersistConfig = {
-  key: 'auth',
+  key: "auth",
   storage,
 };
 
 const unionPersistConfig = {
-  key: 'union',
+  key: "union",
   storage,
 };
 
 // Persist configuration for applicant
 const applicantPersistConfig = {
-  key: 'applicant',
+  key: "applicant",
   storage,
 };
 
@@ -92,9 +93,10 @@ export const store = configureStore({
     user: persistedAuthReducer,
     union: persistedUnionReducer,
     applicant: persistedApplicantReducer, // Persisted applicant reducer
+    informations: informationsReducer,
   },
 
-  middleware: getDefaultMiddlewares =>
+  middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

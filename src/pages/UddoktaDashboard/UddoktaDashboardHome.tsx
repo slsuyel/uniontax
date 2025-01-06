@@ -1,15 +1,33 @@
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const UddoktaDashboardHome = () => {
   const navigate = useNavigate();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-
+  const last_sonod = useAppSelector(
+    (state: RootState) => state.informations.lastApplicationSonodName
+  );
+  const informations = useAppSelector(
+    (state: RootState) => state.informations.data
+  );
+  console.log(last_sonod);
   const handleService = (service: string) => {
-    navigate(`/uddokta/application/${service}`);
+    if (last_sonod && informations && last_sonod !== service) {
+      Modal.confirm({
+        title: `আপনি ইতোপূর্বে ${informations?.fullNameBN} এর জন্যে একটি ${last_sonod} এর আবেদন করার চেষ্টা করেছেন।`,
+        content: ` অনুগ্রহ করে আবেদনটি সম্পন্য করে নতুন আবেদনের চেষ্টা করুন। `,
+        okText: "OK",
+        cancelButtonProps: { style: { display: "none" } },
+        onOk() {
+          navigate(`/uddokta/application/${last_sonod}`);
+        },
+      });
+    } else {
+      navigate(`/uddokta/application/${service}`);
+    }
   };
-
 
   return (
     <div className="container mx-auto">

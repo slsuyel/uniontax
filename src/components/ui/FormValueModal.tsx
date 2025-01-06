@@ -36,7 +36,7 @@ const FormValueModal = ({
     onCancel();
   };
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
-
+  console.log(unionInfo);
   const handlePayment = async () => {
     const additionalData = {
       applicant_date_of_birth: formattedDate,
@@ -72,21 +72,6 @@ const FormValueModal = ({
         state: { userData: data },
       });
   };
-
-  /* [
-    {
-        "name": "cxvbcxvb",
-        "relation": "mother",
-        "birth_date": "2025-01-05T18:00:00.000Z",
-        "nid": "xcvbvcb"
-    },
-    {
-        "name": "vv",
-        "relation": "sibling",
-        "birth_date": "2025-01-25T18:00:00.000Z",
-        "nid": "vcb"
-    }
-] */
 
   return (
     <Modal

@@ -8,22 +8,6 @@ const UddoktaLayout = () => {
   const theme = false;
 
   const sidebarItems = [
-    // {
-    //   key: "/uddokta",
-    //   label: (
-    //     <Link className="text-decoration-none" to="/uddokta">
-    //       ড্যাশবোর্ড
-    //     </Link>
-    //   ),
-    // },
-    // {
-    //   key: "make-payment",
-    //   label: (
-    //     <Link className="text-decoration-none" to="/make-payment">
-    //       পেমেন্ট করুন
-    //     </Link>
-    //   ),
-    // },
     {
       key: "new-application",
       label: (
@@ -80,8 +64,8 @@ const UddoktaLayout = () => {
                 ? "rgba(0, 0, 0, 0.8)"
                 : "#001529"
               : scrollY > 0
-                ? "#fffcfc8a"
-                : "white",
+              ? "#fffcfc8a"
+              : "white",
 
             backdropFilter: scrollY > 0 ? "blur(4px)" : "none",
             transition: "background-color 0.3s, backdrop-filter 0.3s",
