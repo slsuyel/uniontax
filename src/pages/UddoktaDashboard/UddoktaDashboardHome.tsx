@@ -12,7 +12,6 @@ const UddoktaDashboardHome = () => {
   const informations = useAppSelector(
     (state: RootState) => state.informations.data
   );
-  console.log(last_sonod);
   const handleService = (service: string) => {
     if (last_sonod && informations && last_sonod !== service) {
       Modal.confirm({
@@ -28,7 +27,7 @@ const UddoktaDashboardHome = () => {
       navigate(`/uddokta/application/${service}`);
     }
   };
-
+  console.log(sonodInfo);
   return (
     <div className="container mx-auto">
       {sonodInfo.map((service, index) => (

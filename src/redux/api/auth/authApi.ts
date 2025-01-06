@@ -43,6 +43,7 @@ const authApi = apiSlice.injectEndpoints({
         url: `/auth/uddokta/check-token`,
         headers: { Authorization: `Bearer ${token}` },
       }),
+      providesTags: ["check-nid"],
     }),
 
     resetPassLink: builder.mutation({

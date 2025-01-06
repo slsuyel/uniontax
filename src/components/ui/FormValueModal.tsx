@@ -36,7 +36,7 @@ const FormValueModal = ({
     onCancel();
   };
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
-  console.log(unionInfo);
+
   const handlePayment = async () => {
     const additionalData = {
       applicant_date_of_birth: formattedDate,

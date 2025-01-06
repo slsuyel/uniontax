@@ -7,6 +7,7 @@ import { useUddoktaTokenCheckQuery } from "@/redux/api/auth/authApi";
 import {
   setInformations,
   setLastApplicationSonodName,
+  setUnionName, // Import the new action
 } from "@/redux/features/nidInfo/informationsSlice";
 
 interface UddoktaProps {
@@ -39,8 +40,9 @@ const UddoktaAuthProvider: FC<UddoktaProps> = ({ children }) => {
           data?.data?.uddokta.latest_uddokta_search?.sonod_name
         )
       );
+      dispatch(setUnionName(data?.data?.uddokta.union_name)); // Dispatch the union name
     }
-  }, [token, isError, data, navigate, dispatch]); // Add `location` to dependencies
+  }, [token, isError, data, navigate, dispatch]);
 
   if (isLoading) {
     return <Loader />; // Show loader while checking token

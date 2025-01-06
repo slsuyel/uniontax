@@ -1,12 +1,19 @@
 import { Layout, Menu } from "antd";
 import { Outlet, Link } from "react-router-dom";
 import Navbar from "../admin/Navbar";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
+import { useUnionInfoQuery } from "@/redux/api/user/userApi";
+import Loader from "@/components/reusable/Loader";
+import { setUnionData } from "@/redux/features/union/unionSlice";
+import { useEffect } from "react";
 
 const { Sider, Content, Header, Footer } = Layout;
 
 const UddoktaLayout = () => {
+  const dispatch = useAppDispatch();
+  const token = localStorage.getItem("token");
   const theme = false;
-
+  const unionName = useAppSelector((state) => state.informations.unionName);
   const sidebarItems = [
     {
       key: "new-application",
@@ -25,6 +32,27 @@ const UddoktaLayout = () => {
       ),
     },
   ];
+  const { data, isLoading } = useUnionInfoQuery(
+    { unionName, token },
+    {
+      skip: !unionName,
+    }
+  );
+
+  useEffect(() => {
+    if (data?.data) {
+      dispatch(
+        setUnionData({
+          unionInfo: data.data.uniouninfos,
+          sonodList: data.data.sonod_name_lists,
+        })
+      );
+    }
+  }, [data, dispatch]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

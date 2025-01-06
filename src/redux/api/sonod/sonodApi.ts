@@ -116,6 +116,7 @@ const sonodApi = apiSlice.injectEndpoints({
         headers: { Authorization: `Bearer ${token}` },
         body: data,
       }),
+      invalidatesTags: ["check-nid"],
     }),
   }),
 });

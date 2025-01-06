@@ -25,7 +25,7 @@ export type TUnion = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface ScrollToTopProps {
   children?: ReactNode;
@@ -293,58 +293,58 @@ export interface TAddress {
 }
 
 export interface TPersonalInformation {
-  id?: number;
-  fullNameEN?: string;
-  fathersNameEN?: string;
-  birthPlaceBN?: string | null;
-  birthRegistrationNumber?: string | null;
-  created_at?: string;
-  dateOfBirth?: string;
-  fathersNameBN?: string;
-  fathersNationalityBN?: string | null;
-  fathersNationalityEN?: string | null;
-  fullNameBN?: string;
-  gender?: string;
-  mothersNameBN?: string;
-  mothersNameEN?: string;
-  mothersNationalityBN?: string | null;
-  mothersNationalityEN?: string | null;
-  nationalIdNumber?: string;
-  oldNationalIdNumber?: string;
-  permanentAddressBN?: string;
-  permanentDistrict?: string;
-  permanentHolding?: string;
-  permanentPost?: string;
-  permanentPostCode?: string;
-  permanentThana?: string;
-  permanentUnion?: string;
-
-  permanentThanaEN?: string;
-  permanentDistrictEN?: string;
-  permanentHoldingEN?: string;
-  permanentPostEN?: string;
-  permanentPostCodeEN?: string;
-  permanentUnionEN?: string;
-  presentThanaEN?: string;
-  permanentVillage?: string;
-  permanentVillageEN?: string;
-  permenantAddressEN?: string;
-  photoUrl?: string | null;
-  presentAddressBN?: string;
-  presentAddressEN?: string;
-  presentDistrict?: string;
-  presentDistrictEN?: string;
-  presentHolding?: string;
-  presentPost?: string;
-  presentPostEN?: string;
-  presentPostCode?: string;
-
-  presentThana?: string;
-  presentUnion?: string;
-  presentVillage?: string;
-  presentVillageEN?: string;
-  profession?: string;
-  spouseNameBN?: string;
-  spouseNameEN?: string | null;
-  updated_at?: string;
+  id: number;
+  fullNameEN: string;
+  fathersNameEN: string;
+  mothersNameEN: string;
+  spouseNameEN: string | null;
+  presentAddressEN: string;
+  permenantAddressEN: string;
+  fullNameBN: string;
+  fathersNameBN: string;
+  mothersNameBN: string;
+  spouseNameBN: string;
+  presentAddressBN: string;
+  presentHolding: string;
+  presentVillage: string;
+  presentUnion: string;
+  presentPost: string;
+  presentPostCode: string;
+  presentThana: string;
+  presentDistrict: string;
+  permanentAddressBN: string;
+  permanentHolding: string;
+  permanentVillage: string;
+  permanentUnion: string;
+  permanentPost: string;
+  permanentPostCode: string;
+  permanentThana: string;
+  permanentDistrict: string;
+  gender: string;
+  profession: string;
+  dateOfBirth: string;
+  birthPlaceBN: string | null;
+  mothersNationalityBN: string | null;
+  mothersNationalityEN: string | null;
+  fathersNationalityBN: string | null;
+  fathersNationalityEN: string | null;
+  birthRegistrationNumber: string | null;
+  nationalIdNumber: string;
+  oldNationalIdNumber: string;
+  photoUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+  presentHolding_en: string;
+  presentVillage_en: string;
+  presentUnion_en: string;
+  presentPost_en: string;
+  presentPostCode_en: string;
+  presentThana_en: string;
+  presentDistrict_en: string;
+  permanentHolding_en: string;
+  permanentVillage_en: string;
+  permanentUnion_en: string;
+  permanentPost_en: string;
+  permanentPostCode_en: string;
+  permanentThana_en: string;
 }
