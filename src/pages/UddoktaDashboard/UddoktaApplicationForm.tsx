@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  Form, Button, message,
-  Input,
-  Select
-} from "antd";
+import { Form, Button, message, Input, Select } from "antd";
 import { SetStateAction, useState } from "react";
 import FormValueModal from "@/components/ui/FormValueModal";
 import { useParams } from "react-router-dom";
@@ -19,18 +15,19 @@ import addressFields from "../ApplicationForm/addressFields";
 import attachmentForm from "../ApplicationForm/attachmentForm";
 import TradeLicenseForm from "../ApplicationForm/tradeLicenseForm";
 import DatePicker from "react-datepicker";
-import axios from "axios";
 import { TApplicantData, TPersonalInformation } from "@/types/global";
 import { setApplicantInfo } from "@/redux/features/application/applicantSlice";
-const { Option } = Select
+import { useNidCheckMutation } from "@/redux/api/sonod/sonodApi";
+const { Option } = Select;
 
 const UddoktaApplicationForm = () => {
-  // const [info, setInfo] = useState<TPersonalInformation>()
+  const token = localStorage.getItem("token");
+  const [nidCheck, { isLoading: checkingNid }] = useNidCheckMutation();
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
   const [form] = Form.useForm<TApplicantData>();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
-  const [selectedIdType, setSelectedIdType] = useState('nid');
+  const [selectedIdType, setSelectedIdType] = useState("nid");
   const { data, isLoading } = useTradeInfoQuery(
     { unionName: unionInfo?.short_name_e },
     {
@@ -38,12 +35,11 @@ const UddoktaApplicationForm = () => {
     }
   );
   const dispatch = useAppDispatch();
-  const [loader, setLoader] = useState(false);
   const [inherList, setInherList] = useState(1);
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   // const navigate = useNavigate()
-
+  console.log(service);
   const handleSubmitForm = async (values: any) => {
     try {
       setUserData(values);
@@ -63,30 +59,33 @@ const UddoktaApplicationForm = () => {
     setSelectedIdType(value);
   };
 
-
   const handleCheckNid = async (values: any) => {
-    setLoader(true); // Start loading
     try {
       // Step 1: Get the token
-      const tokenResponse = await axios.get(`https://uniontax.xyz/api/token/genarate`);
-      const sToken = tokenResponse.data.apitoken;
+
       const date = new Date(values.dateOfBirth);
-      const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-      const formattedDate = `${localDate.getFullYear()}-${(localDate.getMonth() + 1)
+      const localDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+      const formattedDate = `${localDate.getFullYear()}-${(
+        localDate.getMonth() + 1
+      )
         .toString()
         .padStart(2, "0")}-${localDate.getDate().toString().padStart(2, "0")}`;
 
       const payload = {
         nidNumber: values.nidNumber,
         dateOfBirth: formattedDate,
-        sToken: sToken
+        sonod_name: service,
       };
-      const res = await axios.post(`https://uniontax.xyz/api/citizen/information/nid`, payload);
-      const info: TPersonalInformation = res?.data?.informations
+      const res = await nidCheck({ data: payload, token }).unwrap();
+      const info: TPersonalInformation = res?.data?.informations;
       dispatch(setApplicantInfo(info));
       form.setFieldsValue({
         applicant_name: info?.fullNameBN,
-        applicant_gender: info?.gender == 'male' ? 'পুরুষ' : 'মহিলা',
+        applicant_gender: info?.gender == "male" ? "পুরুষ" : "মহিলা",
         applicant_father_name: info?.fathersNameBN,
         applicant_mother_name: info?.mothersNameBN,
         applicant_national_id_number: info?.nationalIdNumber,
@@ -102,20 +101,17 @@ const UddoktaApplicationForm = () => {
         applicant_permanent_village: info.permanentVillage,
       });
     } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setLoader(false);
+      console.error("Error:", error);
     }
   };
 
-
   return (
     <div className={`container my-3`}>
-
-      <Form layout="vertical" onFinish={handleCheckNid}
-
-
-        className=" border rounded p-3">
+      <Form
+        layout="vertical"
+        onFinish={handleCheckNid}
+        className=" border rounded p-3"
+      >
         <div className=" row">
           <Form.Item
             className="col-md-4"
@@ -124,9 +120,15 @@ const UddoktaApplicationForm = () => {
             initialValue="nid"
             rules={[{ required: true, message: "Please select the ID type" }]}
           >
-            <Select style={{ height: 40, width: "100%" }} placeholder="Select ID Type" onChange={handleIdTypeChange}>
+            <Select
+              style={{ height: 40, width: "100%" }}
+              placeholder="Select ID Type"
+              onChange={handleIdTypeChange}
+            >
               <Option value="nid">জাতীয় পরিচয়পত্র (NID)</Option>
-              <Option value="birthCertificate">জন্ম নিবন্ধন (Birth Certificate)</Option>
+              <Option value="birthCertificate">
+                জন্ম নিবন্ধন (Birth Certificate)
+              </Option>
             </Select>
           </Form.Item>
         </div>
@@ -135,7 +137,11 @@ const UddoktaApplicationForm = () => {
         <div className="align-items-end d-flex gap-3">
           <div className="">
             <Form.Item
-              label={`${selectedIdType == 'birthCertificate' ? 'জন্ম নিবন্ধন ' : 'জাতীয় পরিচয়পত্র'} নাম্বার`}
+              label={`${
+                selectedIdType == "birthCertificate"
+                  ? "জন্ম নিবন্ধন "
+                  : "জাতীয় পরিচয়পত্র"
+              } নাম্বার`}
               name="nidNumber"
               rules={[{ required: true, message: "Please enter your number" }]}
             >
@@ -150,7 +156,9 @@ const UddoktaApplicationForm = () => {
             <Form.Item
               label="জন্ম তারিখ"
               name="dateOfBirth"
-              rules={[{ required: true, message: "Please enter your date of birth" }]}
+              rules={[
+                { required: true, message: "Please enter your date of birth" },
+              ]}
             >
               <DatePicker
                 className="form-control w-100"
@@ -164,15 +172,20 @@ const UddoktaApplicationForm = () => {
                 }}
               />
             </Form.Item>
-            <Form.Item label=''>
-              <Button loading={loader} disabled={loader} size="large" type="primary" htmlType="submit">
+            <Form.Item label="">
+              <Button
+                loading={checkingNid}
+                disabled={checkingNid}
+                size="large"
+                type="primary"
+                htmlType="submit"
+              >
                 খুজুন
               </Button>
             </Form.Item>
           </div>
         </div>
       </Form>
-
 
       <Form form={form} layout="vertical" onFinish={handleSubmitForm}>
         <div
@@ -215,12 +228,7 @@ const UddoktaApplicationForm = () => {
             inheritanceList(inherList, setInherList)}
 
           <div style={{ textAlign: "center" }}>
-            <Button
-
-              type="primary"
-              htmlType="submit"
-              size="large"
-            >
+            <Button type="primary" htmlType="submit" size="large">
               সাবমিট
             </Button>
           </div>

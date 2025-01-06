@@ -36,7 +36,7 @@ const InheritanceList: React.FC = () => {
                       <td>
                         <Form.Item
                           {...restField}
-                          name={[name, "name"]}
+                          name={[name, "w_name"]}
                           rules={[{ required: true, message: "নাম প্রয়োজন" }]}
                         >
                           <Input style={{ height: 40 }} placeholder="নাম" />
@@ -45,15 +45,15 @@ const InheritanceList: React.FC = () => {
                       <td>
                         <Form.Item
                           {...restField}
-                          name={[name, "relation"]}
+                          name={[name, "w_relation"]}
                           rules={[
                             { required: true, message: "সম্পর্ক প্রয়োজন" },
                           ]}
                         >
                           <Select style={{ height: 40 }} placeholder="সম্পর্ক">
-                            <Select.Option value="father">পিতা</Select.Option>
-                            <Select.Option value="mother">মাতা</Select.Option>
-                            <Select.Option value="sibling">
+                            <Select.Option value="পিতা">পিতা</Select.Option>
+                            <Select.Option value="মাতা">মাতা</Select.Option>
+                            <Select.Option value=" ভাই/বোন">
                               ভাই/বোন
                             </Select.Option>
                           </Select>
@@ -62,7 +62,7 @@ const InheritanceList: React.FC = () => {
                       <td>
                         <Form.Item
                           {...restField}
-                          name={[name, "birth_date"]}
+                          name={[name, "w_age"]}
                           rules={[
                             { required: true, message: "জন্ম তারিখ প্রয়োজন" },
                           ]}
@@ -73,7 +73,7 @@ const InheritanceList: React.FC = () => {
                       <td>
                         <Form.Item
                           {...restField}
-                          name={[name, "nid"]}
+                          name={[name, "w_nid"]}
                           rules={[
                             {
                               required: true,

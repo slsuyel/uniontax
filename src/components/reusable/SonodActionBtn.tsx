@@ -70,7 +70,7 @@ const SonodActionBtn = ({
       >
         আবেদনপত্র দেখুন
       </Menu.Item>
-      {item.hasEnData && (
+      {item.hasEnData !== 0 && (
         <Menu.Item
           className="border my-1 border-info"
           key="view_en"
@@ -79,6 +79,7 @@ const SonodActionBtn = ({
           ইংরেজি আবেদনপত্র দেখুন
         </Menu.Item>
       )}
+
       {condition !== "cancel" && condition !== "approved" && (
         <Menu.Item
           className="border text-success border-warning my-1"

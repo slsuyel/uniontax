@@ -48,6 +48,8 @@ const FormValueModal = ({
     };
     const updatedData = { ...data, ...additionalData };
     try {
+      // console.log(updatedData);
+      // return;
       const response = await sonodApply({ bn: updatedData }).unwrap();
       console.log(response);
       if (response.status_code === 200) {

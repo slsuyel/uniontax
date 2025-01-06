@@ -109,6 +109,14 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["sonod-action"],
     }),
+    nidCheck: builder.mutation({
+      query: ({ token, data }) => ({
+        url: `/auth/uddokta/citizen/information/nid`,
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -124,4 +132,5 @@ export const {
   useAllHoldingFrontendQuery,
   useSingleSonodQuery,
   useSingleHoldingPublicQuery,
+  useNidCheckMutation,
 } = sonodApi;
