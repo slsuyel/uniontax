@@ -51,22 +51,32 @@ const englishInheritanceList: React.FC = () => {
                           ]}
                         >
                           <Select style={{ height: 40 }} placeholder="সম্পর্ক">
-                            <Select.Option value="পিতা">পিতা</Select.Option>
-                            <Select.Option value="মাতা">মাতা</Select.Option>
-                            <Select.Option value="ভাই/বোন">
-                              ভাই/বোন
+                            <Select.Option value="Father">Father</Select.Option>
+                            <Select.Option value="Mother">Mother</Select.Option>
+                            <Select.Option value="Brother/Sister">
+                              Brother/Sister
                             </Select.Option>
-                            <Select.Option value="স্ত্রী">স্ত্রী</Select.Option>
-                            <Select.Option value="পুত্র">পুত্র</Select.Option>
-                            <Select.Option value="কন্যা">কন্যা</Select.Option>
-                            <Select.Option value="স্বামী">স্বামী</Select.Option>
-                            <Select.Option value="ভাই">ভাই</Select.Option>
-                            <Select.Option value="বোন">বোন</Select.Option>
-                            <Select.Option value="নাতি">নাতি</Select.Option>
-                            <Select.Option value="নাতনি">নাতনি</Select.Option>
-                            <Select.Option value="ভাতিজা">ভাতিজা</Select.Option>
-                            <Select.Option value="ভাতিজী">ভাতিজী</Select.Option>
-                            <Select.Option value="চাচা">চাচা</Select.Option>
+                            <Select.Option value="Wife">Wife</Select.Option>
+                            <Select.Option value="Son">Son</Select.Option>
+                            <Select.Option value="Daughter">
+                              Daughter
+                            </Select.Option>
+                            <Select.Option value="Husband">
+                              Husband
+                            </Select.Option>
+                            <Select.Option value="Brother">
+                              Brother
+                            </Select.Option>
+                            <Select.Option value="Sister">Sister</Select.Option>
+                            <Select.Option value="Grandson">
+                              Grandson
+                            </Select.Option>
+                            <Select.Option value="Granddaughter">
+                              Granddaughter
+                            </Select.Option>
+                            <Select.Option value="Nephew">Nephew</Select.Option>
+                            <Select.Option value="Niece">Niece</Select.Option>
+                            <Select.Option value="Uncle">Uncle</Select.Option>
                           </Select>
                         </Form.Item>
                       </td>
