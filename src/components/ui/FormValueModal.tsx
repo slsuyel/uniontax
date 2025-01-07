@@ -48,7 +48,7 @@ const FormValueModal = ({
     };
     const updatedData = { ...data, ...additionalData };
     try {
-      // console.log(updatedData);
+      // console.log(data?.successor_list);
       // return;
       const response = await sonodApply({ bn: updatedData }).unwrap();
       console.log(response);
@@ -218,12 +218,11 @@ const FormValueModal = ({
               <tbody>
                 {data?.successor_list?.map((successor: any, index: number) => (
                   <tr key={index}>
-                    <td>{successor.name}</td>
-                    <td>{successor.relation}</td>
-                    <td>
-                      {new Date(successor.birth_date).toLocaleDateString()}
-                    </td>
-                    <td>{successor.nid}</td>
+                    <td>{successor.w_name}</td>
+                    <td>{successor.w_relation}</td>
+                    <td></td>
+                    {/* <td>{successor?.w_age}</td> */}
+                    <td>{successor.w_nid}</td>
                   </tr>
                 ))}
               </tbody>

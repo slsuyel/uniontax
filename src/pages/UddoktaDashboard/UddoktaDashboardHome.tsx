@@ -27,7 +27,7 @@ const UddoktaDashboardHome = () => {
       navigate(`/uddokta/application/${service}`);
     }
   };
-  console.log(sonodInfo);
+
   return (
     <div className="container mx-auto">
       {sonodInfo.map((service, index) => (

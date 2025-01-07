@@ -43,7 +43,7 @@ const UddoktaApplicationForm = () => {
   );
   const dispatch = useAppDispatch();
   const [inherList, setInherList] = useState(1);
-  const [userDta, setUserData] = useState();
+  const [userData, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleSubmitForm = async (values: any) => {
@@ -56,7 +56,7 @@ const UddoktaApplicationForm = () => {
       );
     }
   };
-
+  // console.log(userData);
   useEffect(() => {
     if (last_sonod && informations?.fullNameBN && last_sonod !== service) {
       Modal.confirm({
@@ -282,7 +282,7 @@ const UddoktaApplicationForm = () => {
 
       <FormValueModal
         visible={modalVisible}
-        data={userDta}
+        data={userData}
         from="uddokta"
         onCancel={handleCancel}
       />

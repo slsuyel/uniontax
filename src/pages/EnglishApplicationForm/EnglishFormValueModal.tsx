@@ -64,32 +64,6 @@ const EnglishFormValueModal = ({
     }
   };
 
-  const getSuccessorList = () => {
-    const successors = [];
-    let index = 0;
-
-    while (true) {
-      const name = data?.[`successor_list[${index}].w_name`];
-      const relation = data?.[`successor_list[${index}].w_relation`];
-      const dob = data?.[`successor_list[${index}].w_dob`];
-      const nid = data?.[`successor_list[${index}].w_nid`];
-
-      if (!name) break;
-
-      successors.push({
-        w_name: name,
-        w_relation: relation,
-        w_dob: dob,
-        w_nid: nid,
-      });
-
-      index++;
-    }
-
-    return successors;
-  };
-  const successorList = getSuccessorList();
-
   const fees =
     service === "ট্রেড লাইসেন্স"
       ? tradeFee
@@ -233,27 +207,27 @@ const EnglishFormValueModal = ({
             <div className="col-md-12">
               <div className="app-heading">List of Successors</div>
             </div>
-            {successorList.map((successor, index) => (
-              <div key={index} className="col-md-12 mt-3">
-                <div className="row">
-                  <div className="col-md-3">
-                    <b>Name: {successor.w_name}</b>
-                  </div>
-                  <div className="col-md-3">
-                    <b>Relation: {successor.w_relation}</b>
-                  </div>
-                  <div className="col-md-3">
-                    <b>
-                      Date of Birth:{" "}
-                      {new Date(successor.w_dob).toLocaleDateString()}
-                    </b>
-                  </div>
-                  <div className="col-md-3">
-                    <b>National ID / Birth Certificate: {successor.w_nid}</b>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <table className="table table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>নাম</th>
+                  <th>সম্পর্ক</th>
+                  <th>জন্ম তারিখ</th>
+                  <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.successor_list?.map((successor: any, index: number) => (
+                  <tr key={index}>
+                    <td>{successor.w_name}</td>
+                    <td>{successor.w_relation}</td>
+                    <td></td>
+                    {/* <td>{successor?.w_age}</td> */}
+                    <td>{successor.w_nid}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
         <br /> <br />
