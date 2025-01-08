@@ -192,7 +192,9 @@ const SonodActionBtn = ({
 
       {
         <Modal
-          title="Modal"
+          maskClosable={false}
+          width={"70%"}
+          title="প্রত্যয়ন প্রদানের বিবরণ"
           open={bibidoTextModal}
           onOk={handleOk}
           onCancel={hideModal}
@@ -202,7 +204,7 @@ const SonodActionBtn = ({
         >
           <div>
             <Input.TextArea
-              rows={4}
+              rows={8}
               cols={50}
               value={textareaValue}
               onChange={(e) => setTextareaValue(e.target.value)}
