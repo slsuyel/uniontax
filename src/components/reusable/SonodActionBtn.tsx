@@ -23,6 +23,7 @@ const SonodActionBtn = ({
   const [view, setView] = useState(false);
   const [viewEn, setViewEn] = useState(false);
   const [textareaValue, setTextareaValue] = useState("");
+  const [textareaValueEn, setTextareaValueEn] = useState("");
 
   const handleView = () => {
     setView(true);
@@ -40,9 +41,11 @@ const SonodActionBtn = ({
     const response = await sonodAction({
       id: item.id,
       sec_prottoyon: textareaValue,
+      sec_prottoyon_en: textareaValueEn,
       token,
     }).unwrap();
     if (response.data.message) {
+      message.success("সনদটি সফলভাবে অনুমোদন করা হয়েছে।");
       hideModal();
     }
   };
@@ -140,7 +143,7 @@ const SonodActionBtn = ({
       )}
     </Menu>
   );
-
+  console.log(item.prottoyon);
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap gap-2">
@@ -194,7 +197,7 @@ const SonodActionBtn = ({
         <Modal
           maskClosable={false}
           width={"70%"}
-          title="প্রত্যয়ন প্রদানের বিবরণ"
+          title=""
           open={bibidoTextModal}
           onOk={handleOk}
           onCancel={hideModal}
@@ -203,14 +206,40 @@ const SonodActionBtn = ({
           okButtonProps={{ loading: isLoading }}
         >
           <div>
-            <Input.TextArea
-              rows={8}
-              cols={50}
-              value={textareaValue}
-              onChange={(e) => setTextareaValue(e.target.value)}
-              placeholder="Enter text here..."
-              style={{ width: "100%" }}
-            />
+            <div>
+              <h5>আবেদনকৃত প্রত্যয়নের বিবরণ (বাংলা সনদ)</h5>
+              <p>{item?.prottoyon}</p>
+            </div>
+            <div>
+              {" "}
+              <h5>প্রত্যয়ন প্রদানের বিবরণ (বাংলা সনদ)</h5>
+              <Input.TextArea
+                rows={8}
+                cols={40}
+                value={textareaValue}
+                onChange={(e) => setTextareaValue(e.target.value)}
+                placeholder="Enter text here..."
+                style={{ width: "100%" }}
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            <div>
+              <h5>আবেদনকৃত প্রত্যয়নের বিবরণ (ইংরেজি সনদ)</h5>
+              <p>{item?.english_prottoyon}</p>
+            </div>
+            <div>
+              {" "}
+              <h5>প্রত্যয়ন প্রদানের বিবরণ (ইংরেজি সনদ)</h5>
+              <Input.TextArea
+                rows={8}
+                cols={40}
+                value={textareaValueEn}
+                onChange={(e) => setTextareaValueEn(e.target.value)}
+                placeholder="Enter text here..."
+                style={{ width: "100%" }}
+              />
+            </div>
           </div>
         </Modal>
       }

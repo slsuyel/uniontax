@@ -72,6 +72,7 @@ export interface TApplicantData {
   sonod_Id: string;
   uniqeKey: string;
 
+  english_prottoyon: string;
   sonod_name: string;
   successor_father_name: string | null;
   successor_mother_name: string | null;
