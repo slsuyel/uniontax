@@ -26,6 +26,17 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["sonod-action"],
     }),
+    englishSonodUpdate: builder.mutation({
+      query: ({ id, data, token }) => ({
+        url: `/user/english/sonod/update/${id}`,
+        method: "PUT",
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["sonod-action"],
+    }),
 
     singleSonod: builder.query({
       query: ({ token, id, en = false }) => ({
@@ -131,6 +142,7 @@ export const {
   useAddHoldingMutation,
   useSonodFeesQuery,
   useUpdateSonodFeesMutation,
+  useEnglishSonodUpdateMutation,
   useAllHoldingFrontendQuery,
   useSingleSonodQuery,
   useSingleHoldingPublicQuery,

@@ -4,7 +4,7 @@ import { Form, Button, message } from "antd";
 
 import { useEffect, useState } from "react";
 
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTradeInfoQuery } from "@/redux/api/user/userApi";
 import { TApplicantData } from "@/types";
 import { useAppSelector } from "@/redux/features/hooks";
@@ -17,8 +17,12 @@ import englishInheritanceList from "./englishInheritanceList";
 import englishConditionalForm from "./englishConditionalForm";
 import englishInheritanceForm from "./englishInheritanceForm";
 import EnglishFormValueModal from "./EnglishFormValueModal";
+import { useEnglishSonodUpdateMutation } from "@/redux/api/sonod/sonodApi";
 
 const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const token = localStorage.getItem(`token`);
   const [form] = Form.useForm();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
@@ -26,7 +30,8 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const location = useLocation();
   const { state } = location || {};
   const bn = state?.userData;
-
+  const [englishSonodUpdate, { isLoading: updating }] =
+    useEnglishSonodUpdateMutation();
   const { data, isLoading } = useTradeInfoQuery(
     { unionName: unionInfo?.short_name_e },
     {
@@ -51,8 +56,17 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const onFinish = async (values: any) => {
     setUserData(values);
     if (isDashboard) {
-      console.log("Submitted values:", values);
-      message.success("Form submitted from dashboard successfully");
+      const res = await englishSonodUpdate({
+        data: values,
+        id,
+        token,
+      }).unwrap();
+      if (res.status_code === 200) {
+        navigate(-1);
+        message.success("সনদটি সফলভাবে আপডেট করা হয়েছে।");
+      } else {
+        message.error("সনদটি আপডেট করতে ব্যর্থ হয়েছে,আবার চেষ্টা করুন");
+      }
     } else {
       setModalVisible(true);
     }
@@ -189,7 +203,13 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
             englishInheritanceList(inherList, setInherList)}
 
           <div style={{ textAlign: "center" }}>
-            <Button type="primary" htmlType="submit" size="large">
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              disabled={updating}
+              loading={updating}
+            >
               Submit
             </Button>
           </div>

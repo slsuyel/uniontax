@@ -23,11 +23,12 @@ import InheritanceList from "./inheritanceList";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const token = localStorage.getItem(`token`);
   const [form] = Form.useForm();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
   const [sonodName, setSonodName] = useState(service);
-  const navigate = useNavigate();
 
   const [updateSonod, { isLoading: updating }] = useSonodUpdateMutation();
   const { data, isLoading } = useTradeInfoQuery(
@@ -36,7 +37,6 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
       skip: !unionInfo?.short_name_e || sonodName !== "ট্রেড লাইসেন্স",
     }
   );
-  const token = localStorage.getItem(`token`);
   const location = useLocation();
   const pathname = location.pathname;
   const isDashboard = pathname.includes("dashboard");
