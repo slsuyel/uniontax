@@ -35,7 +35,7 @@ const EnglishFormValueModal = ({
     onCancel();
   };
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
-
+  const token = localStorage.getItem("token");
   const handlePayment = async () => {
     const additionalData = {
       applicant_date_of_birth: formattedDate,
@@ -52,8 +52,11 @@ const EnglishFormValueModal = ({
       en: { ...data, ...additionalData },
     };
 
+    console.log({ ...payload, token });
+    // return;
     try {
-      const response = await sonodApply(payload).unwrap();
+      const response = await sonodApply({ ...payload, token }).unwrap();
+
       console.log(response);
       if (response.status_code === 200) {
         message.success("You are redirect to payment gateway");

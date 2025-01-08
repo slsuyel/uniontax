@@ -23,6 +23,7 @@ const FormValueModal = ({
   onCancel,
   from,
 }: FormValueModalProps) => {
+  const token = localStorage.getItem("token");
   const [banglaSonod, setBanglaSonod] = useState(false);
   const navigate = useNavigate();
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
@@ -46,12 +47,14 @@ const FormValueModal = ({
       f_uri: window.origin + "/payment-failed",
       c_uri: window.origin + "/payment-cancel",
     };
+
     const updatedData = { ...data, ...additionalData };
+
     try {
-      // console.log(data?.successor_list);
-      // return;
-      const response = await sonodApply({ bn: updatedData }).unwrap();
+      // Send the data in the required format with token in headers
+      const response = await sonodApply({ bn: updatedData, token }).unwrap();
       console.log(response);
+
       if (response.status_code === 200) {
         message.success("You are redirect to payment gateway");
         window.location.href = response.data.redirect_url;

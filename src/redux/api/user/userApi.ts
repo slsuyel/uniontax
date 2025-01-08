@@ -1,22 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import apiSlice from '../apiSlice';
+import apiSlice from "../apiSlice";
 
 const userApi = apiSlice.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     sonodApply: builder.mutation({
-      query: data => ({
-        url: '/sonod/submit',
-        method: 'POST',
-        body: data,
+      query: ({ bn, token, en }) => ({
+        url: "/sonod/submit",
+        method: "POST",
+        body: { bn, en }, // Send `bn` in the payload
+        headers: {
+          authorization: `Bearer ${token}`, // Include token in headers
+        },
       }),
-      invalidatesTags: ['sonod-action'],
-
+      invalidatesTags: ["sonod-action"],
     }),
+
     sonodSearch: builder.mutation({
       query: ({ sonodType, sonodNo }) => ({
         url: `/sonod/search?sonod_name=${sonodType}&sonod_Id=${sonodNo}`,
-        method: 'Post',
+        method: "Post",
       }),
     }),
 
@@ -32,10 +35,10 @@ const userApi = apiSlice.injectEndpoints({
     createHolding: builder.mutation({
       query: ({ data }) => ({
         url: `/user/holdingtax`,
-        method: 'Post',
+        method: "Post",
         body: data,
       }),
-      invalidatesTags: ['holding-create-update'],
+      invalidatesTags: ["holding-create-update"],
     }),
     // checkPayment: builder.mutation({
     //   query: ({ trnx_id }) => ({
@@ -45,16 +48,15 @@ const userApi = apiSlice.injectEndpoints({
     //   }),
     // }),
 
-
     unionInfo: builder.query({
       query: ({ unionName, token }) => ({
         url: `/global/uniouninfo?name=${unionName}`,
-        method: 'Get',
+        method: "Get",
         headers: {
           authorization: `Bearer ${token}`,
         },
       }),
-      providesTags: ['sonod-action'],
+      providesTags: ["sonod-action"],
     }),
 
     tradeInfo: builder.query({
