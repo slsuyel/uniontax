@@ -36,7 +36,7 @@ const SonodActionBtn = ({
   const handleApproved = async () => {
     Modal.confirm({
       title: "আপনি কি নিশ্চিত?",
-      content: "আপনার অনুমোদনের পর এটি চূড়ান্ত হবে।",
+      content: "আপনি কি আবেদনটি অনুমোদন করতে চান?",
       okText: "হ্যাঁ",
       cancelText: "না",
       onOk: async () => {
