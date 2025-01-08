@@ -38,8 +38,8 @@ const UserLayout = () => {
               zIndex: 1000,
               backgroundColor: !theme
                 ? scrollY > 0
-                  ? "rgba(0, 0, 0, 0.8)"
-                  : "#001529"
+                  ? "#017575"
+                  : "#007575"
                 : scrollY > 0
                 ? "#fffcfc8a"
                 : "white",
