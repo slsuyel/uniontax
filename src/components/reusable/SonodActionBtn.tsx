@@ -90,6 +90,17 @@ const SonodActionBtn = ({
           এডিট করুন
         </Link>
       </Menu.Item>
+      {item.hasEnData == 1 && (
+        <Menu.Item className="border my-1 border-info" key="edit">
+          <Link
+            className="text-decoration-none"
+            to={`/dashboard/sonod/${sonodName}/action/edit-english/${item.id}`}
+          >
+            ইংরেজি সনদ এডিট করুন
+          </Link>
+        </Menu.Item>
+      )}
+
       <Menu.Item className="border my-1 border-success" key="receipt">
         <Link
           className="text-decoration-none text-success "
