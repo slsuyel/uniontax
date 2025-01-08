@@ -1,4 +1,5 @@
 import UnderConstruction from "@/components/reusable/UnderConstruction";
+import ProfilePage from "@/pages/auth/ProfilePage";
 
 import UddoktaApplicationForm from "@/pages/UddoktaDashboard/UddoktaApplicationForm";
 import UddoktaDashboardHome from "@/pages/UddoktaDashboard/UddoktaDashboardHome";
@@ -20,5 +21,9 @@ export const uddoktaRoutes = [
   {
     path: "application-english/:service",
     element: <UddoktaEnglishApplicationForm />,
+  },
+  {
+    path: "profile",
+    element: <ProfilePage />,
   },
 ];

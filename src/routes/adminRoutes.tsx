@@ -1,4 +1,5 @@
 import UnderConstruction from "@/components/reusable/UnderConstruction";
+import ProfilePage from "@/pages/auth/ProfilePage";
 import Dhome from "@/pages/dashboard/Admin/Dhome";
 import HoldingAdd from "@/pages/dashboard/holding/HoldingAdd";
 import HoldingShow from "@/pages/dashboard/holding/HoldingShow";
@@ -65,5 +66,9 @@ export const adminRoutes = [
   {
     path: "settings",
     element: <UnderConstruction />,
+  },
+  {
+    path: "profile",
+    element: <ProfilePage />,
   },
 ];

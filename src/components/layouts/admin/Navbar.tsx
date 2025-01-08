@@ -5,10 +5,6 @@ import { Dropdown, message } from "antd";
 import { useNavigate } from "react-router-dom";
 
 // Define the onClick handler for Profile click
-function handleProfileClick() {
-  console.log("Profile clicked");
-  // Add your logic here
-}
 
 // Define the onClick handler for Logout click
 
@@ -37,6 +33,11 @@ const Navbar = () => {
     navigate("/");
     message.success("Logout successfully");
   }
+  function handleProfileClick() {
+    navigate("/dashboard/profile");
+    // Add your logic here
+  }
+
   console.log(user);
   return (
     <div className="d-flex gap-3 align-item-center ">
