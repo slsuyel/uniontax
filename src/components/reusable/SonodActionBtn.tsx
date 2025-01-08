@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TApplicantData } from "@/types";
 import { useSonodActionMutation } from "@/redux/api/sonod/sonodApi";
-import { message, Dropdown, Menu, Button } from "antd";
+import { message, Dropdown, Menu, Button, Modal } from "antd";
 import SingleSonodViewModal from "@/pages/dashboard/SonodManagement/SingleSonodViewModal";
 
 interface SonodActionBtnProps {
@@ -34,14 +34,25 @@ const SonodActionBtn = ({
   };
 
   const handleApproved = async () => {
-    try {
-      const response = await sonodAction({ id: item.id, token }).unwrap();
-      console.log("Success:", response.data.message);
-      message.success(` ${response.data.message}`);
-    } catch (err) {
-      console.error("Error:", err);
-      message.error("কিছু সমস্যা হয়েছে");
-    }
+    Modal.confirm({
+      title: "আপনি কি নিশ্চিত?",
+      content: "আপনার অনুমোদনের পর এটি চূড়ান্ত হবে।",
+      okText: "হ্যাঁ",
+      cancelText: "না",
+      onOk: async () => {
+        try {
+          const response = await sonodAction({ id: item.id, token }).unwrap();
+          console.log("Success:", response.data.message);
+          message.success(` ${response.data.message}`);
+        } catch (err) {
+          console.error("Error:", err);
+          message.error("কিছু সমস্যা হয়েছে");
+        }
+      },
+      onCancel: () => {
+        console.log("Action canceled");
+      },
+    });
   };
 
   const menu = (
