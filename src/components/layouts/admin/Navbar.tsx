@@ -1,3 +1,5 @@
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, message } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +13,11 @@ function handleProfileClick() {
 // Define the onClick handler for Logout click
 
 const Navbar = () => {
+  const user = useAppSelector((state: RootState) => state.user.user);
+  const navigate = useNavigate();
   const items = [
     {
-      label: "Profile",
+      label: `${user?.position}`,
       key: "1",
       icon: <UserOutlined />,
       onClick: handleProfileClick,
@@ -25,9 +29,6 @@ const Navbar = () => {
       onClick: handleLogoutClick,
     },
   ];
-
-  const navigate = useNavigate();
-
   const menuProps = {
     items,
   };
@@ -36,7 +37,7 @@ const Navbar = () => {
     navigate("/");
     message.success("Logout successfully");
   }
-
+  console.log(user);
   return (
     <div className="d-flex gap-3 align-item-center ">
       <Dropdown.Button
@@ -44,7 +45,7 @@ const Navbar = () => {
         placement="bottom"
         icon={<UserOutlined />}
       >
-        Admin
+        {user?.position}
       </Dropdown.Button>
     </div>
   );
