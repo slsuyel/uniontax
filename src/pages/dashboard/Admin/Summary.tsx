@@ -1,21 +1,29 @@
+import allApplications from "/images/all-application.png";
+import approvedApplications from "/images/approved-application.png";
+import canceledApplications from "/images/cancel-application.png";
+import newApplications from "/images/new-application.png";
+import totalFees from "/images/total-fees.png";
+
 const SummaryItem = ({
   icon,
   title,
   value,
 }: {
-  icon: string;
+  icon: string; // This will now be the image source
   title: string;
   value: number;
 }) => {
   return (
     <div className="col-md-3 my-2">
-      <div className="border-0 card h-100 mb-2 py-3 shadow-sm hover-effect">
+      <div className="border-0 card h-100 mb-2 py-3 shadow hover-effect">
         <div className="card-body d-flex align-items-center justify-content-around">
-          <i
-            className={`p-3 rounded-circle my-auto ${icon} fs-1 bg-light text-primary`}
-          ></i>
+          <img
+            src={icon}
+            alt={title}
+            style={{ width: "80px", height: "80px" }} // Adjust size as needed
+          />
           <div className="text-end">
-            <h5 className="card-title fw-bold  mb-2">{title}</h5>
+            <h5 className="card-title fw-bold mb-2">{title}</h5>
             <p className="card-text fs-4 mb-0 text-primary fw-bold">{value}</p>
           </div>
         </div>
@@ -26,15 +34,11 @@ const SummaryItem = ({
 
 const Summary = () => {
   const summaryItems = [
-    { icon: "fa-solid fa-file-contract", title: "মোট আবেদন", value: 15299 },
-    { icon: "fa-solid fa-file-pen", title: "নতুন আবেদন", value: 1126 },
-    { icon: "fa-solid fa-file-circle-check", title: "ইস্যুকৃত সনদ", value: 26 },
-    { icon: "fa-solid fa-file-excel", title: "বাতিলকৃত আবেদন", value: 500 },
-    {
-      icon: "fa-solid fa-bangladeshi-taka-sign",
-      title: "মোট আদায়কৃত ফি পরিমাণ",
-      value: 396,
-    },
+    { icon: allApplications, title: "মোট আবেদন", value: 15299 },
+    { icon: newApplications, title: "নতুন আবেদন", value: 1126 },
+    { icon: approvedApplications, title: "ইস্যুকৃত সনদ", value: 26 },
+    { icon: canceledApplications, title: "বাতিলকৃত আবেদন", value: 500 },
+    { icon: totalFees, title: "মোট আদায়কৃত ফি পরিমাণ", value: 396 },
   ];
 
   return (

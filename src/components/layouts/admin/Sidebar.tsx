@@ -79,7 +79,7 @@ const Sidebar = () => {
         label: (
           <>
             <span className="text-white">{item.title}</span>{" "}
-            <Badge className="bg-danger rounded-circle p-2">
+            <Badge className="bg-danger rounded-circle p-2 p-auto text-white">
               {item.pendingCount}
             </Badge>
           </>
