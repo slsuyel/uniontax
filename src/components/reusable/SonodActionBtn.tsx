@@ -143,7 +143,7 @@ const SonodActionBtn = ({
       )}
     </Menu>
   );
-  console.log(item.prottoyon);
+  // console.log(item.hasEnData);
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap gap-2">
@@ -159,27 +159,6 @@ const SonodActionBtn = ({
         <Dropdown overlay={menu} placement="bottomLeft" arrow>
           <Button type="primary">Actions</Button>
         </Dropdown>
-
-        {/* {condition === "approved" && (
-          <>
-            <Link className="text-decoration-none"
-              target="_blank"
-              to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
-              className="btn btn-success btn-sm mr-1"
-            >
-              বাংলা সনদ
-            </Link>
-            {item.hasEnData === 1 && (
-              <Link className="text-decoration-none"
-                target="_blank"
-                to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
-                className="btn btn-success btn-sm mr-1"
-              >
-                ইংরেজি সনদ
-              </Link>
-            )}
-          </>
-        )} */}
       </div>
 
       {view && (
@@ -223,24 +202,26 @@ const SonodActionBtn = ({
               />
             </div>
           </div>
-          <div className="mt-4">
-            <div>
-              <h5>আবেদনকৃত প্রত্যয়নের বিবরণ (ইংরেজি সনদ)</h5>
-              <p>{item?.english_prottoyon}</p>
+          {item?.hasEnData == 1 && (
+            <div className="mt-4">
+              <div>
+                <h5>আবেদনকৃত প্রত্যয়নের বিবরণ (ইংরেজি সনদ)</h5>
+                <p>{item?.english_prottoyon}</p>
+              </div>
+              <div>
+                {" "}
+                <h5>প্রত্যয়ন প্রদানের বিবরণ (ইংরেজি সনদ)</h5>
+                <Input.TextArea
+                  rows={8}
+                  cols={40}
+                  value={textareaValueEn}
+                  onChange={(e) => setTextareaValueEn(e.target.value)}
+                  placeholder="Enter text here..."
+                  style={{ width: "100%" }}
+                />
+              </div>
             </div>
-            <div>
-              {" "}
-              <h5>প্রত্যয়ন প্রদানের বিবরণ (ইংরেজি সনদ)</h5>
-              <Input.TextArea
-                rows={8}
-                cols={40}
-                value={textareaValueEn}
-                onChange={(e) => setTextareaValueEn(e.target.value)}
-                placeholder="Enter text here..."
-                style={{ width: "100%" }}
-              />
-            </div>
-          </div>
+          )}
         </Modal>
       }
     </>
