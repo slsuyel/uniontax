@@ -102,10 +102,11 @@ const sonodApi = apiSlice.injectEndpoints({
     }),
 
     sonodAction: builder.mutation({
-      query: ({ id, token }) => ({
+      query: ({ id, token, sec_prottoyon }) => ({
         url: `/user/sonod/action/${id}`,
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
+        body: { sec_prottoyon },
       }),
       invalidatesTags: ["sonod-action"],
     }),

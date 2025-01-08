@@ -53,7 +53,7 @@ const SonodManagement = () => {
 
   const allSonod: TApplicantData[] = data?.data.sonods.data || [];
 
-  console.log(allSonod);
+  // console.log(allSonod);
 
   return (
     <div className="card p-3 border-0">
