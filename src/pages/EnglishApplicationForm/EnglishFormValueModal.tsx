@@ -34,6 +34,7 @@ const EnglishFormValueModal = ({
   const handleCancel = () => {
     onCancel();
   };
+
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
   const token = localStorage.getItem("token");
   const handlePayment = async () => {
@@ -48,7 +49,7 @@ const EnglishFormValueModal = ({
     // const updatedData = { ...data, ...additionalData };
 
     const payload = {
-      bn: { ...bn, ...additionalData },
+      bn: { ...bn, ...additionalData, image: bn?.image?.thumbUrl },
       en: { ...data, ...additionalData },
     };
 

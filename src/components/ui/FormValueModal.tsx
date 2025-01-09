@@ -40,6 +40,7 @@ const FormValueModal = ({
   // console.log(data?.image?.thumbUrl);
   const imageFile = data?.image?.originFileObj;
   const blobUrl = imageFile ? URL.createObjectURL(imageFile) : null;
+
   const handlePayment = async () => {
     const additionalData = {
       applicant_date_of_birth: formattedDate,
