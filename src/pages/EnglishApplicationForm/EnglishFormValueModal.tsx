@@ -88,135 +88,177 @@ const EnglishFormValueModal = ({
       <div>
         <div className="row w-100 mx-auto">
           <div className="col-md-12">
-            <div className="app-heading">Applicant Information</div>
+            <div className="app-heading">
+              আবেদনকারীর তথ্য (Applicant Information)
+            </div>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Applicant Name: </b>
+            <b>আবেদনকারীর নাম (Applicant Name): </b>
             {data?.applicant_name}
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Gender: {data?.applicant_gender} </b>
-          </div>
-          <div className="col-md-4 col-6 mt-3">
-            <b>Father's/Husband's Name: {data?.applicant_father_name}</b>
-          </div>
-          <div className="col-md-4 col-6 mt-3">
-            <b>Mother's Name: {data?.applicant_mother_name}</b>
-          </div>
-          <div className="col-md-4 col-6 mt-3">
-            <b>National ID: {data?.applicant_national_id_number}</b>
+            <b>লিঙ্গ (Gender): {data?.applicant_gender} </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
             <b>
-              Birth Certificate Number:{" "}
+              পিতার/স্বামীর নাম (Father's/Husband's Name):{" "}
+              {data?.applicant_father_name}
+            </b>
+          </div>
+          <div className="col-md-4 col-6 mt-3">
+            <b>মাতার নাম (Mother's Name): {data?.applicant_mother_name}</b>
+          </div>
+          <div className="col-md-4 col-6 mt-3">
+            <b>
+              জাতীয় পরিচয়পত্র নম্বর (National ID):{" "}
+              {data?.applicant_national_id_number}
+            </b>
+          </div>
+          <div className="col-md-4 col-6 mt-3">
+            <b>
+              জন্ম নিবন্ধন নম্বর (Birth Certificate Number):{" "}
               {data?.applicant_birth_certificate_number}{" "}
             </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Holding Number: {data?.applicant_holding_tax_number} </b>
+            <b>
+              হোল্ডিং নম্বর (Holding Number):{" "}
+              {data?.applicant_holding_tax_number}{" "}
+            </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Date of Birth: {formattedDate} </b>
+            <b>জন্ম তারিখ (Date of Birth): {formattedDate} </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Passport Number: </b>
+            <b>পাসপোর্ট নম্বর (Passport Number): </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Marital Status: </b>
+            <b>বৈবাহিক অবস্থা (Marital Status): </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Occupation: </b>
+            <b>পেশা (Occupation): </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Educational Qualification: </b>
+            <b>শিক্ষাগত যোগ্যতা (Educational Qualification): </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Religion: {data?.applicant_religion}</b>
+            <b>ধর্ম (Religion): {data?.applicant_religion}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Resident Status: {data?.applicant_resident_status} </b>Permanent
+            <b>
+              বাসিন্দার অবস্থা (Resident Status):{" "}
+              {data?.applicant_resident_status}{" "}
+            </b>
           </div>
           <div className="col-md-12 col-12 mt-3">
             <b>
-              Applied Certification: <br />
+              আবেদিত সনদ (Applied Certification): <br />
             </b>
           </div>
           <div className="col-md-12">
-            <div className="app-heading">Present Address</div>
+            <div className="app-heading">বর্তমান ঠিকানা (Present Address)</div>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Village/Moholla: {data?.applicant_present_village} </b>
+            <b>
+              গ্রাম/মহল্লা (Village/Moholla): {data?.applicant_present_village}{" "}
+            </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Road/Block/Sector: </b>
+            <b>রোড/ব্লক/সেক্টর (Road/Block/Sector): </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Ward Number: {data?.applicant_present_word_number}</b>
+            <b>
+              ওয়ার্ড নম্বর (Ward Number): {data?.applicant_present_word_number}
+            </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>District: {data?.applicant_present_district}</b>
+            <b>জেলা (District): {data?.applicant_present_district}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Upazila/Thana: {data?.applicant_present_Upazila}</b>
+            <b>
+              উপজেলা/থানা (Upazila/Thana): {data?.applicant_present_Upazila}
+            </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Post Office: {data?.applicant_present_post_office} </b>
+            <b>
+              পোস্ট অফিস (Post Office): {data?.applicant_present_post_office}{" "}
+            </b>
           </div>
           <div className="col-md-12">
-            <div className="app-heading">Permanent Address</div>
+            <div className="app-heading">স্থায়ী ঠিকানা (Permanent Address)</div>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Village/Moholla: {data?.applicant_permanent_village} </b>
+            <b>
+              গ্রাম/মহল্লা (Village/Moholla):{" "}
+              {data?.applicant_permanent_village}{" "}
+            </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Road/Block/Sector: </b>
+            <b>রোড/ব্লক/সেক্টর (Road/Block/Sector): </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Ward Number: {data?.applicant_permanent_word_number} </b>
+            <b>
+              ওয়ার্ড নম্বর (Ward Number):{" "}
+              {data?.applicant_permanent_word_number}{" "}
+            </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>District: {data?.applicant_permanent_district} </b>
+            <b>জেলা (District): {data?.applicant_permanent_district} </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Upazila/Thana: {data?.applicant_permanent_Upazila}</b>
+            <b>
+              উপজেলা/থানা (Upazila/Thana): {data?.applicant_permanent_Upazila}
+            </b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>Post Office: {data?.applicant_permanent_post_office}</b>
+            <b>
+              পোস্ট অফিস (Post Office): {data?.applicant_permanent_post_office}
+            </b>
           </div>
           <div className="col-md-12">
-            <div className="app-heading">Contact Information</div>
+            <div className="app-heading">
+              যোগাযোগের তথ্য (Contact Information)
+            </div>
           </div>
           <div className="col-md-6 col-6 mt-3">
-            <b>Mobile: {data?.applicant_mobile}</b>
+            <b>মোবাইল নম্বর (Mobile): {data?.applicant_mobile}</b>
           </div>
           <div className="col-md-6 col-6 mt-3">
-            <b>Email: {data?.applicant_email}</b>
+            <b>ইমেইল (Email): {data?.applicant_email}</b>
           </div>
           <div className="col-md-12">
-            <div className="app-heading">Attachments</div>
+            <div className="app-heading">সংযুক্তি (Attachments)</div>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <span>National ID (Front page)</span> <br />
+            <span>জাতীয় পরিচয়পত্র (সামনের পৃষ্ঠা) (National ID - Front)</span>{" "}
+            <br />
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <span>National ID (Back page)</span> <br />
+            <span>জাতীয় পরিচয়পত্র (পিছনের পৃষ্ঠা) (National ID - Back)</span>{" "}
+            <br />
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <span>Birth Certificate</span> <br /> <img width="100%" alt="" />
+            <span>জন্ম নিবন্ধন (Birth Certificate)</span> <br />{" "}
+            <img width="100%" alt="" />
           </div>
           <hr />
 
           <div className="row mx-auto">
             <div className="col-md-12">
-              <div className="app-heading">List of Successors</div>
+              <div className="app-heading">
+                উত্তরাধিকারীদের তালিকা (List of Successors)
+              </div>
             </div>
             <table className="table table-bordered mt-3">
               <thead>
                 <tr>
-                  <th>নাম</th>
-                  <th>সম্পর্ক</th>
-                  <th>জন্ম তারিখ</th>
-                  <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
+                  <th>নাম (Name)</th>
+                  <th>সম্পর্ক (Relation)</th>
+                  <th>জন্ম তারিখ (Date of Birth)</th>
+                  <th>
+                    জাতীয় পরিচয়পত্র / জন্মনিবন্ধন (National ID / Birth
+                    Certificate)
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -238,8 +280,8 @@ const EnglishFormValueModal = ({
         {from !== "dashboard" && (
           <div className="text-center col-md-7 mx-auto">
             <h3>
-              Please pay the fee to complete your application. The fee for{" "}
-              {service} is {fees * 2} Taka.
+              অনুগ্রহ করে আপনার আবেদন সম্পূর্ণ করতে ফি প্রদান করুন। {service} এর
+              ফি হল {fees * 2} টাকা।
             </h3>
             <button
               disabled={isLoading}
@@ -247,7 +289,7 @@ const EnglishFormValueModal = ({
               type="submit"
               className="border-1 btn_main text-nowrap w-100"
             >
-              {isLoading ? "Please wait" : "Pay And Submit"}
+              {isLoading ? "অপেক্ষা করুন" : "ফি প্রদান করুন এবং জমা দিন"}
             </button>
           </div>
         )}

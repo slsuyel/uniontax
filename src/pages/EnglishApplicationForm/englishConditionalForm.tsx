@@ -4,93 +4,85 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const englishConditionalForm = (service: any) => {
-    const renderDynamicFormItem = (
-        label: string,
-        name: string,
-        component: JSX.Element
-    ) => (
-        <div className="col-md-4">
-            <Form.Item label={label} name={name}>
-                {component}
-            </Form.Item>
-        </div>
-    );
+  const renderDynamicFormItem = (
+    label: string,
+    name: string,
+    component: JSX.Element
+  ) => (
+    <div className="col-md-4">
+      <Form.Item label={label} name={name}>
+        {component}
+      </Form.Item>
+    </div>
+  );
 
-    return (
-        <>
-            {/* {renderDynamicFormItem(
-                "Mobile",
-                "applicant_mobile",
-                <Input
-                    min={11}
-                    max={11}
-                    style={{ height: 40, width: "100%" }}
-                    type="tel"
-                    className="form-control"
-                />
-            )} */}
+  return (
+    <>
+      {renderDynamicFormItem(
+        "ইমেইল (Email)",
+        "applicant_email",
+        <Input
+          style={{ height: 40, width: "100%" }}
+          type="email"
+          className="form-control"
+          placeholder="ইমেইল লিখুন"
+        />
+      )}
 
-            {renderDynamicFormItem(
-                "Email",
-                "applicant_email",
-                <Input
-                    style={{ height: 40, width: "100%" }}
-                    type="email"
-                    className="form-control"
-                />
-            )}
+      {renderDynamicFormItem(
+        "বাসিন্দার অবস্থা (Resident Status)",
+        "applicant_resident_status",
+        <Select
+          placeholder="বাসিন্দার অবস্থা নির্বাচন করুন"
+          style={{ height: 40, width: "100%" }}
+          className=""
+        >
+          <Option value="Permanent">স্থায়ী (Permanent)</Option>
+          <Option value="Temporary">অস্থায়ী (Temporary)</Option>
+        </Select>
+      )}
 
-            {renderDynamicFormItem(
-                "Resident Status",
-                "applicant_resident_status",
-                <Select
-                    placeholder="Select Resident Status"
-                    style={{ height: 40, width: "100%" }}
-                    className=""
-                >
-                    <Option value="Permanent">Permanent</Option>
-                    <Option value="Temporary">Temporary</Option>
-                </Select>
-            )}
+      {service == "বিবিধ প্রত্যয়নপত্র" || service === "অনাপত্তি সনদপত্র"
+        ? renderDynamicFormItem(
+            "আবেদিত সনদের বিবরণ লিখুন (Provide details of the applied certificate)",
+            "prottoyon",
+            <TextArea style={{ height: 80 }} placeholder="বিবরণ লিখুন" />
+          )
+        : null}
 
-            {service == "বিবিধ প্রত্যয়নপত্র" || service === "অনাপত্তি সনদপত্র"
-                ? renderDynamicFormItem(
-                    "Provide details of the applied certificate",
-                    "prottoyon",
-                    <TextArea style={{ height: 80 }} />
-                )
-                : null}
+      {service == "পারিবারিক সনদ" &&
+        renderDynamicFormItem(
+          "পরিবারের নাম (Family Name)",
+          "family_name",
+          <Input style={{ height: 40 }} placeholder="পরিবারের নাম লিখুন" />
+        )}
 
-            {service == "পারিবারিক সনদ" &&
-                renderDynamicFormItem(
-                    "Family Name",
-                    "family_name",
-                    <Input style={{ height: 40 }} />
-                )}
+      {service == "বার্ষিক আয়ের প্রত্যয়ন" &&
+        renderDynamicFormItem(
+          "বার্ষিক আয় (Annual Income)",
+          "Annual_income",
+          <Input style={{ height: 40 }} placeholder="বার্ষিক আয় লিখুন" />
+        )}
 
-            {service == "বার্ষিক আয়ের প্রত্যয়ন" &&
-                renderDynamicFormItem(
-                    "Annual Income",
-                    "Annual_income",
-                    <Input style={{ height: 40 }} />
-                )}
-
-            {service == "প্রতিবন্ধী সনদপত্র" &&
-                renderDynamicFormItem(
-                    "Disability",
-                    "disabled",
-                    <Select style={{ height: 40 }} placeholder="Select">
-                        <Option value="physical">Physical</Option>
-                        <Option value="vision">Vision</Option>
-                        <Option value="hearing">Hearing</Option>
-                        <Option value="speech">Speech</Option>
-                        <Option value="intellectual">Intellectual</Option>
-                        <Option value="multiple">Multiple</Option>
-                        <Option value="mental">Mental</Option>
-                    </Select>
-                )}
-        </>
-    );
+      {service == "প্রতিবন্ধী সনদপত্র" &&
+        renderDynamicFormItem(
+          "প্রতিবন্ধিতা (Disability)",
+          "disabled",
+          <Select
+            style={{ height: 40 }}
+            placeholder="প্রতিবন্ধিতা নির্বাচন করুন"
+          >
+            <Option value="physical">শারীরিক (Physical)</Option>
+            <Option value="vision">দৃষ্টি (Vision)</Option>
+            <Option value="hearing">শ্রবণ (Hearing)</Option>
+            <Option value="speech">বাক (Speech)</Option>
+            <Option value="intellectual">বুদ্ধিবৃত্তিক (Intellectual)</Option>
+            <Option value="multiple">বহুমাত্রিক (Multiple)</Option>
+            <Option value="mental">মানসিক (Mental)</Option>
+          </Select>
+        )}
+    </>
+  );
 };
 
 export default englishConditionalForm;
