@@ -64,7 +64,7 @@ export interface TApplicantData {
   applicant_resident_status?: string;
   attachment_type?: string;
   current_division?: string;
-  image?: string;
+  image?: any;
   same_address?: boolean;
   applicant_religion?: string;
   id: number;

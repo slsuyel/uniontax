@@ -38,8 +38,8 @@ const FormValueModal = ({
   };
   const formattedDate = getFormattedDate(data?.applicant_date_of_birth || null);
   // console.log(data?.image?.thumbUrl);
-  // const imageFile = data?.image?.originFileObj;
-  // const blobUrl = imageFile ? URL.createObjectURL(imageFile) : null;
+  const imageFile = data?.image?.originFileObj;
+  const blobUrl = imageFile ? URL.createObjectURL(imageFile) : null;
   const handlePayment = async () => {
     const additionalData = {
       applicant_date_of_birth: formattedDate,
@@ -95,19 +95,20 @@ const FormValueModal = ({
           <div className="col-md-12">
             <div className="app-heading">আবেদনকারীর তথ্য</div>
           </div>
-          {/* {blobUrl ? (
-            <img
-              src={blobUrl}
-              alt={data?.image?.name || "Uploaded image"}
-              style={{
-                width: "300px",
-                height: "auto",
-                border: "1px solid #ccc",
-              }}
-            />
-          ) : (
-            <p>No image to display</p>
-          )} */}
+          <div className="text-center">
+            {blobUrl ? (
+              <img
+                src={blobUrl}
+                alt={data?.image?.name || "Uploaded image"}
+                style={{
+                  width: "100px",
+                  height: "100px",
+                }}
+              />
+            ) : (
+              <p>No image to display</p>
+            )}
+          </div>
           <div className="col-md-4 col-6 mt-3">
             <b>আবেদনকারীর নাম : </b>
             {data?.applicant_name}
