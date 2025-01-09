@@ -96,10 +96,10 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedUpazila("");
 
     const filterDivition = divisions.find((d) => d.id === value);
-    console.log(filterDivition?.bn_name);
+    console.log(filterDivition?.name);
 
     form.setFieldsValue({
-      current_division: filterDivition?.bn_name,
+      current_division: filterDivition?.name,
     });
   };
 
@@ -108,10 +108,10 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedUpazila("");
 
     const filterDistrict = districts.find((d) => d.id === value);
-    console.log(filterDistrict?.bn_name);
+    console.log(filterDistrict?.name);
 
     form.setFieldsValue({
-      applicant_present_district: filterDistrict?.bn_name,
+      applicant_present_district: filterDistrict?.name,
     });
 
     console.log(form);
@@ -121,10 +121,10 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedUpazila(value);
 
     const filterUpazila = upazilas.find((d) => d.id === value);
-    console.log(filterUpazila?.bn_name);
+    console.log(filterUpazila?.name);
 
     form.setFieldsValue({
-      applicant_present_Upazila: filterUpazila?.bn_name,
+      applicant_present_Upazila: filterUpazila?.name,
     });
 
     console.log(form);
@@ -137,10 +137,10 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedPerDistrict("");
     setSelectedPerUpazila("");
     const filterDivition = divisions.find((d) => d.id === value);
-    console.log(filterDivition?.bn_name);
+    console.log(filterDivition?.name);
 
     form.setFieldsValue({
-      permanent_division: filterDivition?.bn_name,
+      permanent_division: filterDivition?.name,
     });
   };
 
@@ -149,10 +149,10 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedPerUpazila("");
 
     const filterDistrict = districts.find((d) => d.id === value);
-    console.log(filterDistrict?.bn_name);
+    console.log(filterDistrict?.name);
 
     form.setFieldsValue({
-      applicant_permanent_district: filterDistrict?.bn_name,
+      applicant_permanent_district: filterDistrict?.name,
     });
 
     console.log(form);
@@ -162,10 +162,10 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedPerUpazila(value);
 
     const filterUpazila = upazilas.find((d) => d.id === value);
-    console.log(filterUpazila?.bn_name);
+    console.log(filterUpazila?.name);
 
     form.setFieldsValue({
-      applicant_permanent_Upazila: filterUpazila?.bn_name,
+      applicant_permanent_Upazila: filterUpazila?.name,
     });
 
     console.log(form);
@@ -219,7 +219,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
             >
               {divisions.map((division) => (
                 <Option key={division.id} value={division.id}>
-                  {division.bn_name}
+                  {division.name}
                 </Option>
               ))}
             </Select>
@@ -234,7 +234,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
             >
               {districts.map((district) => (
                 <Option key={district.id} value={district.id}>
-                  {district.bn_name}
+                  {district.name}
                 </Option>
               ))}
             </Select>
@@ -252,7 +252,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
             >
               {upazilas.map((upazila) => (
                 <Option key={upazila.id} value={upazila.id}>
-                  {upazila.bn_name}
+                  {upazila.name}
                 </Option>
               ))}
             </Select>
@@ -307,7 +307,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
             >
               {divisions.map((division) => (
                 <Option key={division.id} value={division.id}>
-                  {division.bn_name}
+                  {division.name}
                 </Option>
               ))}
             </Select>
@@ -325,7 +325,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
             >
               {perDistricts.map((district) => (
                 <Option key={district.id} value={district.id}>
-                  {district.bn_name}
+                  {district.name}
                 </Option>
               ))}
             </Select>
@@ -343,7 +343,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
             >
               {perUpazilas.map((upazila) => (
                 <Option key={upazila.id} value={upazila.id}>
-                  {upazila.bn_name}
+                  {upazila.name}
                 </Option>
               ))}
             </Select>
