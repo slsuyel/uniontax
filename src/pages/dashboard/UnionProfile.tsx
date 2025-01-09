@@ -146,7 +146,7 @@ const UnionProfile = () => {
       const res = await updateUnion({ data: values, token }).unwrap();
       console.log(res.status_code);
       if (res.status_code == 200) {
-        message.success("Union information updated successfully.");
+        message.success("ইউনিয়ন তথ্য সফলভাবে আপডেট করা হয়েছে।");
       }
       if (
         res.status_code !== 200 ||
