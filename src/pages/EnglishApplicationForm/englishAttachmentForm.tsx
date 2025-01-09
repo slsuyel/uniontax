@@ -1,10 +1,5 @@
-
 const englishAttachmentForm = () => {
-    return (
-        <div>
-            attachmentForm.tsx
-        </div>
-    );
+  return <div></div>;
 };
 
 export default englishAttachmentForm;
