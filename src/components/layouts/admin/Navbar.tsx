@@ -19,7 +19,7 @@ const Navbar = () => {
       onClick: handleProfileClick,
     },
     {
-      label: "Log Out",
+      label: "লগ আউট",
       key: "2",
       icon: <LogoutOutlined />,
       onClick: handleLogoutClick,

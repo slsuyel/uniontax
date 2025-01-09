@@ -3,7 +3,7 @@ import { RootState } from "@/redux/features/store";
 import { useAppSelector } from "@/redux/features/hooks";
 import { Badge, Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
-import mainLogo from "/main_logo.png";
+
 const { Sider } = Layout;
 
 const theme = false;
@@ -28,6 +28,7 @@ type SidebarItemWithoutSubmenu = SidebarItemBase & {
 export type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 
 const Sidebar = () => {
+  const user = useAppSelector((state: RootState) => state.user.user);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
 
   const sidebarItems: SidebarItem[] = [
@@ -127,7 +128,8 @@ const Sidebar = () => {
           alignItems: "center",
         }}
       >
-        <img src={mainLogo} alt="" width={160} />
+        {/* <img src={mainLogo} alt="" width={160} /> */}
+        <h5 className=" fw-semibold text-white">{user?.dashboard_title}</h5>
       </div>
       <Menu
         style={{ background: "#191f25" }}

@@ -69,7 +69,7 @@ const UserLayout = () => {
               <div className="float-right d-none d-sm-inline">
                 Version 1.0.0{" "}
               </div>
-              <strong>Copyright © 2023-2024 সফটওয়েব সিস্টেম সল্যুশন</strong>
+              <strong>Copyright © 2024-2025 সফটওয়েব সিস্টেম সল্যুশন</strong>
               {""} || All rights reserved.
             </footer>
           </Footer>
