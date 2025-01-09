@@ -129,7 +129,9 @@ const Sidebar = () => {
         }}
       >
         {/* <img src={mainLogo} alt="" width={160} /> */}
-        <h5 className=" fw-semibold text-white">{user?.dashboard_title}</h5>
+        <h5 className=" fw-semibold text-white mb-0">
+          {user?.dashboard_title}
+        </h5>
       </div>
       <Menu
         style={{ background: "#191f25" }}

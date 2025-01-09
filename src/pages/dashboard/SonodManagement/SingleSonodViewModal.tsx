@@ -91,7 +91,7 @@ const SingleSonodViewModal = ({
             <b>ধর্ম: {data?.applicant_religion}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>বাসিন্দা: {data?.applicant_resident_status} </b>স্থায়ী
+            <b>বাসিন্দা: {data?.applicant_resident_status} </b>
           </div>
           <div className="col-md-12 col-12 mt-3">
             <b>
