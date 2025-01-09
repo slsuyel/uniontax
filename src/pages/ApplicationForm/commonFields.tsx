@@ -1,4 +1,5 @@
-import { Form, Input, Select, DatePicker } from "antd";
+import { Form, Input, Select, DatePicker, Upload, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 const commonFields = () => {
@@ -112,14 +113,18 @@ const commonFields = () => {
         </Form.Item>
       </div>
 
-      <div className="col-md-4">
-        <Form.Item label="ছবি" name="image">
-          <Input
-            type="file"
-            // onChange={(e) => handleFileChange(e, setBackPreview)}
-          />
-        </Form.Item>
-      </div>
+      <Form.Item
+        label="ছবি"
+        name="image"
+        valuePropName="file"
+        getValueFromEvent={(e) => {
+          return e?.file;
+        }}
+      >
+        <Upload name="image" listType="picture" maxCount={1}>
+          <Button icon={<UploadOutlined />}>Upload Image</Button>
+        </Upload>
+      </Form.Item>
     </>
   );
 };
