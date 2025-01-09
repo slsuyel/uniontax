@@ -1,13 +1,12 @@
 import { Layout } from "antd";
-
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
-
 import Sidebar from "./Sidebar";
 import ScrollToTop from "@/utils/ScrollToTop";
 
 const { Header, Content, Footer } = Layout;
+
 const UserLayout = () => {
   const theme = false;
   const [scrollY, setScrollY] = useState(0);
@@ -30,11 +29,12 @@ const UserLayout = () => {
         <Sidebar />
         <Layout>
           <Header
+            className="antd-db-header-nv"
             style={{
+              // padding: "5px",
               display: "flex",
               alignItems: "center",
               position: "fixed",
-              width: "100%",
               zIndex: 1000,
               backgroundColor: !theme
                 ? scrollY > 0
@@ -43,12 +43,15 @@ const UserLayout = () => {
                 : scrollY > 0
                 ? "#fffcfc8a"
                 : "white",
-
               backdropFilter: scrollY > 0 ? "blur(4px)" : "none",
               transition: "background-color 0.3s, backdrop-filter 0.3s",
             }}
           >
-            <Navbar />
+            <div style={{ marginLeft: "auto" }}>
+              {" "}
+              {/* Push Navbar to the right */}
+              <Navbar />
+            </div>
           </Header>
           <Content
             style={{ margin: "24px 0px 0" }}

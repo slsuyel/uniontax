@@ -113,7 +113,7 @@ const PaymentFailed = () => {
   return (
     <div className="card p-3 border-0">
       <div className=" mt-5">
-        <h4>পেমেন্ট Failed তালিকাঃ</h4>
+        <h4>পেমেন্ট ফেইল্ড তালিকাঃ</h4>
         <div className="row ">
           <div className="form-group col-md-3 my-1">
             <select
@@ -147,30 +147,30 @@ const PaymentFailed = () => {
               onClick={handleSearch}
               disabled={!selectedDate || !selectedService}
             >
-              Search
+              অনুসন্ধান
             </button>
           </div>
         </div>
       </div>
 
       <div className="my-4">
-        <h2>Payment Failed Records</h2>
+        <h2>পেমেন্ট ফেইল্ড রেকর্ড</h2>
         <div className="table-responsive d-none d-md-block">
           <table className="table table-bordered table-hover">
             <thead className="thead-dark">
               <tr>
-                <th>ID</th>
-                <th>Sonod ID</th>
-                <th>Union</th>
-                <th>Transaction ID</th>
-                <th>Sonod Type</th>
-                <th>Date</th>
-                <th>Method</th>
-                <th>Maliker Name</th>
-                <th>Gram</th>
-                <th>Mobile No</th>
-                <th>Holding No</th>
-                <th>Action</th>
+                <th>আইডি</th>
+                <th>সনদ আইডি</th>
+                <th>ইউনিয়ন</th>
+                <th>লেনদেন আইডি</th>
+                <th>সনদ প্রকার</th>
+                <th>তারিখ</th>
+                <th>পদ্ধতি</th>
+                <th>মালিকের নাম</th>
+                <th>গ্রাম</th>
+                <th>মোবাইল নম্বর</th>
+                <th>হোল্ডিং নম্বর</th>
+                <th>অ্যাকশন</th>
               </tr>
             </thead>
             <tbody>
@@ -223,7 +223,7 @@ const PaymentFailed = () => {
               ) : (
                 <tr>
                   <td colSpan={14} className="text-center">
-                    No records found.
+                    কোন রেকর্ড পাওয়া যায়নি।
                   </td>
                 </tr>
               )}
@@ -241,59 +241,60 @@ const PaymentFailed = () => {
               <div key={item.id} className="card mb-3">
                 <div className="card-body">
                   <p>
-                    <strong>ID:</strong> {item.id}
+                    <strong>আইডি:</strong> {item.id}
                   </p>
                   <p>
-                    <strong>Sonod ID:</strong> {item.sonodId}
+                    <strong>সনদ আইডি:</strong> {item.sonodId}
                   </p>
                   <p>
-                    <strong>Union:</strong> {item.union}
+                    <strong>ইউনিয়ন:</strong> {item.union}
                   </p>
                   <p>
-                    <strong>Transaction ID:</strong> {item.trxId}
+                    <strong>লেনদেন আইডি:</strong> {item.trxId}
                   </p>
                   <p>
-                    <strong>Sonod Type:</strong> {item.sonod_type}
+                    <strong>সনদ প্রকার:</strong> {item.sonod_type}
                   </p>
                   <p>
-                    <strong>Date:</strong> {item.date}
+                    <strong>তারিখ:</strong> {item.date}
                   </p>
                   <p>
-                    <strong>Method:</strong> {item.method}
+                    <strong>পদ্ধতি:</strong> {item.method}
                   </p>
                   {item?.holding_tax ? (
                     <>
                       <p>
-                        <strong>Maliker Name:</strong>{" "}
+                        <strong>মালিকের নাম:</strong>{" "}
                         {item.holding_tax.maliker_name}
                       </p>
                       <p>
-                        <strong>Gram:</strong> {item.holding_tax.gramer_name}
+                        <strong>গ্রাম:</strong> {item.holding_tax.gramer_name}
                       </p>
                       <p>
-                        <strong>Mobile No:</strong> {item.holding_tax.mobile_no}
+                        <strong>মোবাইল নম্বর:</strong>{" "}
+                        {item.holding_tax.mobile_no}
                       </p>
                       <p>
-                        <strong>Holding No:</strong>{" "}
+                        <strong>হোল্ডিং নম্বর:</strong>{" "}
                         {item.holding_tax.holding_no}
                       </p>
                     </>
                   ) : (
                     <>
                       <p>
-                        <strong>Maliker Name:</strong>{" "}
+                        <strong>মালিকের নাম:</strong>{" "}
                         {item.sonods?.applicant_name}
                       </p>
                       <p>
-                        <strong>Gram:</strong>{" "}
+                        <strong>গ্রাম:</strong>{" "}
                         {item.sonods?.applicant_present_village}
                       </p>
                       <p>
-                        <strong>Mobile No:</strong>{" "}
+                        <strong>মোবাইল নম্বর:</strong>{" "}
                         {item.sonods?.applicant_mobile}
                       </p>
                       <p>
-                        <strong>Holding No:</strong>{" "}
+                        <strong>হোল্ডিং নম্বর:</strong>{" "}
                         {item.sonods?.applicant_holding_tax_number}
                       </p>
                     </>
@@ -314,20 +315,20 @@ const PaymentFailed = () => {
               </div>
             ))
           ) : (
-            <div className="text-center">No records found.</div>
+            <div className="text-center">কোন রেকর্ড পাওয়া যায়নি।</div>
           )}
         </div>
       </div>
 
       <Modal
         // loading={}
-        title="Payment Details"
+        title="পেমেন্ট বিস্তারিত"
         open={isModalOpen}
         onOk={handleCloseModal}
         onCancel={handleCloseModal}
         footer={[
           <Button key="close" type="primary" onClick={handleCloseModal}>
-            Close
+            বন্ধ
           </Button>,
         ]}
       >
@@ -342,7 +343,7 @@ const PaymentFailed = () => {
                 key="recall"
                 onClick={handleRecallCheckPayment}
               >
-                Recall Payment
+                পেমেন্ট পুনরায় চেক করুন
               </Button>
             )}
           </div>

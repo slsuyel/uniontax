@@ -381,3 +381,12 @@ select.searchFrom.form_control {
     border-radius: 0;
   }
 }
+.antd-db-header-nv {
+  width: calc(100% - 200px);
+}
+
+@media (max-width: 950px) {
+  .antd-db-header-nv {
+    width: 100%;
+  }
+}
