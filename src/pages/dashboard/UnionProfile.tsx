@@ -114,10 +114,9 @@ const UnionProfile = () => {
       | ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
       | any
   ) => {
-    const { id, value, type } = event.target;
+    const { id, value, type, files } = event.target;
 
     if (type === "file") {
-      const files = (event.target as HTMLInputElement).files;
       setFormData((prevData) => ({
         ...prevData,
         [id]: files ? files[0] : null,
@@ -141,14 +140,36 @@ const UnionProfile = () => {
     }
   };
   const handleSubmit = async (values: TUnionInfo) => {
-    console.log(values);
-    try {
-      const res = await updateUnion({ data: values, token }).unwrap();
-      console.log(res.status_code);
-      if (res.status_code == 200) {
-        message.success("ইউনিয়ন তথ্য সফলভাবে আপডেট করা হয়েছে।");
+    const formData = new FormData();
+
+    // Append all fields to FormData
+    Object.keys(values).forEach((key) => {
+      const value = values[key as keyof TUnionInfo];
+      if (value !== null && value !== undefined) {
+        if (
+          key === "web_logo" ||
+          key === "sonod_logo" ||
+          key === "c_signture" ||
+          key === "socib_signture" ||
+          key === "u_image"
+        ) {
+          // Append files if they exist
+          if (value instanceof File) {
+            formData.append(key, value);
+          }
+        } else {
+          // Append other fields as strings
+          formData.append(key, value as string);
+        }
       }
-      if (
+    });
+
+    try {
+      const res = await updateUnion({ data: formData, token }).unwrap();
+      console.log(res.status_code);
+      if (res.status_code === 200) {
+        message.success("ইউনিয়ন তথ্য সফলভাবে আপডেট করা হয়েছে।");
+      } else if (
         res.status_code !== 200 ||
         res.status_code === 302 ||
         res.status_code === 401
@@ -156,7 +177,7 @@ const UnionProfile = () => {
         message.error("Failed to update union information.");
       }
     } catch (error) {
-      console.error("failed updating union :", error);
+      console.error("Failed updating union:", error);
       message.error("Failed to update union information. Please try again.");
     }
   };
@@ -358,13 +379,12 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item label="ওয়েবসাইট এর লোগো" name="web_logo">
-                {/* <Upload
-                  beforeUpload={() => false}
-                  onChange={handleChange} className="form-control"
-                  showUploadList={false}
-                >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
-                </Upload> */}
+                <Input
+                  type="file"
+                  onChange={handleChange}
+                  className="form-control"
+                  id="web_logo"
+                />
                 {formData.web_logo && (
                   <img
                     width={250}
@@ -378,13 +398,12 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item label="সনদ এর লোগো" name="sonod_logo">
-                {/* <Upload
-                  beforeUpload={() => false}
-                  onChange={handleChange} className="form-control"
-                  showUploadList={false}
-                >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
-                </Upload> */}
+                <Input
+                  type="file"
+                  onChange={handleChange}
+                  className="form-control"
+                  id="sonod_logo"
+                />
                 {formData.sonod_logo && (
                   <img
                     width={250}
@@ -398,13 +417,12 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item label="চেয়ারম্যানের স্বাক্ষর" name="c_signture">
-                {/* <Upload
-                  beforeUpload={() => false}
-                  onChange={handleChange} className="form-control"
-                  showUploadList={false}
-                >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
-                </Upload> */}
+                <Input
+                  type="file"
+                  onChange={handleChange}
+                  className="form-control"
+                  id="c_signture"
+                />
                 {formData.c_signture && (
                   <img
                     width={250}
@@ -418,13 +436,12 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item label="সচিবের স্বাক্ষর" name="socib_signture">
-                {/* <Upload
-                  beforeUpload={() => false}
-                  onChange={handleChange} className="form-control"
-                  showUploadList={false}
-                >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
-                </Upload> */}
+                <Input
+                  type="file"
+                  onChange={handleChange}
+                  className="form-control"
+                  id="socib_signture"
+                />
                 {formData.socib_signture && (
                   <img
                     width={250}
@@ -438,13 +455,12 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item label="ইউনিয়নের ছবি" name="u_image">
-                {/* <Upload
-                  beforeUpload={() => false}
-                  onChange={handleChange} className="form-control"
-                  showUploadList={false}
-                >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
-                </Upload> */}
+                <Input
+                  type="file"
+                  onChange={handleChange}
+                  className="form-control"
+                  id="u_image"
+                />
                 {formData.u_image && (
                   <img
                     width={250}

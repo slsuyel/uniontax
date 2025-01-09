@@ -23,15 +23,15 @@ const Login = () => {
   const loginConfig = {
     chairman: {
       endpoint: "user/login",
-      buttonText: "চেয়ারম্যান লগইন",
+      buttonText: " লগইন",
     },
     entrepreneur: {
       endpoint: "uddokta/login",
-      buttonText: "উদ্যোক্তা লগইন",
+      buttonText: " লগইন",
     },
     secretary: {
       endpoint: "user/login",
-      buttonText: "সচিব লগইন",
+      buttonText: " লগইন",
     },
   };
 
