@@ -8,9 +8,9 @@ const userApi = apiSlice.injectEndpoints({
       query: ({ bn, token, en }) => ({
         url: "/sonod/submit",
         method: "POST",
-        body: { bn, en }, // Send `bn` in the payload
+        body: { bn, en },
         headers: {
-          authorization: `Bearer ${token}`, // Include token in headers
+          authorization: `Bearer ${token}`,
         },
       }),
       invalidatesTags: ["sonod-action"],
@@ -23,15 +23,6 @@ const userApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    // payTax: builder.mutation({
-    //   query: ({ id, data }) => ({
-    //     url: `/pay/holding/tax/${id}`,
-    //     method: 'Post',
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ['holding_pay'],
-    // }),
-
     createHolding: builder.mutation({
       query: ({ data }) => ({
         url: `/user/holdingtax`,
@@ -40,13 +31,6 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["holding-create-update"],
     }),
-    // checkPayment: builder.mutation({
-    //   query: ({ trnx_id }) => ({
-    //     url: `/ekpay/check/payments/ipn`,
-    //     method: 'Post',
-    //     body: { trnx_id },
-    //   }),
-    // }),
 
     unionInfo: builder.query({
       query: ({ unionName, token }) => ({
@@ -64,17 +48,14 @@ const userApi = apiSlice.injectEndpoints({
         url: `/global/uniouninfo?name=${unionName}&type=TradeLicenseKhat`,
       }),
     }),
-
-    // failedPayment: builder.query({
-    //   query: ({ sonod_type, token, date }) => ({
-    //     url: `/user/failed-payments?date=${date}&sonod_type=${sonod_type}`,
-    //     method: 'Get',
-    //     headers: {
-    //       authorization: `Bearer ${token}`,
-    //     },
-    //   }),
-    //   providesTags: ['holding_pay'],
-    // }),
+    dbMetrics: builder.query({
+      query: ({ token }) => ({
+        url: `/user/dashboard/metrics`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -83,7 +64,6 @@ export const {
   useUnionInfoQuery,
   useTradeInfoQuery,
   useSonodSearchMutation,
-  // usePayTaxMutation,
   useCreateHoldingMutation,
-  // useFailedPaymentQuery,
+  useDbMetricsQuery,
 } = userApi;

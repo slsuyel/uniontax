@@ -13,7 +13,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const items = [
     {
-      label: `${user?.position}`,
+      label: `${user?.designation} প্রোফাইল`,
       key: "1",
       icon: <UserOutlined />,
       onClick: handleProfileClick,
@@ -46,7 +46,7 @@ const Navbar = () => {
         placement="bottom"
         icon={<UserOutlined />}
       >
-        {user?.position}
+        {user?.designation}
       </Dropdown.Button>
     </div>
   );
