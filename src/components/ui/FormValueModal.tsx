@@ -67,16 +67,29 @@ const FormValueModal = ({
     }
   };
 
+  // const handleEnglishSonod = () => {
+  //   console.log(from);
+  //   if (from == "uddokta") {
+  //     navigate(`/uddokta/application-english/${service}`, {
+  //       state: { userData: data },
+  //     });
+  //   } else
+  //     navigate(`/application-english/${service}`, {
+  //       state: { userData: data },
+  //     });
+  // };
   const handleEnglishSonod = () => {
     console.log(from);
-    if (from == "uddokta") {
+    const sanitizedData = JSON.parse(JSON.stringify(data));
+    if (from === "uddokta") {
       navigate(`/uddokta/application-english/${service}`, {
-        state: { userData: data },
+        state: { userData: sanitizedData },
       });
-    } else
+    } else {
       navigate(`/application-english/${service}`, {
-        state: { userData: data },
+        state: { userData: sanitizedData },
       });
+    }
   };
 
   return (
