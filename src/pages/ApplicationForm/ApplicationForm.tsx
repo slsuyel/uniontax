@@ -2,7 +2,7 @@
 
 import { Form, Button, message /* Modal */ } from "antd";
 import addressFields from "./addressFields";
-import attachmentForm from "./attachmentForm";
+// import attachmentForm from "./attachmentForm";
 
 import { useEffect, useState } from "react";
 import TradeLicenseForm from "./tradeLicenseForm";
@@ -196,7 +196,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             {conditionalForm(sonodName)}
           </div>
           {addressFields({ form })}
-          {attachmentForm()}
+          {/* {attachmentForm()} */}
 
           {sonodName === "ওয়ারিশান সনদ" && <InheritanceList />}
 

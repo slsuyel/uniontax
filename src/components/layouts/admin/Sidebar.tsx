@@ -118,6 +118,7 @@ const Sidebar = () => {
       breakpoint="lg"
       collapsedWidth="0"
       style={{ background: "#00b7b7" }}
+      // width={"16%"}
     >
       <div
         className="border-bottom "
@@ -134,11 +135,12 @@ const Sidebar = () => {
         </h5>
       </div>
       <Menu
-        style={{ background: "#191f25" }}
+        // style={{ background: "#191f25", height: "100%" }}
+        className="sidebar-menu-db"
         theme={theme ? "light" : "dark"}
         mode="inline"
         defaultSelectedKeys={["4"]}
-        items={menuItems} // Use items prop
+        items={menuItems}
       />
     </Sider>
   );

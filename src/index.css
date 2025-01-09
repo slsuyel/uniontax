@@ -1,9 +1,9 @@
-@import url('https://fonts.maateen.me/kalpurush/font.css');
+@import url("https://fonts.maateen.me/kalpurush/font.css");
 * {
-  font-family: 'Kalpurush', sans-serif;
+  font-family: "Kalpurush", sans-serif;
 }
 body {
-  font-family: 'Kalpurush', sans-serif;
+  font-family: "Kalpurush", sans-serif;
   font-size: medium;
 }
 
@@ -14,10 +14,10 @@ body {
   color: var(--defaultColor) !important;
 }
 .form-control {
-  font-family: 'Kalpurush', sans-serif;
+  font-family: "Kalpurush", sans-serif;
 }
 .ant-input {
-  font-family: 'Kalpurush', sans-serif;
+  font-family: "Kalpurush", sans-serif;
 }
 
 label {
@@ -62,7 +62,7 @@ h3.searchHeader {
 
 h3.searchHeader:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 15px;
   left: -19px;
   background: #fff;
@@ -172,7 +172,7 @@ select.searchFrom.form_control {
 }
 
 .footer_top_bg {
-  background: url('./assets/icons/footer_top_bg.png') 0% 0% / cover no-repeat;
+  background: url("./assets/icons/footer_top_bg.png") 0% 0% / cover no-repeat;
   height: 93px;
 }
 
@@ -230,7 +230,7 @@ select.searchFrom.form_control {
   text-transform: capitalize;
   color: #111;
   margin-bottom: 8px;
-  font-family: 'Kalpurush';
+  font-family: "Kalpurush";
 }
 .breadcrumbs-area ul li {
   display: inline-block;
@@ -369,4 +369,15 @@ select.searchFrom.form_control {
 
 .sssssssssdgsfdg .ant-space-item {
   width: 40%;
+}
+.sidebar-menu-db {
+  background-color: #191f25;
+  height: 100%;
+}
+.sidebar-menu-db {
+  .ant-menu-item,
+  .ant-menu-submenu-inline {
+    border-bottom: 1px solid #021933;
+    border-radius: 0;
+  }
 }

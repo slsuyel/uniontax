@@ -205,32 +205,36 @@ const FormValueModal = ({
           </div>
           <hr />
 
-          <div className="row mx-auto">
-            <div className="col-md-12">
-              <div className="app-heading">ওয়ারিশগণের তালিকা</div>
-            </div>
-            <table className="table table-bordered mt-3">
-              <thead>
-                <tr>
-                  <th>নাম</th>
-                  <th>সম্পর্ক</th>
-                  <th>জন্ম তারিখ</th>
-                  <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.successor_list?.map((successor: any, index: number) => (
-                  <tr key={index}>
-                    <td>{successor.w_name}</td>
-                    <td>{successor.w_relation}</td>
-                    <td></td>
-                    {/* <td>{successor?.w_age}</td> */}
-                    <td>{successor.w_nid}</td>
+          {data?.successor_list && (
+            <div className="row mx-auto">
+              <div className="col-md-12">
+                <div className="app-heading">ওয়ারিশগণের তালিকা</div>
+              </div>
+              <table className="table table-bordered mt-3">
+                <thead>
+                  <tr>
+                    <th>নাম</th>
+                    <th>সম্পর্ক</th>
+                    <th>জন্ম তারিখ</th>
+                    <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {data?.successor_list?.map(
+                    (successor: any, index: number) => (
+                      <tr key={index}>
+                        <td>{successor.w_name}</td>
+                        <td>{successor.w_relation}</td>
+                        <td></td>
+                        {/* <td>{successor?.w_age}</td> */}
+                        <td>{successor.w_nid}</td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
         <br />
 

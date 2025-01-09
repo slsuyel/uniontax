@@ -161,19 +161,24 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
           prottoyon: user?.prottoyon,
         }}
       >
-        <div
-          className="panel-heading"
-          style={{
-            fontWeight: "bold",
-            fontSize: "20px",
-            background: "rgb(21, 149, 19)",
-            textAlign: "center",
-            color: "white",
-          }}
-        >
-          {sonodName || "Form Title"}
+        <div>
+          <div
+            className="panel-heading"
+            style={{
+              fontWeight: "bold",
+              fontSize: "20px",
+              background: "rgb(21, 149, 19)",
+              textAlign: "center",
+              color: "white",
+            }}
+          >
+            <span> {sonodName || "Form Title"}</span>
+          </div>
         </div>
         <div className="form-pannel">
+          <h6 className="border-bottom border-danger fs-5 fw-bold text-center text-danger">
+            *সকল তথ্য ইংরেজিতে লিখতে হবে
+          </h6>
           <div className="row">
             {sonodName == "উত্তরাধিকারী সনদ" &&
               englishInheritanceForm(sonodName)}
@@ -184,7 +189,7 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
             {sonodName == "একই নামের প্রত্যয়ন" &&
               englishInheritanceForm(sonodName)}
             <div className="col-md-12">
-              <div className="app-heading">Applicant Information</div>
+              <div className="app-heading">আবেদনকারীর তথ্য</div>
             </div>
             {englishCommonFields()}
             {sonodName === "ট্রেড লাইসেন্স" && (

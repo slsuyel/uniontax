@@ -207,7 +207,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
     <>
       <div className="row">
         <div className="col-md-6">
-          <div className="app-heading">Current Address</div>
+          <div className="app-heading">বর্তমান ঠিকানা</div>
 
           <Form.Item></Form.Item>
           <Form.Item name="current_division" label="বিভাগ (Division)">
@@ -286,11 +286,11 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
         </div>
 
         <div className="col-md-6">
-          <div className="app-heading">Permanent Address</div>
+          <div className="app-heading">স্থায়ী ঠিকানা</div>
 
           <Form.Item name="permanent_address" valuePropName="checked">
             <Checkbox onChange={handleSameAddressChange}>
-              Match with Current Address
+              বর্তমান ঠিকানার সাথে মিলিয়ে দিন (Match with Current Address)
             </Checkbox>
           </Form.Item>
 
