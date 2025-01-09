@@ -38,7 +38,6 @@ const Navbar = () => {
     // Add your logic here
   }
 
-  console.log(user);
   return (
     <div className="d-flex gap-3 align-item-center ">
       <Dropdown.Button

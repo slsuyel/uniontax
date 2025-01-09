@@ -33,7 +33,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   }
 
   if (data && data.status_code === 200) {
-    console.log(data);
     return <>{children}</>;
   }
   return null;
