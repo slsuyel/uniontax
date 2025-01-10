@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, DatePicker, Select } from "antd";
+import { Button, Form, Input, Select } from "antd";
 
 const englishInheritanceList: React.FC = () => {
   return (
@@ -88,7 +88,11 @@ const englishInheritanceList: React.FC = () => {
                             { required: true, message: "জন্ম তারিখ প্রয়োজন" },
                           ]}
                         >
-                          <DatePicker style={{ width: "100%", height: 40 }} />
+                          <Input
+                            type="date"
+                            style={{ width: "100%", height: 40 }}
+                          />
+                          {/* <DatePicker style={{ width: "100%", height: 40 }} /> */}
                         </Form.Item>
                       </td>
                       <td>

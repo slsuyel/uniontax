@@ -75,6 +75,8 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const handleCancel = () => {
     setModalVisible(false);
   };
+  const successorList =
+    (user?.successor_list && JSON.parse(user?.successor_list)) || [];
 
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
@@ -148,7 +150,7 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_permanent_Upazila: user?.applicant_permanent_Upazila,
           applicant_permanent_post_office:
             user?.applicant_permanent_post_office,
-          successor_list: user?.successor_list,
+          successor_list: successorList,
           applicant_mobile: user?.applicant_mobile,
           applicant_email: user?.applicant_email,
           applicant_phone: user?.applicant_phone,
