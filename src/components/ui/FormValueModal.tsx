@@ -256,8 +256,8 @@ const FormValueModal = ({
                       <tr key={index}>
                         <td>{successor.w_name}</td>
                         <td>{successor.w_relation}</td>
-                        <td></td>
-                        {/* <td>{successor?.w_age}</td> */}
+
+                        <td>{successor?.w_age}</td>
                         <td>{successor.w_nid}</td>
                       </tr>
                     )

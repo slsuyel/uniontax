@@ -80,9 +80,9 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     setModalVisible(false);
   };
 
-  const successorList = JSON.parse(user?.successor_list) || [];
+  const successorList =
+    (user?.successor_list && JSON.parse(user?.successor_list)) || [];
 
-  console.log(successorList);
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form
