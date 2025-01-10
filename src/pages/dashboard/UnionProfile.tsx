@@ -7,8 +7,10 @@ import {
 import { TUnionInfo } from "@/types";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
+import { useLocation } from "react-router-dom";
 
 const UnionProfile = () => {
+  const location = useLocation();
   const token = localStorage.getItem("token");
   const { data, isLoading } = useUnionProfileQuery({ token });
   const [updateUnion, { isLoading: updating }] = useUpdateUnionMutation();
@@ -163,7 +165,9 @@ const UnionProfile = () => {
 
   return (
     <div className="card p-3 border-0">
-      <Breadcrumbs current="ইউনিয়ন প্রোফাইল" />
+      {location.pathname == "/dashboard/union/profile" && (
+        <Breadcrumbs current="ইউনিয়ন প্রোফাইল" />
+      )}
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <div className="card-body">
           <div className="row">
