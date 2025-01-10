@@ -83,7 +83,7 @@ const SonodActionBtn = ({
         },
       });
   };
-  console.log(user);
+
   const menu = (
     <Menu>
       <Menu.Item className="border my-1 border-info" key="edit">

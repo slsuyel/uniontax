@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSingleSonodQuery } from "@/redux/api/sonod/sonodApi";
 
 import { TApplicantData } from "@/types";
@@ -32,6 +33,10 @@ const SingleSonodViewModal = ({
   };
 
   const data: TApplicantData = !getingSonod && singleS?.data;
+  console.log(data);
+
+  const successorList =
+    (data?.successor_list && JSON.parse(data?.successor_list)) || [];
 
   return (
     <Modal
@@ -149,6 +154,36 @@ const SingleSonodViewModal = ({
           <div className="col-md-6 col-6 mt-3">
             <b>ইমেল: {data?.applicant_email}</b>
           </div>
+
+          {data?.successor_list && (
+            <div className="row mx-auto">
+              <div className="col-md-12">
+                <div className="app-heading">ওয়ারিশগণের তালিকা</div>
+              </div>
+              <table className="table table-bordered mt-3">
+                <thead>
+                  <tr>
+                    <th>নাম</th>
+                    <th>সম্পর্ক</th>
+                    <th>জন্ম তারিখ</th>
+                    <th>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {successorList?.map((successor: any, index: number) => (
+                    <tr key={index}>
+                      <td>{successor?.w_name}</td>
+                      <td>{successor?.w_relation}</td>
+
+                      <td>{successor?.w_age}</td>
+                      <td>{successor?.w_nid}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
           <div className="col-md-12">
             <div className="app-heading">সংযুক্ত</div>
           </div>
