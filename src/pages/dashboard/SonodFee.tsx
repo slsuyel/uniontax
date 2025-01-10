@@ -61,7 +61,7 @@ const SonodFee = () => {
     try {
       const res = await updateSonod({ data: payload, token }).unwrap();
       if (res.status_code == 200) {
-        message.success("SonodFees updated successfully");
+        message.success("সনদ ফি সফলভাবে আপডেট করা হয়েছে");
       }
       if (res.status_code !== 200) {
         message.success("SonodFees updated failed");

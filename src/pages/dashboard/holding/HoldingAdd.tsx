@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  UploadOutlined,
+  // UploadOutlined,
   MinusCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
@@ -9,7 +9,7 @@ import {
   Input,
   Button,
   Select,
-  Upload,
+  // Upload,
   Space,
   message,
   InputNumber,
@@ -36,11 +36,22 @@ const HoldingAdd = () => {
     try {
       const res = await addHolding({ data: values, token }).unwrap();
       console.log(res);
-      if (res.status_code == 201) {
+
+      if (res.status_code === 201) {
         message.success("Holding created successfully");
+        form.resetFields();
+        setCategory("");
+
+        form.setFieldsValue({ bokeya: [] });
+      } else if (res.isError) {
+        console.error("Error in response:", res);
+        message.error(
+          `Failed to create holding: ${res.message || "An error occurred"}`
+        );
       }
     } catch (error) {
-      message.error("Failed to create holding");
+      console.error("Error creating holding:", error); // Log the full error for debugging
+      message.error(`Failed to create holding`); // Show detailed error message
     }
   };
 
@@ -59,17 +70,43 @@ const HoldingAdd = () => {
       >
         <div className="row mx-auto">
           <div className="col-md-6">
-            <Form.Item label="হোল্ডিং নং" name="holding_no" className="my-1">
-              <Input style={{ height: 40 }} />
-            </Form.Item>
-          </div>
-          <div className="col-md-6">
-            <Form.Item label="মালিকের নাম" name="maliker_name" className="my-1">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "হোল্ডিং নং",
+                },
+              ]}
+              label="হোল্ডিং নং"
+              name="holding_no"
+              className="my-1"
+            >
               <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
           <div className="col-md-6">
             <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "মালিকের নাম",
+                },
+              ]}
+              label="মালিকের নাম"
+              name="maliker_name"
+              className="my-1"
+            >
+              <Input style={{ height: 40 }} />
+            </Form.Item>
+          </div>
+          <div className="col-md-6">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "পিতা/স্বামীর নাম",
+                },
+              ]}
               label="পিতা/স্বামীর নাম"
               name="father_or_samir_name"
               className="my-1"
@@ -78,17 +115,47 @@ const HoldingAdd = () => {
             </Form.Item>
           </div>
           <div className="col-md-6">
-            <Form.Item label="গ্রামের নাম" name="gramer_name" className="my-1">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "গ্রামের নাম",
+                },
+              ]}
+              label="গ্রামের নাম"
+              name="gramer_name"
+              className="my-1"
+            >
               <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
           <div className="col-md-6">
-            <Form.Item label="এনআইডি নং" name="nid_no" className="my-1">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "এনআইডি নং",
+                },
+              ]}
+              label="এনআইডি নং"
+              name="nid_no"
+              className="my-1"
+            >
               <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
           <div className="col-md-6">
-            <Form.Item label="মোবাইল নং" name="mobile_no" className="my-1">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "মোবাইল নং",
+                },
+              ]}
+              label="মোবাইল নং"
+              name="mobile_no"
+              className="my-1"
+            >
               <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
@@ -101,13 +168,18 @@ const HoldingAdd = () => {
           {/* Category Selection */}
           <div className="col-md-6">
             <Form.Item
-              required
+              rules={[
+                {
+                  required: true,
+                  message: "হোল্ডিং ট্যাক্স এর ধরণ নির্বাচন করুন",
+                },
+              ]}
               label="হোল্ডিং ট্যাক্স এর ধরণ"
               name="category"
               className="my-1"
             >
               <Select
-                placeholder='হোল্ডিং ট্যাক্স এর ধরণ নির্বাচন করুন'
+                placeholder="হোল্ডিং ট্যাক্স এর ধরণ নির্বাচন করুন"
                 style={{ height: 40 }}
                 onChange={handleTaxType}
                 value={category}
@@ -147,7 +219,10 @@ const HoldingAdd = () => {
               </div>
               <div className="col-md-6">
                 <Form.Item label="জমির ভাড়া" name="jomir_vara" className="my-1">
-                  <InputNumber type="number" style={{ height: 40, width: "100%" }} />
+                  <InputNumber
+                    type="number"
+                    style={{ height: 40, width: "100%" }}
+                  />
                 </Form.Item>
               </div>
 
@@ -194,7 +269,10 @@ const HoldingAdd = () => {
                   },
                 ]}
               >
-                <InputNumber type="number" style={{ height: 40, width: "100%" }} />
+                <InputNumber
+                  type="number"
+                  style={{ height: 40, width: "100%" }}
+                />
               </Form.Item>
             </div>
           )}
@@ -236,18 +314,18 @@ const HoldingAdd = () => {
           )}
 
           {/* Upload Field */}
-          <div className="col-md-6">
+          {/* <div className="col-md-6">
             <Form.Item
               label="মালিকের ছবি"
               name="image"
               valuePropName="fileList"
               className="my-1"
             >
-              <Upload action="/upload.do" listType="text">
+              <Upload listType="text">
                 <Button icon={<UploadOutlined />}>Choose file</Button>
               </Upload>
             </Form.Item>
-          </div>
+          </div> */}
 
           <div className="border rounded my-4">
             <h3>
