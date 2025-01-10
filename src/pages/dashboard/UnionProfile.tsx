@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { Button, Form, message, Input, Select } from "antd";
 import {
   useUnionProfileQuery,
@@ -22,7 +22,7 @@ const UnionProfile = () => {
     u_image: null,
   });
 
-  const [formValues, setFormValues] = useState<TUnionInfo>({
+  const [formValues, setFormValues] = useState({
     full_name: "",
     full_name_en: "",
     short_name_b: "",
@@ -107,7 +107,6 @@ const UnionProfile = () => {
     const file = e.target.files?.[0];
     if (file) {
       setFiles((prev) => ({ ...prev, [fieldName]: file }));
-      message.success(`${file.name} file selected successfully`);
     }
   };
 
@@ -141,7 +140,7 @@ const UnionProfile = () => {
     });
 
     // Debugging: Log FormData contents
-    for (let [key, value] of formData.entries()) {
+    for (const [key, value] of formData.entries()) {
       console.log(key, value);
     }
 
