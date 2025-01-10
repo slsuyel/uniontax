@@ -4,6 +4,8 @@ import { TApplicantData } from "@/types";
 import { useSonodActionMutation } from "@/redux/api/sonod/sonodApi";
 import { message, Dropdown, Menu, Button, Modal, Input } from "antd";
 import SingleSonodViewModal from "@/pages/dashboard/SonodManagement/SingleSonodViewModal";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 interface SonodActionBtnProps {
   sonodName: string | undefined;
@@ -16,6 +18,7 @@ const SonodActionBtn = ({
   item,
   condition,
 }: SonodActionBtnProps) => {
+  const user = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
   const [sonodAction, { isLoading }] = useSonodActionMutation();
   const [bibidoTextModal, setBibidoTextModal] = useState(false);
@@ -54,8 +57,9 @@ const SonodActionBtn = ({
   };
   const handleApproved = async () => {
     if (
-      sonodName === "বিবিধ প্রত্যয়নপত্র" ||
-      sonodName === "অনাপত্তি সনদপত্র"
+      (sonodName === "বিবিধ প্রত্যয়নপত্র" ||
+        sonodName === "অনাপত্তি সনদপত্র") &&
+      user?.position == "Secretary"
     ) {
       setBibidoTextModal(true);
     } else
@@ -79,7 +83,7 @@ const SonodActionBtn = ({
         },
       });
   };
-
+  console.log(user);
   const menu = (
     <Menu>
       <Menu.Item className="border my-1 border-info" key="edit">
