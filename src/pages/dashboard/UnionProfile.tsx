@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import Breadcrumbs from "@/components/reusable/Breadcrumbs";
-import Loader from "@/components/reusable/Loader";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { Button, Form, message, Input, Select } from "antd";
 import {
   useUnionProfileQuery,
   useUpdateUnionMutation,
 } from "@/redux/api/auth/authApi";
 import { TUnionInfo } from "@/types";
-import { message, Form, Input, Button, Select } from "antd";
-import { useState, ChangeEvent, useEffect } from "react";
-// import { UploadOutlined } from "@ant-design/icons";
+import Breadcrumbs from "@/components/reusable/Breadcrumbs";
+import Loader from "@/components/reusable/Loader";
 
 const UnionProfile = () => {
   const token = localStorage.getItem("token");
@@ -18,7 +14,15 @@ const UnionProfile = () => {
   const [updateUnion, { isLoading: updating }] = useUpdateUnionMutation();
   const [form] = Form.useForm();
 
-  const [formData, setFormData] = useState<TUnionInfo>({
+  const [files, setFiles] = useState({
+    web_logo: null,
+    sonod_logo: null,
+    c_signture: null,
+    socib_signture: null,
+    u_image: null,
+  });
+
+  const [formValues, setFormValues] = useState<TUnionInfo>({
     full_name: "",
     full_name_en: "",
     short_name_b: "",
@@ -34,22 +38,25 @@ const UnionProfile = () => {
     socib_name: "",
     socib_name_en: "",
     socib_email: "",
-
     u_description: "",
     u_notice: "",
     google_map: "",
     defaultColor: "",
-    web_logo: null,
-    sonod_logo: null,
-    c_signture: null,
-    socib_signture: null,
-    u_image: null,
   });
 
+  const cTypeOptions = [
+    { bn: "চেয়ারম্যান", en: "Chairman" },
+    { bn: "প্যানেল চেয়ারম্যান ১", en: "Panel Chairman 1" },
+    { bn: "প্যানেল চেয়ারম্যান ২", en: "Panel Chairman 2" },
+    { bn: "প্যানেল চেয়ারম্যান ৩", en: "Panel Chairman 3" },
+    { bn: "প্রশাসক", en: "Deputy Commissioner" },
+    { bn: "সদস্য/সদস্যা", en: "Member" },
+  ];
+
   useEffect(() => {
-    const unionInfo: TUnionInfo = data?.data;
     if (data?.data) {
-      setFormData({
+      const unionInfo: TUnionInfo = data.data;
+      setFormValues({
         full_name: unionInfo.full_name,
         full_name_en: unionInfo.full_name_en,
         short_name_b: unionInfo.short_name_b,
@@ -59,17 +66,18 @@ const UnionProfile = () => {
         district_en: unionInfo.district_en,
         c_name: unionInfo.c_name,
         c_name_en: unionInfo.c_name_en,
-        c_type: unionInfo.c_name,
-        c_type_en: unionInfo.c_name_en,
+        c_type: unionInfo.c_type,
+        c_type_en: unionInfo.c_type_en,
         c_email: unionInfo.c_email,
         socib_name: unionInfo.socib_name,
-        socib_name_en: unionInfo.socib_name,
+        socib_name_en: unionInfo.socib_name_en,
         socib_email: unionInfo.socib_email,
-
         u_description: unionInfo.u_description,
         u_notice: unionInfo.u_notice,
         google_map: unionInfo.google_map,
         defaultColor: unionInfo.defaultColor,
+      });
+      setFiles({
         web_logo: unionInfo.web_logo,
         sonod_logo: unionInfo.sonod_logo,
         c_signture: unionInfo.c_signture,
@@ -80,100 +88,68 @@ const UnionProfile = () => {
     }
   }, [data, form]);
 
-  // const handleChange = (
-  //   event: ChangeEvent<
-  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-  //   >
-  // ) => {
-  //   const { id, value, type } = event.target;
-
-  //   if (type === "file") {
-  //     const files = (event.target as HTMLInputElement).files;
-  //     setFormData((prevData) => ({
-  //       ...prevData,
-  //       [id]: files ? files[0] : null,
-  //     }));
-  //   } else {
-  //     setFormData((prevData) => ({
-  //       ...prevData,
-  //       [id]: value,
-  //     }));
-  //   }
-  // };
-  const cTypeOptions = [
-    { bn: "চেয়ারম্যান", en: "Chairman" },
-    { bn: "প্যানেল চেয়ারম্যান ১", en: "Panel Chairman 1" },
-    { bn: "প্যানেল চেয়ারম্যান ২", en: "Panel Chairman 2" },
-    { bn: "প্যানেল চেয়ারম্যান ৩", en: "Panel Chairman 3" },
-    { bn: "প্রশাসক", en: "Deputy Commissioner" },
-    { bn: "সদস্য/সদস্যা", en: "Member" },
-  ];
-
   const handleChange = (
-    event:
-      | ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-      | any
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
-    const { id, value, type, files } = event.target;
+    const { id, value } = event.target;
+    setFormValues((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
 
-    if (type === "file") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [id]: files ? files[0] : null,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [id]: value,
-      }));
+  const handleFileChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    fieldName: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFiles((prev) => ({ ...prev, [fieldName]: file }));
+      message.success(`${file.name} file selected successfully`);
     }
   };
+
   const handleCTypeChange = (value: string) => {
     const selectedOption = cTypeOptions.find((option) => option.bn === value);
     if (selectedOption) {
-      setFormData((prevData) => ({
+      setFormValues((prevData) => ({
         ...prevData,
         c_type: value,
         c_type_en: selectedOption.en,
       }));
-      form.setFieldsValue({ c_type: value, c_type_en: selectedOption.en }); // Update form fields
+      form.setFieldsValue({ c_type: value, c_type_en: selectedOption.en });
     }
   };
-  const handleSubmit = async (values: TUnionInfo) => {
+
+  const handleSubmit = async () => {
     const formData = new FormData();
 
-    // Append all fields to FormData
-    Object.keys(values).forEach((key) => {
-      const value = values[key as keyof TUnionInfo];
+    // Append form values to FormData
+    Object.entries(formValues).forEach(([key, value]) => {
       if (value !== null && value !== undefined) {
-        if (
-          key === "web_logo" ||
-          key === "sonod_logo" ||
-          key === "c_signture" ||
-          key === "socib_signture" ||
-          key === "u_image"
-        ) {
-          // Append files if they exist
-          if (value instanceof File) {
-            formData.append(key, value);
-          }
-        } else {
-          // Append other fields as strings
-          formData.append(key, value as string);
-        }
+        formData.append(key, value);
       }
     });
 
+    // Append files to FormData
+    Object.entries(files).forEach(([key, file]) => {
+      if (file) {
+        formData.append(key, file);
+      }
+    });
+
+    // Debugging: Log FormData contents
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
     try {
       const res = await updateUnion({ data: formData, token }).unwrap();
-      console.log(res.status_code);
       if (res.status_code === 200) {
         message.success("ইউনিয়ন তথ্য সফলভাবে আপডেট করা হয়েছে।");
-      } else if (
-        res.status_code !== 200 ||
-        res.status_code === 302 ||
-        res.status_code === 401
-      ) {
+      } else {
         message.error("Failed to update union information.");
       }
     } catch (error) {
@@ -198,6 +174,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="full_name"
                 />
               </Form.Item>
             </div>
@@ -210,6 +187,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="full_name_en"
                 />
               </Form.Item>
             </div>
@@ -222,6 +200,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="short_name_b"
                 />
               </Form.Item>
             </div>
@@ -231,6 +210,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="thana"
                 />
               </Form.Item>
             </div>
@@ -240,6 +220,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="thana_en"
                 />
               </Form.Item>
             </div>
@@ -249,6 +230,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="district"
                 />
               </Form.Item>
             </div>
@@ -258,6 +240,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="district_en"
                 />
               </Form.Item>
             </div>
@@ -267,6 +250,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="c_name"
                 />
               </Form.Item>
             </div>
@@ -276,10 +260,10 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="c_name_en"
                 />
               </Form.Item>
             </div>
-
             <div className="col-md-4">
               <Form.Item label="চেয়ারম্যানের ধরন (বাংলা)" name="c_type">
                 <Select style={{ height: 40 }} onChange={handleCTypeChange}>
@@ -297,16 +281,17 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   readOnly
                   className="form-control"
+                  id="c_type_en"
                 />
               </Form.Item>
             </div>
-
             <div className="col-md-4">
               <Form.Item label="সচিবের নাম (বাংলা)" name="socib_name">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="socib_name"
                 />
               </Form.Item>
             </div>
@@ -316,6 +301,7 @@ const UnionProfile = () => {
                   style={{ height: 40 }}
                   onChange={handleChange}
                   className="form-control"
+                  id="socib_name_en"
                 />
               </Form.Item>
             </div>
@@ -326,6 +312,7 @@ const UnionProfile = () => {
                   type="email"
                   onChange={handleChange}
                   className="form-control"
+                  id="c_email"
                 />
               </Form.Item>
             </div>
@@ -336,16 +323,17 @@ const UnionProfile = () => {
                   type="email"
                   onChange={handleChange}
                   className="form-control"
+                  id="socib_email"
                 />
               </Form.Item>
             </div>
-
             <div className="col-md-4">
               <Form.Item label="ইউনিয়নের বিবরন (বাংলা)" name="u_description">
                 <Input.TextArea
                   rows={6}
                   onChange={handleChange}
                   className="form-control"
+                  id="u_description"
                 />
               </Form.Item>
             </div>
@@ -355,6 +343,7 @@ const UnionProfile = () => {
                   rows={6}
                   onChange={handleChange}
                   className="form-control"
+                  id="u_notice"
                 />
               </Form.Item>
             </div>
@@ -364,6 +353,7 @@ const UnionProfile = () => {
                   rows={6}
                   onChange={handleChange}
                   className="form-control"
+                  id="google_map"
                 />
               </Form.Item>
             </div>
@@ -374,6 +364,7 @@ const UnionProfile = () => {
                   type="color"
                   onChange={handleChange}
                   className="form-control"
+                  id="defaultColor"
                 />
               </Form.Item>
             </div>
@@ -381,16 +372,16 @@ const UnionProfile = () => {
               <Form.Item label="ওয়েবসাইট এর লোগো" name="web_logo">
                 <Input
                   type="file"
-                  onChange={handleChange}
+                  onChange={(e) => handleFileChange(e, "web_logo")}
                   className="form-control"
                   id="web_logo"
                 />
-                {formData.web_logo && (
+                {files.web_logo && (
                   <img
                     width={250}
                     alt="Web Logo"
                     className="img-thumbnail img-fluid"
-                    src={formData.web_logo}
+                    src={files.web_logo}
                     style={{ marginTop: "10px" }}
                   />
                 )}
@@ -400,16 +391,16 @@ const UnionProfile = () => {
               <Form.Item label="সনদ এর লোগো" name="sonod_logo">
                 <Input
                   type="file"
-                  onChange={handleChange}
+                  onChange={(e) => handleFileChange(e, "sonod_logo")}
                   className="form-control"
                   id="sonod_logo"
                 />
-                {formData.sonod_logo && (
+                {files.sonod_logo && (
                   <img
                     width={250}
                     alt="Sonod Logo"
                     className="img-thumbnail img-fluid"
-                    src={formData.sonod_logo}
+                    src={files.sonod_logo}
                     style={{ marginTop: "10px" }}
                   />
                 )}
@@ -419,16 +410,16 @@ const UnionProfile = () => {
               <Form.Item label="চেয়ারম্যানের স্বাক্ষর" name="c_signture">
                 <Input
                   type="file"
-                  onChange={handleChange}
+                  onChange={(e) => handleFileChange(e, "c_signture")}
                   className="form-control"
                   id="c_signture"
                 />
-                {formData.c_signture && (
+                {files.c_signture && (
                   <img
                     width={250}
                     alt="Chairman Signature"
                     className="img-thumbnail img-fluid"
-                    src={formData.c_signture}
+                    src={files.c_signture}
                     style={{ marginTop: "10px" }}
                   />
                 )}
@@ -438,16 +429,16 @@ const UnionProfile = () => {
               <Form.Item label="সচিবের স্বাক্ষর" name="socib_signture">
                 <Input
                   type="file"
-                  onChange={handleChange}
+                  onChange={(e) => handleFileChange(e, "socib_signture")}
                   className="form-control"
                   id="socib_signture"
                 />
-                {formData.socib_signture && (
+                {files.socib_signture && (
                   <img
                     width={250}
                     alt="Secretary Signature"
                     className="img-thumbnail img-fluid"
-                    src={formData.socib_signture}
+                    src={files.socib_signture}
                     style={{ marginTop: "10px" }}
                   />
                 )}
@@ -457,16 +448,16 @@ const UnionProfile = () => {
               <Form.Item label="ইউনিয়নের ছবি" name="u_image">
                 <Input
                   type="file"
-                  onChange={handleChange}
+                  onChange={(e) => handleFileChange(e, "u_image")}
                   className="form-control"
                   id="u_image"
                 />
-                {formData.u_image && (
+                {files.u_image && (
                   <img
                     width={250}
                     alt="Union Image"
                     className="img-thumbnail img-fluid"
-                    src={formData.u_image}
+                    src={files.u_image}
                     style={{ marginTop: "10px" }}
                   />
                 )}
