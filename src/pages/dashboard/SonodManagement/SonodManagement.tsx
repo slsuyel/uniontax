@@ -121,6 +121,26 @@ const SonodManagement = () => {
                     <p>
                       <strong>আবেদনের তারিখ:</strong> {item.created_at}
                     </p>
+                    {condition === "approved" && (
+                      <td>
+                        <Link
+                          target="_blank"
+                          to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+                          className="btn btn-success btn-sm me-1"
+                        >
+                          বাংলা সনদ
+                        </Link>
+                        {item.hasEnData === 1 && (
+                          <Link
+                            target="_blank"
+                            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
+                            className="btn btn-success btn-sm mr-1"
+                          >
+                            ইংরেজি সনদ
+                          </Link>
+                        )}
+                      </td>
+                    )}
                     <SonodActionBtn
                       condition={condition}
                       item={item}
