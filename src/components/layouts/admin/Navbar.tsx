@@ -1,5 +1,6 @@
-import { useAppSelector } from "@/redux/features/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { setUser } from "@/redux/features/user/userSlice";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, message } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 // Define the onClick handler for Logout click
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
   const items = [
@@ -31,6 +33,7 @@ const Navbar = () => {
   async function handleLogoutClick() {
     localStorage.removeItem("token");
     navigate("/");
+    dispatch(setUser(null));
     message.success("Logout successfully");
   }
   function handleProfileClick() {

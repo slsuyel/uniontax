@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Input, Checkbox, Tabs, message } from "antd";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const { TabPane } = Tabs;
 
@@ -11,6 +13,7 @@ const { TabPane } = Tabs;
 type LoginType = "chairman" | "entrepreneur" | "secretary";
 
 const Login = () => {
+  const user = useAppSelector((state: RootState) => state.user.user);
   const [userLogin, { isLoading }] = useUserLoginMutation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,6 +48,16 @@ const Login = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      if (user.position === "Secretary" || user.position === "Chairman") {
+        navigate("/dashboard");
+      } else {
+        navigate("/uddokta");
+      }
+    }
+  }, [user, navigate]);
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
@@ -63,8 +76,10 @@ const Login = () => {
           localStorage.removeItem("rememberedEmail");
           localStorage.removeItem("rememberedPassword");
         }
-        if (res.data.uddokta) {
-          navigate(`/uddokta`);
+        if (loginType === "chairman" || res.data.position === "chairman") {
+          navigate("/dashboard");
+        } else if (loginType === "entrepreneur" || res.data.uddokta) {
+          navigate("/uddokta");
         } else {
           navigate(from);
         }
@@ -90,6 +105,7 @@ const Login = () => {
     setLoginType(key as LoginType);
   };
 
+  console.log(user);
   return (
     <>
       <div className="row mx-auto py-5">

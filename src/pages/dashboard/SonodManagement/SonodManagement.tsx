@@ -18,7 +18,7 @@ const SonodManagement = () => {
   const [searchSonodId, setSearchSonodId] = useState("");
   const { sonodName, condition } = useParams();
   const token = localStorage.getItem("token");
-  const { data, isLoading, isFetching } = useAllSonodQuery({
+  const { data, isLoading, isFetching, refetch } = useAllSonodQuery({
     sonodName: sonodName,
     stutus: condition || "Pending",
     sondId: searchSonodId,
@@ -58,27 +58,38 @@ const SonodManagement = () => {
   return (
     <div className="card p-3 border-0">
       <Breadcrumbs page={s_name} current={condition_bn} />
-      <Form layout="inline" className="my-2 ps-2  rounded-1 bg-white">
-        <Form.Item className=" my-1">
-          <Input
-            allowClear
-            style={{ height: 36 }}
-            placeholder="সনদ নাম্বার"
-            value={sonod_Id}
-            onChange={handleInputChange}
-          />
-        </Form.Item>
-        <Form.Item className=" my-1">
-          <Button
-            onClick={handleSearch}
-            type="primary"
-            htmlType="submit"
-            className="btn_main border-1 py-3"
+      <div className="align-items-baseline d-flex justify-content-between">
+        <Form layout="inline" className="my-2 ps-2  rounded-1 bg-white">
+          <Form.Item className=" my-1">
+            <Input
+              allowClear
+              style={{ height: 36 }}
+              placeholder="সনদ নাম্বার"
+              value={sonod_Id}
+              onChange={handleInputChange}
+            />
+          </Form.Item>
+          <Form.Item className=" my-1">
+            <Button
+              onClick={handleSearch}
+              type="primary"
+              htmlType="submit"
+              className="btn_main border-1 py-3"
+            >
+              {isFetching ? "অপেক্ষা করুন" : "খুঁজুন"}
+            </Button>
+          </Form.Item>
+        </Form>
+        <div>
+          <button
+            disabled={isFetching}
+            onClick={() => refetch()}
+            className="btn btn-info text-white"
           >
-            {isFetching ? "অপেক্ষা করুন" : "খুঁজুন"}
-          </Button>
-        </Form.Item>
-      </Form>
+            {isFetching ? "অপেক্ষা করুন" : "Reload"}
+          </button>
+        </div>
+      </div>
       <hr />
 
       {isFetching ? (

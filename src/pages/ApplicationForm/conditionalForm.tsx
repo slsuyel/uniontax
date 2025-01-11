@@ -55,10 +55,10 @@ const conditionalForm = (service: any) => {
 
       {service == "বিবিধ প্রত্যয়নপত্র" || service === "অনাপত্তি সনদপত্র"
         ? renderDynamicFormItem(
-          "আবেদনকৃত প্রত্যয়নের বিবরণ উল্লেখ করুন",
-          "prottoyon",
-          <TextArea style={{ height: 80 }} />
-        )
+            "আবেদনকৃত প্রত্যয়নের বিবরণ উল্লেখ করুন",
+            "prottoyon",
+            <TextArea style={{ height: 80 }} />
+          )
         : null}
 
       {service == "পারিবারিক সনদ" &&
@@ -67,7 +67,17 @@ const conditionalForm = (service: any) => {
           "family_name",
           <Input style={{ height: 40 }} />
         )}
-
+      {service == "বার্ষিক আয়ের প্রত্যয়ন" &&
+        renderDynamicFormItem(
+          "পেশা",
+          "applicant_occupation",
+          <Input style={{ height: 40 }} />
+        )}
+      {/* <div className="col-md-4">
+        <Form.Item label="পেশা" name="applicant_occupation">
+          <Input style={{ height: 40, width: "100%" }} />
+        </Form.Item>
+      </div> */}
       {service == "বার্ষিক আয়ের প্রত্যয়ন" &&
         renderDynamicFormItem(
           "বার্ষিক আয়",
