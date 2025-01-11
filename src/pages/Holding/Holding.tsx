@@ -24,12 +24,13 @@ const Holding = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedWord, setSelectedWord] = useState("1");
-  const [triggerSearch, setTriggerSearch] = useState(false);
+  const [submittedSearchTerm, setSubmittedSearchTerm] = useState(""); // New state for submitted search term
   const smallUnion = `${selectedUnion?.name}`.replace(/\s+/g, "").toLowerCase();
+
   const { data, isLoading, isFetching } = useAllHoldingFrontendQuery(
     {
       word: selectedWord,
-      search: searchTerm,
+      search: submittedSearchTerm, // Use submittedSearchTerm instead of searchTerm
       page: currentPage,
       unioun:
         unionInfo && unionInfo.short_name_e == "uniontax"
@@ -37,7 +38,7 @@ const Holding = () => {
           : unionInfo && unionInfo.short_name_e,
     },
     {
-      skip: !triggerSearch,
+      skip: !submittedSearchTerm, // Skip the API call if submittedSearchTerm is empty
     }
   );
 
@@ -122,7 +123,7 @@ const Holding = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setCurrentPage(1);
-    setTriggerSearch(true); // Trigger API call
+    setSubmittedSearchTerm(searchTerm); // Set the submitted search term to trigger the API call
   };
 
   const holdings = data?.data?.data || [];
@@ -279,7 +280,7 @@ const Holding = () => {
                 ) : holdings.length > 0 ? (
                   holdings.map((item: THolding) => (
                     <tr key={item.id}>
-                      <td>{item.id}</td>
+                      <td>{item.holding_no}</td>
                       <td>{item.maliker_name}</td>
                       <td>{item.nid_no}</td>
                       <td>{item.mobile_no}</td>

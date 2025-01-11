@@ -27,7 +27,7 @@ const SummaryItem = ({
             <h5 className="card-title fw-bold mb-2 fs-6 text-secondary">
               {title}
             </h5>
-            <p className="card-text fs-4 mb-0  fw-bold">{value}</p>
+            <p className="card-text fs-4 mb-0  fw-bold">{value.toFixed(2)}</p>
           </div>
         </div>
       </div>

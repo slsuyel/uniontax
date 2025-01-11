@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export interface THolding {
   id: number;
+  holding_no: number;
   maliker_name: string;
   nid_no: string;
   mobile_no: string;
@@ -102,7 +103,7 @@ const HoldingShow = () => {
                 {holdings.length > 0 ? (
                   holdings.map((item: THolding) => (
                     <tr key={item.id}>
-                      <td>{item.id}</td>
+                      <td>{item.holding_no}</td>
                       <td>{item.maliker_name}</td>
                       <td>{item.nid_no}</td>
                       <td>{item.mobile_no}</td>
