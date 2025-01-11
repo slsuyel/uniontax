@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useState, useEffect } from "react";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input, Checkbox, Tabs, message } from "antd";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 
-const { TabPane } = Tabs;
-
-// Define a union type for valid login types
 type LoginType = "chairman" | "entrepreneur" | "secretary";
 
 const Login = () => {
@@ -105,7 +101,12 @@ const Login = () => {
     setLoginType(key as LoginType);
   };
 
-  console.log(user);
+  const tabItems = [
+    { label: "সচিব লগইন", key: "secretary" },
+    { label: "চেয়ারম্যান লগইন", key: "chairman" },
+    { label: "উদ্যোক্তা লগইন", key: "entrepreneur" },
+  ];
+
   return (
     <>
       <div className="row mx-auto py-5">
@@ -116,11 +117,8 @@ const Login = () => {
                 className=""
                 defaultActiveKey="secretary"
                 onChange={handleTabChange}
-              >
-                <TabPane tab="সচিব লগইন" key="secretary" />
-                <TabPane tab="চেয়ারম্যান লগইন" key="chairman" />
-                <TabPane tab="উদ্যোক্তা লগইন" key="entrepreneur" />
-              </Tabs>
+                items={tabItems}
+              />
             </div>
             <form onSubmit={handleSubmit} className="px-3">
               <div className="form-group mb-2">
