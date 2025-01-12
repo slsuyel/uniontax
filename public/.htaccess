@@ -1,9 +1,21 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    
+    # Redirect www to non-www for HTTPS
+    RewriteCond %{HTTPS} on
+    RewriteCond %{HTTP_HOST} ^www\.uniontax\.gov\.bd$ [NC]
+    RewriteRule ^(.*)$ https://uniontax.gov.bd/$1 [L,R=301]
+    
+    # Redirect www to non-www for HTTP (optional)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} ^www\.uniontax\.gov\.bd$ [NC]
+    RewriteRule ^(.*)$ http://uniontax.gov.bd/$1 [L,R=301]
+    
+    # Existing rules
     RewriteBase /subdirectory
     RewriteRule ^index\.html$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
     RewriteRule . /index.html [L]
-</IfModule>
+    </IfModule>

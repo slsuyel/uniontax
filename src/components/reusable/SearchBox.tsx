@@ -77,8 +77,10 @@ const SearchBox: React.FC = () => {
     setSelectedUpazila(event.target.value);
   };
   const handleUnionChange = (event: { target: { value: string } }) => {
-    const union = event.target.value;
+    const union = event.target.value.replace(/\s+/g, '').toLowerCase();
 
+  // console.log(union)
+    // return;
     window.location.href = `http://${union}.uniontax.gov.bd`;
   };
 

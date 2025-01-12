@@ -79,7 +79,7 @@ const SonodActionBtn = ({
           try {
             // Perform the sonodAction
             const response = await sonodAction({ id: item.id, token }).unwrap();
-            console.log("Success:", response.data.message);
+            // console.log("Success:", response.data.message);
             message.success(` ${response.data.message}`);
             const sonodItem = sonodInfo.find(
               (sonod) =>
@@ -106,6 +106,11 @@ const SonodActionBtn = ({
       });
     }
   };
+
+const handleCancelSonod = ()=>{
+  console.log(item.id)
+}
+
   const menu = (
     <Menu>
       <Menu.Item className="border my-1 border-info" key="edit">
@@ -171,11 +176,11 @@ const SonodActionBtn = ({
           রশিদ প্রিন্ট
         </Link>
       </Menu.Item>
-      {condition === "new" && (
-        <Menu.Item className="border my-1" key="cancel">
-          <Button type="link" danger>
+      {condition === "Pending" && (
+        <Menu.Item className="border my-1 border-danger" key="cancel">
+          <button onClick={handleCancelSonod} className="border-0" >
             বাতিল করুন
-          </Button>
+          </button>
         </Menu.Item>
       )}
     </Menu>
