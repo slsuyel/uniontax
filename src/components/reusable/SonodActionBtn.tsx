@@ -4,8 +4,9 @@ import { TApplicantData } from "@/types";
 import { useSonodActionMutation } from "@/redux/api/sonod/sonodApi";
 import { message, Dropdown, Menu, Button, Modal, Input } from "antd";
 import SingleSonodViewModal from "@/pages/dashboard/SonodManagement/SingleSonodViewModal";
-import { useAppSelector } from "@/redux/features/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { updatePendingCount } from "@/redux/features/union/unionSlice";
 
 interface SonodActionBtnProps {
   sonodName: string | undefined;
@@ -18,6 +19,12 @@ const SonodActionBtn = ({
   item,
   condition,
 }: SonodActionBtnProps) => {
+  const dispatch = useAppDispatch();
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+  // const handleUpdatePendingCount = (id: number, newPendingCount: number) => {
+  //   dispatch(updatePendingCount({ id, pendingCount: newPendingCount }));
+  // };
+
   const user = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
   const [sonodAction, { isLoading }] = useSonodActionMutation();
@@ -62,7 +69,7 @@ const SonodActionBtn = ({
       user?.position == "Secretary"
     ) {
       setBibidoTextModal(true);
-    } else
+    } else {
       Modal.confirm({
         title: "আপনি কি নিশ্চিত?",
         content: "আপনি কি আবেদনটি অনুমোদন করতে চান?",
@@ -70,9 +77,24 @@ const SonodActionBtn = ({
         cancelText: "না",
         onOk: async () => {
           try {
+            // Perform the sonodAction
             const response = await sonodAction({ id: item.id, token }).unwrap();
             console.log("Success:", response.data.message);
             message.success(` ${response.data.message}`);
+            const sonodItem = sonodInfo.find(
+              (sonod) =>
+                sonod.bnname === sonodName || sonod.enname === sonodName
+            );
+
+            if (sonodItem) {
+              const newPendingCount = (sonodItem.pendingCount || 0) - 1;
+              dispatch(
+                updatePendingCount({
+                  id: sonodItem.id,
+                  pendingCount: newPendingCount,
+                })
+              );
+            }
           } catch (err) {
             console.error("Error:", err);
             message.error("কিছু সমস্যা হয়েছে");
@@ -82,8 +104,8 @@ const SonodActionBtn = ({
           console.log("Action canceled");
         },
       });
+    }
   };
-
   const menu = (
     <Menu>
       <Menu.Item className="border my-1 border-info" key="edit">
