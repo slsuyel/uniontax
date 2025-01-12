@@ -1,189 +1,189 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import { Form, Select, Checkbox, Input } from "antd";
-import { TDistrict, TDivision, TUpazila } from "@/types";
+// import { useEffect, useState } from "react";
+import { Form, Checkbox, Input } from "antd";
+// import { TDistrict, TDivision, TUpazila } from "@/types";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 interface AddressFieldsProps {
   form: any; // Accept the form prop from the parent component
 }
 const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
-  const [selectedDivision, setSelectedDivision] = useState<string>("");
-  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-  const [selectedUpazila, setSelectedUpazila] = useState<string>("");
-  const [selectedPerDivision, setSelectedPerDivision] = useState<string>("");
-  const [selectedPerDistrict, setSelectedPerDistrict] = useState<string>("");
-  const [selectedPerUpazila, setSelectedPerUpazila] = useState<string>("");
+  // const [selectedDivision, setSelectedDivision] = useState<string>("");
+  // const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  // const [selectedUpazila, setSelectedUpazila] = useState<string>("");
+  // const [selectedPerDivision, setSelectedPerDivision] = useState<string>("");
+  // const [selectedPerDistrict, setSelectedPerDistrict] = useState<string>("");
+  // const [selectedPerUpazila, setSelectedPerUpazila] = useState<string>("");
 
-  const [divisions, setDivisions] = useState<TDivision[]>([]);
-  const [districts, setDistricts] = useState<TDistrict[]>([]);
-  const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
+  // const [divisions, setDivisions] = useState<TDivision[]>([]);
+  // const [districts, setDistricts] = useState<TDistrict[]>([]);
+  // const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
 
-  const [perDistricts, setPerDistricts] = useState<TDistrict[]>([]);
-  const [perUpazilas, setPerUpazilas] = useState<TUpazila[]>([]);
+  // const [perDistricts, setPerDistricts] = useState<TDistrict[]>([]);
+  // const [perUpazilas, setPerUpazilas] = useState<TUpazila[]>([]);
 
-  useEffect(() => {
-    fetch("/divisions.json")
-      .then((res) => res.json())
-      .then((data: TDivision[]) => {
-        setDivisions(data);
-      })
-      .catch((error) => console.error("Error fetching divisions data:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/divisions.json")
+  //     .then((res) => res.json())
+  //     .then((data: TDivision[]) => {
+  //       setDivisions(data);
+  //     })
+  //     .catch((error) => console.error("Error fetching divisions data:", error));
+  // }, []);
 
-  useEffect(() => {
-    if (selectedDivision) {
-      fetch("/districts.json")
-        .then((response) => response.json())
-        .then((data: TDistrict[]) => {
-          const filteredDistricts = data.filter(
-            (d) => d.division_id === selectedDivision
-          );
-          setDistricts(filteredDistricts);
-        })
-        .catch((error) =>
-          console.error("Error fetching districts data:", error)
-        );
-    }
-    if (selectedPerDivision) {
-      fetch("/districts.json")
-        .then((response) => response.json())
-        .then((data: TDistrict[]) => {
-          const filteredDistricts = data.filter(
-            (d) => d.division_id === selectedPerDivision
-          );
-          setPerDistricts(filteredDistricts);
-        })
-        .catch((error) =>
-          console.error("Error fetching districts data:", error)
-        );
-    }
-  }, [selectedDivision, selectedPerDivision]);
+  // useEffect(() => {
+  //   if (selectedDivision) {
+  //     fetch("/districts.json")
+  //       .then((response) => response.json())
+  //       .then((data: TDistrict[]) => {
+  //         const filteredDistricts = data.filter(
+  //           (d) => d.division_id === selectedDivision
+  //         );
+  //         setDistricts(filteredDistricts);
+  //       })
+  //       .catch((error) =>
+  //         console.error("Error fetching districts data:", error)
+  //       );
+  //   }
+  //   if (selectedPerDivision) {
+  //     fetch("/districts.json")
+  //       .then((response) => response.json())
+  //       .then((data: TDistrict[]) => {
+  //         const filteredDistricts = data.filter(
+  //           (d) => d.division_id === selectedPerDivision
+  //         );
+  //         setPerDistricts(filteredDistricts);
+  //       })
+  //       .catch((error) =>
+  //         console.error("Error fetching districts data:", error)
+  //       );
+  //   }
+  // }, [selectedDivision, selectedPerDivision]);
 
-  useEffect(() => {
-    if (selectedDistrict) {
-      fetch("/upazilas.json")
-        .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedDistrict
-          );
-          setUpazilas(filteredUpazilas);
-        })
-        .catch((error) =>
-          console.error("Error fetching upazilas data:", error)
-        );
-    }
-    if (selectedPerDistrict) {
-      fetch("/upazilas.json")
-        .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedPerDistrict
-          );
-          setPerUpazilas(filteredUpazilas);
-        })
-        .catch((error) =>
-          console.error("Error fetching upazilas data:", error)
-        );
-    }
-  }, [selectedDistrict, selectedPerDistrict]);
+  // useEffect(() => {
+  //   if (selectedDistrict) {
+  //     fetch("/upazilas.json")
+  //       .then((response) => response.json())
+  //       .then((data: TUpazila[]) => {
+  //         const filteredUpazilas = data.filter(
+  //           (upazila) => upazila.district_id === selectedDistrict
+  //         );
+  //         setUpazilas(filteredUpazilas);
+  //       })
+  //       .catch((error) =>
+  //         console.error("Error fetching upazilas data:", error)
+  //       );
+  //   }
+  //   if (selectedPerDistrict) {
+  //     fetch("/upazilas.json")
+  //       .then((response) => response.json())
+  //       .then((data: TUpazila[]) => {
+  //         const filteredUpazilas = data.filter(
+  //           (upazila) => upazila.district_id === selectedPerDistrict
+  //         );
+  //         setPerUpazilas(filteredUpazilas);
+  //       })
+  //       .catch((error) =>
+  //         console.error("Error fetching upazilas data:", error)
+  //       );
+  //   }
+  // }, [selectedDistrict, selectedPerDistrict]);
 
-  const handleDivChange = (value: string) => {
-    setSelectedDivision(value);
-    setSelectedDistrict("");
-    setSelectedUpazila("");
+  // const handleDivChange = (value: string) => {
+  //   setSelectedDivision(value);
+  //   setSelectedDistrict("");
+  //   setSelectedUpazila("");
 
-    const filterDivition = divisions.find((d) => d.id === value);
-    console.log(filterDivition?.name);
+  //   const filterDivition = divisions.find((d) => d.id === value);
+  //   console.log(filterDivition?.name);
 
-    form.setFieldsValue({
-      current_division: filterDivition?.name,
-    });
-  };
+  //   form.setFieldsValue({
+  //     current_division: filterDivition?.name,
+  //   });
+  // };
 
-  const handleDistrictChange = (value: string) => {
-    setSelectedDistrict(value);
-    setSelectedUpazila("");
+  // const handleDistrictChange = (value: string) => {
+  //   setSelectedDistrict(value);
+  //   setSelectedUpazila("");
 
-    const filterDistrict = districts.find((d) => d.id === value);
-    console.log(filterDistrict?.name);
+  //   const filterDistrict = districts.find((d) => d.id === value);
+  //   console.log(filterDistrict?.name);
 
-    form.setFieldsValue({
-      applicant_present_district: filterDistrict?.name,
-    });
+  //   form.setFieldsValue({
+  //     applicant_present_district: filterDistrict?.name,
+  //   });
 
-    console.log(form);
-  };
+  //   console.log(form);
+  // };
 
-  const handleUpazilaChange = (value: string) => {
-    setSelectedUpazila(value);
+  // const handleUpazilaChange = (value: string) => {
+  //   setSelectedUpazila(value);
 
-    const filterUpazila = upazilas.find((d) => d.id === value);
-    console.log(filterUpazila?.name);
+  //   const filterUpazila = upazilas.find((d) => d.id === value);
+  //   console.log(filterUpazila?.name);
 
-    form.setFieldsValue({
-      applicant_present_Upazila: filterUpazila?.name,
-    });
+  //   form.setFieldsValue({
+  //     applicant_present_Upazila: filterUpazila?.name,
+  //   });
 
-    console.log(form);
-  };
+  //   console.log(form);
+  // };
 
   /* ------------------ */
 
-  const handlePerDivChange = (value: string) => {
-    setSelectedPerDivision(value);
-    setSelectedPerDistrict("");
-    setSelectedPerUpazila("");
-    const filterDivition = divisions.find((d) => d.id === value);
-    console.log(filterDivition?.name);
+  // const handlePerDivChange = (value: string) => {
+  //   setSelectedPerDivision(value);
+  //   setSelectedPerDistrict("");
+  //   setSelectedPerUpazila("");
+  //   const filterDivition = divisions.find((d) => d.id === value);
+  //   console.log(filterDivition?.name);
 
-    form.setFieldsValue({
-      permanent_division: filterDivition?.name,
-    });
-  };
+  //   form.setFieldsValue({
+  //     permanent_division: filterDivition?.name,
+  //   });
+  // };
 
-  const handlePerDistrictChange = (value: string) => {
-    setSelectedPerDistrict(value);
-    setSelectedPerUpazila("");
+  // const handlePerDistrictChange = (value: string) => {
+  //   setSelectedPerDistrict(value);
+  //   setSelectedPerUpazila("");
 
-    const filterDistrict = districts.find((d) => d.id === value);
-    console.log(filterDistrict?.name);
+  //   const filterDistrict = districts.find((d) => d.id === value);
+  //   console.log(filterDistrict?.name);
 
-    form.setFieldsValue({
-      applicant_permanent_district: filterDistrict?.name,
-    });
+  //   form.setFieldsValue({
+  //     applicant_permanent_district: filterDistrict?.name,
+  //   });
 
-    console.log(form);
-  };
+  //   console.log(form);
+  // };
 
-  const handlePerUpazilaChange = (value: string) => {
-    setSelectedPerUpazila(value);
+  // const handlePerUpazilaChange = (value: string) => {
+  //   setSelectedPerUpazila(value);
 
-    const filterUpazila = upazilas.find((d) => d.id === value);
-    console.log(filterUpazila?.name);
+  //   const filterUpazila = upazilas.find((d) => d.id === value);
+  //   console.log(filterUpazila?.name);
 
-    form.setFieldsValue({
-      applicant_permanent_Upazila: filterUpazila?.name,
-    });
+  //   form.setFieldsValue({
+  //     applicant_permanent_Upazila: filterUpazila?.name,
+  //   });
 
-    console.log(form);
-  };
+  //   console.log(form);
+  // };
 
   const handleSameAddressChange = (e: any) => {
     if (e.target.checked) {
       form.setFieldsValue({
-        applicant_permanent_division: form.getFieldValue("current_division"),
-        applicant_permanent_district: form.getFieldValue(
-          "applicant_present_district"
-        ),
-        applicant_permanent_Upazila: form.getFieldValue(
-          "applicant_present_Upazila"
-        ),
-        applicant_permanent_word_number: form.getFieldValue(
-          "applicant_present_word_number"
-        ),
+        // applicant_permanent_division: form.getFieldValue("current_division"),
+        // applicant_permanent_district: form.getFieldValue(
+        //   "applicant_present_district"
+        // ),
+        // applicant_permanent_Upazila: form.getFieldValue(
+        //   "applicant_present_Upazila"
+        // ),
+        // applicant_permanent_word_number: form.getFieldValue(
+        //   "applicant_present_word_number"
+        // ),
         applicant_permanent_village: form.getFieldValue(
           "applicant_present_village"
         ),
@@ -193,10 +193,10 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
       });
     } else {
       form.setFieldsValue({
-        applicant_permanent_division: "",
-        applicant_permanent_district: "",
-        applicant_permanent_Upazila: "",
-        applicant_permanent_word_number: "",
+        // applicant_permanent_division: "",
+        // applicant_permanent_district: "",
+        // applicant_permanent_Upazila: "",
+        // applicant_permanent_word_number: "",
         applicant_permanent_village: "",
         applicant_permanent_post_office: "",
       });
@@ -210,7 +210,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
           <div className="app-heading">বর্তমান ঠিকানা</div>
 
           <Form.Item></Form.Item>
-          <Form.Item name="current_division" label="বিভাগ (Division)">
+          {/* <Form.Item name="current_division" label="বিভাগ (Division)">
             <Select
               placeholder="Select Division"
               style={{ height: 40, width: "100%" }}
@@ -223,9 +223,9 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
-          <Form.Item name="applicant_present_district" label="জেলা (District)">
+          {/* <Form.Item name="applicant_present_district" label="জেলা (District)">
             <Select
               placeholder="Select District"
               style={{ height: 40, width: "100%" }}
@@ -238,9 +238,9 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
-          <Form.Item
+          {/* <Form.Item
             name="applicant_present_Upazila"
             label="উপজেলা/থানা (Upazila/Thana)"
           >
@@ -256,7 +256,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             name="applicant_present_post_office"
@@ -264,7 +264,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
           >
             <Input className="form-control" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="applicant_present_word_number"
             label="ওয়ার্ড নম্বর (Ward Number)"
           >
@@ -276,7 +276,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             name="applicant_present_village"
             label="গ্রাম/পাড়া (Village/Neighborhood)"
@@ -294,7 +294,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
             </Checkbox>
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             name="applicant_permanent_division"
             label="বিভাগ (Division)"
           >
@@ -311,8 +311,8 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-          <Form.Item
+          </Form.Item> */}
+          {/* <Form.Item
             name="applicant_permanent_district"
             label="জেলা (District)"
           >
@@ -329,8 +329,8 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-          <Form.Item
+          </Form.Item> */}
+          {/* <Form.Item
             name="applicant_permanent_Upazila"
             label="উপজেলা/থানা (Upazila/Thana)"
           >
@@ -347,7 +347,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             name="applicant_permanent_post_office"
@@ -355,7 +355,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
           >
             <Input className="form-control" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="applicant_permanent_word_number"
             label="ওয়ার্ড নম্বর (Ward Number)"
           >
@@ -367,7 +367,7 @@ const EnglishAddressFields = ({ form }: AddressFieldsProps) => {
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             name="applicant_permanent_village"
             label="গ্রাম/পাড়া (Village/Neighborhood)"

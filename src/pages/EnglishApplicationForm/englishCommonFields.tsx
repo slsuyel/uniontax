@@ -1,6 +1,6 @@
-import { Form, Input, Select, DatePicker } from "antd";
+import { Form, Input } from "antd";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 const englishCommonFields = () => {
   return (
@@ -17,7 +17,7 @@ const englishCommonFields = () => {
           />
         </Form.Item>
       </div>
-      <div className="col-md-4">
+      {/* <div className="col-md-4">
         <Form.Item label="লিঙ্গ (Gender)" name="applicant_gender">
           <Select
             placeholder="লিঙ্গ নির্বাচন করুন"
@@ -28,7 +28,7 @@ const englishCommonFields = () => {
             <Option value="Female">মহিলা (Female)</Option>
           </Select>
         </Form.Item>
-      </div>
+      </div> */}
       <div className="col-md-4">
         <Form.Item
           label="পিতার/স্বামীর নাম (Father's/Husband's Name)"
@@ -51,7 +51,7 @@ const englishCommonFields = () => {
           />
         </Form.Item>
       </div>
-      <div className="col-md-4">
+      {/* <div className="col-md-4">
         <Form.Item
           label="জাতীয় পরিচয়পত্র নম্বর (National ID Number)"
           name="applicant_national_id_number"
@@ -61,8 +61,8 @@ const englishCommonFields = () => {
             className="form-control"
           />
         </Form.Item>
-      </div>
-      <div className="col-md-4">
+      </div> */}
+      {/* <div className="col-md-4">
         <Form.Item
           label="জন্ম নিবন্ধন নম্বর (Birth Certificate Number)"
           name="applicant_birth_certificate_number"
@@ -72,8 +72,8 @@ const englishCommonFields = () => {
             className="form-control"
           />
         </Form.Item>
-      </div>
-      <div className="col-md-4">
+      </div> */}
+      {/* <div className="col-md-4">
         <Form.Item
           label="হোল্ডিং নম্বর (Holding Number)"
           name="applicant_holding_tax_number"
@@ -83,9 +83,9 @@ const englishCommonFields = () => {
             className="form-control"
           />
         </Form.Item>
-      </div>
+      </div> */}
 
-      <div className="col-md-4">
+      {/* <div className="col-md-4">
         <Form.Item
           rules={[
             { required: true, message: "দয়া করে আপনার মোবাইল নম্বর লিখুন" },
@@ -107,24 +107,24 @@ const englishCommonFields = () => {
             type="tel"
           />
         </Form.Item>
-      </div>
-      <div className="col-md-4">
+      </div> */}
+      {/* <div className="col-md-4">
         <Form.Item
           label="জন্ম তারিখ (Date of Birth)"
           name="applicant_date_of_birth"
         >
           <DatePicker className="form-control" style={{ width: "100%" }} />
         </Form.Item>
-      </div>
+      </div> */}
 
-      <div className="col-md-4">
+      {/* <div className="col-md-4">
         <Form.Item label="ছবি (Photo)" name="image">
           <Input
             type="file"
             // onChange={(e) => handleFileChange(e, setBackPreview)}
           />
         </Form.Item>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -18,7 +18,7 @@ const englishConditionalForm = (service: any) => {
 
   return (
     <>
-      {renderDynamicFormItem(
+      {/* {renderDynamicFormItem(
         "ইমেইল (Email)",
         "applicant_email",
         <Input
@@ -27,9 +27,9 @@ const englishConditionalForm = (service: any) => {
           className="form-control"
           placeholder="ইমেইল লিখুন"
         />
-      )}
+      )} */}
 
-      {renderDynamicFormItem(
+      {/* {renderDynamicFormItem(
         "বাসিন্দার অবস্থা (Resident Status)",
         "applicant_resident_status",
         <Select
@@ -40,7 +40,7 @@ const englishConditionalForm = (service: any) => {
           <Option value="Permanent">স্থায়ী (Permanent)</Option>
           <Option value="Temporary">অস্থায়ী (Temporary)</Option>
         </Select>
-      )}
+      )} */}
 
       {service == "বিবিধ প্রত্যয়নপত্র" || service === "অনাপত্তি সনদপত্র"
         ? renderDynamicFormItem(
