@@ -15,6 +15,14 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["sonod-action"],
     }),
+    renewSonod: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/sonod/renew/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["sonod-action"],
+    }),
 
     sonodSearch: builder.mutation({
       query: ({ sonodType, sonodNo }) => ({
@@ -65,5 +73,6 @@ export const {
   useTradeInfoQuery,
   useSonodSearchMutation,
   useCreateHoldingMutation,
+  useRenewSonodMutation,
   useDbMetricsQuery,
 } = userApi;

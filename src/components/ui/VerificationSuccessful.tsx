@@ -1,20 +1,65 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import { TSonodDetails } from "./SearchTimeline";
+import { useState } from "react";
+import { message, Modal } from "antd";
+import { useRenewSonodMutation } from "@/redux/api/user/userApi";
 
 const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
+  const [renewSonod,{isLoading}]=useRenewSonodMutation()
+  const [renew, setRenew] = useState<boolean>(false);
+  const handleRenew = () => {
+    setRenew(true);
+  };
+
+  const handleCancel = () => {
+    setRenew(false);
+  };
+  const additionalData = {
+   
+    s_uri: window.origin + "/payment-success",
+    f_uri: window.origin + "/payment-failed",
+    c_uri: window.origin + "/payment-cancel",
+  };
+const handleOk =async ()=>{
+  const res = await renewSonod({data:additionalData,id:sonod.id}).unwrap()
+  if (res.status_code === 200) {
+    message.success("You are redirect to payment gateway");
+    window.location.href = res.data.redirect_url;
+    setRenew(false);
+  }
+  
+}
+
   return (
     <div className="d-flex justify-content-between my-5 sonod-verification">
       <div className="col-md-12 p-sm-0">
         <div className=" text-end mb-2 no-print">
-          <div>
-            <Link
-              to={`https://api.uniontax.gov.bd/sonod/download/${sonod.id}`}
-              target="_blank"
-              className="btn btn-sm btn-success"
-            >
-              Download
-            </Link>{" "}
+          <div className="d-flex gap-2 justify-content-end px-2">
+            {sonod.renew_able ? (
+              <button onClick={handleRenew} className="btn btn-sm btn-info">
+                রিনিউ করুন
+              </button>
+            ) : (
+              <>
+                <Link
+                  to={sonod.download_url}
+                  target="_blank"
+                  className="btn btn-sm btn-success"
+                >
+                  ডাউনলোড
+                </Link>
+                {sonod.download_url_en && (
+                  <Link
+                    to={sonod.download_url_en}
+                    target="_blank"
+                    className="btn btn-sm btn-success"
+                  >
+                    ইংরেজি সনদ ডাউনলোড
+                  </Link>
+                )}
+              </>
+            )}
           </div>
         </div>{" "}
         <div className="border">
@@ -242,6 +287,20 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
         </div>{" "}
         {/**/} {/**/}
       </div>
+      {renew && (
+        <Modal
+          maskClosable={false}
+          title="আপনি কি নিশ্চিত?"
+          open={renew}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okText="হ্যাঁ নিশ্চিত"
+          cancelText="না"
+          okButtonProps={{ loading: isLoading }}
+        >
+          <p>সনদটি রিনিউ করতে চান?</p>
+        </Modal>
+      )}
     </div>
   );
 };

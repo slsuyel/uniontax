@@ -3,19 +3,26 @@ import { Steps } from "antd";
 import VerificationSuccessful from "./VerificationSuccessful";
 
 export interface TSonodDetails {
-  id?: number;
-  unioun_name?: string;
-  year?: string;
-  sonod_Id?: string;
-  sonod_name?: string;
-  applicant_national_id_number?: string;
-  applicant_birth_certificate_number?: string;
-  applicant_name?: string;
-  applicant_date_of_birth?: string;
-  applicant_gender?: string;
-  payment_status?: string;
-  stutus?: string;
-  successor_list?: string;
+  id: number;
+  unioun_name: string;
+  year: string;
+  sonod_Id: string;
+  sonod_name: string;
+  applicant_national_id_number: string;
+  applicant_birth_certificate_number: string | null;
+  applicant_name: string;
+  applicant_date_of_birth: string;
+  applicant_gender: string;
+  payment_status: string;
+  stutus: string;
+  successor_list: any;
+  orthoBchor: string;
+  renewed_id: string | null;
+  renewed: number;
+  hasEnData: number;
+  renew_able: boolean;
+  download_url: string;
+  download_url_en: string;
 }
 
 const SearchTimeline = ({ data }: any) => {
