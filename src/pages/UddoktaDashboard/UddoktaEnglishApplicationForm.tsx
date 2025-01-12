@@ -5,10 +5,10 @@ import { Form, Button, message } from "antd";
 import { useEffect, useState } from "react";
 
 import { useLocation, useParams } from "react-router-dom";
-import { useTradeInfoQuery } from "@/redux/api/user/userApi";
+// import { useTradeInfoQuery } from "@/redux/api/user/userApi";
 import { TApplicantData } from "@/types";
 import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
+// import { RootState } from "@/redux/features/store";
 import englishInheritanceForm from "../EnglishApplicationForm/englishInheritanceForm";
 import englishCommonFields from "../EnglishApplicationForm/englishCommonFields";
 import EnglishTradeLicenseForm from "../EnglishApplicationForm/englishTradeLicenseForm";
@@ -24,19 +24,19 @@ const UddoktaEnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
   );
   const info = applicantInfo;
   const [form] = Form.useForm();
-  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  // const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { service } = useParams<{ service: string }>();
   const [sonodName, setSonodName] = useState(service);
   const location = useLocation();
   const { state } = location || {};
   const bn = state?.userData;
 
-  const { data, isLoading } = useTradeInfoQuery(
-    { unionName: unionInfo?.short_name_e },
-    {
-      skip: !unionInfo?.short_name_e || sonodName !== "ট্রেড লাইসেন্স",
-    }
-  );
+  // const { data, isLoading } = useTradeInfoQuery(
+  //   { unionName: unionInfo?.short_name_e },
+  //   {
+  //     skip: !unionInfo?.short_name_e || sonodName !== "ট্রেড লাইসেন্স",
+  //   }
+  // );
 
   const pathname = location.pathname;
   const isDashboard = pathname.includes("dashboard");
@@ -120,9 +120,7 @@ const UddoktaEnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
               <div className="app-heading">Applicant Information</div>
             </div>
             {englishCommonFields()}
-            {sonodName === "ট্রেড লাইসেন্স" && (
-              <EnglishTradeLicenseForm data={data} isLoading={isLoading} />
-            )}{" "}
+            {sonodName === "ট্রেড লাইসেন্স" && <EnglishTradeLicenseForm />}{" "}
             {/* Corrected JSX component call */}
             {englishConditionalForm(sonodName)}
           </div>
