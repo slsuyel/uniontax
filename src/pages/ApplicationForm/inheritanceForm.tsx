@@ -61,18 +61,20 @@ const inheritanceForm = (service: string) => {
         </Form.Item>
       </div>
 
+
       <div className="col-md-4">
         {" "}
-        <Form.Item label="ধর্ম" name="applicant_religion">
-          <Select style={{ height: 40 }}>
-            <Option value="islam">ইসলাম</Option>
-            <Option value="hindu">হিন্দু</Option>
-            <Option value="christian">খ্রিস্টান</Option>
-            <Option value="buddhist">বৌদ্ধ</Option>
-            <Option value="other">অন্যান্য</Option>
+        <Form.Item label="ধর্ম" name="ut_religion">
+          <Select placeholder='ধর্ম' style={{ height: 40 }}>
+            <Option value="ইসলাম">ইসলাম</Option>
+            <Option value="হিন্দু">হিন্দু</Option>
+            <Option value="খ্রিস্টান">খ্রিস্টান</Option>
+            <Option value="বৌদ্ধ">বৌদ্ধ</Option>
+            <Option value="অন্যান্য">অন্যান্য</Option>
           </Select>
         </Form.Item>
       </div>
+    
 
       <div className="col-md-4">
         {" "}
