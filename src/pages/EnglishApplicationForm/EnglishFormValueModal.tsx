@@ -92,8 +92,7 @@ const EnglishFormValueModal = ({
             <div className="app-heading">আবেদনকারীর তথ্য</div>
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <b>আবেদনকারীর নাম : </b>
-            {data?.applicant_name}
+            <b>আবেদনকারীর নাম : {data?.applicant_name}</b>
           </div>
           <div className="col-md-4 col-6 mt-3">
             <b>লিঙ্গ : {bn?.applicant_gender} </b>
@@ -226,8 +225,8 @@ const EnglishFormValueModal = ({
                       <tr key={index}>
                         <td>{successor.w_name}</td>
                         <td>{successor.w_relation}</td>
-                        <td></td>
-                        {/* <td>{successor?.w_age}</td> */}
+
+                        <td>{successor?.w_age}</td>
                         <td>{successor.w_nid}</td>
                       </tr>
                     )
