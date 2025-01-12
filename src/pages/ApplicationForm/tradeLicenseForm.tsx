@@ -40,7 +40,22 @@ const TradeLicenseForm = ({
       dispatch(setTradeFee(selectedKhat.fee));
     }
   };
+  // Get the current year
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; // Months are 0-indexed in JavaScript
 
+  // Determine the current financial year
+  // Assuming the financial year starts in April (month 4)
+  const financialYearStart = currentMonth >= 4 ? currentYear : currentYear - 1;
+  const financialYearEnd = financialYearStart + 1;
+
+  // Generate the last three financial years
+  const financialYears = [];
+  for (let i = 0; i < 3; i++) {
+    const startYear = financialYearStart - i;
+    const endYear = financialYearEnd - i;
+    financialYears.push(`${startYear}-${endYear.toString().slice(-2)}`);
+  }
   return (
     <>
       <div className="col-md-4">
@@ -160,7 +175,11 @@ const TradeLicenseForm = ({
             style={{ height: 40, width: "100%" }}
             placeholder="অর্থ বছর নির্বাচন করুন"
           >
-            <Option value="2023-24">২০২৩-২৪</Option>
+            {financialYears.map((year) => (
+              <Option key={year} value={year}>
+                {year.replace(/(\d{4})-(\d{2})/, (_, y1, y2) => `${y1}-${y2}`)}
+              </Option>
+            ))}
           </Select>
         </Form.Item>
       </div>

@@ -112,25 +112,25 @@ const commonFields = () => {
           <DatePicker className="form-control" style={{ width: "100%" }} />
         </Form.Item>
       </div>
- <div className="col-md-4">
-      <Form.Item
-        label="ছবি"
-        name="image"
-        valuePropName="file"
-        getValueFromEvent={(e) => {
-          return e?.file;
-        }}
-      >
-        <Upload name="image" listType="picture" maxCount={1}>
-          <Button icon={<UploadOutlined />}>Upload Image</Button>
-        </Upload>
-      </Form.Item>
+      <div className="col-md-4">
+        <Form.Item
+          label="ছবি"
+          name="image"
+          valuePropName="file"
+          getValueFromEvent={(e) => {
+            return e?.file;
+          }}
+        >
+          <Upload name="image" listType="picture" maxCount={1}>
+            <Button icon={<UploadOutlined />}>Upload Image</Button>
+          </Upload>
+        </Form.Item>
       </div>
       <div className="col-md-4">
         {" "}
         <Form.Item label="ধর্ম" name="applicant_religion">
           <Select style={{ height: 40 }}>
-          <Option value="ইসলাম">ইসলাম</Option>
+            <Option value="ইসলাম">ইসলাম</Option>
             <Option value="হিন্দু">হিন্দু</Option>
             <Option value="খ্রিস্টান">খ্রিস্টান</Option>
             <Option value="বৌদ্ধ">বৌদ্ধ</Option>
