@@ -4,6 +4,7 @@ import Dhome from "@/pages/dashboard/Admin/Dhome";
 import HoldingAdd from "@/pages/dashboard/holding/HoldingAdd";
 import HoldingShow from "@/pages/dashboard/holding/HoldingShow";
 import HoldingTax from "@/pages/dashboard/holding/HoldingTax";
+import HoldingTaxEdit from "@/pages/dashboard/holding/HoldingTaxEdit";
 import SingleHolding from "@/pages/dashboard/holding/SingleHolding";
 import PaymentFailed from "@/pages/dashboard/PaymentFailed";
 
@@ -42,6 +43,10 @@ export const adminRoutes = [
   {
     path: "/dashboard/holding/list/add/:word",
     element: <HoldingAdd />,
+  },
+  {
+    path: "/dashboard/holding/list/edit/:id",
+    element: <HoldingTaxEdit />,
   },
   {
     path: "/dashboard/holding/list/view/:id",

@@ -108,8 +108,9 @@ const HoldingShow = () => {
                       <td>{item.nid_no}</td>
                       <td>{item.mobile_no}</td>
                       <td>
+                        {/* /holding/edit/${item.id} */}
                         <Link
-                          to={`/holding/edit/${item.id}`}
+                          to={`/dashboard/holding/list/edit/:${item.id}`}
                           className="btn btn-success"
                         >
                           এডিট
