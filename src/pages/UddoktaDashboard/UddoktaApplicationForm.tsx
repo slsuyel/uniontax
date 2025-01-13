@@ -259,7 +259,7 @@ const UddoktaApplicationForm = () => {
             </div>
             {commonFields()}
             {service === "ট্রেড লাইসেন্স" && (
-              <TradeLicenseForm data={data} isLoading={isLoading} />
+              <TradeLicenseForm data={data} isLoading={isLoading} form={form}/>
             )}
             {conditionalForm(service)}
           </div>
