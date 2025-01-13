@@ -193,7 +193,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             </div>
             {commonFields()}
             {sonodName === "ট্রেড লাইসেন্স" && (
-              <TradeLicenseForm data={data} isLoading={isLoading} />
+              <TradeLicenseForm data={data} isLoading={isLoading} form={form} />
             )}{" "}
             {/* Corrected JSX component call */}
             {conditionalForm(sonodName)}

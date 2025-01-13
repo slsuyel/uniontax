@@ -9,6 +9,7 @@ export interface TTradeKhat {
   name: string;
   khat_id: string;
   khat_fees: TKhatFee[];
+  
 }
 
 export interface TKhatFee {
@@ -16,46 +17,64 @@ export interface TKhatFee {
   applicant_type_of_businessKhat: string;
   applicant_type_of_businessKhatAmount: string;
   fee: string;
+
 }
 
 const TradeLicenseForm = ({
   data,
   isLoading,
+  form,
 }: {
   data: any;
   isLoading: boolean;
+  form: any;
 }) => {
   const [khatAmounts, setKhatAmounts] = useState<TKhatFee[]>([]);
+  const [checkChild, setSelectedChild] = useState<any>();
   const dispatch = useAppDispatch();
+
   const handleBusinessKhatChange = (value: string) => {
+    //  khat.applicant_type_of_businessKhatAmount === null
+    form.setFieldsValue({
+      applicant_type_of_businessKhatAmount: null,
+    });
+
     const selectedD = data?.data?.find((d: TTradeKhat) => d.khat_id === value);
     setKhatAmounts(selectedD.khat_fees);
+    setSelectedChild(selectedD);
+
+    if (selectedD.has_child == false) {
+      dispatch(setTradeFee(selectedD.khat_fees[0].fee));
+      form.setFieldsValue({
+        applicant_type_of_businessKhatAmount: 0,
+      });
+    }
+
+    // console.log(selectedD);
   };
 
   const handleTradeFees = (value: string) => {
+    console.log(value);
     const selectedKhat = khatAmounts.find(
       (khat) => khat.applicant_type_of_businessKhatAmount === value
     );
+    console.log(selectedKhat);
     if (selectedKhat) {
       dispatch(setTradeFee(selectedKhat.fee));
     }
   };
-  // Get the current year
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1; // Months are 0-indexed in JavaScript
-
-  // Determine the current financial year
-  // Assuming the financial year starts in April (month 4)
+  const currentMonth = new Date().getMonth() + 1;
   const financialYearStart = currentMonth >= 4 ? currentYear : currentYear - 1;
   const financialYearEnd = financialYearStart + 1;
 
-  // Generate the last three financial years
   const financialYears = [];
   for (let i = 0; i < 3; i++) {
     const startYear = financialYearStart - i;
     const endYear = financialYearEnd - i;
     financialYears.push(`${startYear}-${endYear.toString().slice(-2)}`);
   }
+
   return (
     <>
       <div className="col-md-4">
@@ -127,28 +146,34 @@ const TradeLicenseForm = ({
           </Select>
         </Form.Item>
       </div>
-      <div className="col-md-4">
-        <Form.Item
-          label="মূলধন/ব্যবসার ধরন"
-          name="applicant_type_of_businessKhatAmount"
-          rules={[{ required: true, message: "Please select investment type" }]}
-        >
-          <Select
-            style={{ height: 40, width: "100%" }}
-            placeholder="নির্বাচন করুন"
-            onChange={handleTradeFees}
+
+      {checkChild?.has_child == true && (
+        <div className="col-md-4">
+          <Form.Item
+            label="মূলধন/ব্যবসার ধরন"
+            name="applicant_type_of_businessKhatAmount"
+            rules={[
+              { required: true, message: "Please select investment type" },
+            ]}
           >
-            {khatAmounts.map((khat) => (
-              <Option
-                key={khat.name}
-                value={khat.applicant_type_of_businessKhatAmount}
-              >
-                {khat.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </div>
+            <Select
+              style={{ height: 40, width: "100%" }}
+              placeholder="নির্বাচন করুন"
+              onChange={handleTradeFees}
+            >
+              {khatAmounts.map((khat) => (
+                <Option
+                  key={khat.name}
+                  value={khat.applicant_type_of_businessKhatAmount}
+                >
+                  {khat.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </div>
+      )}
+
       <div className="col-md-4">
         <Form.Item label="বকেয়া" name="last_years_money">
           <Input style={{ height: 40, width: "100%" }} />
