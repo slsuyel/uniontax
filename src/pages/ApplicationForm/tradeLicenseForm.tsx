@@ -132,7 +132,7 @@ const TradeLicenseForm = ({
             { required: true, message: "Please select business category" },
           ]}
         >
-          <Select
+          <Select showSearch
             style={{ height: 40, width: "100%" }}
             placeholder="নির্বাচন করুন"
             onChange={handleBusinessKhatChange}
@@ -156,7 +156,7 @@ const TradeLicenseForm = ({
               { required: true, message: "Please select investment type" },
             ]}
           >
-            <Select
+            <Select showSearch
               style={{ height: 40, width: "100%" }}
               placeholder="নির্বাচন করুন"
               onChange={handleTradeFees}
