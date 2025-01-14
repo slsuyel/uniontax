@@ -301,11 +301,15 @@ const HoldingTaxEdit = () => {
                       <td>{bokeya.price}</td>
                       <td>
                         <Button
+                          disabled={bokeya.status == "Paid"}
                           type="primary"
                           onClick={() => handleEdit(bokeya)}
                           className=""
                         >
-                          <i className="fa-solid fa-pen"></i> এডিট
+                          {bokeya.status !== "Paid" && (
+                            <i className="fa-solid fa-pen"></i>
+                          )}
+                          {bokeya.status == "Paid" ? "Paid" : "এডিট"}
                         </Button>
                       </td>
                     </tr>

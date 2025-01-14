@@ -104,7 +104,7 @@ const Login = () => {
   const tabItems = [
     { label: "সচিব লগইন", key: "secretary" },
     { label: "চেয়ারম্যান লগইন", key: "chairman" },
-    { label: "উদ্যোক্তা লগইন", key: "entrepreneur" },
+    { label: "নিয়মিত ব্যবহারকারী ", key: "entrepreneur" },
   ];
 
   return (
