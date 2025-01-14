@@ -48,8 +48,8 @@ const sonodApi = apiSlice.injectEndpoints({
     }),
 
     allHolding: builder.query({
-      query: ({ word, token, search }) => ({
-        url: `/user/holdingtax?page=1&word=${word}${
+      query: ({ word, token, search,page = 1  }) => ({
+        url: `/user/holdingtax?page=${page}&word=${word}${
           search ? `&search=${search}` : ""
         }`,
         method: "Get",
@@ -59,8 +59,8 @@ const sonodApi = apiSlice.injectEndpoints({
     }),
 
     allHoldingFrontend: builder.query({
-      query: ({ word, search, unioun }) => ({
-        url: `/holdingtax/search?page=1&word=${word}${
+      query: ({ word, search, unioun, page = 1 }) => ({
+        url: `/holdingtax/search?page=${page}&word=${word}${
           search ? `&search=${search}&unioun=${unioun}` : ""
         }`,
         method: "GET",

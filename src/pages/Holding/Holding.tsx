@@ -1,20 +1,20 @@
 import RightSidebar from "../Home/RightSidebar";
 import { Link } from "react-router-dom";
 import { useAllHoldingFrontendQuery } from "@/redux/api/sonod/sonodApi";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent,  useEffect, useState } from "react";
 import { THolding } from "../dashboard/holding/HoldingShow";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { TDistrict, TDivision, TUnion, TUpazila } from "@/types";
+import { Pagination, Alert } from "antd";
+import Loader from "@/components/reusable/Loader";
 
 const Holding = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [selectedUnion, setSelectedUnion] = useState<TUnion | null>(null);
-  const [selectedDivision, setSelectedDivision] = useState<TDivision | null>(
-    null
-  );
-  const [selectedDistrict, setSelectedDistrict] = useState<TDistrict | null>(
-    null
-  );
+  const [selectedDivision, setSelectedDivision] = useState<TDivision | null>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<TDistrict | null>(null);
   const [selectedUpazila, setSelectedUpazila] = useState<TUpazila | null>(null);
   const [divisions, setDivisions] = useState<TDivision[]>([]);
   const [districts, setDistricts] = useState<TDistrict[]>([]);
@@ -22,15 +22,14 @@ const Holding = () => {
   const [unions, setUnions] = useState<TUnion[]>([]);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedWord, setSelectedWord] = useState("1");
-  const [submittedSearchTerm, setSubmittedSearchTerm] = useState(""); // New state for submitted search term
+  const [submittedSearchTerm, setSubmittedSearchTerm] = useState("");
   const smallUnion = `${selectedUnion?.name}`.replace(/\s+/g, "").toLowerCase();
 
-  const { data, isLoading, isFetching } = useAllHoldingFrontendQuery(
+  const { data, isLoading, isFetching, isError } = useAllHoldingFrontendQuery(
     {
       word: selectedWord,
-      search: submittedSearchTerm, // Use submittedSearchTerm instead of searchTerm
+      search: submittedSearchTerm,
       page: currentPage,
       unioun:
         unionInfo && unionInfo.short_name_e == "uniontax"
@@ -38,9 +37,14 @@ const Holding = () => {
           : unionInfo && unionInfo.short_name_e,
     },
     {
-      skip: !submittedSearchTerm, // Skip the API call if submittedSearchTerm is empty
+      skip: !submittedSearchTerm,
     }
   );
+
+  const handlePageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
 
   useEffect(() => {
     fetch("/divisions.json")
@@ -61,9 +65,7 @@ const Holding = () => {
           );
           setDistricts(filteredDistricts);
         })
-        .catch((error) =>
-          console.error("Error fetching districts data:", error)
-        );
+        .catch((error) => console.error("Error fetching districts data:", error));
     }
   }, [selectedDivision]);
 
@@ -77,9 +79,7 @@ const Holding = () => {
           );
           setUpazilas(filteredUpazilas);
         })
-        .catch((error) =>
-          console.error("Error fetching upazilas data:", error)
-        );
+        .catch((error) => console.error("Error fetching upazilas data:", error));
     }
   }, [selectedDistrict]);
 
@@ -102,31 +102,47 @@ const Holding = () => {
     setSelectedDivision(division || null);
     setSelectedDistrict(null);
     setSelectedUpazila(null);
+    setCurrentPage(1); // Reset to the first page
   };
 
   const handleDistrictChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const district = districts.find((d) => d?.id === event.target.value);
     setSelectedDistrict(district || null);
     setSelectedUpazila(null);
+    setCurrentPage(1); // Reset to the first page
   };
 
   const handleUpazilaChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const upazila = upazilas.find((u) => u?.id === event.target.value);
     setSelectedUpazila(upazila || null);
+    setCurrentPage(1); // Reset to the first page
   };
 
   const handleUnionChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const union = unions.find((u) => u?.id === event.target.value);
     setSelectedUnion(union || null);
+    setCurrentPage(1); // Reset to the first page
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setCurrentPage(1);
-    setSubmittedSearchTerm(searchTerm); // Set the submitted search term to trigger the API call
+    setCurrentPage(1); // Reset to the first page
+    setSubmittedSearchTerm(searchTerm); // Trigger API call
+  };
+
+  const handleWordChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedWord(event.target.value);
+    setCurrentPage(1); // Reset to the first page
   };
 
   const holdings = data?.data?.data || [];
+  const totalItems = data?.data?.total || 0;
+  const lastPage = data?.data?.last_page || 1; // Use last_page from the API
+
+
+
+  // Conditionally render the Pagination component
+  const showPagination = totalItems > pageSize && holdings.length > 0;
 
   return (
     <div className="row mx-auto container my-3">
@@ -223,7 +239,7 @@ const Holding = () => {
                 <select
                   className="form-select"
                   value={selectedWord}
-                  onChange={(e) => setSelectedWord(e.target.value)}
+                  onChange={handleWordChange}
                 >
                   {[...Array(9).keys()].map((_, index) => (
                     <option key={index + 1} value={index + 1}>
@@ -255,54 +271,65 @@ const Holding = () => {
             </form>
           </div>
           <div className="card-body">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>হোল্ডিং নাম্বার</th>
-                  <th>নাম</th>
-                  <th>এন আইডি নাম্বার</th>
-                  <th>মোবাইল নাম্বার</th>
-                  <th>আরও তথ্য</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <tr>
-                    <td colSpan={5} className="text-center">
-                      <div
-                        className="spinner-border text-primary"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    </td>
-                  </tr>
-                ) : holdings.length > 0 ? (
-                  holdings.map((item: THolding) => (
-                    <tr key={item.id}>
-                      <td>{item.holding_no}</td>
-                      <td>{item.maliker_name}</td>
-                      <td>{item.nid_no}</td>
-                      <td>{item.mobile_no}</td>
-                      <td>
-                        <Link
-                          to={`/holding/list/view/${item.id}`}
-                          className="btn btn-info"
-                        >
-                          দেখুন
-                        </Link>
-                      </td>
+            {isError ? (
+              <Alert message="Error fetching data" type="error" />
+            ) : isLoading || isFetching ? (
+              <><Loader /></>
+            ) : (
+              <>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>হোল্ডিং নাম্বার</th>
+                      <th>নাম</th>
+                      <th>এন আইডি নাম্বার</th>
+                      <th>মোবাইল নাম্বার</th>
+                      <th>আরও তথ্য</th>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="text-center">
-                      কোন ডেটা পাওয়া যায়নি
-                    </td>
-                  </tr>
+                  </thead>
+                  <tbody>
+                    {holdings.length > 0 ? (
+                      holdings.map((item: THolding) => (
+                        <tr key={item.id}>
+                          <td>{item.holding_no}</td>
+                          <td>{item.maliker_name}</td>
+                          <td>{item.nid_no}</td>
+                          <td>{item.mobile_no}</td>
+                          <td>
+                            <Link
+                              to={`/holding/list/view/${item.id}`}
+                              className="btn btn-info"
+                            >
+                              দেখুন
+                            </Link>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5} className="text-center">
+                          কোন ডেটা পাওয়া যায়নি
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+
+                {/* Conditionally render Pagination */}
+                {showPagination && (
+                  <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={lastPage*pageSize}
+                    onChange={handlePageChange}
+                    showSizeChanger
+                    onShowSizeChange={handlePageChange}
+                    pageSizeOptions={[10, 20, 50, 100]}
+                    style={{ marginTop: 20, textAlign: "center" }}
+                  />
                 )}
-              </tbody>
-            </table>
+              </>
+            )}
           </div>
         </div>
       </div>

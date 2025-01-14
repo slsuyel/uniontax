@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
 import { useAllHoldingQuery } from "@/redux/api/sonod/sonodApi";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
+import { Pagination } from "antd";
 
 export interface THolding {
   id: number;
@@ -17,24 +19,36 @@ const HoldingShow = () => {
   const { word } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 20; // Fixed page size
 
-  const { data, isLoading } = useAllHoldingQuery({
+  const { data, isFetching } = useAllHoldingQuery({
     word,
     token,
     search: searchTerm,
     page: currentPage,
   });
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to the first page when searching
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   const holdings = data?.data?.data || [];
+  const totalItems = data?.data?.total || 0;
+
+  // Check if the current page has no data
+  const isPageEmpty = holdings.length === 0 && currentPage > 1;
+
+  // Reset to the previous valid page if the current page is empty
+  useEffect(() => {
+    if (isPageEmpty) {
+      setCurrentPage((prev) => Math.max(prev - 1, 1));
+    }
+  }, [isPageEmpty]);
 
   return (
     <div className="card p-3 border-0">
@@ -89,50 +103,82 @@ const HoldingShow = () => {
             </form>
           </div>
           <div className="card-body">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>হোল্ডিং নাম্বার</th>
-                  <th>নাম</th>
-                  <th>এন আইডি নাম্বার</th>
-                  <th>মোবাইল নাম্বার</th>
-                  <th>আরও তথ্য</th>
-                </tr>
-              </thead>
-              <tbody>
-                {holdings.length > 0 ? (
-                  holdings.map((item: THolding) => (
-                    <tr key={item.id}>
-                      <td>{item.holding_no}</td>
-                      <td>{item.maliker_name}</td>
-                      <td>{item.nid_no}</td>
-                      <td>{item.mobile_no}</td>
-                      <td>
-                        {/* /holding/edit/${item.id} */}
-                        <Link
-                          to={`/dashboard/holding/list/edit/:${item.id}`}
-                          className="btn btn-success"
-                        >
-                          এডিট
-                        </Link>{" "}
-                        <Link
-                          to={`/dashboard/holding/list/view/${item.id}`}
-                          className="btn btn-info"
-                        >
-                          দেখুন
-                        </Link>
-                      </td>
-                    </tr>
-                  ))
+            {isFetching ? (
+              <Loader />
+            ) : (
+              <>
+                {isPageEmpty ? (
+                  <div className="text-center">
+                    <p>এই পৃষ্ঠায় কোন ডেটা পাওয়া যায়নি।</p>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => setCurrentPage(1)}
+                    >
+                      প্রথম পৃষ্ঠায় ফিরে যান
+                    </button>
+                  </div>
                 ) : (
-                  <tr>
-                    <td colSpan={5} className="text-center">
-                      কোন ডেটা পাওয়া যায়নি
-                    </td>
-                  </tr>
+                  <>
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>হোল্ডিং নাম্বার</th>
+                          <th>নাম</th>
+                          <th>এন আইডি নাম্বার</th>
+                          <th>মোবাইল নাম্বার</th>
+                          <th>আরও তথ্য</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {holdings.length > 0 ? (
+                          holdings.map((item: THolding) => (
+                            <tr key={item.id}>
+                              <td>{item.holding_no}</td>
+                              <td>{item.maliker_name}</td>
+                              <td>{item.nid_no}</td>
+                              <td>{item.mobile_no}</td>
+                              <td>
+                                <Link
+                                  to={`/dashboard/holding/list/edit/:${item.id}`}
+                                  className="btn btn-success"
+                                >
+                                  এডিট
+                                </Link>{" "}
+                                <Link
+                                  to={`/dashboard/holding/list/view/${item.id}`}
+                                  className="btn btn-info"
+                                >
+                                  দেখুন
+                                </Link>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={5} className="text-center">
+                              কোন ডেটা পাওয়া যায়নি
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+
+                    {/* Pagination Component */}
+                    {totalItems > pageSize && (
+                      <div className="d-flex justify-content-center mt-4">
+                        <Pagination
+                          current={currentPage}
+                          pageSize={pageSize}
+                          total={totalItems}
+                          onChange={handlePageChange}
+                          // Remove showSizeChanger and onShowSizeChange
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
-              </tbody>
-            </table>
+              </>
+            )}
           </div>
         </div>
       </div>
