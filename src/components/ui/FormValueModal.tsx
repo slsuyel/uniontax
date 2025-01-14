@@ -92,7 +92,7 @@ const FormValueModal = ({
       });
     }
   };
-
+console.log(data?.last_years_money)
   return (
     <Modal
       width={800}
@@ -311,7 +311,7 @@ const FormValueModal = ({
                     এর ফি{" "}
                     {service === "ট্রেড লাইসেন্স"
                       ? tradeFee
-                        ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
+                        ? (Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15)+Number(data?.last_years_money)
                         : Number(sonod?.sonod_fees)
                       : sonod?.sonod_fees}{" "}
                     টাকা ।

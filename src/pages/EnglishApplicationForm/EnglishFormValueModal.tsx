@@ -75,6 +75,8 @@ const EnglishFormValueModal = ({
         : Number(sonod?.sonod_fees)
       : Number(sonod?.sonod_fees);
 
+  // console.log(bn?.last_years_money)
+
   return (
     <Modal
       width={800}
@@ -242,7 +244,14 @@ const EnglishFormValueModal = ({
           <div className="text-center col-md-7 mx-auto">
             <h3>
               অনুগ্রহ করে আপনার আবেদন সম্পূর্ণ করতে ফি প্রদান করুন। {service} এর
-              ফি হল {fees * 2} টাকা।
+              ফি হল{" "}
+              {service == "ট্রেড লাইসেন্স"
+                ? fees +
+                  Number(bn?.last_years_money) +
+                  // Number(sonod?.sonod_fees) +
+                  Number(sonod?.sonod_fees) * 1.15
+                : fees * 2}{" "}
+              টাকা।
             </h3>
             <button
               disabled={isLoading}
