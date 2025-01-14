@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { Form, Input, Button, Card } from "antd";
+import { SetStateAction, useState } from "react";
+import { Form, Input, Button, Card, Pagination } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
@@ -14,6 +14,7 @@ import { TApplicantData } from "@/types/global";
 import { Spinner } from "react-bootstrap";
 
 const SonodManagement = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [sonod_Id, setSonod_Id] = useState("");
   const [searchSonodId, setSearchSonodId] = useState("");
   const { sonodName, condition } = useParams();
@@ -23,10 +24,11 @@ const SonodManagement = () => {
     stutus: condition || "Pending",
     sondId: searchSonodId,
     token,
+    page: currentPage,
   });
 
   const services = useAllServices();
-
+  const totalPages: number = data?.data?.sonods?.last_page || 0;
   const { s_name, condition_bn } = checkNameCondition(
     services,
     sonodName,
@@ -50,7 +52,10 @@ const SonodManagement = () => {
   if (isLoading) {
     return <Loader />;
   }
-
+  const handlePageChange = (page: SetStateAction<number>) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const allSonod: TApplicantData[] = data?.data.sonods.data || [];
 
   // console.log(allSonod);
@@ -226,6 +231,15 @@ const SonodManagement = () => {
           )}
         </>
       )}
+      <div className="d-flex justify-content-center mt-4">
+        <Pagination
+          current={currentPage}
+          total={totalPages * 10} // Ant Design Pagination uses total items, not pages
+          pageSize={10} // Assuming 10 items per page
+          onChange={handlePageChange}
+          showSizeChanger={false} // Hide the page size changer
+        />
+      </div>
     </div>
   );
 };

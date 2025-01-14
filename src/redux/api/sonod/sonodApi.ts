@@ -5,8 +5,8 @@ import apiSlice from "../apiSlice";
 const sonodApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     allSonod: builder.query({
-      query: ({ sonodName, stutus, token, sondId }) => ({
-        url: `/user/sonod/list?sonod_name=${sonodName}&stutus=${stutus}${
+      query: ({ sonodName, stutus, token, sondId,page = 1 }) => ({
+        url: `/user/sonod/list?sonod_name=${sonodName}&page=${page}&stutus=${stutus}${
           sondId ? `&sondId=${sondId}` : ""
         }`,
         method: "Get",
