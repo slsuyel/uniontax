@@ -34,9 +34,14 @@ import { HomeOutlined } from "@ant-design/icons";
 interface BreadcrumbProps {
   current?: string;
   page?: string;
+  className?: string;
 }
 
-const Breadcrumbs = ({ page, current }: BreadcrumbProps) => {
+const Breadcrumbs = ({
+  page,
+  current,
+  className = " mb-4",
+}: BreadcrumbProps) => {
   // Construct the breadcrumb items
   const breadcrumbItems = [
     {
@@ -66,12 +71,11 @@ const Breadcrumbs = ({ page, current }: BreadcrumbProps) => {
   ];
 
   return (
-    <div className="breadcrumbs-area mb-4">
+    <div className={`breadcrumbs-area ${className}`}>
       <h3>
         {page && ` ${page} ||`} {current}
       </h3>
       <Breadcrumb items={breadcrumbItems} separator=">" />
-      <br />
     </div>
   );
 };

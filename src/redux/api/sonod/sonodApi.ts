@@ -48,7 +48,7 @@ const sonodApi = apiSlice.injectEndpoints({
     }),
 
     allHolding: builder.query({
-      query: ({ word, token, search,page = 1  }) => ({
+      query: ({ word, token, search, page = 1 }) => ({
         url: `/user/holdingtax?page=${page}&word=${word}${
           search ? `&search=${search}` : ""
         }`,
@@ -111,6 +111,15 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["holding-create-update"],
     }),
+    holdingBokeyaUpdate: builder.mutation({
+      query: ({ id, token, price }) => ({
+        url: `/user/holding-bokeya/${id}/update-price`,
+        method: "Put",
+        headers: { Authorization: `Bearer ${token}` },
+        body: {price},
+      }),
+      invalidatesTags: ["holding-create-update"],
+    }),
 
     sonodAction: builder.mutation({
       query: ({ id, token, sec_prottoyon, sec_prottoyon_en }) => ({
@@ -147,4 +156,5 @@ export const {
   useSingleSonodQuery,
   useSingleHoldingPublicQuery,
   useNidCheckMutation,
+  useHoldingBokeyaUpdateMutation
 } = sonodApi;
