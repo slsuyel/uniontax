@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { setUser } from "@/redux/features/user/userSlice";
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, message } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +26,12 @@ const Navbar = () => {
       icon: <LogoutOutlined />,
       onClick: handleLogoutClick,
     },
+    {
+      label: "মেইন সাইট",
+      key: "",
+      icon: <HomeOutlined />,
+      onClick: handleback,
+    },
   ];
   const menuProps = {
     items,
@@ -38,6 +44,10 @@ const Navbar = () => {
   }
   function handleProfileClick() {
     navigate("/dashboard/profile");
+    // Add your logic here
+  }
+  function handleback() {
+    navigate("/");
     // Add your logic here
   }
 

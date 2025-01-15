@@ -6,10 +6,10 @@ body {
   font-family: "Kalpurush", sans-serif;
   font-size: medium;
 }
-
+/* 
 * {
   --defaultColor: green;
-}
+} */
 .defaltTextColor {
   color: var(--defaultColor) !important;
 }
@@ -146,7 +146,8 @@ select.searchFrom.form_control {
   max-width: 100%;
 }
 .sidebarTitle {
-  background: #159513;
+  background-color: var(--defaultColor);
+
   padding: 9px 8px;
 }
 .services {
@@ -182,21 +183,22 @@ select.searchFrom.form_control {
 }
 
 .btn_main {
-  background: green;
+  background-color: var(--defaultColor);
   border: 1px solid #023076;
   color: white;
   width: 125px;
   font-size: 19px;
   border-radius: 5px;
   padding: 4px 0px;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .btn_main:hover,
 .btn_main:focus {
-  background: #4caf50; /* Change color on hover/focus */
-  color: rgb(255, 255, 255); /* Change text color on hover/focus */
-  border-color: #4caf50; /* Change border color on hover/focus */
+  background: var(--defaultColor); /* Use the same default color */
+  color: rgb(255, 255, 255); /* Keep the text color white */
+  border-color: var(--defaultColor); /* Use the same default color for border */
+  opacity: 0.8; /* Optional: Add opacity for a hover effect */
 }
 
 /* application */
@@ -205,10 +207,11 @@ select.searchFrom.form_control {
   border-top-right-radius: 6px;
   margin-top: 20px;
   padding: 11px 0;
+  background-color: var(--defaultColor);
 }
 
 .form-pannel {
-  border: 1px solid #159513;
+  border: 1px solid var(--defaultColor);
   padding: 25px;
   border-radius: 0px 0px 6px 6px;
 }

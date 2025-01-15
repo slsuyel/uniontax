@@ -72,7 +72,7 @@ const Breadcrumbs = ({
 
   return (
     <div className={`breadcrumbs-area ${className}`}>
-      <h3>
+      <h3 className="defaltTextColor">
         {page && ` ${page} ||`} {current}
       </h3>
       <Breadcrumb items={breadcrumbItems} separator=">" />
