@@ -3,12 +3,15 @@ import Loader from "@/components/reusable/Loader";
 import {
   useHoldingBokeyaUpdateMutation,
   useSingleHoldingQuery,
+  useUpdateHoldingMutation,
 } from "@/redux/api/sonod/sonodApi";
 import { useParams } from "react-router-dom";
 import { Form, Input, Select, InputNumber, Modal, Button, message } from "antd";
 import { SetStateAction, useState } from "react";
 
 const HoldingTaxEdit = () => {
+  const [updateHolding, { isLoading: updatingHolding }] =
+    useUpdateHoldingMutation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedBokeya, setSelectedBokeya] = useState<any>(null);
   const [form] = Form.useForm();
@@ -25,9 +28,19 @@ const HoldingTaxEdit = () => {
   if (isLoading) {
     return <Loader />;
   }
-
-  const onFinish = (values: any) => {
-    console.log("Edited Form Data:", values);
+  const onFinish = async (values: any) => {
+    try {
+      const res = await updateHolding({ data: values, token, id }).unwrap();
+      if (res.status_code === 200 && !res.isError) {
+        message.success("হোল্ডিং ট্যাক্স সফলভাবে আপডেট করা হয়েছে");
+        console.log(res);
+      } else {
+        message.error("হোল্ডিং ট্যাক্স আপডেট করতে সমস্যা হয়েছে");
+      }
+    } catch (error) {
+      message.error("একটি অপ্রত্যাশিত ত্রুটি ঘটেছে");
+      console.error(error);
+    }
   };
 
   const handleTaxType = (value: SetStateAction<string>) => {
@@ -116,7 +129,7 @@ const HoldingTaxEdit = () => {
               name="holding_no"
               className="my-1"
             >
-              <Input style={{ height: 40 }} disabled />
+              <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
 
@@ -133,7 +146,7 @@ const HoldingTaxEdit = () => {
               name="maliker_name"
               className="my-1"
             >
-              <Input style={{ height: 40 }} disabled />
+              <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
 
@@ -150,7 +163,7 @@ const HoldingTaxEdit = () => {
               name="father_or_samir_name"
               className="my-1"
             >
-              <Input style={{ height: 40 }} disabled />
+              <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
 
@@ -167,7 +180,7 @@ const HoldingTaxEdit = () => {
               name="gramer_name"
               className="my-1"
             >
-              <Input style={{ height: 40 }} disabled />
+              <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
 
@@ -184,7 +197,7 @@ const HoldingTaxEdit = () => {
               name="nid_no"
               className="my-1"
             >
-              <Input style={{ height: 40 }} disabled />
+              <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
 
@@ -201,14 +214,18 @@ const HoldingTaxEdit = () => {
               name="mobile_no"
               className="my-1"
             >
-              <Input style={{ height: 40 }} disabled />
+              <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
 
           {/* Ward Number */}
           <div className="col-md-6">
             <Form.Item label="ওয়ার্ড নং" name="word_no" className="my-1">
-              <Input disabled style={{ height: 40 }} />
+              <Input
+                min={1}
+                max={9}
+                style={{ height: 40, width: "100%" }}
+              />
             </Form.Item>
           </div>
 
@@ -220,7 +237,6 @@ const HoldingTaxEdit = () => {
               className="my-1"
             >
               <Select
-                disabled
                 placeholder="হোল্ডিং ট্যাক্স এর ধরণ নির্বাচন করুন"
                 style={{ height: 40 }}
                 onChange={handleTaxType}
@@ -274,11 +290,22 @@ const HoldingTaxEdit = () => {
                   name="busnessName"
                   className="my-1"
                 >
-                  <Input style={{ height: 40 }} disabled />
+                  <Input style={{ height: 40 }} />
                 </Form.Item>
               </div>
             </>
           )}
+
+          <Form.Item>
+            <Button
+              loading={updatingHolding}
+              disabled={updatingHolding}
+              type="primary"
+              htmlType="submit"
+            >
+              Submit
+            </Button>
+          </Form.Item>
 
           {/* Bokeya Table */}
           <div className="border rounded my-4">
@@ -339,7 +366,7 @@ const HoldingTaxEdit = () => {
             name="year"
             initialValue={selectedBokeya?.year}
           >
-            <Input style={{ height: 40 }} disabled />
+            <Input style={{ height: 40 }} />
           </Form.Item>
           <Form.Item
             className="my-1"

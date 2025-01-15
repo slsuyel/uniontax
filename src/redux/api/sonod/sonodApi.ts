@@ -111,6 +111,16 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["holding-create-update"],
     }),
+    updateHolding: builder.mutation({
+      query: ({ data, token,id }) => ({
+        url: `/user/holdingtax/${id}`,
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        body: data,
+      }),
+      invalidatesTags: ["holding-create-update"],
+    }),
+
     holdingBokeyaUpdate: builder.mutation({
       query: ({ id, token, price }) => ({
         url: `/user/holding-bokeya/${id}/update-price`,
@@ -156,5 +166,6 @@ export const {
   useSingleSonodQuery,
   useSingleHoldingPublicQuery,
   useNidCheckMutation,
-  useHoldingBokeyaUpdateMutation
+  useHoldingBokeyaUpdateMutation,
+  useUpdateHoldingMutation
 } = sonodApi;
