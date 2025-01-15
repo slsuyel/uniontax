@@ -7,6 +7,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // }
 interface User {
   email: string;
+  unioun: string;
   name: string | null;
   position: string;
   dashboard_title: string;

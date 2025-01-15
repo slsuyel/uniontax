@@ -86,11 +86,7 @@ const UnionReports = () => {
             />
           </div>
           <div className="form-group col-md-3 my-1">
-            <button
-              type="submit"
-              className="btn_main mt-3"
-              style={{ fontSize: "22px", marginLeft: "10px" }}
-            >
+            <button type="submit" className="btn btn-info ">
               ডাউনলোড
             </button>
           </div>

@@ -9,10 +9,11 @@ import { message, Modal } from "antd";
 import SearchBox from "../reusable/SearchBox";
 
 const Header = () => {
+  const userInfo = useAppSelector((state: RootState) => state.user.user)
   const [noUnion, setNoUnion] = useState(false);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
-  // console.log(unionInfo);
+  // console.log(unionInfo,sonodInfo);
   const navItems = [
     { title: "হোম", link: "/" },
     { title: "ইউপি সেবা পরিচিতি", link: "about" },
@@ -44,7 +45,10 @@ const Header = () => {
     { title: "যোগাযোগ", link: "/contact" },
     { title: "হোল্ডিং ট্যাক্স", link: "/holding/tax" },
     { title: "নাগরিক কর্নার", link: "/citizens_corner" },
-    { title: "লগইন", link: "/login" },
+    {
+      title: userInfo ? "ড্যাশবোর্ড" : "লগইন",
+      link: "/login",
+    },
   ];
 
   const navigate = useNavigate();

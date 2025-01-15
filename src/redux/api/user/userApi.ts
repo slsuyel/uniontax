@@ -51,6 +51,16 @@ const userApi = apiSlice.injectEndpoints({
       providesTags: ["sonod-action"],
     }),
 
+    getUnionInfo: builder.mutation({
+      query: ({ unionName, token }) => ({
+        url: `/global/uniouninfo?name=${unionName}`,
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+
     tradeInfo: builder.query({
       query: ({ unionName }) => ({
         url: `/global/uniouninfo?name=${unionName}&type=TradeLicenseKhat`,
@@ -75,4 +85,5 @@ export const {
   useCreateHoldingMutation,
   useRenewSonodMutation,
   useDbMetricsQuery,
+  useGetUnionInfoMutation,
 } = userApi;

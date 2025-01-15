@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input, Checkbox, Tabs, message } from "antd";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
-import { useAppSelector } from "@/redux/features/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { useGetUnionInfoMutation } from "@/redux/api/user/userApi";
+import { setUnionData } from "@/redux/features/union/unionSlice";
 
 type LoginType = "chairman" | "entrepreneur" | "secretary";
 
@@ -18,7 +20,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [loginType, setLoginType] = useState<LoginType>("chairman");
-
+  const [getUnionInfo, { isLoading: getting }] = useGetUnionInfoMutation();
+  const dispatch = useAppDispatch();
   const loginConfig = {
     chairman: {
       endpoint: "user/login",
@@ -64,6 +67,17 @@ const Login = () => {
       }).unwrap();
 
       if (res.status_code === 200) {
+        const upInfo = await getUnionInfo({
+          unionName: res?.data?.user.unioun,
+          token: res.data.token,
+        }).unwrap();
+        // console.log(upInfo);
+        dispatch(
+          setUnionData({
+            unionInfo: upInfo.data.uniouninfos,
+            sonodList: upInfo.data.sonod_name_lists,
+          })
+        );
         localStorage.setItem("token", res.data.token);
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", email);
@@ -170,11 +184,11 @@ const Login = () => {
               </div>
               <div className="form-group">
                 <button
-                  disabled={isLoading}
+                  disabled={isLoading || getting}
                   type="submit"
                   className="border-1 btn_main w-100"
                 >
-                  {isLoading
+                  {isLoading || getting
                     ? "লগইন হচ্ছে ..."
                     : loginConfig[loginType].buttonText}
                 </button>

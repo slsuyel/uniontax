@@ -79,7 +79,7 @@ const SonodManagement = () => {
               onClick={handleSearch}
               type="primary"
               htmlType="submit"
-              className="btn_main border-1 py-3"
+              className=" border-1 py-3"
             >
               {isFetching ? "অপেক্ষা করুন" : "খুঁজুন"}
             </Button>
@@ -187,15 +187,18 @@ const SonodManagement = () => {
                       <td>{item.applicant_father_name}</td>
                       <td>{item.applicant_present_word_number}</td>
                       <td>{new Date(item.created_at).toLocaleString()}</td>
-                      <td
-                        className={` fs-6 text-white ${
-                          item.payment_status === "Paid"
-                            ? "bg-success"
-                            : "bg-danger"
-                        }`}
-                      >
-                        {item.payment_status}
-                      </td>{" "}
+                      <td>
+                        <span
+                          className={`d-block font-monospace fs-6 p-1 rounded text-white ${
+                            item.payment_status === "Paid"
+                              ? "bg-success"
+                              : "bg-danger"
+                          }`}
+                        >
+                          {" "}
+                          {item.payment_status}
+                        </span>
+                      </td>
                       {condition === "approved" && (
                         <td>
                           <Link

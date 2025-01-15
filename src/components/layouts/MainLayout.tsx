@@ -51,8 +51,6 @@
 //     return <Loader />;
 //   }
 
-
-
 //   return (
 //     <ScrollToTop>
 //       <TopHeader />
@@ -78,18 +76,21 @@ import { useUnionInfoQuery } from "@/redux/api/user/userApi";
 import Loader from "../reusable/Loader";
 
 import { setUnionData } from "@/redux/features/union/unionSlice";
-import { useAppDispatch } from "@/redux/features/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const MainLayout = () => {
   const token = localStorage.getItem("token");
   const dispatch = useAppDispatch();
   const [unionName, setUnionName] = useState("uniontax");
-  const [defaultColor, setDefaultColor] = useState("green"); 
+  const [defaultColor, setDefaultColor] = useState("green");
   const navigate = useNavigate();
+
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { data, isLoading } = useUnionInfoQuery(
     { unionName, token },
     {
-      skip: !unionName,
+      skip: !unionName || !!unionInfo,
     }
   );
 
@@ -129,8 +130,8 @@ const MainLayout = () => {
 
   return (
     <ScrollToTop>
-      <TopHeader  />
-      <Header  />
+      <TopHeader />
+      <Header />
       <Outlet />
       <Footer />
       <GoToTop />
