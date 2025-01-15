@@ -247,7 +247,7 @@ const EnglishFormValueModal = ({
               ফি হল{" "}
               {service == "ট্রেড লাইসেন্স"
                 ? fees +
-                  Number(data?.last_years_money || 0) +
+                  Number(bn?.last_years_money) +
                   // Number(sonod?.sonod_fees) +
                   Number(sonod?.sonod_fees) * 1.15
                 : fees * 2}{" "}

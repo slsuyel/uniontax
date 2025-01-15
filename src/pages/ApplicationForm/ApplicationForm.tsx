@@ -98,6 +98,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           ut_mother_name: user?.ut_mother_name,
           ut_grame: user?.ut_grame,
           ut_post: user?.ut_post,
+          last_years_money: user?.last_years_money ?? 0,
           ut_thana: user?.ut_thana,
           ut_district: user?.ut_district,
           ut_word: user?.ut_word,
