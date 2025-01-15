@@ -169,7 +169,7 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
             style={{
               fontWeight: "bold",
               fontSize: "20px",
-              background: "rgb(21, 149, 19)",
+             
               textAlign: "center",
               color: "white",
             }}

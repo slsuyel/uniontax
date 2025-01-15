@@ -174,7 +174,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           style={{
             fontWeight: "bold",
             fontSize: "20px",
-           
+
             textAlign: "center",
             color: "white",
           }}
