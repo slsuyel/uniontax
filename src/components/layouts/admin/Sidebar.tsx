@@ -129,7 +129,7 @@ const Sidebar = () => {
           alignItems: "center",
         }}
       >
-        {/* <img src={mainLogo} alt="" width={160} /> */}
+        {/* <img loading="lazy" src={mainLogo} alt="" width={160} /> */}
         <h5 className=" fw-semibold text-white mb-0">
           {user?.dashboard_title}
         </h5>

@@ -40,7 +40,7 @@ const ServiceBox = () => {
         >
           <div className="serviceBox py-2">
             <div className="serviceLogo">
-              <img src={icon2} alt="" width={60} />
+              <img loading="lazy" src={icon2} alt="" width={60} />
             </div>
             <div className="serviceTitle defaltTextColor mt-2">
               <h6> {service.bnname.slice(0, 20)}</h6>

@@ -90,7 +90,7 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img src="/bangladesh-govt.png" alt="" width={50} />{" "}
+                  <img loading="lazy" src="/bangladesh-govt.png" alt="" width={50} />{" "}
                   <span style={{ padding: "0px 15px" }}>
                     <b> ব্যবস্থাপনা ও তত্ত্বাবধানে:</b> <br /> জেলা প্রশাসন,
                     পঞ্চগড়।
@@ -107,7 +107,7 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img src={sos} alt="" width={40} />{" "}
+                  <img loading="lazy" src={sos} alt="" width={40} />{" "}
                   <span style={{ padding: "0px 15px" }}>
                     <b> কারিগরি সহায়তায়:</b> <br />{" "}
                     <a
@@ -127,7 +127,7 @@ const Footer = () => {
         <div className="footerpayment row">
           <div className="col-md-2" />{" "}
           <div className="col-md-8">
-            <img src={ekpay} width="100%" alt="" />
+            <img loading="lazy" src={ekpay} width="100%" alt="" />
           </div>{" "}
           <div className="col-md-2" />
         </div>

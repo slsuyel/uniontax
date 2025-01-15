@@ -1,9 +1,7 @@
 import { Carousel } from "antd";
-
-const images = [
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Government_of_Bangladesh_Logo_%28unofficial_and_fictional_logo%29.png/1029px-Government_of_Bangladesh_Logo_%28unofficial_and_fictional_logo%29.png",
-  "https://t4.ftcdn.net/jpg/03/21/70/45/360_F_321704592_azoD811yWmGtGixdjW2koEM1i4ZSksyA.jpg",
-];
+import flag from "/images/bd-flag.webp";
+import bd from "/images/bd-logo.webp";
+const images = [bd, flag];
 
 const HeroSlider = () => {
   return (
@@ -11,6 +9,7 @@ const HeroSlider = () => {
       {images.map((imageUrl, index) => (
         <div key={index}>
           <img
+            loading="lazy"
             src={imageUrl}
             alt=""
             className="w-100 hero_slider_img object-fit-cover"
