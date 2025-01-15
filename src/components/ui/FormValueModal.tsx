@@ -92,7 +92,7 @@ const FormValueModal = ({
       });
     }
   };
-
+  // console.log(data?.last_years_money);
   return (
     <Modal
       width={800}
@@ -307,16 +307,16 @@ const FormValueModal = ({
               {from !== "dashboard" && (
                 <div className="text-center col-md-7 mx-auto">
                   <h3>
-                    আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন । {service}{" "}
+                    আপনার আবেদনটি সফল করার জন্য সনদের ফি প্রদান করুন। {service}{" "}
                     এর ফি{" "}
                     {service === "ট্রেড লাইসেন্স"
                       ? tradeFee
                         ? Number(tradeFee) +
-                          Number(sonod?.sonod_fees) * 1.15 +
-                          Number(data?.last_years_money)
+                          Number(Number(sonod?.sonod_fees) * 1.15) +
+                          Number(data?.last_years_money || 0)
                         : Number(sonod?.sonod_fees)
-                      : sonod?.sonod_fees}{" "}
-                    টাকা ।
+                      : sonod?.sonod_fees}{" "}টাকা ।
+           
                   </h3>
                   <button
                     disabled={isLoading}

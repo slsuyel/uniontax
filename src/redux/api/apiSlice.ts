@@ -17,6 +17,7 @@ const apiSlice = createApi({
     "sonod-fee",
     "holding_pay",
     "check-nid",
+    "sonod-apply",
   ],
 });
 

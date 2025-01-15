@@ -118,7 +118,7 @@ export interface TApplicantData {
 
   successor_list: any;
   khat: string;
-  last_years_money: string | undefined;
+  last_years_money: number;
   currently_paid_money: string | undefined;
   total_amount: string | null;
   amount_deails: string | null;

@@ -84,7 +84,7 @@ const MainLayout = () => {
   const token = localStorage.getItem("token");
   const dispatch = useAppDispatch();
   const [unionName, setUnionName] = useState("uniontax");
-  const [defaultColor, setDefaultColor] = useState("green"); // Default fallback color
+  const [defaultColor, setDefaultColor] = useState("green"); 
   const navigate = useNavigate();
   const { data, isLoading } = useUnionInfoQuery(
     { unionName, token },

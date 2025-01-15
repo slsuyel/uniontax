@@ -2,7 +2,7 @@
 
 import { useAppDispatch } from "@/redux/features/hooks";
 import { setTradeFee } from "@/redux/features/union/unionSlice";
-import { Form, Input, Select } from "antd";
+import { Form, Input, InputNumber, Select } from "antd";
 import { useState } from "react";
 const { Option } = Select;
 export interface TTradeKhat {
@@ -176,7 +176,7 @@ const TradeLicenseForm = ({
 
       <div className="col-md-4">
         <Form.Item label="বকেয়া" name="last_years_money">
-          <Input style={{ height: 40, width: "100%" }} />
+          <InputNumber min={0} style={{ height: 40, width: "100%" }} />
         </Form.Item>
       </div>
       <div className="col-md-4">
