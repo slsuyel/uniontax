@@ -32,8 +32,8 @@ const SonodActionBtn = ({
 
   const [view, setView] = useState(false);
   const [viewEn, setViewEn] = useState(false);
-  const [textareaValue, setTextareaValue] = useState("");
-  const [textareaValueEn, setTextareaValueEn] = useState("");
+  const [textareaValue, setTextareaValue] = useState(item?.prottoyon);
+  const [textareaValueEn, setTextareaValueEn] = useState(item?.english_prottoyon);
 
   const handleView = () => {
     setView(true);
@@ -237,7 +237,7 @@ const handleCancelSonod = ()=>{
               <Input.TextArea
                 rows={8}
                 cols={40}
-                value={textareaValue}
+                value={textareaValue  || ""}
                 onChange={(e) => setTextareaValue(e.target.value)}
                 placeholder="Enter text here..."
                 style={{ width: "100%" }}
@@ -256,7 +256,7 @@ const handleCancelSonod = ()=>{
                 <Input.TextArea
                   rows={8}
                   cols={40}
-                  value={textareaValueEn}
+                  value={textareaValueEn  || ""}
                   onChange={(e) => setTextareaValueEn(e.target.value)}
                   placeholder="Enter text here..."
                   style={{ width: "100%" }}

@@ -224,6 +224,7 @@ const HoldingTaxEdit = () => {
               <Input
                 min={1}
                 max={9}
+                maxLength={1}
                 style={{ height: 40, width: "100%" }}
               />
             </Form.Item>
@@ -364,6 +365,9 @@ const HoldingTaxEdit = () => {
             className="my-1"
             label="সাল"
             name="year"
+            rules={[
+              { required: true, message: "সাল অবশ্যই পূরণ করতে হবে" },
+            ]}
             initialValue={selectedBokeya?.year}
           >
             <Input style={{ height: 40 }} />
