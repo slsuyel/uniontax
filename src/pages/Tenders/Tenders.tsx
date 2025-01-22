@@ -61,7 +61,7 @@ const Tenders = () => {
               </td>{" "}
               <td>
                 <a
-                  href="/tenderview/8"
+                  href="#"
                   className="border-1 btn-sm btn_main fs-6 px-3 py-1 text-decoration-none"
                 >
                   দেখুন
@@ -94,7 +94,7 @@ const Tenders = () => {
               <td>1970-01-01 6:00 am</td> <td />{" "}
               <td>
                 <a
-                  href="/tenderview/5"
+                  href="#"
                   className="border-1 btn-sm btn_main fs-6 px-3 py-1 text-decoration-none"
                 >
                   দেখুন
@@ -124,7 +124,7 @@ const Tenders = () => {
               </td>{" "}
               <td>
                 <a
-                  href="/tenderview/4"
+                  href="#"
                   className="border-1 btn-sm btn_main fs-6 px-3 py-1 text-decoration-none"
                 >
                   দেখুন
@@ -154,7 +154,7 @@ const Tenders = () => {
               </td>{" "}
               <td>
                 <a
-                  href="/tenderview/3"
+                  href="#"
                   className="border-1 btn-sm btn_main fs-6 px-3 py-1 text-decoration-none"
                 >
                   দেখুন
@@ -183,7 +183,7 @@ const Tenders = () => {
               </td>{" "}
               <td>
                 <a
-                  href="/tenderview/2"
+                  href="#"
                   className="border-1 btn-sm btn_main fs-6 px-3 py-1 text-decoration-none"
                 >
                   দেখুন
@@ -194,7 +194,7 @@ const Tenders = () => {
               <td>2023-07-05 7:23 pm</td> <td>testtesttesttesttesttest</td>{" "}
               <td>
                 <a
-                  href="/tenderview/1"
+                  href="#"
                   className="border-1 btn-sm btn_main fs-6 px-3 py-1 text-decoration-none"
                 >
                   দেখুন

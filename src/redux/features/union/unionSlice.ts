@@ -1,49 +1,3 @@
-// // src/redux/slices/unionSlice.ts
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { TSonod, TUnionInfo } from "@/types/global";
-
-
-// interface UnionState {
-//   unionInfo: TUnionInfo | null;
-//   sonodList: TSonod[] | [];
-//   tradeFee: string | null;
-// }
-
-// const initialState: UnionState = {
-//   unionInfo: null,
-//   sonodList: [],
-//   tradeFee: null,
-// };
-
-// const unionSlice = createSlice({
-//   name: "union",
-//   initialState,
-//   reducers: {
-//     setUnionData: (
-//       state,
-//       action: PayloadAction<{ unionInfo: TUnionInfo; sonodList: TSonod[] }>
-//     ) => {
-//       state.unionInfo = action.payload.unionInfo;
-//       state.sonodList = action.payload.sonodList;
-//     },
-//     clearUnionData: (state) => {
-//       state.unionInfo = null;
-//       state.sonodList = [];
-//       state.tradeFee = null;
-//     },
-//     setTradeFee: (state, action: PayloadAction<string>) => {
-//       state.tradeFee = action.payload;
-//     },
-//     clearTradeFee: (state) => {
-//       state.tradeFee = null;
-//     },
-//   },
-// });
-
-// export const { setUnionData, clearUnionData, setTradeFee, clearTradeFee } =
-//   unionSlice.actions;
-
-// export default unionSlice.reducer;
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TSonod, TUnionInfo } from "@/types/global";
 
@@ -81,7 +35,9 @@ const unionSlice = createSlice({
     clearTradeFee: (state) => {
       state.tradeFee = null;
     },
-    // New reducer to update pendingCount
+    clearSonodList: (state) => {
+      state.sonodList = [];
+    },
     updatePendingCount: (
       state,
       action: PayloadAction<{ id: number; pendingCount: number }>
@@ -100,7 +56,8 @@ export const {
   clearUnionData,
   setTradeFee,
   clearTradeFee,
-  updatePendingCount, // Export the new action
+  clearSonodList,
+  updatePendingCount,
 } = unionSlice.actions;
 
 export default unionSlice.reducer;

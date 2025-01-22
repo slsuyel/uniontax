@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { clearSonodList } from "@/redux/features/union/unionSlice";
 import { setUser } from "@/redux/features/user/userSlice";
 import { HomeOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, message } from "antd";
@@ -40,6 +41,7 @@ const Navbar = () => {
     localStorage.removeItem("token");
     navigate("/");
     dispatch(setUser(null));
+    dispatch(clearSonodList());
     message.success("Logout successfully");
   }
   function handleProfileClick() {

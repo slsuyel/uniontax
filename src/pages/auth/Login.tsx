@@ -46,14 +46,16 @@ const Login = () => {
       setRememberMe(true);
     }
   }, []);
-
+  console.log(user);
   useEffect(() => {
     if (user) {
       if (user.position === "Secretary" || user.position === "Chairman") {
         navigate("/dashboard");
-      } else {
+      } else if (user.position === "uddokta") {
         navigate("/uddokta");
       }
+    } else {
+      navigate("/login");
     }
   }, [user, navigate]);
 
