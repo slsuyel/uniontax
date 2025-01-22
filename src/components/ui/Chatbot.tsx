@@ -38,6 +38,11 @@ const predefinedQuestions: QAPair[] = [
       "ফি অনলাইনে বিকাশ, নগদ বা অন্যান্য ডিজিটাল পেমেন্ট সিস্টেমের মাধ্যমে পরিশোধ করা যায়। ফি পরিশোধের পর সেবাগ্রহীতা একটি প্রাপ্তি স্বীকারপত্র এবং রসিদ পাবেন।",
   },
   {
+    question: "সাপোর্টে কিভাবে যোগাযোগ করব?",
+    answer:
+      "আপনি আমাদের <a href='/contact' target='_blank'>যোগাযোগ পৃষ্ঠা</a> ভিজিট করে বা <a href='mailto:support@uniontax.gov.bd'>support@uniontax.gov.bd</a> ইমেইল করে আমাদের সাপোর্ট টিমের সাথে যোগাযোগ করতে পারেন। ",
+  },
+  {
     question: "ক্যাশলেস ইউপি সেবা সিস্টেমে আবেদন করার প্রক্রিয়া কী?",
     answer:
       "www.uniontax.gov.bd ওয়েবসাইটে গিয়ে বিভাগ, জেলা, উপজেলা এবং ইউনিয়ন নির্বাচন করুন। এরপর কাঙ্খিত সেবা নির্বাচন করে প্রয়োজনীয় তথ্য দিয়ে আবেদন করুন এবং অনলাইনে ফি পরিশোধ করুন।",
@@ -442,7 +447,7 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="position-fixed bottom-0 end-0 m-3 z-3">
+    <div className="position-fixed bottom-0 end-0 m-3 " style={{ zIndex: 999 }}>
       {!isOpen && (
         <Button
           type="primary"
@@ -452,7 +457,11 @@ export default function Chatbot() {
           onClick={() => setIsOpen(true)}
           className="shadow"
           aria-label="Open chat"
-          style={{ width: "56px", height: "56px" }}
+          style={{
+            width: "56px",
+            height: "56px",
+            zIndex: 100,
+          }}
         />
       )}
       {isOpen && (
@@ -470,8 +479,9 @@ export default function Chatbot() {
             width: "95%",
             maxWidth: 450,
             minWidth: 300,
+            zIndex: 999,
           }}
-          className="shadow w-100"
+          className="shadow w-100 "
         >
           <div
             ref={chatBoxRef}
