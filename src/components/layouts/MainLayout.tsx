@@ -78,6 +78,7 @@ import Loader from "../reusable/Loader";
 import { setUnionData } from "@/redux/features/union/unionSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import Chatbot from "../ui/Chatbot";
 
 const MainLayout = () => {
   const token = localStorage.getItem("token");
@@ -134,6 +135,7 @@ const MainLayout = () => {
       <Header />
       <Outlet />
       <Footer />
+      <Chatbot />
       <GoToTop />
     </ScrollToTop>
   );
