@@ -143,7 +143,7 @@ const PaymentFailed = () => {
           </div>
           <div className="form-group col-md-3 my-1">
             <button
-              className="btn_main"
+              className=" btn btn-info"
               onClick={handleSearch}
               disabled={!selectedDate || !selectedService}
             >

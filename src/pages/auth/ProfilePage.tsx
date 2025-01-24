@@ -24,9 +24,11 @@ const ProfilePage: React.FC = () => {
       if (res.status_code === 200 && !res.isError) {
         message.success("পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছে।");
       } else {
-        message.error(
-          res.error || "An error occurred while updating the password."
-        );
+        const errorMessage =
+          res.data?.message ||
+          res.error?.message ||
+          "An error occurred while updating the password.";
+        message.error(errorMessage);
       }
     } catch (error) {
       message.error("An unexpected error occurred. Please try again.");
@@ -34,9 +36,9 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container card p-4">
       <Breadcrumbs current="প্রোফাইল" />
-      <div className="card p-2">
+      <div className="">
         <Tabs defaultActiveKey="1">
           {/* প্রোফাইল আপডেট ট্যাব */}
           <TabPane tab="প্রোফাইল আপডেট" key="1">
