@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-const AttachmentForm = () => {
+const AttachmentForm = ({
+  setFrontFile,
+  setBackFile,
+  setBirthCertificateFile,
+}: any) => {
   const [attachmentType, setAttachmentType] = useState("national_id");
   const [frontPreview, setFrontPreview] = useState<string | null>(null);
   const [backPreview, setBackPreview] = useState<string | null>(null);
@@ -20,12 +25,11 @@ const AttachmentForm = () => {
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setPreview: React.Dispatch<React.SetStateAction<string | null>>
+    setFile: React.Dispatch<React.SetStateAction<File | null>>
   ) => {
     const file = event.target.files?.[0];
     if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setPreview(previewUrl);
+      setFile(file);
     }
   };
 
@@ -58,17 +62,11 @@ const AttachmentForm = () => {
             <Form.Item
               name="applicant_national_id_front_attachment"
               label="Upload National ID Front"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: "Please upload the front side of your ID",
-              //   },
-              // ]}
             >
               <div>
                 <Input
                   type="file"
-                  onChange={(e) => handleFileChange(e, setFrontPreview)}
+                  onChange={(e) => handleFileChange(e, setFrontFile)}
                 />
                 {frontPreview && (
                   <img
@@ -89,7 +87,7 @@ const AttachmentForm = () => {
               <div>
                 <Input
                   type="file"
-                  onChange={(e) => handleFileChange(e, setBackPreview)}
+                  onChange={(e) => handleFileChange(e, setBackFile)}
                 />
                 {backPreview && (
                   <img
@@ -120,9 +118,7 @@ const AttachmentForm = () => {
               <div>
                 <Input
                   type="file"
-                  onChange={(e) =>
-                    handleFileChange(e, setBirthCertificatePreview)
-                  }
+                  onChange={(e) => handleFileChange(e, setBirthCertificateFile)}
                 />
                 {birthCertificatePreview && (
                   <img

@@ -2,7 +2,7 @@
 
 import { Form, Button, message /* Modal */ } from "antd";
 import addressFields from "./addressFields";
-// import attachmentForm from "./attachmentForm";
+import attachmentForm from "./attachmentForm";
 
 import { useEffect, useState } from "react";
 import TradeLicenseForm from "./tradeLicenseForm";
@@ -22,6 +22,14 @@ import { useSonodUpdateMutation } from "@/redux/api/sonod/sonodApi";
 import InheritanceList from "./inheritanceList";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
+  /* ```````````` */
+
+  const [frontFile, setFrontFile] = useState<File | null>(null);
+  const [backFile, setBackFile] = useState<File | null>(null);
+  const [birthCertificateFile, setBirthCertificateFile] = useState<File | null>(
+    null
+  );
+  /* ```````````` */
   const { id } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem(`token`);
@@ -40,10 +48,9 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const location = useLocation();
   const pathname = location.pathname;
   const isDashboard = pathname.includes("dashboard");
-  // const [inherList, setInherList] = useState(1);
+
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-  // const navigate = useNavigate()
 
   useEffect(() => {
     if (isDashboard && user?.sonod_name) {
@@ -54,8 +61,18 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   }, [isDashboard, user?.sonod_name, service]);
 
   const handleSubmitForm = async (values: any) => {
+    const files = {
+      frontFile,
+      backFile,
+      birthCertificateFile,
+    };
+
+    const updatedData = { ...values, ...files };
+
+    // console.log(updatedData);
+    // return;
     try {
-      setUserData(values);
+      setUserData(updatedData);
       if (isDashboard) {
         const res = await updateSonod({ data: values, id, token }).unwrap();
         if (res.status_code === 200) {
@@ -200,7 +217,11 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             {conditionalForm(sonodName)}
           </div>
           {addressFields({ form })}
-          {/* {attachmentForm()} */}
+          {attachmentForm({
+            setFrontFile,
+            setBackFile,
+            setBirthCertificateFile,
+          })}
 
           {sonodName === "ওয়ারিশান সনদ" && <InheritanceList />}
 

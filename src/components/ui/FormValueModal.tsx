@@ -51,16 +51,23 @@ const FormValueModal = ({
       f_uri: window.origin + "/payment-failed",
       c_uri: window.origin + "/payment-cancel",
     };
-
     const updatedData = { ...data, ...additionalData };
 
-    try {
-      // Send the data in the required format with token in headers
-      const response = await sonodApply({ bn: updatedData, token }).unwrap();
-      console.log(response);
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append("bn", JSON.stringify(updatedData)); // append additional data as JSON string
+    formData.append("applicant_national_id_front_attachment", data?.frontFile);
+    formData.append("applicant_national_id_back_attachment", data?.backFile);
+    formData.append(
+      "applicant_birth_certificate_attachment",
+      data?.birthCertificateFile
+    );
 
+    try {
+      const response = await sonodApply({ formData, token }).unwrap();
+      // return;
       if (response.status_code === 200) {
-        message.success("You are redirect to payment gateway");
+        message.success("You are redirecting to the payment gateway");
         window.location.href = response.data.redirect_url;
       }
     } catch (error) {
@@ -315,8 +322,8 @@ const FormValueModal = ({
                           Number(Number(sonod?.sonod_fees) * 1.15) +
                           Number(data?.last_years_money || 0)
                         : Number(sonod?.sonod_fees)
-                      : sonod?.sonod_fees}{" "}টাকা ।
-           
+                      : sonod?.sonod_fees}{" "}
+                    টাকা ।
                   </h3>
                   <button
                     disabled={isLoading}
