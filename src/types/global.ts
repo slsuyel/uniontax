@@ -126,7 +126,7 @@ export interface TApplicantData {
 
   applicant_phone: string | null;
 
-  applicant_birth_certificate_attachment: string | null;
+  applicant_birth_certificate_attachment?: any;
   prottoyon: string | null;
   sec_prottoyon: string | null;
   stutus: string;
