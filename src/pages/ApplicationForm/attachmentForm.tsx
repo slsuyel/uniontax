@@ -204,7 +204,7 @@ const AttachmentForm = ({
           <div className="col-md-4">
             <Form.Item
               name="applicant_national_id_front_attachment"
-              label="Upload National ID Front"
+              label="সামনের পাতা (জাতীয় পরিচয়পত্র)"
             >
               <div>
                 <Input

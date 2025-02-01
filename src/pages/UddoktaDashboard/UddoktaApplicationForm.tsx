@@ -11,7 +11,7 @@ import conditionalForm from "../ApplicationForm/conditionalForm";
 import commonFields from "../ApplicationForm/commonFields";
 import InheritanceForm from "../ApplicationForm/inheritanceForm";
 import addressFields from "../ApplicationForm/addressFields";
-import attachmentForm from "../ApplicationForm/attachmentForm";
+// import attachmentForm from "../ApplicationForm/attachmentForm";
 import TradeLicenseForm from "../ApplicationForm/tradeLicenseForm";
 import DatePicker from "react-datepicker";
 import { TApplicantData, TPersonalInformation } from "@/types/global";
@@ -240,7 +240,7 @@ const UddoktaApplicationForm = () => {
           style={{
             fontWeight: "bold",
             fontSize: "20px",
-         
+
             textAlign: "center",
             color: "white",
           }}
@@ -259,12 +259,12 @@ const UddoktaApplicationForm = () => {
             </div>
             {commonFields()}
             {service === "ট্রেড লাইসেন্স" && (
-              <TradeLicenseForm data={data} isLoading={isLoading} form={form}/>
+              <TradeLicenseForm data={data} isLoading={isLoading} form={form} />
             )}
             {conditionalForm(service)}
           </div>
           {addressFields({ form })}
-          {attachmentForm()}
+          {/* {attachmentForm()} */}
 
           {service === "ওয়ারিশান সনদ" &&
             inheritanceList(inherList, setInherList)}
