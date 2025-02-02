@@ -75,7 +75,11 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
       setUserData(updatedData);
       if (isDashboard) {
         const formData = new FormData();
-        formData.append("bn", JSON.stringify(values));
+        Object.entries(values).forEach(([key, value]) => {
+          if (typeof value === "string") {
+            formData.append(key, value);
+          }
+        });
         if (frontFile)
           formData.append("applicant_national_id_front_attachment", frontFile);
         if (backFile)
@@ -85,10 +89,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             "applicant_birth_certificate_attachment",
             birthCertificateFile
           );
-
-        const res = await updateSonod({ data: formData, id, token }).unwrap();
-        // console.log(res);
-        // return;
+        const res = await updateSonod({ formData, id, token }).unwrap();
         if (res.status_code === 200) {
           navigate(-1);
           message.success("সনদটি সফলভাবে আপডেট করা হয়েছে।");
@@ -206,7 +207,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           style={{
             fontWeight: "bold",
             fontSize: "20px",
-
+            background: "green",
             textAlign: "center",
             color: "white",
           }}

@@ -16,10 +16,11 @@ const sonodApi = apiSlice.injectEndpoints({
     }),
 
     sonodUpdate: builder.mutation({
-      query: ({ id, data, token }) => ({
+      query: ({ id, formData, token }) => ({
         url: `/user/sonod/update/${id}`,
         method: "POST",
-        body: data,
+        body: formData,
+        formData: true,
         headers: {
           authorization: `Bearer ${token}`,
         },

@@ -209,6 +209,7 @@ const AttachmentForm = ({
               <div>
                 <Input
                   type="file"
+                  accept="image/*"
                   onChange={(e) =>
                     handleFileChange(e, setFrontFile, setFrontPreview)
                   }
@@ -231,6 +232,7 @@ const AttachmentForm = ({
             >
               <div>
                 <Input
+                  accept="image/*"
                   type="file"
                   onChange={(e) =>
                     handleFileChange(e, setBackFile, setBackPreview)
@@ -265,6 +267,7 @@ const AttachmentForm = ({
               <div>
                 <Input
                   type="file"
+                  accept="image/*"
                   onChange={(e) =>
                     handleFileChange(
                       e,
