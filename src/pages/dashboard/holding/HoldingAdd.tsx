@@ -32,11 +32,8 @@ const HoldingAdd = () => {
   };
 
   const onFinish = async (values: any) => {
-    console.log("Form Submitted:", values);
     try {
       const res = await addHolding({ data: values, token }).unwrap();
-      console.log(res);
-
       if (res.status_code === 201) {
         message.success("Holding created successfully");
         form.resetFields();
@@ -50,8 +47,8 @@ const HoldingAdd = () => {
         );
       }
     } catch (error) {
-      console.error("Error creating holding:", error); // Log the full error for debugging
-      message.error(`Failed to create holding`); // Show detailed error message
+      console.error("Error creating holding:", error);
+      message.error(`Failed to create holding`);
     }
   };
 
@@ -189,7 +186,7 @@ const HoldingAdd = () => {
                 <Select.Option value="মালিক নিজে বসবাসকারী">
                   মালিক নিজে বসবাসকারী
                 </Select.Option>
-                <Select.Option value="প্রতিষ্ঠান (সরকারি/আধা সরকারি/বেসরকারি/বাণিজ্যিক)">
+                <Select.Option value="প্রতিষ্ঠান">
                   প্রতিষ্ঠান (সরকারি/আধা সরকারি/বেসরকারি/বাণিজ্যিক)
                 </Select.Option>
               </Select>
@@ -381,7 +378,7 @@ const HoldingAdd = () => {
                       name={[name, "price"]}
                       style={{ width: "100%" }}
                     >
-                      <Input
+                      <InputNumber
                         placeholder="Price"
                         style={{ width: "100%", height: 40 }}
                       />
