@@ -5,7 +5,7 @@ import apiSlice from "../apiSlice";
 const sonodApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     allSonod: builder.query({
-      query: ({ sonodName, stutus, token, sondId,page = 1 }) => ({
+      query: ({ sonodName, stutus, token, sondId, page = 1 }) => ({
         url: `/user/sonod/list?sonod_name=${sonodName}&page=${page}&stutus=${stutus}${
           sondId ? `&sondId=${sondId}` : ""
         }`,
@@ -18,7 +18,7 @@ const sonodApi = apiSlice.injectEndpoints({
     sonodUpdate: builder.mutation({
       query: ({ id, data, token }) => ({
         url: `/user/sonod/update/${id}`,
-        method: "PUT",
+        method: "POST",
         body: data,
         headers: {
           authorization: `Bearer ${token}`,
@@ -112,7 +112,7 @@ const sonodApi = apiSlice.injectEndpoints({
       invalidatesTags: ["holding-create-update"],
     }),
     updateHolding: builder.mutation({
-      query: ({ data, token,id }) => ({
+      query: ({ data, token, id }) => ({
         url: `/user/holdingtax/${id}`,
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
@@ -126,20 +126,33 @@ const sonodApi = apiSlice.injectEndpoints({
         url: `/user/holding-bokeya/${id}/update-price`,
         method: "Put",
         headers: { Authorization: `Bearer ${token}` },
-        body: {price},
+        body: { price },
       }),
       invalidatesTags: ["holding-create-update"],
     }),
 
     sonodAction: builder.mutation({
-      query: ({ id, token, sec_prottoyon, sec_prottoyon_en }) => ({
-        url: `/user/sonod/action/${id}`,
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: { sec_prottoyon, sec_prottoyon_en },
-      }),
+      query: ({
+        id,
+        token,
+        sec_prottoyon,
+        sec_prottoyon_en,
+        cancel_reason,
+        cancel,
+      }) => {
+        const queryParams = cancel ? `?action=${cancel}` : "";
+        return {
+          url: `/user/sonod/action/${id}${queryParams}`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: { sec_prottoyon, sec_prottoyon_en, cancel_reason },
+        };
+      },
       invalidatesTags: ["sonod-action"],
     }),
+
     nidCheck: builder.mutation({
       query: ({ token, data }) => ({
         url: `/auth/uddokta/citizen/information/nid`,
@@ -167,5 +180,5 @@ export const {
   useSingleHoldingPublicQuery,
   useNidCheckMutation,
   useHoldingBokeyaUpdateMutation,
-  useUpdateHoldingMutation
+  useUpdateHoldingMutation,
 } = sonodApi;

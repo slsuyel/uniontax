@@ -74,7 +74,21 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     try {
       setUserData(updatedData);
       if (isDashboard) {
-        const res = await updateSonod({ data: values, id, token }).unwrap();
+        const formData = new FormData();
+        formData.append("bn", JSON.stringify(values));
+        if (frontFile)
+          formData.append("applicant_national_id_front_attachment", frontFile);
+        if (backFile)
+          formData.append("applicant_national_id_back_attachment", backFile);
+        if (birthCertificateFile)
+          formData.append(
+            "applicant_birth_certificate_attachment",
+            birthCertificateFile
+          );
+
+        const res = await updateSonod({ data: formData, id, token }).unwrap();
+        // console.log(res);
+        // return;
         if (res.status_code === 200) {
           navigate(-1);
           message.success("সনদটি সফলভাবে আপডেট করা হয়েছে।");

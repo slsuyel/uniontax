@@ -7,6 +7,7 @@ import SingleSonodViewModal from "@/pages/dashboard/SonodManagement/SingleSonodV
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { updatePendingCount } from "@/redux/features/union/unionSlice";
+import SonodCancelModal from "../ui/SonodCancelModal";
 
 interface SonodActionBtnProps {
   sonodName: string | undefined;
@@ -21,9 +22,6 @@ const SonodActionBtn = ({
 }: SonodActionBtnProps) => {
   const dispatch = useAppDispatch();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-  // const handleUpdatePendingCount = (id: number, newPendingCount: number) => {
-  //   dispatch(updatePendingCount({ id, pendingCount: newPendingCount }));
-  // };
 
   const user = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
@@ -32,8 +30,12 @@ const SonodActionBtn = ({
 
   const [view, setView] = useState(false);
   const [viewEn, setViewEn] = useState(false);
+  const [sonodCancelModal, setSonodCancelModal] = useState<boolean>(false);
   const [textareaValue, setTextareaValue] = useState(item?.prottoyon);
-  const [textareaValueEn, setTextareaValueEn] = useState(item?.english_prottoyon);
+
+  const [textareaValueEn, setTextareaValueEn] = useState(
+    item?.english_prottoyon
+  );
 
   const handleView = () => {
     setView(true);
@@ -107,9 +109,11 @@ const SonodActionBtn = ({
     }
   };
 
-const handleCancelSonod = ()=>{
-  console.log(item.id)
-}
+  const handleCancelSonod = () => {
+    setSonodCancelModal(true);
+  };
+
+  console.log(user?.position == "position");
 
   const menu = (
     <Menu>
@@ -158,6 +162,16 @@ const handleCancelSonod = ()=>{
         </Menu.Item>
       )}
 
+      {user?.position == "Secretary" && (
+        <Menu.Item
+          className="border text-success border-warning my-1"
+          key="approve"
+          onClick={handleApproved}
+        >
+          {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
+        </Menu.Item>
+      )}
+
       {condition !== "cancel" && condition !== "approved" && (
         <Menu.Item
           className="border text-success border-warning my-1"
@@ -178,7 +192,7 @@ const handleCancelSonod = ()=>{
       </Menu.Item>
       {condition === "Pending" && (
         <Menu.Item className="border my-1 border-danger" key="cancel">
-          <button onClick={handleCancelSonod} className="border-0" >
+          <button onClick={handleCancelSonod} className="border-0">
             বাতিল করুন
           </button>
         </Menu.Item>
@@ -189,6 +203,16 @@ const handleCancelSonod = ()=>{
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap gap-2">
+        {user?.position == "Secretary" && (
+          <button
+            className="border border-warning btn btn-sm btn-success"
+            key="approve"
+            onClick={handleApproved}
+          >
+            {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
+          </button>
+        )}
+
         {condition !== "cancel" && condition !== "approved" && (
           <button
             className="border border-warning btn btn-sm btn-success"
@@ -237,7 +261,7 @@ const handleCancelSonod = ()=>{
               <Input.TextArea
                 rows={8}
                 cols={40}
-                value={textareaValue  || ""}
+                value={textareaValue || ""}
                 onChange={(e) => setTextareaValue(e.target.value)}
                 placeholder="Enter text here..."
                 style={{ width: "100%" }}
@@ -256,7 +280,7 @@ const handleCancelSonod = ()=>{
                 <Input.TextArea
                   rows={8}
                   cols={40}
-                  value={textareaValueEn  || ""}
+                  value={textareaValueEn || ""}
                   onChange={(e) => setTextareaValueEn(e.target.value)}
                   placeholder="Enter text here..."
                   style={{ width: "100%" }}
@@ -266,6 +290,14 @@ const handleCancelSonod = ()=>{
           )}
         </Modal>
       }
+
+      {sonodCancelModal && (
+        <SonodCancelModal
+          item={item}
+          setSonodCancelModal={setSonodCancelModal}
+          sonodCancelModal={sonodCancelModal}
+        />
+      )}
     </>
   );
 };
