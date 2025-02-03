@@ -349,3 +349,117 @@ export interface TPersonalInformation {
   permanentPostCode_en: string;
   permanentThana_en: string;
 }
+
+export interface TIpnResposne {
+  data: Data;
+  isError: boolean;
+  error: null;
+  status_code: number;
+}
+
+export interface Data {
+  myserver: Myserver;
+  akpay: Akpay;
+}
+
+export interface Akpay {
+  secure_token: string;
+  msg_code: string;
+  msg_det: string;
+  req_timestamp: string;
+  basic_Info: BasicInfo;
+  cust_info: CustInfo;
+  scroll_no: null;
+  trnx_info: TrnxInfo;
+  pi_det_info: PiDetInfo;
+}
+
+export interface BasicInfo {
+  mer_reg_id: string;
+  ipn_info: string;
+  redirect_to: string;
+  dgtl_sign: string;
+  ord_desc: string;
+  remarks: null | string;
+}
+
+export interface CustInfo {
+  cust_id: string;
+  cust_name: string;
+  cust_mobo_no: string;
+  cust_email: null | string;
+  cust_mail_addr: string;
+}
+
+export interface PiDetInfo {
+  pay_timestamp: string;
+  pi_name: string;
+  pi_type: string;
+  pi_number: string;
+  pi_gateway: string;
+  card_holder_name: null | string;
+}
+
+export interface TrnxInfo {
+  trnx_amt: string;
+  trnx_id: string;
+  mer_trnx_id: string;
+  curr: string;
+  pi_trnx_id: string;
+  pi_charge: string;
+  ekpay_charge: string;
+  pi_discount: string;
+  discount: string;
+  promo_discount: string;
+  total_ser_chrg: string;
+  total_pabl_amt: string;
+}
+
+export interface Myserver {
+  id: number;
+  union: string;
+  trxId: string;
+  sonodId: string;
+  sonod_type: string;
+  amount: string;
+  applicant_mobile: null;
+  status: string;
+  payable_type: null;
+  payable_id: null;
+  coupon_id: null;
+  date: string;
+  month: string;
+  year: string;
+  paymentUrl: string;
+  ipnResponse: Akpay;
+  method: string;
+  payment_type: string;
+  balance: null;
+  hasEnData: number;
+  uddoktaId: null;
+  created_at: string;
+  updated_at: string;
+  sonods: null;
+  holding_tax: HoldingTax;
+  tax: Tax;
+}
+
+export interface HoldingTax {
+  id: number;
+  maliker_name: string;
+  gramer_name: string;
+  mobile_no: string;
+  holding_no: string;
+}
+
+export interface Tax {
+  id: number;
+  holdingTax_id: string;
+  year: string;
+  price: string;
+  payYear: string;
+  payOB: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
