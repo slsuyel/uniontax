@@ -74,12 +74,33 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     try {
       setUserData(updatedData);
       if (isDashboard) {
+        console.log(values);
+
+        // const formData = new FormData();
+        // Object.entries(values).forEach(([key, value]) => {
+        //   if (typeof value === "string") {
+        //     formData.append(key, value);
+        //   }
+        // });
+        // if (frontFile)
+        //   formData.append("applicant_national_id_front_attachment", frontFile);
+        // if (backFile)
+        //   formData.append("applicant_national_id_back_attachment", backFile);
+        // if (birthCertificateFile)
+        //   formData.append(
+        //     "applicant_birth_certificate_attachment",
+        //     birthCertificateFile
+        //   );
+        // const res = await updateSonod({ formData, id, token }).unwrap();
         const formData = new FormData();
+
         Object.entries(values).forEach(([key, value]) => {
           if (typeof value === "string") {
             formData.append(key, value);
           }
         });
+
+        // ফাইল যোগ করা
         if (frontFile)
           formData.append("applicant_national_id_front_attachment", frontFile);
         if (backFile)
@@ -89,7 +110,19 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             "applicant_birth_certificate_attachment",
             birthCertificateFile
           );
+
+        // successor_list অ্যারে থাকলে JSON আকারে পাঠানো
+        if (values.successor_list) {
+          formData.append(
+            "successor_list",
+            JSON.stringify(values.successor_list)
+          );
+        }
+
         const res = await updateSonod({ formData, id, token }).unwrap();
+
+        console.log("res---", res);
+        // return;
         if (res.status_code === 200) {
           navigate(-1);
           message.success("সনদটি সফলভাবে আপডেট করা হয়েছে।");
