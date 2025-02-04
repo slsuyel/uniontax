@@ -162,7 +162,8 @@ const SonodActionBtn = ({
         </Menu.Item>
       )}
 
-      {user?.position == "Secretary" && (
+      {(user?.position === "Secretary" && condition === "cancel") ||
+      (condition !== "cancel" && condition !== "approved") ? (
         <Menu.Item
           className="border text-success border-warning my-1"
           key="approve"
@@ -170,17 +171,8 @@ const SonodActionBtn = ({
         >
           {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
         </Menu.Item>
-      )}
+      ) : null}
 
-      {condition !== "cancel" && condition !== "approved" && (
-        <Menu.Item
-          className="border text-success border-warning my-1"
-          key="approve"
-          onClick={handleApproved}
-        >
-          {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
-        </Menu.Item>
-      )}
       <Menu.Item className="border my-1 border-success" key="invoice">
         <Link
           className="text-decoration-none"
@@ -203,7 +195,8 @@ const SonodActionBtn = ({
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap gap-2">
-        {user?.position == "Secretary" && (
+        {(user?.position === "Secretary" ||
+          (condition !== "cancel" && condition !== "approved")) && (
           <button
             className="border border-warning btn btn-sm btn-success"
             key="approve"
@@ -213,15 +206,6 @@ const SonodActionBtn = ({
           </button>
         )}
 
-        {condition !== "cancel" && condition !== "approved" && (
-          <button
-            className="border border-warning btn btn-sm btn-success"
-            key="approve"
-            onClick={handleApproved}
-          >
-            {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
-          </button>
-        )}
         <Dropdown overlay={menu} placement="bottomLeft" arrow>
           <Button type="primary">Actions</Button>
         </Dropdown>
