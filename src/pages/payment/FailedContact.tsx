@@ -11,9 +11,14 @@ const { Option } = Select;
 interface FailedContactProps {
   sonodId?: string;
   transId?: string;
+  className?: string;
 }
 
-const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
+const FailedContact: React.FC<FailedContactProps> = ({
+  sonodId,
+  transId,
+  className,
+}) => {
   const [paymentFailedTicket, { isLoading }] = usePaymentFailedTicketMutation();
   const navigate = useNavigate();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
@@ -36,6 +41,7 @@ const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
         navigate("/");
         message.success("আপনার তথ্যগুলো সফলভাবে জমা হয়েছে");
       } else {
+        console.log(res);
         message.error("তথ্য জমা করতে সমস্যা হয়েছে");
       }
     } catch (error) {
@@ -50,7 +56,7 @@ const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
         layout="vertical"
         onFinish={onFinish}
         autoComplete="off"
-        className="mx-auto col-md-6 card p-4"
+        className={`mx-auto  card p-4 ${className ? className : "col-md-6"}`}
       >
         <div className="text-center mb-4">
           <h2>পেমেন্ট ব্যর্থ হয়েছে</h2>
