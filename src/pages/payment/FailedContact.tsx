@@ -42,7 +42,9 @@ const FailedContact: React.FC<FailedContactProps> = ({
         message.success("আপনার তথ্যগুলো সফলভাবে জমা হয়েছে");
       } else {
         console.log(res);
-        message.error("তথ্য জমা করতে সমস্যা হয়েছে");
+        message.error(
+          "তথ্য জমা করতে সমস্যা হয়েছে, বা আপনার প্রদানকৃত তথ্য ভুল হতে পারে"
+        );
       }
     } catch (error) {
       console.error("Error submitting data:", error);

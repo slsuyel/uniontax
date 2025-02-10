@@ -707,8 +707,10 @@ const PaymentFailed = () => {
       </div>
 
       <Modal
+        // width={failedPage ? "w-100" : undefined}
         title="পেমেন্ট বিস্তারিত"
         open={isModalOpen}
+        className={failedPage ? "w-100" : undefined}
         onOk={handleCloseModal}
         onCancel={handleCloseModal}
         footer={[
