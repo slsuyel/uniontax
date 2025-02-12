@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input, Checkbox, Tabs, message } from "antd";
 import { useUserLoginMutation } from "@/redux/api/auth/authApi";
-import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
+import { useAppDispatch } from "@/redux/features/hooks";
+// import { RootState } from "@/redux/features/store";
 import { useGetUnionInfoMutation } from "@/redux/api/user/userApi";
 import { setUnionData } from "@/redux/features/union/unionSlice";
 
 type LoginType = "chairman" | "entrepreneur" | "secretary";
 
 const Login = () => {
-  const user = useAppSelector((state: RootState) => state.user.user);
+  // const user = useAppSelector((state: RootState) => state.user.user);
   const [userLogin, { isLoading }] = useUserLoginMutation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,18 +46,18 @@ const Login = () => {
       setRememberMe(true);
     }
   }, []);
-  console.log(user);
-  useEffect(() => {
-    if (user) {
-      if (user.position === "Secretary" || user.position === "Chairman") {
-        navigate("/dashboard");
-      } else if (user.position === "uddokta") {
-        navigate("/uddokta");
-      }
-    } else {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+  // console.log(user);
+  // useEffect(() => {
+  //   if (user) {
+  //     if (user.position === "Secretary" || user.position === "Chairman") {
+  //       navigate("/dashboard");
+  //     } else if (user.position === "uddokta") {
+  //       navigate("/uddokta");
+  //     }
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, [user, navigate]);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
