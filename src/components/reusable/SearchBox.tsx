@@ -76,13 +76,18 @@ const SearchBox: React.FC = () => {
   const handleUpazilaChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedUpazila(event.target.value);
   };
-  const handleUnionChange = (event: { target: { value: string } }) => {
-    const union = event.target.value.replace(/\s+/g, '').toLowerCase();
 
-  // console.log(union)
-    // return;
-    window.location.href = `http://${union}.uniontax.gov.bd`;
+  const baseUrl = window.origin;
+  const handleUnionChange = (event: { target: { value: string } }) => {
+    const union = event.target.value.replace(/\s+/g, "").toLowerCase();
+    if (baseUrl.includes("uniontax")) {
+      window.location.href = `http://${union}.uniontax.gov.bd`;
+    } else if (baseUrl.includes("unionservices")) {
+      window.location.href = `http://${union}.unionservices.gov.bd`;
+    }
+    else { window.location.href = `http://${union}.uniontax.gov.bd`; }
   };
+
 
   return (
     <div className="d-flex justify-content-between align-items-center">
