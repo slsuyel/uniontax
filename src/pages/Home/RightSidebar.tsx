@@ -9,24 +9,25 @@ const RightSidebar = () => {
 
   return (
     <>
-      {unionInfo && unionInfo.short_name_e !== "uniontax" ? (
-        <div className=" pt-3 col-md-3 services">
-          {" "}
+      {unionInfo &&
+      !["uniontax", "unionservices"].includes(
+        unionInfo.short_name_e as string
+      ) ? (
+        <div className="pt-3 col-md-3 services">
           <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>
-            <h4> এক নজরে {unionInfo?.short_name_b} ইউনিয়ন</h4>
-          </div>{" "}
+            <h4>এক নজরে {unionInfo.short_name_b} ইউনিয়ন</h4>
+          </div>
           <p className="sidebaruser text-center">
             <img
-              className=" object-fit-cover"
-              src="https://www.newagebd.com/files/records/news/202303/195797_133.JPG"
+              className="object-fit-cover"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"
               width="100%"
               height="100px"
               alt=""
             />
           </p>
           <div className="sidebarTitle mb-3 defaltColor">
-            <h4 className=" border-bottom t">নোটিশ</h4>
-
+            <h4 className="border-bottom t">নোটিশ</h4>
             <Marquee direction="left" className="text-white">
               ইউনিয়ন পরিষদ হল বাংলাদেশে পল্লী অঞ্চলের সর্বনিম্ন প্রশাসনিক একক।
               গ্রাম চৌকিদারি আইনের ১৮৭০ এর অধীনে ইউনিয়ন পরিষদের সৃষ্টি হয়।
@@ -37,55 +38,55 @@ const RightSidebar = () => {
           </div>
           <div className="sidebarTitle mb-3 defaltColor">
             <h4>জরুরি হটলাইন</h4>
-          </div>{" "}
+          </div>
           <div className="column block">
             <img width="100%" src={suport} alt="" />
-          </div>{" "}
+          </div>
         </div>
       ) : (
-        <div className=" pt-3 col-md-3 services">
-          <div className={`sidebarTitle mb-3 defaultColor`}>
+        <div className="pt-3 col-md-3 services">
+          <div className="sidebarTitle mb-3 defaultColor">
             <h4>উপদেষ্টা ও তত্ত্বাবধানে</h4>
-          </div>{" "}
+          </div>
           <p className="sidebaruser text-center">
             <img width="70%" alt="" src={dc} />
-          </p>{" "}
+          </p>
           <div className="contactInfo text-center">
             <span>
-              <b>জনাব মোঃ সাবেত আলী </b>
-            </span>{" "}
-            <br />{" "}
+              <b>জনাব মোঃ সাবেত আলী</b>
+            </span>
+            <br />
             <span>
               <b>জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট</b>
-            </span>{" "}
+            </span>
             <br />
-          </div>{" "}
+          </div>
           <div className="sidebarTitle mb-3 defaltColor">
             <h4>পরিকল্পনা ও বাস্তবায়নে</h4>
-          </div>{" "}
+          </div>
           <p className="sidebaruser text-center">
             <img width="70%" alt="" src={uno} />
-          </p>{" "}
+          </p>
           <div className="contactInfo text-center">
             <span>
-              <b> সোহাগ চন্দ্র সাহা</b>
-            </span>{" "}
-            <br />{" "}
+              <b>সোহাগ চন্দ্র সাহা</b>
+            </span>
+            <br />
             <span>
               সিনিয়র সহকারী সচিব (ওএসডি) <br /> জনপ্রশাসন মন্ত্রণালয়
-            </span>{" "}
-            <br />{" "}
+            </span>
+            <br />
             <span>
               <b>প্রাক্তন উপজেলা নির্বাহী অফিসার তেঁতুলিয়া</b>
-            </span>{" "}
+            </span>
             <br />
-          </div>{" "}
+          </div>
           <div className="sidebarTitle mb-3 defaltColor">
             <h4>জরুরি হটলাইন</h4>
-          </div>{" "}
+          </div>
           <div className="column block">
             <img width="100%" src={suport} alt="" />
-          </div>{" "}
+          </div>
         </div>
       )}
     </>
