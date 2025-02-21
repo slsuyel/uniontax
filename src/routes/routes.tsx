@@ -24,6 +24,7 @@ import EnglishApplicationForm from "@/pages/EnglishApplicationForm/EnglishApplic
 import UddoktaLayout from "./../components/layouts/uddokta/UddoktaLayout";
 import { uddoktaRoutes } from "./uddoktaRoutes";
 import UddoktaAuthProvider from "@/Providers/UddoktaAuthProvider";
+import SonodSearchById from "@/pages/SonodSearch/SonodSearchById";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
         path: "/sonod/search",
         element: <SonodSearch />,
       },
+      {
+        path: "/verification/sonod/:id",
+        element: <SonodSearchById />,
+      },
+
       {
         path: "/notice",
         element: <Notice />,

@@ -31,6 +31,12 @@ const userApi = apiSlice.injectEndpoints({
         method: "Post",
       }),
     }),
+    sonodSearchById: builder.query({
+      query: (id) => ({
+        url: `/sonod/search?id=${id}`,
+        method: "Get",
+      }),
+    }),
 
     createHolding: builder.mutation({
       query: ({ data }) => ({
@@ -87,4 +93,5 @@ export const {
   useRenewSonodMutation,
   useDbMetricsQuery,
   useGetUnionInfoMutation,
+  useSonodSearchByIdQuery
 } = userApi;
