@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import logo from "/main_logo.png";
+import logoUnionService from "/unionservices.png";
 import SearchBox from "../reusable/SearchBox";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 
 const TopHeader = () => {
   const unionData = useAppSelector((state: RootState) => state.union.unionInfo);
+  const baseUrl = window.origin;
 
   return (
     <>
@@ -32,7 +34,15 @@ const TopHeader = () => {
       <div className=" row mx-auto container">
         <div className="col-md-6 my-3 ps-0">
           <Link to={"/"}>
-            <img width={270} src={unionData?.web_logo || logo} alt="" />
+            <img
+              width={270}
+              src={
+                unionData?.web_logo || baseUrl.includes("unionservices")
+                  ? logoUnionService
+                  : logo
+              }
+              alt=""
+            />
           </Link>
         </div>
         <div className="col-md-6  pe-0">
