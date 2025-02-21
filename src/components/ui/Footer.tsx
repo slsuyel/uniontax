@@ -38,6 +38,7 @@ const footerLinks = [
 import sos from "../../assets/icons/sos.png";
 import ekpay from "../../assets/images/ekpay.png";
 const Footer = () => {
+  const baseUrl = window.origin;
   return (
     <>
       <div className="row mx-auto container">
@@ -90,10 +91,17 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img loading="lazy" src="/bangladesh-govt.png" alt="" width={50} />{" "}
+                  <img
+                    loading="lazy"
+                    src="/bangladesh-govt.png"
+                    alt=""
+                    width={50}
+                  />{" "}
                   <span style={{ padding: "0px 15px" }}>
-                    <b> ব্যবস্থাপনা ও তত্ত্বাবধানে:</b> <br /> জেলা প্রশাসন,
-                    পঞ্চগড়।
+                    <b> ব্যবস্থাপনা ও তত্ত্বাবধানে:</b> <br />
+                    {baseUrl.includes("unionservices")
+                      ? "বিভাগীয় কমিশনারের কার্যালয়, রংপুর"
+                      : " জেলা প্রশাসন,পঞ্চগড়। "}
                   </span>
                 </li>
               </ul>

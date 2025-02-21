@@ -1,4 +1,5 @@
 import dc from "../../assets/images/dc_anchagarh.png";
+import dlg from "../../assets/images/dlg-rangpur.jpg";
 import uno from "../../assets/images/uno-pic2.png";
 import suport from "../../assets/images/support.png";
 import { RootState } from "@/redux/features/store";
@@ -6,7 +7,7 @@ import { useAppSelector } from "@/redux/features/hooks";
 import Marquee from "react-fast-marquee";
 const RightSidebar = () => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
-
+  const baseUrl = window.origin;
   return (
     <>
       {unionInfo &&
@@ -49,15 +50,27 @@ const RightSidebar = () => {
             <h4>উপদেষ্টা ও তত্ত্বাবধানে</h4>
           </div>
           <p className="sidebaruser text-center">
-            <img width="70%" alt="" src={dc} />
+            <img
+              width="70%"
+              alt=""
+              src={baseUrl.includes("unionservices") ? dlg : dc}
+            />
           </p>
           <div className="contactInfo text-center">
             <span>
-              <b>জনাব মোঃ সাবেত আলী</b>
+              <b>
+                {baseUrl.includes("unionservices")
+                  ? "মোঃ আবু জাফর"
+                  : "জনাব মোঃ সাবেত আলী "}
+              </b>
             </span>
             <br />
             <span>
-              <b>জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট</b>
+              <b>
+                {baseUrl.includes("unionservices")
+                  ? "পরিচালক, (যুগ্মসচিব) স্থানীয় সরকার"
+                  : "   জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট"}
+              </b>
             </span>
             <br />
           </div>
