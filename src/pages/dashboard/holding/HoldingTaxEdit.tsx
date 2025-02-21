@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { EditOutlined } from "@ant-design/icons";
+
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
 import {
@@ -334,9 +337,7 @@ const HoldingTaxEdit = () => {
                           onClick={() => handleEdit(bokeya)}
                           className=""
                         >
-                          {bokeya.status !== "Paid" && (
-                            <i className="fa-solid fa-pen"></i>
-                          )}
+                          {bokeya.status !== "Paid" && <EditOutlined />}
                           {bokeya.status == "Paid" ? "Paid" : "এডিট"}
                         </Button>
                       </td>
@@ -365,9 +366,7 @@ const HoldingTaxEdit = () => {
             className="my-1"
             label="সাল"
             name="year"
-            rules={[
-              { required: true, message: "সাল অবশ্যই পূরণ করতে হবে" },
-            ]}
+            rules={[{ required: true, message: "সাল অবশ্যই পূরণ করতে হবে" }]}
             initialValue={selectedBokeya?.year}
           >
             <Input style={{ height: 40 }} />

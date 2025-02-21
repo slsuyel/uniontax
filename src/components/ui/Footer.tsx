@@ -37,6 +37,8 @@ const footerLinks = [
 ];
 import sos from "../../assets/icons/sos.png";
 import ekpay from "../../assets/images/ekpay.png";
+import { CheckCircleOutlined } from "@ant-design/icons";
+
 const Footer = () => {
   const baseUrl = window.origin;
   return (
@@ -54,7 +56,7 @@ const Footer = () => {
               >
                 {section.links.map((link, idx) => (
                   <li key={idx}>
-                    <i className="fas fa-check-circle" /> &nbsp;
+                    <CheckCircleOutlined className="defaltTextColor me-1" />
                     <a
                       href={link.url}
                       title={link.text}
