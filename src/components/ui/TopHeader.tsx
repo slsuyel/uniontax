@@ -37,7 +37,9 @@ const TopHeader = () => {
             <img
               width={270}
               src={
-                unionData?.web_logo || baseUrl.includes("unionservices")
+                unionData?.web_logo
+                  ? unionData.web_logo
+                  : baseUrl.includes("unionservices")
                   ? logoUnionService
                   : logo
               }
