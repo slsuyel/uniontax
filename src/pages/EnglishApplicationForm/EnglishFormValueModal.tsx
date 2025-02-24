@@ -56,7 +56,10 @@ const EnglishFormValueModal = ({
     console.log({ ...payload, token });
     // return;
     try {
-      const response = await sonodApply({ ...payload, token }).unwrap();
+      const response = await sonodApply({
+        formData: { ...payload },
+        token,
+      }).unwrap();
 
       console.log(response);
       if (response.status_code === 200) {
