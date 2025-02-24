@@ -26,15 +26,15 @@ const SonodFee = () => {
 
   // Update feesData when the data changes
   useEffect(() => {
-    if (data?.data) {
-      setFeesData(data.data);
+    if (data?.data?.data) {
+      setFeesData(data?.data?.data);
     }
   }, [data]);
 
   if (isLoading) {
     return <Loader />;
   }
-
+  console.log(data);
   // Handler to update fees value
   const handleFeeChange = (index: number, value: string) => {
     setFeesData((prevFeesData) => {
@@ -71,7 +71,7 @@ const SonodFee = () => {
     }
   };
 
-  const dataSource = feesData.map((d, index) => ({
+  const dataSource = feesData?.map((d, index) => ({
     key: index + 1,
     bnname: d.bnname,
     fees: d.fees,
