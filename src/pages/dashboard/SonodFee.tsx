@@ -20,14 +20,12 @@ interface TSonodFee {
 }
 
 const SonodFee = () => {
-  // Fetch the sonod information from the state
   const userInfo = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
   const { data, isLoading } = useSonodFeesQuery({ token });
   const [updateSonod, { isLoading: updating }] = useUpdateSonodFeesMutation();
   const [feesData, setFeesData] = useState<TSonodFee[]>([]);
 
-  // Update feesData when the data changes
   useEffect(() => {
     if (data?.data?.data) {
       setFeesData(data?.data?.data);
@@ -38,7 +36,6 @@ const SonodFee = () => {
     return <Loader />;
   }
 
-  // Handler to update fees value
   const handleFeeChange = (index: number, value: string) => {
     setFeesData((prevFeesData) => {
       const updatedFeesData = [...prevFeesData];
