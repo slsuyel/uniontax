@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import logo from "/main_logo.png";
-import logoUnionService from "/unionservices.png";
+import logo from "/main_logo.webp";
+import logoUnionService from "/unionservices_logo.webp";
 import SearchBox from "../reusable/SearchBox";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
@@ -26,7 +26,7 @@ const TopHeader = () => {
             >
               {new Date().toISOString().split("T")[0]}
             </span>{" "}
-            <span>Visitors : 36470</span>
+            <span>Visitors : 42470</span>
           </div>
         </div>
       </div>
@@ -40,10 +40,11 @@ const TopHeader = () => {
                 unionData?.web_logo
                   ? unionData.web_logo
                   : baseUrl.includes("unionservices")
-                  ? logoUnionService
-                  : logo
+                    ? logoUnionService
+                    : logo
               }
-              alt=""
+              alt="Logo"
+              height="auto"
             />
           </Link>
         </div>

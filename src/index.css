@@ -147,30 +147,19 @@ select.searchFrom.form_control {
 }
 .sidebarTitle {
   background-color: var(--defaultColor);
-
   padding: 9px 8px;
+  background-color: var(--defaultColor);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  border-left: 4px solid #145a32;
+ border-radius: 5px;
+
 }
 .services {
   box-shadow: 0 0 8px #0000002e;
   padding: 0 18px;
 }
-.serviceBox {
-  box-shadow: 0px 7px 9px -2px #0000007a !important;
-  padding: 9px 8px;
-  height: 122px !important;
-  transition: all 0.4s;
-  border: 1px solid green;
-}
-.serviceBox {
-  cursor: pointer;
-}
 
-.serviceBox:hover {
-  transform: scale(1.1);
-  background: none !important;
-  text-decoration: none !important;
-  box-shadow: 0px 0px 17px -4px #000 !important;
-}
 
 .footer_top_bg {
   background: url("./assets/icons/footer_top_bg.png") 0% 0% / cover no-repeat;
