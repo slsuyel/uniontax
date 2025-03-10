@@ -36,7 +36,7 @@ const footerLinks = [
   },
 ];
 import sos from "../../assets/icons/sos.png";
-import ekpay from "../../assets/images/ekpay.png";
+import ekpay from "../../assets/images/ekpay.webp";
 import { CheckCircleOutlined } from "@ant-design/icons";
 
 const Footer = () => {

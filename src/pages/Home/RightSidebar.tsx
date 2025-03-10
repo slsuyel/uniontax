@@ -1,7 +1,7 @@
-import dc from "../../assets/images/dc_anchagarh.png";
-import dlg from "../../assets/images/dlg-rangpur.jpg";
-import uno from "../../assets/images/uno-pic2.png";
-import suport from "../../assets/images/support.png";
+import dc from "../../assets/images/dc_panchagarh.webp";
+import dlg from "../../assets/images/dlg-rangpur.webp";
+import uno from "../../assets/images/uno-pic2.webp";
+import suport from "../../assets/images/support.webp";
 import { RootState } from "@/redux/features/store";
 import { useAppSelector } from "@/redux/features/hooks";
 import Marquee from "react-fast-marquee";
