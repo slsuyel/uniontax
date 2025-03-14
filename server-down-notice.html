@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>গুরুত্বপূর্ণ নোটিশ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f8f9fa;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .notice-container {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+            max-width:850px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .notice-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #5e35b1, #3949ab);
+        }
+        
+        .notice-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed #e0e0e0;
+            padding-bottom: 20px;
+        }
+        
+        .notice-icon {
+            font-size: 38px;
+            margin-right: 15px;
+            background: #f3f0ff;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: #303f9f;
+            font-family: 'BenSenHandwriting', 'Hind Siliguri', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            margin: 0;
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .notice-body {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .notice-body::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+        }
+        
+        p {
+            color: #424242;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        
+        .greeting {
+            font-family: 'BenSenHandwriting', 'Hind Siliguri', sans-serif;
+            font-size: 22px;
+            color: #5e35b1;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: #fff5f5;
+            color: #e53935;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(229, 57, 53, 0.1);
+        }
+        
+        .website {
+            font-family: 'BenSenHandwriting', 'Hind Siliguri', sans-serif;
+            font-weight: 600;
+            color: #303f9f;
+            font-size: 20px;
+            padding: 0 3px;
+        }
+        
+        .notice-footer {
+            text-align: right;
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+        
+        .signature {
+            font-family: 'BenSenHandwriting', 'Hind Siliguri', sans-serif;
+            font-weight: 600;
+            color: #303f9f;
+            font-size: 20px;
+            display: inline-block;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 10px;
+        }
+        
+        .date-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #5e35b1, #3949ab);
+            color: white;
+            border-radius: 30px;
+            padding: 8px 16px;
+            margin: 5px 5px 15px;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(94, 53, 177, 0.2);
+        }
+        
+        .decorative-element {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #5e35b1, #3949ab);
+            opacity: 0.03;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .decorative-element.top-right {
+            top: -50px;
+            right: -50px;
+        }
+        
+        .decorative-element.bottom-left {
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .thanks {
+            font-family: 'BenSenHandwriting', 'Hind Siliguri', sans-serif;
+            font-size: 19px;
+            color: #5e35b1;
+        }
+        
+        @media (max-width: 480px) {
+            .notice-container {
+                padding: 25px;
+            }
+            
+            h2 {
+                font-size: 26px;
+            }
+            
+            p {
+                font-size: 16px;
+            }
+            
+            .notice-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notice-container">
+        <div class="decorative-element top-right"></div>
+        <div class="decorative-element bottom-left"></div>
+        
+        <div class="content">
+            <div class="notice-header">
+                <div class="notice-icon">📢</div>
+                <h2>গুরুত্বপূর্ণ নোটিশ</h2>
+            </div>
+            
+            <div class="notice-body">
+                <p class="greeting">প্রিয় ব্যবহারকারী,</p>
+                
+                <p>
+                     <span class="date-badge" >14 March 2025</span> তারিখে 
+                    <span class="website">uniontax.gov.bd</span> সার্ভার উন্নয়ন ও রক্ষণাবেক্ষণের কাজ চলবে।
+                </p>
+                
+                <p>
+                    এ কারণে সার্ভার <span class="highlight">সারা দিন বন্ধ থাকবে</span>, এবং ওয়েবসাইট সাময়িকভাবে ব্যবহার করা সম্ভব হবে না।
+                </p>
+                
+                <p class="thanks">আমাদের সঙ্গে থাকার জন্য ধন্যবাদ। সাময়িক অসুবিধার জন্য আমরা দুঃখিত।</p>
+            </div>
+            
+            <div class="notice-footer">
+                <p class="signature">- ইউনিয়ন ট্যাক্স কর্তৃপক্ষ</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
