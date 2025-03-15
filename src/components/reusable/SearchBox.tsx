@@ -81,11 +81,11 @@ const SearchBox: React.FC = () => {
   const handleUnionChange = (event: { target: { value: string } }) => {
     const union = event.target.value.replace(/\s+/g, "").toLowerCase();
     if (baseUrl.includes("uniontax")) {
-      window.location.href = `http://${union}.uniontax.gov.bd`;
+      window.location.href = `https://${union}.uniontax.gov.bd`;
     } else if (baseUrl.includes("unionservices")) {
-      window.location.href = `http://${union}.unionservices.gov.bd`;
+      window.location.href = `https://${union}.unionservices.gov.bd`;
     }
-    else { window.location.href = `http://${union}.uniontax.gov.bd`; }
+    else { window.location.href = `https://${union}.uniontax.gov.bd`; }
   };
 
 
