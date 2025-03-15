@@ -33,22 +33,18 @@ const TopHeader = () => {
 
       <div className=" row mx-auto container">
         <div className="col-md-6 my-3 ps-0">
-          <Link to={"/"}>
-            <img
-              width={270}
-              src={
-                unionData?.web_logo
-                  ? unionData.web_logo
-                  : baseUrl.includes("unionservices")
-                    ? logoUnionService
-                    : logo
-              }
-              alt="Logo"
-              height="auto"
-              referrerPolicy="no-referrer"
-              crossOrigin="anonymous"
-            />
-          </Link>
+        <Link to={"/"}>
+  <img
+    width={270}
+    src={`https://images.weserv.nl/?url=${encodeURIComponent(
+      unionData?.web_logo ||
+        (baseUrl.includes("unionservices") ? logoUnionService : logo)
+    )}`}
+    alt="Logo"
+    height="auto"
+  />
+</Link>
+
 
         </div>
         <div className="col-md-6  pe-0">
