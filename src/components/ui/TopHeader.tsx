@@ -45,8 +45,11 @@ const TopHeader = () => {
               }
               alt="Logo"
               height="auto"
+              referrerPolicy="no-referrer"
+              crossOrigin="anonymous"
             />
           </Link>
+
         </div>
         <div className="col-md-6  pe-0">
           <h3 className="defaltColor fs-4 searchHeader text-white">
