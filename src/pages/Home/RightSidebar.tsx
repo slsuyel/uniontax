@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dc from "../../assets/images/dc_panchagarh.webp";
 import dlg from "../../assets/images/dlg-rangpur.webp";
 import uno from "../../assets/images/uno-pic2.webp";
@@ -21,6 +22,7 @@ const RightSidebar = () => {
           </div>
           <div className="">
               <img
+                 onError={(e:any) => e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s'} 
                 className="object-fit-cover"
                 src={unionInfo.u_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"}
                 width="100%"
