@@ -5,47 +5,11 @@ import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import ScrollToTop from "@/utils/ScrollToTop";
-// import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
-// import { useUnionInfoQuery } from "@/redux/api/user/userApi";
-// import { setUnionData } from "@/redux/features/union/unionSlice";
-// import Loader from "@/components/reusable/Loader";
-// import { RootState } from "@/redux/features/store";
-
 const { Header, Content, Footer } = Layout;
 
 const UserLayout = () => {
-  // const userInfo = useAppSelector((state: RootState) => state.user.user);
-  // const token = localStorage.getItem("token");
-  // const dispatch = useAppDispatch();
-  // const [unionName, setUnionName] = useState(userInfo?.unioun);
-  // const navigate = useNavigate();
   const theme = false;
   const [scrollY, setScrollY] = useState(0);
-  // const { data, isLoading } = useUnionInfoQuery(
-  //   { unionName, token },
-  //   {
-  //     skip: !unionName,
-  //   }
-  // );
-  // useEffect(() => {
-  //   const hostname = window.location.hostname;
-  //   const union = hostname.split(".")[0];
-  //   if (union !== "localhost") {
-  //     setUnionName(union);
-  //   }
-  // }, [navigate]);
-
-  // useEffect(() => {
-  //   if (data?.data) {
-  //     dispatch(
-  //       setUnionData({
-  //         unionInfo: data.data.uniouninfos,
-  //         sonodList: data.data.sonod_name_lists,
-  //       })
-  //     );
-  //   }
-  // }, [data, dispatch]);
-
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -57,11 +21,6 @@ const UserLayout = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
-  // console.log(userInfo);
   return (
     <ScrollToTop>
       <Layout>
