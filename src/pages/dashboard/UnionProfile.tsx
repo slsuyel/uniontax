@@ -8,12 +8,17 @@ import { TUnionInfo } from "@/types";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
 import { useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
+import { setUnionData } from "@/redux/features/union/unionSlice";
+import { RootState } from "@/redux/features/store";
 
 const UnionProfile = () => {
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const token = localStorage.getItem("token");
   const { data, isLoading } = useUnionProfileQuery({ token });
   const [updateUnion, { isLoading: updating }] = useUpdateUnionMutation();
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const [form] = Form.useForm();
 
   const [files, setFiles] = useState({
@@ -142,13 +147,20 @@ const UnionProfile = () => {
     });
 
     // Debugging: Log FormData contents
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+    // for (const [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
 
     try {
       const res = await updateUnion({ data: formData, token }).unwrap();
       if (res.status_code === 200) {
+        console.log(res.data.data);
+          dispatch(
+            setUnionData({
+              unionInfo: res.data.data,
+              sonodList: sonodInfo,
+            })
+          );
         message.success("ইউনিয়ন তথ্য সফলভাবে আপডেট করা হয়েছে।");
       } else {
         message.error("Failed to update union information.");
