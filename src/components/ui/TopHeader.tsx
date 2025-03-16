@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
-import logo from "/main_logo.webp";
-import logoUnionService from "/unionservices_logo.webp";
+// import logo from "/main_logo.webp";
+// import logoUnionService from "/unionservices_logo.webp";
 import SearchBox from "../reusable/SearchBox";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
@@ -8,6 +9,9 @@ import { RootState } from "@/redux/features/store";
 const TopHeader = () => {
   const unionData = useAppSelector((state: RootState) => state.union.unionInfo);
   const baseUrl = window.origin;
+
+
+
 
   return (
     <>
@@ -34,15 +38,17 @@ const TopHeader = () => {
       <div className=" row mx-auto container">
         <div className="col-md-6 my-3 ps-0">
           <Link to={"/"}>
-            <img
+            <img 
+              onError={(e:any) => e.target.src = (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://uniontax.gov.bd/main_logo.webp")}
               width={270}
               src={`https://images.weserv.nl/?url=${encodeURIComponent(
                 unionData?.web_logo ||
-                (baseUrl.includes("unionservices") ? logoUnionService : logo)
+                (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://uniontax.gov.bd/main_logo.webp")
               )}`}
               alt="Logo"
               height="auto"
             />
+
           </Link>
 
 

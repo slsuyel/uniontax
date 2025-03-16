@@ -76,8 +76,8 @@ import { useUnionInfoQuery } from "@/redux/api/user/userApi";
 import Loader from "../reusable/Loader";
 
 import { setUnionData } from "@/redux/features/union/unionSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
+import { useAppDispatch } from "@/redux/features/hooks";
+// import { RootState } from "@/redux/features/store";
 import Chatbot from "../ui/Chatbot";
 
 const MainLayout = () => {
@@ -87,11 +87,11 @@ const MainLayout = () => {
   const [defaultColor, setDefaultColor] = useState("green");
   const navigate = useNavigate();
 
-  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  // const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { data, isLoading } = useUnionInfoQuery(
     { unionName, token },
     {
-      skip: !unionName || !!unionInfo,
+      skip: unionName =='uniontax',
     }
   );
 
