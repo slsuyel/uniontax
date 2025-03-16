@@ -8,33 +8,33 @@ import Marquee from "react-fast-marquee";
 const RightSidebar = () => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const baseUrl = window.origin;
+
   return (
     <>
       {unionInfo &&
-      !["uniontax", "unionservices"].includes(
-        unionInfo.short_name_e as string
-      ) ? (
+        !["uniontax", "unionservices"].includes(
+          unionInfo.short_name_e as string
+        ) ? (
         <div className="pt-3 col-md-3 services">
           <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>
             <h4>এক নজরে {unionInfo.short_name_b} ইউনিয়ন</h4>
           </div>
-          <p className="sidebaruser text-center">
-            <img
-              className="object-fit-cover"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"
-              width="100%"
-              height="100px"
-              alt=""
-            />
-          </p>
+          <div className="">
+              <img
+                className="object-fit-cover"
+                src={unionInfo.u_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"}
+                width="100%"
+                height="100px"
+                alt=""
+              />
+            <p style={{fontSize:12}} className="sidebaruser mt-3 mb-1">
+              {unionInfo?.u_description || ""}
+            </p>
+          </div>
           <div className="sidebarTitle mb-3 defaltColor">
             <h4 className="border-bottom t">নোটিশ</h4>
             <Marquee direction="left" className="text-white">
-              ইউনিয়ন পরিষদ হল বাংলাদেশে পল্লী অঞ্চলের সর্বনিম্ন প্রশাসনিক একক।
-              গ্রাম চৌকিদারি আইনের ১৮৭০ এর অধীনে ইউনিয়ন পরিষদের সৃষ্টি হয়।
-              প্রাথমিক পর্যায়ে এর ভূমিকা নিরাপত্তামূলক কর্মকাণ্ডে সীমাবদ্ধ
-              থাকলেও পরবর্তী কালে এটিই স্থানীয় সরকারের প্রাথমিক ইউনিটের
-              ভিত্তিরুপে গড়ে উঠে।
+              {unionInfo?.u_notice}
             </Marquee>
           </div>
           <div className="sidebarTitle mb-3 defaltColor">
