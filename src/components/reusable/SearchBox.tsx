@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TDistrict, TDivision, TUnion, TUpazila } from "@/types";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
@@ -10,21 +11,18 @@ const SearchBox: React.FC = () => {
   const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
   const [unions, setUnions] = useState<TUnion[]>([]);
   useEffect(() => {
-    fetch("/divisions.json")
+    fetch("https://api.uniontax.gov.bd/api/global/divisions")
       .then((res) => res.json())
-      .then((data: TDivision[]) => setDivisions(data))
+      .then((data: any) => setDivisions(data?.data))
       .catch((error) => console.error("Error fetching divisions data:", error));
   }, []);
 
   useEffect(() => {
     if (selecteddivisions) {
-      fetch("/districts.json")
+      fetch(`https://api.uniontax.gov.bd/api/global/districts/${selecteddivisions}`)
         .then((response) => response.json())
-        .then((data: TDistrict[]) => {
-          const filteredDistricts = data.filter(
-            (d) => d.division_id === selecteddivisions
-          );
-          setDistricts(filteredDistricts);
+        .then((data:any) => {
+          setDistricts(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching districts data:", error)
@@ -34,13 +32,10 @@ const SearchBox: React.FC = () => {
 
   useEffect(() => {
     if (selectedDistrict) {
-      fetch("/upazilas.json")
+      fetch(`https://api.uniontax.gov.bd/api/global/upazilas/${selectedDistrict}`)
         .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedDistrict
-          );
-          setUpazilas(filteredUpazilas);
+        .then((data: any) => {
+          setUpazilas(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching upazilas data:", error)
@@ -50,13 +45,10 @@ const SearchBox: React.FC = () => {
 
   useEffect(() => {
     if (selectedUpazila) {
-      fetch("/unions.json")
+      fetch(`https://api.uniontax.gov.bd/api/global/unions/${selectedUpazila}`)
         .then((response) => response.json())
-        .then((data: TUnion[]) => {
-          const filteredUnions = data.filter(
-            (union) => union.upazilla_id === selectedUpazila
-          );
-          setUnions(filteredUnions);
+        .then((data: any) => {
+          setUnions(data?.data);
         })
         .catch((error) => console.error("Error fetching unions data:", error));
     }
