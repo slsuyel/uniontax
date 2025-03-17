@@ -19,9 +19,9 @@ const Header = () => {
     { title: "ইউপি সেবা পরিচিতি", link: "about" },
     {
       title: "নাগরিক সেবা",
-      dropdown: sonodInfo.map((sonod) => ({
-        title: sonod.bnname,
-        link: `/application/${sonod.bnname}`,
+      dropdown: sonodInfo?.map((sonod) => ({
+        title: sonod?.bnname,
+        link: `/application/${sonod?.bnname}`,
       })),
     },
     {

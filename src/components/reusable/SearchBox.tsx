@@ -90,8 +90,8 @@ const SearchBox: React.FC = () => {
         onChange={handleDivChange}
       >
         {divisions?.map((d) => (
-          <option key={d.id} value={d.id}>
-            {d.bn_name}
+          <option key={d?.id} value={d?.id}>
+            {d?.bn_name}
           </option>
         ))}
       </select>
@@ -103,8 +103,8 @@ const SearchBox: React.FC = () => {
       >
         <option>জেলা নির্বাচন করুন</option>
         {districts?.map((d) => (
-          <option key={d.id} value={d.id}>
-            {d.bn_name}
+          <option key={d?.id} value={d?.id}>
+            {d?.bn_name}
           </option>
         ))}
       </select>

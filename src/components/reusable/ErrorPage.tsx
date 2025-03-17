@@ -1,17 +1,17 @@
 import { Button, Result } from 'antd';
 
-const ErrorPage = () => {
+const NotFoundPage = () => {
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <Result
-            status="500"
-            title="500"
-            subTitle="Sorry, something went wrong."
+            status="404"
+            title="৪০৪"
+            subTitle="দুঃখিত, আপনি যে পৃষ্ঠাটি খুঁজছেন তা খুঁজে পাওয়া যায়নি।"
             extra={
-              <Button type="primary" href="/">
-                Back Home
+              <Button type="primary" href="/" className='text-decoration-none'>
+                হোমপেজে ফিরে যান
               </Button>
             }
           />
@@ -21,4 +21,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default NotFoundPage;
