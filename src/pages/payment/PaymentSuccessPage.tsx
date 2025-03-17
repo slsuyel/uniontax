@@ -178,7 +178,7 @@ const PaymentSuccessPage: React.FC = () => {
             <div>
               <div className="col-sm-6 my-5 py-5 text-center w-100">
                 <h2 style={{ color: "#0fad00" }}>Success</h2>
-                <img width={150} src={succes} alt="Success" />
+                <img width={150} height={"auto"} src={succes} alt="Success" />
                 <div className="my-3">
                   <h3>জনাব,</h3>
                   <p

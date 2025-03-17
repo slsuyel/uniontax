@@ -96,7 +96,8 @@ const Footer = () => {
                   <img
                     loading="lazy"
                     src="/bangladesh-govt.png"
-                    alt=""
+                    alt="bangladesh"
+                    height={"auto"}
                     width={50}
                   />{" "}
                   <span style={{ padding: "0px 15px" }}>
@@ -117,7 +118,7 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img loading="lazy" src={sos} alt="" width={40} />{" "}
+                  <img loading="lazy" src={sos} alt="sys" width={40}  height={"auto"} />{" "}
                   <span style={{ padding: "0px 15px" }}>
                     <b> কারিগরি সহায়তায়:</b> <br />{" "}
                     <a
@@ -137,7 +138,7 @@ const Footer = () => {
         <div className="footerpayment row">
           <div className="col-md-2" />{" "}
           <div className="col-md-8">
-            <img loading="lazy" src={ekpay} width="100%" alt="" />
+            <img loading="lazy" src={ekpay} width="100%"  height={"auto"} alt="sys" />
           </div>{" "}
           <div className="col-md-2" />
         </div>

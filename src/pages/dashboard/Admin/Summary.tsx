@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import allApplications from "/images/all-application.png";
 import approvedApplications from "/images/approved-application.png";
@@ -18,7 +19,7 @@ const SummaryItem = ({
     <div className="col-md-3 my-2">
       <div className="border-0 card h-100 mb-2 py-2 shadow hover-effect">
         <div className="card-body d-flex align-items-center justify-content-around">
-          <img
+          <img  
             src={icon}
             alt={title}
             style={{ width: "80px", height: "80px" }} // Adjust size as needed

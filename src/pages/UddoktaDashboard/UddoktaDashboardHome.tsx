@@ -38,7 +38,7 @@ const UddoktaDashboardHome = () => {
         >
           <div className="serviceBox py-2">
             <div className="serviceLogo">
-              <img loading="lazy" src={service.icon} alt="" width={60} />
+              <img loading="lazy" height={"auto"} src={service.icon} alt="logo" width={60} />
             </div>
             <div className="serviceTitle defaltTextColor mt-2">
               <h6> {service.bnname.slice(0, 20)}</h6>

@@ -21,15 +21,15 @@ const RightSidebar = () => {
             <h4>এক নজরে {unionInfo.short_name_b} ইউনিয়ন</h4>
           </div>
           <div className="">
-              <img
-                 onError={(e:any) => e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s'} 
-                className="object-fit-cover"
-                src={unionInfo.u_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"}
-                width="100%"
-                height="100px"
-                alt=""
-              />
-            <p style={{fontSize:12}} className="sidebaruser mt-3 mb-1">
+            <img
+              onError={(e: any) => e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s'}
+              className="object-fit-cover"
+              src={unionInfo.u_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"}
+              width="100%"
+              height="100px"
+              alt="union-image"
+            />
+            <p style={{ fontSize: 12 }} className="sidebaruser mt-3 mb-1">
               {unionInfo?.u_description || ""}
             </p>
           </div>
@@ -43,7 +43,7 @@ const RightSidebar = () => {
             <h4>জরুরি হটলাইন</h4>
           </div>
           <div className="column block">
-            <img width="100%" src={suport} alt="" />
+            <img width="100%" src={suport} height={"auto"} alt="support" />
           </div>
         </div>
       ) : (
@@ -54,7 +54,8 @@ const RightSidebar = () => {
           <p className="sidebaruser text-center">
             <img
               width="70%"
-              alt=""
+              height={"auto"}
+              alt="unionservices"
               src={baseUrl.includes("unionservices") ? dlg : dc}
             />
           </p>
@@ -80,7 +81,7 @@ const RightSidebar = () => {
             <h4>পরিকল্পনা ও বাস্তবায়নে</h4>
           </div>
           <p className="sidebaruser text-center">
-            <img width="70%" alt="" src={uno} />
+            <img width="70%" height={"auto"} alt="unio" src={uno} />
           </p>
           <div className="contactInfo text-center">
             <span>
@@ -100,7 +101,7 @@ const RightSidebar = () => {
             <h4>জরুরি হটলাইন</h4>
           </div>
           <div className="column block">
-            <img width="100%" src={suport} alt="" />
+            <img width="100%" height={"auto"} src={suport} alt="" />
           </div>
         </div>
       )}

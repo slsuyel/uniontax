@@ -65,7 +65,7 @@ const handleOk =async ()=>{
         <div className="border">
           <div className="row m-0 mt-2 mx-auto ">
             <div className="logo-img col-md-3 col-sm-12 text-end hide-mobile">
-              <img width={70} src="/bangladesh-govt.png" />
+              <img width={70}  height={"auto"} alt="bangladesh-govt" src="/bangladesh-govt.png" />
             </div>{" "}
             <div className="header-text col-md-6 col-sm-12 text-center">
               <p>Government of the People's Republic of Bangladesh</p>{" "}

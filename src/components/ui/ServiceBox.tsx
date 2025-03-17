@@ -42,7 +42,7 @@ const ServiceBox = () => {
             >
               <div className="service-card-inner p-3 rounded-3 d-flex flex-column align-items-center justify-content-center h-100">
                 <div className="service-icon mb-3 d-flex align-items-center justify-content-center rounded-circle">
-                  <img loading="lazy" src={icon2 || "/placeholder.svg"} alt="" width={40} />
+                  <img loading="lazy" src={icon2 || "/placeholder.svg"} alt="icon2" width={40} height={40} />
                 </div>
                 <div className="service-title text-center">
                   <h6 className="mb-0 fw-semibold">{service.bnname}</h6>

@@ -11,7 +11,8 @@ const HeroSlider = () => {
           <img
             loading="lazy"
             src={imageUrl}
-            alt=""
+            alt="slider"
+            height={"auto"}
             className="w-100 hero_slider_img object-fit-cover"
           />
         </div>

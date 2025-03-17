@@ -394,6 +394,7 @@ const UnionProfile = () => {
                 {files.web_logo && (
                   <img
                     width={250}
+                    height={"auto"}
                     alt="Web Logo"
                     className="img-thumbnail img-fluid"
                     src={files.web_logo}
@@ -413,6 +414,7 @@ const UnionProfile = () => {
                 {files.sonod_logo && (
                   <img
                     width={250}
+                    height={"auto"}
                     alt="Sonod Logo"
                     className="img-thumbnail img-fluid"
                     src={files.sonod_logo}
@@ -432,6 +434,7 @@ const UnionProfile = () => {
                 {files.c_signture && (
                   <img
                     width={250}
+                    height={"auto"}
                     alt="Chairman Signature"
                     className="img-thumbnail img-fluid"
                     src={files.c_signture}
@@ -450,7 +453,7 @@ const UnionProfile = () => {
                 />
                 {files.socib_signture && (
                   <img
-                    width={250}
+                    width={250} height={"auto"}
                     alt="Secretary Signature"
                     className="img-thumbnail img-fluid"
                     src={files.socib_signture}
@@ -469,7 +472,7 @@ const UnionProfile = () => {
                 />
                 {files.u_image && (
                   <img
-                    width={250}
+                    width={250} height={"auto"}
                     alt="Union Image"
                     className="img-thumbnail img-fluid"
                     src={files.u_image}

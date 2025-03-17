@@ -191,9 +191,10 @@ const SingleSonodViewModal = ({
             <span>ন্যাশনাল আইডি (Front page)</span> <br />
             {data.applicant_national_id_front_attachment && (
               <img
+              height={"auto"}
                 className="w-100 img-thumbnail"
                 src={data.applicant_national_id_front_attachment}
-                alt=""
+                alt="nid"
               />
             )}
           </div>
@@ -201,9 +202,10 @@ const SingleSonodViewModal = ({
             <span>ন্যাশনাল আইডি (Back page)</span> <br />
             {data.applicant_national_id_back_attachment && (
               <img
+              height={"auto"}
                 className="w-100 img-thumbnail"
                 src={data.applicant_national_id_back_attachment}
-                alt=""
+                alt="nid"
               />
             )}
           </div>
@@ -211,9 +213,10 @@ const SingleSonodViewModal = ({
             <span>জন্ম নিবন্ধন</span> <br />{" "}
             {data.applicant_birth_certificate_attachment && (
               <img
+              height={"auto"}
                 className="w-100 img-thumbnail"
                 src={data.applicant_birth_certificate_attachment}
-                alt=""
+                alt="birth"
               />
             )}
           </div>

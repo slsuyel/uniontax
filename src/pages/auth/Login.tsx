@@ -197,7 +197,7 @@ const Login = () => {
               </div>
             </form>
             <div className="text-center mt-5">
-              <img width="50px" src="/bangladesh-govt.png" alt="" />{" "}
+              <img width="50px" height={"auto"} src="/bangladesh-govt.png" alt="bd-gov" />{" "}
               <h4 style={{ margin: "10px 0px 0px" }}>স্মার্ট বাংলাদেশ</h4>
               ক্যাশ লেস , পেপার লেস সেবা সিস্টেম
             </div>

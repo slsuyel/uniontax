@@ -4,6 +4,7 @@ const UnderConstruction = () => {
       <div>
         <h1 className=" text-center">COMING SOON</h1>
         <img
+          height={"auto"}
           className="img-fluid text-center"
           src="https://www.freepnglogos.com/uploads/under-construction-png/under-construction-diy-coming-soon-3.png"
           alt=""

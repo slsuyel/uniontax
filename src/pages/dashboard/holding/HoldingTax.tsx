@@ -22,6 +22,7 @@ const HoldingTax = () => {
                     to={`/dashboard/holding/tax/list/${ward}`}
                   >
                     <img
+                      alt="holding"
                       className=""
                       src="https://cdn-icons-png.flaticon.com/512/11008/11008490.png"
                       width={50}
