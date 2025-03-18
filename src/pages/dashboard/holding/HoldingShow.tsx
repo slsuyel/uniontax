@@ -71,7 +71,7 @@ const HoldingShow = () => {
                 <Link
                   className="btn btn-success  me-2"
                   target="_blank"
-                  to={`https://api.uniontax.gov.bd/api/holding/tax/bokeya/list?word=${word}&token=${token}`}
+                  to={`https://api.uniontax.gov.bd/holding/tax/bokeya/list?word=${word}&token=${token}`}
                 >
                   {" "}
                   বকেয়া রিপোর্ট
