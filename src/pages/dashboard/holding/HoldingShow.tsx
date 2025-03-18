@@ -58,30 +58,31 @@ const HoldingShow = () => {
         <div className="">
           <div className="card-header">
             <div className="d-flex justify-content-between align-items-center">
-              <h3>হোল্ডিং ট্যাক্স</h3>
+            
               <div>
-                {/* <Link 
-                  to="/holding/tax/bokeya/list?word=1&union=test"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-success"
-                >
-                  বকেয়া রিপোর্ট
-                </Link>{" "} */}
                 <Link
-                  className="btn btn-success  me-2"
+                  to={`/dashboard/holding/list/add/${word}`}
+                  className="btn btn-info m-1"
+                >
+                  হোল্ডিং ট্যাক্স যোগ করুন
+                </Link>
+                <Link
+                  className="btn btn-success  m-1"
+                  target="_blank"
+                  to={`https://api.uniontax.gov.bd/api/user/holding-tax/export?word_no=${word}&token=${token}`}
+                >
+                  {" "}
+                  Export হোল্ডিং ট্যাক্স
+                </Link>
+                <Link
+                  className="btn btn-success  m-1"
                   target="_blank"
                   to={`https://api.uniontax.gov.bd/holding/tax/bokeya/list?word=${word}&token=${token}`}
                 >
                   {" "}
                   বকেয়া রিপোর্ট
                 </Link>
-                <Link
-                  to={`/dashboard/holding/list/add/${word}`}
-                  className="btn btn-info"
-                >
-                  হোল্ডিং ট্যাক্স যোগ করুন
-                </Link>
+                
               </div>
             </div>
             <form

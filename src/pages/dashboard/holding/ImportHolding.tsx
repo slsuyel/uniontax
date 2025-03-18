@@ -48,9 +48,9 @@ const ImportHolding = () => {
             message.warning("Please select an Excel file first!");
             return;
         }
-        const file = fileList[0] as unknown as File; 
+        const file = fileList[0] as unknown as File;
         const formData = new FormData();
-        formData.append("file",file);
+        formData.append("file", file);
         const res = await importHolding({ token, formData }).unwrap();
         if (res.status_code == 200) {
             message.success('File uploaded successfully')
@@ -62,62 +62,58 @@ const ImportHolding = () => {
         <div className="card p-3 border-0">
             <Breadcrumbs current="হোল্ডিং ট্যাক্স" />
 
-            <div className="row mt-4">
-                <div className="col-md-12">
-                    <div className="card shadow-sm border-0">
-                        <div className="row mx-auto">
-                            <div className="col-lg-8 col-md-10 mx-auto">
-                                <div className="upload-container bg-light p-4 rounded-3 mb-4">
-                                    <Dragger {...props} className="bg-white border-dashed" style={{ borderRadius: "8px" }}>
-                                        <p className="ant-upload-drag-icon">
-                                            <InboxOutlined style={{ color: "#1677ff", fontSize: "48px" }} />
-                                        </p>
-                                        <p className="ant-upload-text fw-bold">Click or drag Excel file to this area to upload</p>
-                                        <p className="ant-upload-hint text-muted">
-                                            Support for a single Excel file upload. Ensure your data follows the required format.
-                                        </p>
-                                    </Dragger>
+            <div className="card shadow-sm border-0">
+                <div className="row mx-auto">
+                    <div className="col-md-10 mx-auto">
+                        <div className="upload-container bg-light p-4 rounded-3 mb-4">
+                            <Dragger {...props} className="bg-white border-dashed" style={{ borderRadius: "8px" }}>
+                                <p className="ant-upload-drag-icon">
+                                    <InboxOutlined style={{ color: "#1677ff", fontSize: "48px" }} />
+                                </p>
+                                <p className="ant-upload-text fw-bold">Click or drag Excel file to this area to upload</p>
+                                <p className="ant-upload-hint text-muted">
+                                    Support for a single Excel file upload. Ensure your data follows the required format.
+                                </p>
+                            </Dragger>
 
-                                    {fileList.length > 0 && (
-                                        <div className="mt-3 d-flex align-items-center">
-                                            <FileExcelOutlined style={{ fontSize: "20px", color: "#52c41a" }} />
-                                            <Text className="ms-2">{fileList[0].name}</Text>
-                                        </div>
-                                    )}
-
-                                    <div className="d-flex justify-content-end mt-4">
-                                        <Space>
-                                            <Button
-                                                onClick={() => setFileList([])}
-                                                disabled={fileList.length === 0 || uploading}
-                                                className="btn-outline-secondary"
-                                            >
-                                                Cancel
-                                            </Button>
-                                            <Button
-                                                type="primary"
-                                                onClick={handleUpload}
-                                                loading={uploading}
-                                                disabled={fileList.length === 0}
-                                                className="btn-primary"
-                                            >
-                                                {uploading ? "Uploading" : "Upload Now"}
-                                            </Button>
-                                        </Space>
-                                    </div>
+                            {fileList.length > 0 && (
+                                <div className="mt-3 d-flex align-items-center">
+                                    <FileExcelOutlined style={{ fontSize: "20px", color: "#52c41a" }} />
+                                    <Text className="ms-2">{fileList[0].name}</Text>
                                 </div>
+                            )}
 
-                                <div className="alert alert-info d-flex align-items-center">
-                                    <i className="bi bi-info-circle me-2"></i>
-                                    <div>
-                                        <p className="mb-0">
-                                            Please ensure your Excel file follows the required template format.
-                                            <a href="#" className="ms-1 fw-bold">
-                                                Download template
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
+                            <div className="d-flex justify-content-end mt-4">
+                                <Space>
+                                    <Button
+                                        onClick={() => setFileList([])}
+                                        disabled={fileList.length === 0 || uploading}
+                                        className="btn-outline-secondary"
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        type="primary"
+                                        onClick={handleUpload}
+                                        loading={uploading}
+                                        disabled={fileList.length === 0}
+                                        className="btn-primary"
+                                    >
+                                        {uploading ? "Uploading" : "Upload Now"}
+                                    </Button>
+                                </Space>
+                            </div>
+                        </div>
+
+                        <div className="alert alert-info d-flex align-items-center">
+                            <i className="bi bi-info-circle me-2"></i>
+                            <div>
+                                <p className="mb-0">
+                                    Please ensure your Excel file follows the required template format.
+                                    <a href="#" className="ms-1 fw-bold">
+                                        Download template
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </div>
