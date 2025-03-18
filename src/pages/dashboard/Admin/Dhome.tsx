@@ -28,7 +28,7 @@ const Dhome = () => {
         <MonthlyCart />
       </div> */}
       <div className="d-flex justify-content-end">
-        <Link className="btn btn-sm btn-success" to={`/dashboard/sms`}>SMS Panel</Link>
+        <Link className="btn btn-sm btn-success" to={`/dashboard/sms`}>SMS প্যানেল</Link>
       </div>
       <Summary data={data?.data} />
     </div>
