@@ -90,9 +90,9 @@ const MainLayout = () => {
   // const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { data, isLoading } = useUnionInfoQuery(
     { unionName, token },
-    {
-      skip: unionName =='uniontax',
-    }
+    // {
+    //   skip: unionName =='uniontax',
+    // }
   );
 
   useEffect(() => {
