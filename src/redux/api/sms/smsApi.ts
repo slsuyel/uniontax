@@ -5,17 +5,27 @@ import apiSlice from '../apiSlice';
 const smsApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
         purchaseSms: builder.mutation({
-            query: ({ data,token }) => ({
+            query: ({ data, token }) => ({
                 url: `/user/sms-purchase`,
-                method: 'Post',
+                method: 'POST',
                 body: data,
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 },
             }),
+            invalidatesTags: ["sms"],
         }),
-
+        allSms: builder.query({
+            query: ({ perPage = 10, token }) => ({
+                url: `/user/purchasesms/list?per_page=${perPage}`,
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+            providesTags: ["sms"],
+        }),
     }),
 });
 
-export const { usePurchaseSmsMutation } = smsApi;
+export const { usePurchaseSmsMutation, useAllSmsQuery } = smsApi;

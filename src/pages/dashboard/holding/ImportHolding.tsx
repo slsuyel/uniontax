@@ -65,7 +65,7 @@ const ImportHolding = () => {
             <div className="row mt-4">
                 <div className="col-md-12">
                     <div className="card shadow-sm border-0">
-                        <div className="row">
+                        <div className="row mx-auto">
                             <div className="col-lg-8 col-md-10 mx-auto">
                                 <div className="upload-container bg-light p-4 rounded-3 mb-4">
                                     <Dragger {...props} className="bg-white border-dashed" style={{ borderRadius: "8px" }}>

@@ -58,7 +58,7 @@ const Summary = ({ data }: any) => {
     {
       icon: totalFees,
       title: "SMS Balance",
-      value: (0),
+      value: (data?.sms_balance),
     },
   ];
 
