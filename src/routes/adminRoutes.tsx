@@ -8,6 +8,7 @@ import HoldingTaxEdit from "@/pages/dashboard/holding/HoldingTaxEdit";
 import ImportHolding from "@/pages/dashboard/holding/ImportHolding";
 import SingleHolding from "@/pages/dashboard/holding/SingleHolding";
 import PaymentFailed from "@/pages/dashboard/PaymentFailed";
+import SmsPanel from "@/pages/dashboard/SmsPanel/SmsPanel";
 
 import SonodFee from "@/pages/dashboard/SonodFee";
 import EditSonod from "@/pages/dashboard/SonodManagement/EditSonod";
@@ -24,6 +25,10 @@ export const adminRoutes = [
   {
     path: "reports",
     element: <UnionReports />,
+  },
+  {
+    path: "sms",
+    element: <SmsPanel />,
   },
   {
     path: "union/profile",

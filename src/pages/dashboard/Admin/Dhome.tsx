@@ -6,6 +6,7 @@ import Loader from "@/components/reusable/Loader";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
+import { Link } from "react-router-dom";
 
 const Dhome = () => {
   const user = useAppSelector((state: RootState) => state.user.user);
@@ -26,6 +27,9 @@ const Dhome = () => {
         <SummaryChart />
         <MonthlyCart />
       </div> */}
+      <div className="d-flex justify-content-end">
+        <Link className="btn btn-sm btn-success" to={`/dashboard/sms`}>SMS Panel</Link>
+      </div>
       <Summary data={data?.data} />
     </div>
   );

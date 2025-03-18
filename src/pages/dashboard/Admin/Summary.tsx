@@ -22,7 +22,7 @@ const SummaryItem = ({
           <img  
             src={icon}
             alt={title}
-            style={{ width: "80px", height: "80px" }} // Adjust size as needed
+            style={{ width: "80px", height: "80px" }} 
           />
           <div className="text-end">
             <h5 className="card-title fw-bold mb-2 fs-6 text-secondary">
@@ -54,6 +54,11 @@ const Summary = ({ data }: any) => {
       icon: totalFees,
       title: "মোট আদায়কৃত ফি'র পরিমাণ",
       value: (data?.totalRevenue).toFixed(2),
+    },
+    {
+      icon: totalFees,
+      title: "SMS Balance",
+      value: (0),
     },
   ];
 

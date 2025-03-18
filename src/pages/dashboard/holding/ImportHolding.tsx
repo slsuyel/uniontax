@@ -48,8 +48,9 @@ const ImportHolding = () => {
             message.warning("Please select an Excel file first!");
             return;
         }
+        const file = fileList[0] as unknown as File; 
         const formData = new FormData();
-        formData.append("file", fileList[0]);
+        formData.append("file",file);
         const res = await importHolding({ token, formData }).unwrap();
         if (res.status_code == 200) {
             message.success('File uploaded successfully')
