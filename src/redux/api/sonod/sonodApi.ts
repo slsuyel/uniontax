@@ -131,6 +131,18 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["holding-create-update"],
     }),
+    importHolding: builder.mutation({
+      query: ({ token, formData }) => ({
+          url: `/user/holding-tax/import`,
+          method: "POST",
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          body: formData,
+      }),
+      invalidatesTags: ["holding-create-update"],
+  }),
+  
 
     sonodAction: builder.mutation({
       query: ({
@@ -182,4 +194,5 @@ export const {
   useNidCheckMutation,
   useHoldingBokeyaUpdateMutation,
   useUpdateHoldingMutation,
+  useImportHoldingMutation
 } = sonodApi;

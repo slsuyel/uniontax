@@ -12,8 +12,9 @@ const HoldingTax = () => {
         <div className="card-body">
           <div className="d-flex justify-content-between mb-3">
             <div className="row">
-              <div className="col-md-12">
+              <div className="align-item-center d-flex justify-content-between">
                 <h5 className="card-title">হোল্ডিং ট্যাক্স</h5>
+                <Link className="btn btn-sm btn-success" to={`/dashboard/holding/import/`}>Import</Link>
               </div>
               {wards.map((ward) => (
                 <div key={ward} className="col-md-2 col-sm-3 my-4 col-4">
