@@ -18,6 +18,7 @@ const apiSlice = createApi({
     'holding_pay',
     'check-nid',
     'sonod-apply',
+    "sms"
   ],
 });
 
