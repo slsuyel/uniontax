@@ -4,7 +4,7 @@ import Loader from "@/components/reusable/Loader";
 import { useAllHoldingQuery } from "@/redux/api/sonod/sonodApi";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { message, Pagination } from "antd";
+import { Pagination } from "antd";
 
 export interface THolding {
   id: number;
@@ -68,13 +68,14 @@ const HoldingShow = () => {
                 >
                   বকেয়া রিপোর্ট
                 </Link>{" "} */}
-                <button
+                <Link
                   className="btn btn-success  me-2"
-                  onClick={() => message.loading("শীঘ্রই আসছে, ধন্যবাদ! 🚀")}
+                  target="_blank"
+                  to={`https://api.uniontax.gov.bd/api/holding/tax/bokeya/list?word=${word}&token=${token}`}
                 >
                   {" "}
                   বকেয়া রিপোর্ট
-                </button>
+                </Link>
                 <Link
                   to={`/dashboard/holding/list/add/${word}`}
                   className="btn btn-info"
@@ -179,7 +180,7 @@ const HoldingShow = () => {
                           pageSize={pageSize}
                           total={totalItems}
                           onChange={handlePageChange}
-                          // Remove showSizeChanger and onShowSizeChange
+                        // Remove showSizeChanger and onShowSizeChange
                         />
                       </div>
                     )}
