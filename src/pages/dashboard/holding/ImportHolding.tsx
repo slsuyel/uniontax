@@ -59,25 +59,25 @@ const ImportHolding = () => {
 
 
     return (
-        <div className="card p-3 border-0">
+        <div className="card border-0 p-3">
             <Breadcrumbs current="হোল্ডিং ট্যাক্স" />
 
-            <div className="card shadow-sm border-0">
+            <div className="card border-0 shadow-sm">
                 <div className="row mx-auto">
                     <div className="col-md-10 mx-auto">
-                        <div className="upload-container bg-light p-4 rounded-3 mb-4">
+                        <div className="bg-light p-4 rounded-3 mb-4 upload-container">
                             <Dragger {...props} className="bg-white border-dashed" style={{ borderRadius: "8px" }}>
                                 <p className="ant-upload-drag-icon">
                                     <InboxOutlined style={{ color: "#1677ff", fontSize: "48px" }} />
                                 </p>
                                 <p className="ant-upload-text fw-bold">Click or drag Excel file to this area to upload</p>
-                                <p className="ant-upload-hint text-muted">
+                                <p className="text-muted ant-upload-hint">
                                     Support for a single Excel file upload. Ensure your data follows the required format.
                                 </p>
                             </Dragger>
 
                             {fileList.length > 0 && (
-                                <div className="mt-3 d-flex align-items-center">
+                                <div className="d-flex align-items-center mt-3">
                                     <FileExcelOutlined style={{ fontSize: "20px", color: "#52c41a" }} />
                                     <Text className="ms-2">{fileList[0].name}</Text>
                                 </div>
@@ -105,13 +105,13 @@ const ImportHolding = () => {
                             </div>
                         </div>
 
-                        <div className="alert alert-info d-flex align-items-center">
+                        <div className="d-flex alert alert-info align-items-center">
                             <i className="bi bi-info-circle me-2"></i>
                             <div>
                                 <p className="mb-0">
-                                    Please ensure your Excel file follows the required template format.
-                                    <a href="#" className="ms-1 fw-bold">
-                                        Download template
+                                    অনুগ্রহ করে নিশ্চিত করুন যে আপনার এক্সেল ফাইলটি প্রয়োজনীয় টেমপ্লেট ফরম্যাট অনুসরণ করে।
+                                    <a href="https://docs.google.com/spreadsheets/d/1wA7N0LDxkj_Zjjl1PRDh6C7ZvUUvNh0O/edit?usp=sharing&ouid=100850055606337083923&rtpof=true&sd=true" className="fw-bold ms-1">
+                                        টেমপ্লেট ডাউনলোড করুন
                                     </a>
                                 </p>
                             </div>
