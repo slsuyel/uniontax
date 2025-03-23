@@ -14,7 +14,7 @@ import SonodFee from "@/pages/dashboard/SonodFee";
 import EditSonod from "@/pages/dashboard/SonodManagement/EditSonod";
 import EnglishEditSonod from "@/pages/dashboard/SonodManagement/EnglishEditSonod";
 import SonodManagement from "@/pages/dashboard/SonodManagement/SonodManagement";
-import UnionProfile from "@/pages/dashboard/UnionProfile";
+// import UnionProfile from "@/pages/dashboard/UnionProfile";
 import UnionReports from "@/pages/dashboard/UnionReports";
 
 export const adminRoutes = [
@@ -32,7 +32,7 @@ export const adminRoutes = [
   },
   {
     path: "union/profile",
-    element: <UnionProfile />,
+    element: <ProfilePage />,
   },
   {
     path: "holding/tax/",

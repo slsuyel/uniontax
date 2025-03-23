@@ -3,20 +3,22 @@ import React from "react";
 import { Form, Input, Button, Tabs, message } from "antd";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import UnionProfile from "../dashboard/UnionProfile";
-import { useChangePasswordMutation } from "@/redux/api/auth/authApi";
+import { useBankDetailsQuery, useChangePasswordMutation, useSetBankAccountMutation } from "@/redux/api/auth/authApi";
+import Loader from "@/components/reusable/Loader";
 
 const { TabPane } = Tabs;
 
 const ProfilePage: React.FC = () => {
+  const [setBankAccount, { isLoading }] = useSetBankAccountMutation()
   const token = localStorage.getItem("token");
   const [changePassword, { isLoading: chaningPass }] =
     useChangePasswordMutation();
-  const [profileForm] = Form.useForm();
+  // const [profileForm] = Form.useForm();
   const [passwordForm] = Form.useForm();
-
-  const onProfileFinish = (values: any) => {
-    console.log("Received profile values: ", values);
-  };
+  const { data, isLoading: getting } = useBankDetailsQuery(token)
+  // const onProfileFinish = (values: any) => {
+  //   console.log("Received profile values: ", values);
+  // };
 
   const onPasswordFinish = async (values: any) => {
     try {
@@ -35,13 +37,25 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  const handleBankFormSubmit = async (values: any) => {
+    const res = await setBankAccount({ data: values, token }).unwrap()
+    console.log(res);
+    if (res.status_code == 200) {
+      message.success("ব্যাংক একাউন্ট সফলভাবে যোগ করা হয়েছে।");
+    }
+  };
+
+
+  if (getting) {
+    return <Loader />
+  }
   return (
     <div className="container card p-4">
       <Breadcrumbs current="প্রোফাইল" />
       <div className="">
         <Tabs defaultActiveKey="1">
           {/* প্রোফাইল আপডেট ট্যাব */}
-          <TabPane tab="প্রোফাইল আপডেট" key="1">
+          {/* <TabPane tab="প্রোফাইল আপডেট" key="1">
             <Form
               className="row mx-auto"
               form={profileForm}
@@ -79,9 +93,50 @@ const ProfilePage: React.FC = () => {
                 </Button>
               </Form.Item>
             </Form>
-          </TabPane>
+          </TabPane> */}
 
           {/* পাসওয়ার্ড পরিবর্তন ট্যাব */}
+
+          <TabPane
+            tab="ইউনিয়ন প্রোফাইল
+"
+            key="3"
+          >
+            <UnionProfile />
+          </TabPane>
+
+          {/* bank account */}
+          <TabPane tab="ব্যাংক অ্যাকাউন্ট সেটআপ" key="4">
+            <Form initialValues={data?.data}
+              onFinish={handleBankFormSubmit}
+              className="row mx-auto" layout="vertical">
+              <Form.Item className="col-md-6" label="ব্যাংকের নাম" name="bank_name">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="ব্রাঞ্চের নাম" name="branch_name">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="অ্যাকাউন্ট নম্বর" name="account_no">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="অ্যাকাউন্টের নাম" name="account_name">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="রাউটিং নম্বর" name="routing_no">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-12">
+                <Button loading={isLoading} disabled={isLoading} type="primary" htmlType="submit">
+                  সংরক্ষণ করুন
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
           <TabPane tab="পাসওয়ার্ড পরিবর্তন" key="2">
             <Form
               className="row mx-auto"
@@ -154,13 +209,6 @@ const ProfilePage: React.FC = () => {
                 </Button>
               </Form.Item>
             </Form>
-          </TabPane>
-          <TabPane
-            tab="ইউনিয়ন প্রোফাইল
-"
-            key="3"
-          >
-            <UnionProfile />
           </TabPane>
         </Tabs>
       </div>
