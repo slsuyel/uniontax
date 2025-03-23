@@ -95,7 +95,7 @@ const SonodFee = () => {
               <td>{item.bnname}</td>
               <td>
                 <input
-                  disabled={userInfo?.position =="Secretary"}
+                  disabled={userInfo?.position =="Secretary" || item.bnname=='ট্রেড লাইসেন্স'}
                   type="number"
                   min={1}
                   value={feesData[index]?.fees || ""}
