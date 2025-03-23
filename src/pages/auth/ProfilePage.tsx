@@ -11,12 +11,12 @@ const ProfilePage: React.FC = () => {
   const token = localStorage.getItem("token");
   const [changePassword, { isLoading: chaningPass }] =
     useChangePasswordMutation();
-  const [profileForm] = Form.useForm();
+  // const [profileForm] = Form.useForm();
   const [passwordForm] = Form.useForm();
 
-  const onProfileFinish = (values: any) => {
-    console.log("Received profile values: ", values);
-  };
+  // const onProfileFinish = (values: any) => {
+  //   console.log("Received profile values: ", values);
+  // };
 
   const onPasswordFinish = async (values: any) => {
     try {
@@ -35,13 +35,18 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  const handleBankFormSubmit = (values: any) => {
+    console.log("Bank Form Data:", values);
+  };
+
+
   return (
     <div className="container card p-4">
       <Breadcrumbs current="প্রোফাইল" />
       <div className="">
         <Tabs defaultActiveKey="1">
           {/* প্রোফাইল আপডেট ট্যাব */}
-          <TabPane tab="প্রোফাইল আপডেট" key="1">
+          {/* <TabPane tab="প্রোফাইল আপডেট" key="1">
             <Form
               className="row mx-auto"
               form={profileForm}
@@ -79,9 +84,49 @@ const ProfilePage: React.FC = () => {
                 </Button>
               </Form.Item>
             </Form>
-          </TabPane>
+          </TabPane> */}
 
           {/* পাসওয়ার্ড পরিবর্তন ট্যাব */}
+
+          <TabPane
+            tab="ইউনিয়ন প্রোফাইল
+"
+            key="3"
+          >
+            <UnionProfile />
+          </TabPane>
+
+          {/* bank account */}
+          <TabPane tab="ব্যাংক অ্যাকাউন্ট সেটআপ" key="4">
+            <Form onFinish={handleBankFormSubmit}
+              className="row mx-auto" layout="vertical">
+              <Form.Item className="col-md-6" label="ব্যাংকের নাম" name="bank_name">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="ব্রাঞ্চের নাম" name="branch_name">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="অ্যাকাউন্ট নম্বর" name="account_no">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="অ্যাকাউন্টের নাম" name="account_name">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-6" label="রাউটিং নম্বর" name="routing_no">
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item className="col-md-12">
+                <Button type="primary" htmlType="submit">
+                  সংরক্ষণ করুন
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
           <TabPane tab="পাসওয়ার্ড পরিবর্তন" key="2">
             <Form
               className="row mx-auto"
@@ -154,13 +199,6 @@ const ProfilePage: React.FC = () => {
                 </Button>
               </Form.Item>
             </Form>
-          </TabPane>
-          <TabPane
-            tab="ইউনিয়ন প্রোফাইল
-"
-            key="3"
-          >
-            <UnionProfile />
           </TabPane>
         </Tabs>
       </div>
