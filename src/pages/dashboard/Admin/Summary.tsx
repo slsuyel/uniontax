@@ -56,7 +56,7 @@ const Summary = ({ data }: any) => {
       value: (data?.totalRevenue).toFixed(2),
     },
     {
-      icon: "/src/assets/icons/sms.webp",
+      icon: "/images/sms.webp",
       title: "SMS Balance",
       value: (data?.sms_balance),
     },
