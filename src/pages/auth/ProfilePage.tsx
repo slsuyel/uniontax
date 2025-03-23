@@ -3,17 +3,19 @@ import React from "react";
 import { Form, Input, Button, Tabs, message } from "antd";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import UnionProfile from "../dashboard/UnionProfile";
-import { useChangePasswordMutation } from "@/redux/api/auth/authApi";
+import { useBankDetailsQuery, useChangePasswordMutation, useSetBankAccountMutation } from "@/redux/api/auth/authApi";
+import Loader from "@/components/reusable/Loader";
 
 const { TabPane } = Tabs;
 
 const ProfilePage: React.FC = () => {
+  const [setBankAccount, { isLoading }] = useSetBankAccountMutation()
   const token = localStorage.getItem("token");
   const [changePassword, { isLoading: chaningPass }] =
     useChangePasswordMutation();
   // const [profileForm] = Form.useForm();
   const [passwordForm] = Form.useForm();
-
+  const { data, isLoading: getting } = useBankDetailsQuery(token)
   // const onProfileFinish = (values: any) => {
   //   console.log("Received profile values: ", values);
   // };
@@ -35,11 +37,18 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  const handleBankFormSubmit = (values: any) => {
-    console.log("Bank Form Data:", values);
+  const handleBankFormSubmit = async (values: any) => {
+    const res = await setBankAccount({ data: values, token }).unwrap()
+    console.log(res);
+    if (res.status_code == 200) {
+      message.success("ব্যাংক একাউন্ট সফলভাবে যোগ করা হয়েছে।");
+    }
   };
 
 
+  if (getting) {
+    return <Loader />
+  }
   return (
     <div className="container card p-4">
       <Breadcrumbs current="প্রোফাইল" />
@@ -98,7 +107,8 @@ const ProfilePage: React.FC = () => {
 
           {/* bank account */}
           <TabPane tab="ব্যাংক অ্যাকাউন্ট সেটআপ" key="4">
-            <Form onFinish={handleBankFormSubmit}
+            <Form initialValues={data?.data}
+              onFinish={handleBankFormSubmit}
               className="row mx-auto" layout="vertical">
               <Form.Item className="col-md-6" label="ব্যাংকের নাম" name="bank_name">
                 <Input style={{ height: 40 }} />
@@ -121,7 +131,7 @@ const ProfilePage: React.FC = () => {
               </Form.Item>
 
               <Form.Item className="col-md-12">
-                <Button type="primary" htmlType="submit">
+                <Button loading={isLoading} disabled={isLoading} type="primary" htmlType="submit">
                   সংরক্ষণ করুন
                 </Button>
               </Form.Item>
