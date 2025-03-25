@@ -34,6 +34,7 @@ const AdminNotice = ({ isVisible, onClose, user }: AdminNoticeProps) => {
             open={isVisible}
             footer={null}
             centered
+            closable={false} 
         >
 
             <Form form={form} layout="vertical" onFinish={handleSubmit}>
