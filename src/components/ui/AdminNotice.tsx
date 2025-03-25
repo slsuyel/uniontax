@@ -36,7 +36,6 @@ const AdminNotice = ({ isVisible, onClose, user }: AdminNoticeProps) => {
             centered
             closable={false} 
         >
-
             <Form form={form} layout="vertical" onFinish={handleSubmit}>
                 <Form.Item className=" mb-1"
                     label="চেয়ারম্যান/প্যানেল চেয়ারম্যান/ প্রশাসক ফোন নম্বর"
