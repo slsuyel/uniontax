@@ -1,60 +1,54 @@
-import { Layout } from "antd";
+"use client"
 
-import { Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
-import { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
-import ScrollToTop from "@/utils/ScrollToTop";
-const { Header, Content, Footer } = Layout;
+import { Layout } from "antd"
+import { Outlet } from "react-router-dom"
+import { useEffect, useState } from "react"
+import Navbar from "./Navbar"
+import Sidebar from "./Sidebar"
+import ScrollToTop from "@/utils/ScrollToTop"
+import { useAppSelector } from "@/redux/features/hooks"
+import type { RootState } from "@/redux/features/store"
+import AdminNotice from "@/components/ui/AdminNotice"
 
+
+const { Header, Content, Footer } = Layout
 const UserLayout = () => {
-  const theme = false;
-  const [scrollY, setScrollY] = useState(0);
+  const user = useAppSelector((state: RootState) => state.user.user)
+  const theme = false
+  const [isNoticeVisible, setIsNoticeVisible] = useState(false)
+
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
+    if (user && user?.is_popup) {
+      setIsNoticeVisible(true)
+    }
+  }, [user])
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const handleCloseNotice = () => {
+    setIsNoticeVisible(false)
+  }
+  // console.log(user);
   return (
     <ScrollToTop>
       <Layout>
-        <Sidebar />
+        <Sidebar user={user} />
         <Layout>
           <Header
             className="antd-db-header-nv"
             style={{
-              // padding: "5px",
               display: "flex",
               alignItems: "center",
               position: "fixed",
               zIndex: 1000,
-              backgroundColor: !theme
-                ? scrollY > 0
-                  ? "#017575"
-                  : "#007575"
-                : scrollY > 0
-                ? "#fffcfc8a"
-                : "white",
-              backdropFilter: scrollY > 0 ? "blur(4px)" : "none",
+              backgroundColor: !theme ? "#007575" : "white",
+              backdropFilter: "none",
               transition: "background-color 0.3s, backdrop-filter 0.3s",
             }}
           >
             <div style={{ marginLeft: "auto" }}>
-              {" "}
-              {/* Push Navbar to the right */}
               <Navbar />
             </div>
           </Header>
-          <Content
-            style={{ margin: "24px 0px 0" }}
-            className={`${!theme ? "dark " : ""}`}
-          >
+          <Content style={{ margin: "24px 0px 0" }} className={`${!theme ? "dark " : ""}`}>
             <div
               style={{
                 padding: 24,
@@ -67,17 +61,21 @@ const UserLayout = () => {
           </Content>
           <Footer className={`${!theme ? "dark border-top" : ""}`}>
             <footer>
-              <div className="float-right d-none d-sm-inline">
-                Version 2.0.0{" "}
-              </div>
-              <strong>Copyright © 2024-2025 সফটওয়েব সিস্টেম সল্যুশন</strong>
-              {""} || All rights reserved.
+              <div className="float-right d-none d-sm-inline">Version 2.0.0</div>
+              <strong>
+                Copyright © {new Date().getFullYear()}-{new Date().getFullYear() + 1} সফটওয়েব সিস্টেম সল্যুশন
+              </strong>
+              || All rights reserved.
             </footer>
           </Footer>
         </Layout>
-      </Layout>{" "}
-    </ScrollToTop>
-  );
-};
+      </Layout>
 
-export default UserLayout;
+      {/* Admin Notice Modal */}
+      <AdminNotice isVisible={isNoticeVisible} onClose={handleCloseNotice} user={user} />
+    </ScrollToTop>
+  )
+}
+
+export default UserLayout
+
