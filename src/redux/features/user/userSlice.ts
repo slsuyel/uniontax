@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 //   email: string;
 //   verified?: boolean;
 // }
-interface User {
+export interface User {
   email: string;
   unioun: string;
   name: string | null;
@@ -13,6 +13,7 @@ interface User {
   dashboard_title: string;
   designation: string;
   email_verified: boolean;
+  is_popup: boolean;
 }
 
 type TInitialState = {
