@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useGetPostOfficesQuery,useGetVillagesQuery } from "@/redux/api/user/userApi";
-import { Form, Select, Checkbox, Input, AutoComplete } from "antd";
+import { Form, Select, Checkbox, AutoComplete } from "antd";
 import { TDistrict, TDivision, TUpazila, TUnion } from "@/types";
 
 const { Option } = Select;
 interface AddressFieldsProps {
   form: any; // Accept the form prop from the parent component
-  postOffices?: any; // Add postOffices as an optional prop
 }
 
-const AddressFields = ({ form, postOffices }: AddressFieldsProps) => {
+const AddressFields = ({ form }: AddressFieldsProps) => {
 
   // Removed unused filteredPostOffices state
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
@@ -21,8 +20,8 @@ const AddressFields = ({ form, postOffices }: AddressFieldsProps) => {
   const [selectedPerDivision, setSelectedPerDivision] = useState<string>("");
   const [selectedPerDistrict, setSelectedPerDistrict] = useState<string>("");
   const [selectedPerUpazila, setSelectedPerUpazila] = useState<string>("");
-  const [selectedPerUnion, setSelectedPerUnion] = useState<string>("");
-  const [selectedPerWord, setSelectedPerWord] = useState<string>("");
+  const [selectedPerUnion] = useState<string>("");
+  const [selectedPerWord] = useState<string>("");
 
   const [divisions, setDivisions] = useState<TDivision[]>([]);
   const [districts, setDistricts] = useState<TDistrict[]>([]);
@@ -47,13 +46,13 @@ const AddressFields = ({ form, postOffices }: AddressFieldsProps) => {
     }
   }, [selectedUnion, selectedWord]);
   
-  const { data: villagesData, isLoading: isLoadingVillages } = useGetVillagesQuery(
+  const { data: villagesData } = useGetVillagesQuery(
     { union: selectedUnion, word: selectedWord },
     { skip: !trigger } // Ensures query runs only when trigger is true
   );
 
   
-  const { data: perVillagesData, isLoading: isLoadingPerVillages } = useGetVillagesQuery(
+  const { data: perVillagesData } = useGetVillagesQuery(
     { union: selectedPerUnion, word: selectedPerWord },
     { skip: !trigger } // Ensures query runs only when trigger is true
   );
