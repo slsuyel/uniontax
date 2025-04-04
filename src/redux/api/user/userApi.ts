@@ -81,6 +81,24 @@ const userApi = apiSlice.injectEndpoints({
         },
       }),
     }),
+
+        // New query for fetching post offices by union
+        getPostOffices: builder.query({
+          query: (union) => ({
+            url: `/global/get/post/office/${union}`,
+            method: "GET",
+          }),
+        }),
+
+        getVillages: builder.query({
+          query: ({ union, word }: { union: string; word: string }) => ({
+            url: `/global/get/village/${union}/${word}`,
+            method: "GET",
+          }),
+        }),
+
+
+
   }),
 });
 
@@ -93,5 +111,7 @@ export const {
   useRenewSonodMutation,
   useDbMetricsQuery,
   useGetUnionInfoMutation,
-  useSonodSearchByIdQuery
+  useSonodSearchByIdQuery,
+  useGetPostOfficesQuery, 
+  useGetVillagesQuery, 
 } = userApi;

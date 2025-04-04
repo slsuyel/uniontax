@@ -1,27 +1,63 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { Form, Select, Checkbox, Input } from "antd";
-import { TDistrict, TDivision, TUpazila } from "@/types";
+import { useGetPostOfficesQuery,useGetVillagesQuery } from "@/redux/api/user/userApi";
+import { Form, Select, Checkbox, Input, AutoComplete } from "antd";
+import { TDistrict, TDivision, TUpazila, TUnion } from "@/types";
 
 const { Option } = Select;
-
 interface AddressFieldsProps {
   form: any; // Accept the form prop from the parent component
+  postOffices?: any; // Add postOffices as an optional prop
 }
-const AddressFields = ({ form }: AddressFieldsProps) => {
-  const [selectedDivision, setSelectedDivision] = useState<string>("");
+
+const AddressFields = ({ form, postOffices }: AddressFieldsProps) => {
+
+  // Removed unused filteredPostOffices state
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [selectedUpazila, setSelectedUpazila] = useState<string>("");
+  const [selectedUnion, setSelectedUnion] = useState<string>("");
+  const [selectedWord, setSelectedWord] = useState<string>("");
+
   const [selectedPerDivision, setSelectedPerDivision] = useState<string>("");
   const [selectedPerDistrict, setSelectedPerDistrict] = useState<string>("");
   const [selectedPerUpazila, setSelectedPerUpazila] = useState<string>("");
+  const [selectedPerUnion, setSelectedPerUnion] = useState<string>("");
+  const [selectedPerWord, setSelectedPerWord] = useState<string>("");
 
   const [divisions, setDivisions] = useState<TDivision[]>([]);
   const [districts, setDistricts] = useState<TDistrict[]>([]);
   const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
+  const [unions, setUnions] = useState<TUnion[]>([]);
 
   const [perDistricts, setPerDistricts] = useState<TDistrict[]>([]);
   const [perUpazilas, setPerUpazilas] = useState<TUpazila[]>([]);
+  const [perUnions, setPerUnions] = useState<TUnion[]>([]);
+  // const [filteredPostOffices, setFilteredPostOffices] = useState<any[]>([]);
+
+  // Fetch post offices using RTK Query
+  const { data: postOfficesData = [] } = useGetPostOfficesQuery(selectedUnion); 
+  const { data: perPostOfficesData = [] } = useGetPostOfficesQuery(selectedPerUnion); 
+
+  // const { data: perPostOfficesData = [] } = useGetVillagesQuery(selectedPerUnion,); 
+  const [trigger, setTrigger] = useState(false);
+
+  useEffect(() => {
+    if (selectedUnion && selectedWord) {
+      setTrigger(true);
+    }
+  }, [selectedUnion, selectedWord]);
+  
+  const { data: villagesData, isLoading: isLoadingVillages } = useGetVillagesQuery(
+    { union: selectedUnion, word: selectedWord },
+    { skip: !trigger } // Ensures query runs only when trigger is true
+  );
+
+  
+  const { data: perVillagesData, isLoading: isLoadingPerVillages } = useGetVillagesQuery(
+    { union: selectedPerUnion, word: selectedPerWord },
+    { skip: !trigger } // Ensures query runs only when trigger is true
+  );
+
 
   useEffect(() => {
     fetch("/divisions.json")
@@ -33,12 +69,12 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
   }, []);
 
   useEffect(() => {
-    if (selectedDivision) {
+    if (selectedPerDivision) {
       fetch("/districts.json")
         .then((response) => response.json())
         .then((data: TDistrict[]) => {
           const filteredDistricts = data.filter(
-            (d) => d.division_id === selectedDivision
+            (d) => d.division_id === selectedPerDivision
           );
           setDistricts(filteredDistricts);
         })
@@ -59,7 +95,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           console.error("Error fetching districts data:", error)
         );
     }
-  }, [selectedDivision, selectedPerDivision]);
+  }, [selectedPerDivision]);
 
   useEffect(() => {
     if (selectedDistrict) {
@@ -90,13 +126,49 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     }
   }, [selectedDistrict, selectedPerDistrict]);
 
+  
+
+
+  useEffect(() => {
+    if (selectedUpazila) {
+      fetch("/unions.json")
+        .then((response) => response.json())
+        .then((data: any[]) => {
+          const filteredUnions = data.filter(
+            (union) => union.upazilla_id === selectedUpazila
+          );
+          setUnions(filteredUnions);
+        })
+        .catch((error) =>
+          console.error("Error fetching unions data:", error)
+        );
+    }
+    if (selectedPerUpazila) {
+      fetch("/unions.json")
+        .then((response) => response.json())
+        .then((data: any[]) => {
+          const filteredUnions = data.filter(
+            (union) => union.upazilla_id === selectedPerUpazila
+          );
+          setPerUnions(filteredUnions);
+        })
+        .catch((error) =>
+          console.error("Error fetching unions data:", error)
+        );
+    }
+  }, [selectedUpazila, selectedPerUpazila]);
+
+  
+
+
+
   const handleDivChange = (value: string) => {
-    setSelectedDivision(value);
+    setSelectedPerDivision(value);
     setSelectedDistrict("");
     setSelectedUpazila("");
 
     const filterDivition = divisions.find((d) => d.id === value);
-    console.log(filterDivition?.bn_name);
+
 
     form.setFieldsValue({
       current_division: filterDivition?.bn_name,
@@ -108,26 +180,52 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedUpazila("");
 
     const filterDistrict = districts.find((d) => d.id === value);
-    console.log(filterDistrict?.bn_name);
+
 
     form.setFieldsValue({
       applicant_present_district: filterDistrict?.bn_name,
     });
 
-    console.log(form);
+
   };
 
   const handleUpazilaChange = (value: string) => {
     setSelectedUpazila(value);
 
     const filterUpazila = upazilas.find((d) => d.id === value);
-    console.log(filterUpazila?.bn_name);
+
 
     form.setFieldsValue({
       applicant_present_Upazila: filterUpazila?.bn_name,
     });
 
-    console.log(form);
+  };
+
+  const handleUnionChange = (value: string) => {
+    setSelectedUnion(value);
+
+ 
+    const filterUnion = unions?.find((union: any) => union.id === value);
+    console.log("filterUnion:", filterUnion);
+
+    form.setFieldsValue({
+      applicant_present_union: filterUnion?.bn_name,
+    });
+
+
+  };
+
+  const handlePerUnionChange = (value: string) => {
+    setSelectedUnion(value);
+
+    const filterUnion = perUnions?.find((union: any) => union.id === value);
+
+
+    form.setFieldsValue({
+      applicant_permanent_union: filterUnion?.bn_name,
+    });
+
+
   };
 
   /* ------------------ */
@@ -137,7 +235,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedPerDistrict("");
     setSelectedPerUpazila("");
     const filterDivition = divisions.find((d) => d.id === value);
-    console.log(filterDivition?.bn_name);
+
 
     form.setFieldsValue({
       permanent_division: filterDivition?.bn_name,
@@ -149,37 +247,40 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     setSelectedPerUpazila("");
 
     const filterDistrict = districts.find((d) => d.id === value);
-    console.log(filterDistrict?.bn_name);
+
 
     form.setFieldsValue({
       applicant_permanent_district: filterDistrict?.bn_name,
     });
 
-    console.log(form);
+
   };
 
   const handlePerUpazilaChange = (value: string) => {
     setSelectedPerUpazila(value);
 
     const filterUpazila = upazilas.find((d) => d.id === value);
-    console.log(filterUpazila?.bn_name);
+
 
     form.setFieldsValue({
       applicant_permanent_Upazila: filterUpazila?.bn_name,
     });
 
-    console.log(form);
+
   };
 
   const handleSameAddressChange = (e: any) => {
     if (e.target.checked) {
-      form.setFieldsValue({
+      const updatedValues = {
         applicant_permanent_division: form.getFieldValue("current_division"),
         applicant_permanent_district: form.getFieldValue(
           "applicant_present_district"
         ),
         applicant_permanent_Upazila: form.getFieldValue(
           "applicant_present_Upazila"
+        ),
+        applicant_permanent_union: form.getFieldValue(
+          "applicant_present_union"
         ),
         applicant_permanent_word_number: form.getFieldValue(
           "applicant_present_word_number"
@@ -190,16 +291,22 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
         applicant_permanent_post_office: form.getFieldValue(
           "applicant_present_post_office"
         ),
-      });
+      };
+      console.log("Current address values:", form.getFieldsValue());
+      console.log("Setting permanent address to:", updatedValues);
+      form.setFieldsValue(updatedValues);
     } else {
-      form.setFieldsValue({
+      const clearedValues = {
         applicant_permanent_division: "",
         applicant_permanent_district: "",
         applicant_permanent_Upazila: "",
+        applicant_permanent_union: "",
         applicant_permanent_word_number: "",
         applicant_permanent_village: "",
         applicant_permanent_post_office: "",
-      });
+      };
+      console.log("Clearing permanent address:", clearedValues);
+      form.setFieldsValue(clearedValues);
     }
   };
 
@@ -214,7 +321,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
               style={{ height: 40, width: "100%" }}
-              value={selectedDivision}
+              value={selectedPerDivision}
               onChange={handleDivChange}
             >
               {divisions.map((division) => (
@@ -255,22 +362,92 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
             </Select>
           </Form.Item>
 
-          <Form.Item name="applicant_present_post_office" label="পোষ্ট অফিস">
-            <Input className="form-control" />
-          </Form.Item>
-          <Form.Item name="applicant_present_word_number" label="ওয়ার্ড নং">
-            <Select style={{ height: 40, width: "100%" }}>
-              <Option value="">ওয়াড নং</Option>
-              {Array.from({ length: 9 }, (_, i) => (
-                <Option key={i + 1} value={i + 1}>
-                  {i + 1}
+
+            <Form.Item name="applicant_present_union" label="ইউনিয়ন">
+            <Select
+              placeholder="ইউনিয়ন নির্বাচন করুন"
+              style={{ height: 40, width: "100%" }}
+              value={selectedUnion}
+              onChange={handleUnionChange}
+            >
+              {unions.map((union) => (
+                <Option key={union.id} value={union.id}>
+                  {union.bn_name}
                 </Option>
               ))}
             </Select>
-          </Form.Item>
+            </Form.Item>
+
+
+
+
+{/* 
+          <Form.Item name="applicant_present_post_office" label="পোষ্ট অফিস">
+            <Input className="form-control" />
+          </Form.Item> */}
+
+
+
+
+<Form.Item name="applicant_present_post_office" label="পোষ্ট অফিস">
+  <AutoComplete
+    options={postOfficesData?.data?.map((postOffice: any) => ({
+      value: postOffice.name_bn,
+      label: postOffice.name_bn,
+    }))}
+    placeholder="পোষ্ট অফিস লিখুন"
+   
+    onChange={(value) => form.setFieldsValue({ applicant_present_post_office: value })}
+    filterOption={(inputValue, option) =>
+      (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
+    }
+  />
+</Form.Item>
+
+
+  <Form.Item name="applicant_present_word_number" label="ওয়ার্ড নং">
+  <Select
+    style={{ height: 40, width: "100%" }}
+    value={selectedWord}
+    onChange={(value) => setSelectedWord(value)}
+  >
+    <Option value="">ওয়াড নং</Option>
+    {Array.from({ length: 9 }, (_, i) => (
+    <Option key={i + 1} value={i + 1}>
+      {i + 1}
+    </Option>
+    ))}
+  </Select>
+  </Form.Item>
+
+
+
+{/* 
           <Form.Item name="applicant_present_village" label="গ্রাম/মহল্লা">
             <Input className="form-control" />
-          </Form.Item>
+          </Form.Item> */}
+
+
+
+
+
+<Form.Item name="applicant_present_village" label="গ্রাম/মহল্লা">
+  <AutoComplete
+    options={villagesData?.data?.map((village: any) => ({
+      value: village.name_bn,
+      label: village.name_bn,
+    }))}
+    placeholder="গ্রাম/মহল্লা লিখুন"
+   
+    onChange={(value) => form.setFieldsValue({ applicant_present_village: value })}
+    filterOption={(inputValue, option) =>
+      (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
+    }
+  />
+</Form.Item>
+
+
+
         </div>
 
         <div className="col-md-6">
@@ -345,22 +522,86 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
             </Select>
           </Form.Item>
 
-          <Form.Item name="applicant_permanent_post_office" label="পোষ্ট অফিস">
-            <Input className="form-control" />
-          </Form.Item>
-          <Form.Item name="applicant_permanent_word_number" label="ওয়ার্ড নং">
-            <Select style={{ height: 40, width: "100%" }}>
-              <Option value="">ওয়াড নং</Option>
-              {Array.from({ length: 9 }, (_, i) => (
-                <Option key={i + 1} value={i + 1}>
-                  {i + 1}
+
+
+
+          
+          <Form.Item name="applicant_permanent_union" label="ইউনিয়ন">
+            <Select
+              placeholder="ইউনিয়ন নির্বাচন করুন"
+              style={{ height: 40, width: "100%" }}
+              value={selectedPerUnion}
+              onChange={handlePerUnionChange}
+            >
+              {perUnions.map((union) => (
+                <Option key={union.id} value={union.id}>
+                  {union.bn_name}
                 </Option>
               ))}
             </Select>
-          </Form.Item>
-          <Form.Item name="applicant_permanent_village" label="গ্রাম/মহল্লা">
+            </Form.Item>
+
+          {/* <Form.Item name="applicant_permanent_post_office" label="পোষ্ট অফিস">
             <Input className="form-control" />
           </Form.Item>
+           */}
+
+<Form.Item name="applicant_permanent_post_office" label="পোষ্ট অফিস">
+  <AutoComplete
+    options={perPostOfficesData?.data?.map((postOffice: any) => ({
+      value: postOffice.name_bn,
+      label: postOffice.name_bn,
+    }))}
+    placeholder="পোষ্ট অফিস লিখুন"
+   
+    onChange={(value) => form.setFieldsValue({ applicant_permanent_post_office: value })}
+    filterOption={(inputValue, option) =>
+      (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
+    }
+  />
+</Form.Item>
+
+
+
+            
+          <Form.Item name="applicant_permanent_word_number" label="ওয়ার্ড নং">
+          <Select
+            style={{ height: 40, width: "100%" }}
+            value={selectedPerWord}
+            onChange={(value) => setSelectedWord(value)}
+          >
+            <Option value="">ওয়াড নং</Option>
+            {Array.from({ length: 9 }, (_, i) => (
+            <Option key={i + 1} value={i + 1}>
+              {i + 1}
+            </Option>
+            ))}
+          </Select>
+          </Form.Item>
+
+{/* 
+          <Form.Item name="applicant_permanent_village" label="গ্রাম/মহল্লা">
+            <Input className="form-control" />
+          </Form.Item> */}
+
+
+
+          
+<Form.Item name="applicant_permanent_village" label="গ্রাম/মহল্লা">
+  <AutoComplete
+    options={perVillagesData?.data?.map((village: any) => ({
+      value: village.name_bn,
+      label: village.name_bn,
+    }))}
+    placeholder="গ্রাম/মহল্লা লিখুন"
+   
+    onChange={(value) => form.setFieldsValue({ applicant_permanent_village: value })}
+    filterOption={(inputValue, option) =>
+      (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
+    }
+  />
+</Form.Item>
+
         </div>
       </div>
     </>

@@ -38,6 +38,9 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const { service } = useParams<{ service: string }>();
   const [sonodName, setSonodName] = useState(service);
 
+  const postOffices = unionInfo?.post_offices || [];
+  const addressFieldsProps = { form, postOffices };
+
   const [updateSonod, { isLoading: updating }] = useSonodUpdateMutation();
   const { data, isLoading } = useTradeInfoQuery(
     { unionName: unionInfo?.short_name_e },
@@ -242,7 +245,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             {/* Corrected JSX component call */}
             {conditionalForm(sonodName)}
           </div>
-          {addressFields({ form })}
+            {addressFields(addressFieldsProps)}
           {attachmentForm({
             setFrontFile,
             setBackFile,
