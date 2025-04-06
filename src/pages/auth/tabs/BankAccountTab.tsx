@@ -39,19 +39,19 @@ const BankAccountTab: React.FC = () => {
   return (
     <Form initialValues={data?.data || {}} onFinish={handleBankFormSubmit} className="row mx-auto" layout="vertical">
       <Form.Item className="col-md-6" label="ব্যাংকের নাম" name="bank_name">
-        <Input style={{ height: 40 }} defaultValue={data?.data.bank_name || ""} readOnly />
+        <Input style={{ height: 40 }} defaultValue={data?.data.bank_name || ""}  />
       </Form.Item>
       <Form.Item className="col-md-6" label="ব্রাঞ্চের নাম" name="branch_name">
-        <Input style={{ height: 40 }} defaultValue={data?.data.branch_name || ""} readOnly />
+        <Input style={{ height: 40 }} defaultValue={data?.data.branch_name || ""}  />
       </Form.Item>
       <Form.Item className="col-md-6" label="অ্যাকাউন্ট নম্বর" name="account_no">
-        <Input style={{ height: 40 }} defaultValue={data?.data.account_no || ""} readOnly />
+        <Input style={{ height: 40 }} defaultValue={data?.data.account_no || ""}  />
       </Form.Item>
       <Form.Item className="col-md-6" label="অ্যাকাউন্টের নাম" name="account_name">
-        <Input style={{ height: 40 }} defaultValue={data?.data.account_name || ""} readOnly />
+        <Input style={{ height: 40 }} defaultValue={data?.data.account_name || ""}  />
       </Form.Item>
       <Form.Item className="col-md-6" label="রাউটিং নম্বর" name="routing_no">
-        <Input style={{ height: 40 }} defaultValue={data?.data.routing_no || ""} readOnly />
+        <Input style={{ height: 40 }} defaultValue={data?.data.routing_no || ""}  />
       </Form.Item>
       <Form.Item className="col-md-12">
         <Button loading={isLoading} disabled={isLoading} type="primary" htmlType="submit">

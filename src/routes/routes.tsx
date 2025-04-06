@@ -25,6 +25,7 @@ import UddoktaLayout from "./../components/layouts/uddokta/UddoktaLayout";
 import { uddoktaRoutes } from "./uddoktaRoutes";
 import UddoktaAuthProvider from "@/Providers/UddoktaAuthProvider";
 import SonodSearchById from "@/pages/SonodSearch/SonodSearchById";
+import SonodDetails from "@/pages/About/SonodDetails";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "/citizens_corner",
         element: <CitizenCorner />,
+      },
+      {
+        path: "/sonod-details/:id",
+        element: <SonodDetails />,
       },
       {
         path: "/login",
