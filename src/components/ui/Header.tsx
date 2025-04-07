@@ -56,7 +56,7 @@ const Header = () => {
 
   const handleService = (serviceLink: string) => {
     if (unionInfo?.short_name_e == "uniontax") {
-      message.warning("ইউনিয়ন নির্বাচন করুন");
+      message.warning(site_settings?.header_union_select_title || "");
       setNoUnion(true);
       return;
     }
@@ -145,7 +145,7 @@ const Header = () => {
         animation="fade-down"
       >
         <div style={{ zIndex: 999 }} className=" py-3">
-          <h3 className="">ইউনিয়ন নির্বাচন করুন </h3>
+          <h3 className="">{site_settings?.header_union_select_title || ""}</h3>
           <SearchBox   service={""} id={""}  unionname={""}  />
         </div>
       </Modal>
