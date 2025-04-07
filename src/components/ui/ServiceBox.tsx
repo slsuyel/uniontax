@@ -60,11 +60,11 @@ const ServiceBox = () => {
 
       <div className="col-md-12 mt-5">
         <h5 className="service-section-title position-relative ps-3 py-2 text-white rounded-2">
-        {site_settings.history_title || ""}
+        {site_settings?.history_title || ""}
         </h5>
 
         <p className="mt-3 lh-base">
-        {site_settings.history}
+        {site_settings?.history}
         </p>
       </div>
 
