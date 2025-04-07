@@ -9,10 +9,12 @@ import { useState } from "react"
 import SearchBox from "../reusable/SearchBox"
 import './service-box.css'
 
+
 const ServiceBox = () => {
   const [noUnion, setNoUnion] = useState(false)
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList)
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo)
+    const [selectedService, setSelectedService] = useState<string | null>(null)
 
   const navigate = useNavigate()
 
@@ -22,6 +24,7 @@ const ServiceBox = () => {
     if (unionInfo?.short_name_e === "uniontax") {
       message.warning("অনুগ্রহ করে আপনার ইউনিয়ন নির্বাচন করুন")
       setNoUnion(true)
+      setSelectedService(service)
       return
     }
     navigate(`/application/${service}`)
@@ -83,7 +86,7 @@ const ServiceBox = () => {
       >
         <div style={{ zIndex: 999 }} className="py-3">
           <h3 className="">ইউনিয়ন নির্বাচন করুন </h3>
-          <SearchBox />
+          <SearchBox   service={selectedService ?? ""} id={""}  unionname={""}  />
         </div>
       </Modal>
     </div>

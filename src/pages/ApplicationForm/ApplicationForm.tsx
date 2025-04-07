@@ -23,6 +23,7 @@ import InheritanceList from "./inheritanceList";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   /* ```````````` */
+  const [fetchedUser, setFetchedUser] = useState<TApplicantData | null>(null);
 
   const [frontFile, setFrontFile] = useState<File | null>(null);
   const [backFile, setBackFile] = useState<File | null>(null);
@@ -55,13 +56,50 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
+
+
+  // Extract the 'id' query parameter from the URL
+  const queryParams = new URLSearchParams(location.search);
+  const idFromUrl = queryParams.get("id");
+
+    // If no id is provided, use the `user` prop to populate the form data
+    useEffect(() => {
+      if (idFromUrl) {
+        // Fetch the data based on the `id` parameter
+        const fetchUser = async () => {
+          try {
+            const response = await fetch(`https://api.uniontax.gov.bd/api/sonod/search/for/re-applicaion?id=${idFromUrl}`);
+            const result = await response.json();
+            if (result?.data) {
+              setFetchedUser(result.data);
+         
+              form.setFieldsValue(result.data); // Set form values after fetching
+            }
+          } catch (error) {
+            console.error("Failed to fetch user by ID:", error);
+          }
+        };
+        fetchUser();
+      } else {
+        setFetchedUser(user || null);
+        form.setFieldsValue(user || {}); // Set form values from the `user` prop
+      }
+    }, [idFromUrl, service, user, form]);
+
+
+
+
+
+
+  const sonodInfo = fetchedUser;
+
   useEffect(() => {
-    if (isDashboard && user?.sonod_name) {
-      setSonodName(user?.sonod_name);
+    if (isDashboard && sonodInfo?.sonod_name) {
+      setSonodName(sonodInfo?.sonod_name);
     } else {
       setSonodName(service);
     }
-  }, [isDashboard, user?.sonod_name, service]);
+  }, [isDashboard, sonodInfo?.sonod_name, service]);
 
   const handleSubmitForm = async (values: any) => {
     const files = {
@@ -126,8 +164,10 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     setModalVisible(false);
   };
 
+
+
   const successorList =
-    (user?.successor_list && JSON.parse(user?.successor_list)) || [];
+    (sonodInfo?.successor_list && JSON.parse(sonodInfo?.successor_list)) || [];
 
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
@@ -136,84 +176,84 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
         layout="vertical"
         onFinish={handleSubmitForm}
         initialValues={{
-          unioun_name: user?.unioun_name,
-          sonod_name: user?.sonod_name,
-          successor_father_name: user?.successor_father_name,
-          successor_mother_name: user?.successor_mother_name,
-          ut_father_name: user?.ut_father_name,
-          ut_mother_name: user?.ut_mother_name,
-          ut_grame: user?.ut_grame,
-          ut_post: user?.ut_post,
-          last_years_money: user?.last_years_money ?? 0,
-          ut_thana: user?.ut_thana,
-          ut_district: user?.ut_district,
-          ut_word: user?.ut_word,
-          successor_father_alive_status: user?.successor_father_alive_status,
-          successor_mother_alive_status: user?.successor_mother_alive_status,
-          applicant_holding_tax_number: user?.applicant_holding_tax_number,
-          applicant_national_id_number: user?.applicant_national_id_number,
+          unioun_name: sonodInfo?.unioun_name,
+          sonod_name: sonodInfo?.sonod_name,
+          successor_father_name: sonodInfo?.successor_father_name,
+          successor_mother_name: sonodInfo?.successor_mother_name,
+          ut_father_name: sonodInfo?.ut_father_name,
+          ut_mother_name: sonodInfo?.ut_mother_name,
+          ut_grame: sonodInfo?.ut_grame,
+          ut_post: sonodInfo?.ut_post,
+          last_years_money: sonodInfo?.last_years_money ?? 0,
+          ut_thana: sonodInfo?.ut_thana,
+          ut_district: sonodInfo?.ut_district,
+          ut_word: sonodInfo?.ut_word,
+          successor_father_alive_status: sonodInfo?.successor_father_alive_status,
+          successor_mother_alive_status: sonodInfo?.successor_mother_alive_status,
+          applicant_holding_tax_number: sonodInfo?.applicant_holding_tax_number,
+          applicant_national_id_number: sonodInfo?.applicant_national_id_number,
           applicant_birth_certificate_number:
-            user?.applicant_birth_certificate_number,
-          applicant_passport_number: user?.applicant_passport_number,
+            sonodInfo?.applicant_birth_certificate_number,
+          applicant_passport_number: sonodInfo?.applicant_passport_number,
 
-          family_name: user?.family_name,
-          Annual_income: user?.Annual_income,
-          Annual_income_text: user?.Annual_income_text,
-          Subject_to_permission: user?.Subject_to_permission,
-          disabled: user?.disabled,
-          The_subject_of_the_certificate: user?.The_subject_of_the_certificate,
-          Name_of_the_transferred_area: user?.Name_of_the_transferred_area,
-          applicant_second_name: user?.applicant_second_name,
-          applicant_owner_type: user?.applicant_owner_type,
+          family_name: sonodInfo?.family_name,
+          Annual_income: sonodInfo?.Annual_income,
+          Annual_income_text: sonodInfo?.Annual_income_text,
+          Subject_to_permission: sonodInfo?.Subject_to_permission,
+          disabled: sonodInfo?.disabled,
+          The_subject_of_the_certificate: sonodInfo?.The_subject_of_the_certificate,
+          Name_of_the_transferred_area: sonodInfo?.Name_of_the_transferred_area,
+          applicant_second_name: sonodInfo?.applicant_second_name,
+          applicant_owner_type: sonodInfo?.applicant_owner_type,
           applicant_name_of_the_organization:
-            user?.applicant_name_of_the_organization,
-          organization_address: user?.organization_address,
-          applicant_name: user?.applicant_name,
-          utname: user?.utname,
-          orthoBchor: user?.orthoBchor,
-          ut_religion: user?.ut_religion,
-          alive_status: user?.alive_status,
-          applicant_gender: user?.applicant_gender,
-          applicant_marriage_status: user?.applicant_marriage_status,
-          applicant_vat_id_number: user?.applicant_vat_id_number,
-          applicant_tax_id_number: user?.applicant_tax_id_number,
-          applicant_type_of_business: user?.applicant_type_of_business,
-          applicant_type_of_businessKhat: user?.applicant_type_of_businessKhat,
+            sonodInfo?.applicant_name_of_the_organization,
+          organization_address: sonodInfo?.organization_address,
+          applicant_name: sonodInfo?.applicant_name,
+          utname: sonodInfo?.utname,
+          orthoBchor: sonodInfo?.orthoBchor,
+          ut_religion: sonodInfo?.ut_religion,
+          alive_status: sonodInfo?.alive_status,
+          applicant_gender: sonodInfo?.applicant_gender,
+          applicant_marriage_status: sonodInfo?.applicant_marriage_status,
+          applicant_vat_id_number: sonodInfo?.applicant_vat_id_number,
+          applicant_tax_id_number: sonodInfo?.applicant_tax_id_number,
+          applicant_type_of_business: sonodInfo?.applicant_type_of_business,
+          applicant_type_of_businessKhat: sonodInfo?.applicant_type_of_businessKhat,
           applicant_type_of_businessKhatAmount:
-            user?.applicant_type_of_businessKhatAmount,
-          applicant_father_name: user?.applicant_father_name,
-          applicant_mother_name: user?.applicant_mother_name,
-          applicant_occupation: user?.applicant_occupation,
-          applicant_education: user?.applicant_education,
-          applicant_religion: user?.applicant_religion,
-          applicant_resident_status: user?.applicant_resident_status,
-          applicant_present_village: user?.applicant_present_village,
+            sonodInfo?.applicant_type_of_businessKhatAmount,
+          applicant_father_name: sonodInfo?.applicant_father_name,
+          applicant_mother_name: sonodInfo?.applicant_mother_name,
+          applicant_occupation: sonodInfo?.applicant_occupation,
+          applicant_education: sonodInfo?.applicant_education,
+          applicant_religion: sonodInfo?.applicant_religion,
+          applicant_resident_status: sonodInfo?.applicant_resident_status,
+          applicant_present_village: sonodInfo?.applicant_present_village,
           applicant_present_road_block_sector:
-            user?.applicant_present_road_block_sector,
-          applicant_present_word_number: user?.applicant_present_word_number,
-          applicant_present_district: user?.applicant_present_district,
-          applicant_present_Upazila: user?.applicant_present_Upazila,
-          applicant_present_post_office: user?.applicant_present_post_office,
-          applicant_permanent_village: user?.applicant_permanent_village,
+            sonodInfo?.applicant_present_road_block_sector,
+          applicant_present_word_number: sonodInfo?.applicant_present_word_number,
+          applicant_present_district: sonodInfo?.applicant_present_district,
+          applicant_present_Upazila: sonodInfo?.applicant_present_Upazila,
+          applicant_present_post_office: sonodInfo?.applicant_present_post_office,
+          applicant_permanent_village: sonodInfo?.applicant_permanent_village,
           applicant_permanent_road_block_sector:
-            user?.applicant_permanent_road_block_sector,
+            sonodInfo?.applicant_permanent_road_block_sector,
           applicant_permanent_word_number:
-            user?.applicant_permanent_word_number,
-          applicant_permanent_district: user?.applicant_permanent_district,
-          applicant_permanent_Upazila: user?.applicant_permanent_Upazila,
+            sonodInfo?.applicant_permanent_word_number,
+          applicant_permanent_district: sonodInfo?.applicant_permanent_district,
+          applicant_permanent_Upazila: sonodInfo?.applicant_permanent_Upazila,
           applicant_permanent_post_office:
-            user?.applicant_permanent_post_office,
+            sonodInfo?.applicant_permanent_post_office,
           successor_list: successorList,
-          applicant_mobile: user?.applicant_mobile,
-          applicant_email: user?.applicant_email,
-          applicant_phone: user?.applicant_phone,
+          applicant_mobile: sonodInfo?.applicant_mobile,
+          applicant_email: sonodInfo?.applicant_email,
+          applicant_phone: sonodInfo?.applicant_phone,
           applicant_national_id_front_attachment:
-            user?.applicant_national_id_front_attachment,
+            sonodInfo?.applicant_national_id_front_attachment,
           applicant_national_id_back_attachment:
-            user?.applicant_national_id_back_attachment,
+            sonodInfo?.applicant_national_id_back_attachment,
           applicant_birth_certificate_attachment:
-            user?.applicant_birth_certificate_attachment,
-          prottoyon: user?.prottoyon,
+            sonodInfo?.applicant_birth_certificate_attachment,
+          prottoyon: sonodInfo?.prottoyon,
         }}
       >
         <div

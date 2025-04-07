@@ -1,13 +1,11 @@
 "use client"
 
 import type React from "react"
-import { useNavigate } from "react-router-dom"
-
+import { useNavigate, useLocation } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { Search, AlertCircle, FileText } from "lucide-react"
 
-
-// Updated interface to match your API response structure
+// Interface for the sonod data
 interface SonodData {
   id: number
   sonod_name: string
@@ -16,61 +14,73 @@ interface SonodData {
   applicant_father_name: string | null
   applicant_present_word_number: string
   created_at: string
-  stutus: string // Note: API has a typo in "stutus"
+  stutus: string
   payment_status: string
   sonod_Id: string
   prottoyon: string | null
   hasEnData: number
   updated_at: string
+  uniqeKey: string
 }
 
-// Interface for the API response structure
+// Interface for the API response
 interface ApiResponse {
   data: {
     status: string
     data: {
       current_page: number
       data: SonodData[]
-      // There might be other pagination fields like total, per_page, etc.
     }
   }
 }
 
 export default function CitizenSearch() {
   const navigate = useNavigate()
+  const location = useLocation()
+
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearching, setIsSearching] = useState(false)
   const [results, setResults] = useState<SonodData[]>([])
   const [error, setError] = useState<string | null>(null)
-  // Removed unused setUseMockData state
-  const [apiUrl, setApiUrl] = useState("")
-  // Removed unused showDebug state
+  // const [apiUrl, setApiUrl] = useState("https://api.uniontax.gov.bd")
 
-  // Get the API URL on component mount
+  // Read API URL
+  // useEffect(() => {
+    //   const url = "https://api.uniontax.gov.bd"
+    //   setApiUrl(url)
+    // }, [])
+    
+      const apiUrl = "https://api.uniontax.gov.bd"
+
+  // Get query from URL and search
   useEffect(() => {
-    // const url = process.env.NEXT_PUBLIC_API_URL || "https://api.uniontax.gov.bd"
-    const url = "https://api.uniontax.gov.bd"
-    setApiUrl(url)
-  }, [])
+    const queryParam = new URLSearchParams(location.search).get("q")
+    if (queryParam) {
+      setSearchQuery(queryParam)
+      searchSonod(queryParam)
+    }
+  }, [location.search])
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (!searchQuery.trim()) return
 
+    // Update URL
+    navigate(`?q=${encodeURIComponent(searchQuery.trim())}`)
+
+    // Search will trigger from useEffect above
+  }
+
+  const searchSonod = async (query: string) => {
     setIsSearching(true)
     setError(null)
 
-
     try {
-      console.log(`Fetching from: ${apiUrl}/api/my/sonod/search?query=${encodeURIComponent(searchQuery)}`)
-
-      const response = await fetch(`${apiUrl}/api/my/sonod/search?query=${encodeURIComponent(searchQuery)}`, {
+      const response = await fetch(`${apiUrl}/api/my/sonod/search?query=${encodeURIComponent(query)}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        // Add credentials if your API requires authentication
-        // credentials: 'include',
       })
 
       if (!response.ok) {
@@ -79,7 +89,6 @@ export default function CitizenSearch() {
 
       const responseData: ApiResponse = await response.json()
 
-      // Check if the API returned a success status
       if (responseData.data.status === "success" && responseData.data.data.data) {
         setResults(responseData.data.data.data)
       } else {
@@ -99,7 +108,6 @@ export default function CitizenSearch() {
     }
   }
 
-  // Function to format date from API
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString)
@@ -108,7 +116,7 @@ export default function CitizenSearch() {
         month: "long",
         day: "numeric",
       })
-    } catch (e) {
+    } catch {
       return dateString
     }
   }
@@ -120,21 +128,20 @@ export default function CitizenSearch() {
       </div>
 
       <div className="card-body">
-
         {/* Search Box */}
         <div className="row mb-4">
           <div className="col-md-9 mb-3 mb-md-0">
             <div className="input-group">
               <span className="input-group-text">
-              <Search size={18} />
+                <Search size={18} />
               </span>
               <input
-              type="text"
-              className="form-control"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="সনদ নম্বর, নাম, জাতীয় পরিচয়পত্র নম্বর, জন্ম সনদ নম্বর, পাসপোর্ট নম্বর, বা মোবাইল নম্বর দিয়ে অনুসন্ধান করুন"
+                type="text"
+                className="form-control"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="সনদ নম্বর, নাম, জাতীয় পরিচয়পত্র নম্বর, জন্ম সনদ নম্বর, পাসপোর্ট নম্বর, বা মোবাইল নম্বর দিয়ে অনুসন্ধান করুন"
               />
             </div>
           </div>
@@ -156,15 +163,13 @@ export default function CitizenSearch() {
           </div>
         </div>
 
-        {/* Error Message */}
+        {/* Error */}
         {error && (
           <div className="alert alert-danger d-flex align-items-start" role="alert">
             <AlertCircle size={20} className="me-2 mt-1 flex-shrink-0" />
             <div>
               <p className="fw-medium mb-1">{error}</p>
-              <p className="small mb-0">
-                সম্ভাব্য কারণ: API সার্ভার অনুপলব্ধ বা CORS সমস্যা।
-              </p>
+              <p className="small mb-0">সম্ভাব্য কারণ: API সার্ভার অনুপলব্ধ বা CORS সমস্যা।</p>
             </div>
           </div>
         )}
@@ -175,21 +180,21 @@ export default function CitizenSearch() {
             <table className="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th scope="col">সনদ নম্বর</th>
-                  <th scope="col">সনদের ধরন</th>
-                  <th scope="col">আবেদনকারীর নাম</th>
-                  <th scope="col">পিতার নাম</th>
-                  <th scope="col">ইউনিয়ন</th>
-                  <th scope="col">ওয়ার্ড নং</th>
-                  <th scope="col">আবেদনের তারিখ</th>
-                  <th scope="col">স্টেটাস</th>
-                  <th scope="col">পেমেন্ট স্টেটাস</th>
-                  <th scope="col">অ্যাকশন</th>
+                  <th>সনদ নম্বর</th>
+                  <th>সনদের ধরন</th>
+                  <th>আবেদনকারীর নাম</th>
+                  <th>পিতার নাম</th>
+                  <th>ইউনিয়ন</th>
+                  <th>ওয়ার্ড নং</th>
+                  <th>আবেদনের তারিখ</th>
+                  <th>স্টেটাস</th>
+                  <th>পেমেন্ট স্টেটাস</th>
+                  <th>অ্যাকশন</th>
                 </tr>
               </thead>
               <tbody>
                 {results.map((item) => (
-                    <tr key={item.id}>
+                  <tr key={item.id}>
                     <td>{item.sonod_Id}</td>
                     <td>{item.sonod_name}</td>
                     <td className="fw-medium">{item.applicant_name}</td>
@@ -199,45 +204,44 @@ export default function CitizenSearch() {
                     <td>{formatDate(item.created_at)}</td>
                     <td>
                       <span
-                      className={`badge ${
-                        item.stutus.toLowerCase() === "approved"
-                        ? "bg-success"
-                        : item.stutus.toLowerCase() === "pending"
-                          ? "bg-warning"
-                          : item.stutus.toLowerCase() === "cancel"
-                          ? "bg-danger"
-                          : "bg-secondary"
-                      }`}
+                        className={`badge ${
+                          item.stutus.toLowerCase() === "approved"
+                            ? "bg-success"
+                            : item.stutus.toLowerCase() === "pending"
+                            ? "bg-warning"
+                            : item.stutus.toLowerCase() === "cancel"
+                            ? "bg-danger"
+                            : "bg-secondary"
+                        }`}
                       >
-                      {item.stutus}
+                        {item.stutus}
                       </span>
                     </td>
                     <td>
                       <span className={`badge ${item.payment_status === "Paid" ? "bg-success" : "bg-danger"}`}>
-                      {item.payment_status}
+                        {item.payment_status}
                       </span>
                     </td>
                     <td>
-                        {item.stutus === "Pepaid" && item.payment_status === "Unpaid" ? (
+                      {item.stutus === "Pepaid" && item.payment_status === "Unpaid" ? (
                         <a
-                        href={`${apiUrl}/create/payment?sonod_id=${item.id}&s_uri=${window.location.origin}/payment-success&f_uri=${window.location.origin}/payment-failed&c_uri=${window.location.origin}/payment-cancel&hasEnData=${item.hasEnData}`}
-                        className="btn btn-sm btn-primary d-flex align-items-center"
+                          href={`${apiUrl}/create/payment?sonod_id=${item.id}&s_uri=${window.location.origin}/payment-success&f_uri=${window.location.origin}/payment-failed&c_uri=${window.location.origin}/payment-cancel&hasEnData=${item.hasEnData}`}
+                          className="btn btn-sm btn-primary d-flex align-items-center"
                         >
-                        <FileText size={14} className="me-1" />
-                        পেমেন্ট করুন
+                          <FileText size={14} className="me-1" />
+                          পেমেন্ট করুন
                         </a>
-                        ) : (
-                <button
+                      ) : (
+                        <button
                           className="btn btn-sm btn-danger d-flex align-items-center"
-                          onClick={() => navigate(`/sonod-details/${item.id}`)}
+                          onClick={() => navigate(`/sonod-details/${item.uniqeKey}`)}
                         >
                           <FileText size={14} className="me-1" />
                           বিস্তারিত
                         </button>
-                        
                       )}
                     </td>
-                    </tr>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -248,7 +252,7 @@ export default function CitizenSearch() {
           </div>
         ) : null}
 
-        {/* Initial State - No Search Yet */}
+        {/* Initial empty state */}
         {!isSearching && results.length === 0 && !error && searchQuery.trim() === "" && (
           <div className="text-center py-5 bg-light rounded border border-dashed">
             <div className="d-flex align-items-center justify-content-center mb-3">
@@ -266,4 +270,3 @@ export default function CitizenSearch() {
     </div>
   )
 }
-

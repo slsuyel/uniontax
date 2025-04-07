@@ -2,7 +2,16 @@
 import { TDistrict, TDivision, TUnion, TUpazila } from "@/types";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
-const SearchBox: React.FC = () => {
+
+interface SearchBoxProps {
+  unionname: string;
+  service: string;
+  id: string | number;
+}
+
+
+
+const SearchBox: React.FC<SearchBoxProps> = ({ unionname,service, id }) => {
   const [selecteddivisions, setSelectedDivisions] = useState<string>("");
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [selectedUpazila, setSelectedUpazila] = useState<string>("");
@@ -71,13 +80,43 @@ const SearchBox: React.FC = () => {
 
   const baseUrl = window.origin;
   const handleUnionChange = (event: { target: { value: string } }) => {
-    const union = event.target.value.replace(/\s+/g, "").toLowerCase();
-    if (baseUrl.includes("uniontax")) {
-      window.location.href = `https://${union}.uniontax.gov.bd`;
-    } else if (baseUrl.includes("unionservices")) {
-      window.location.href = `https://${union}.unionservices.gov.bd`;
+
+    let union = '';
+    if(unionname){
+       union = unionname.replace(/\s+/g, "").toLowerCase();
+    }else{
+       union = event.target.value.replace(/\s+/g, "").toLowerCase();
     }
-    else { window.location.href = `https://${union}.uniontax.gov.bd`; }
+
+
+
+    if (service) {
+      if (id) {
+        if (baseUrl.includes("uniontax")) {
+          window.location.href = `https://${union}.uniontax.gov.bd/application/${service}?id=${id}`;
+        } else if (baseUrl.includes("unionservices")) {
+          window.location.href = `https://${union}.unionservices.gov.bd/application/${service}?id=${id}`;
+        } else {
+           window.location.href = `http://${union}.${baseUrl.split("//")[1]}/application/${service}?id=${id}`
+        }
+      } else {
+        if (baseUrl.includes("uniontax")) {
+          window.location.href = `https://${union}.uniontax.gov.bd/application/${service}`;
+        } else if (baseUrl.includes("unionservices")) {
+          window.location.href = `https://${union}.unionservices.gov.bd/application/${service}`;
+        } else {
+          window.location.href = `http://${union}.${baseUrl.split("//")[1]}/application/${service}`
+        }
+      }
+    } else {
+      if (baseUrl.includes("uniontax")) {
+        window.location.href = `https://${union}.uniontax.gov.bd`;
+      } else if (baseUrl.includes("unionservices")) {
+        window.location.href = `https://${union}.unionservices.gov.bd`;
+      } else {
+        window.location.href = `http://${union}.${baseUrl.split("//")[1]}`;
+      }
+    }
   };
 
 
