@@ -21,7 +21,7 @@ const TopHeader = () => {
       <div className=" container mx-auto">
         <div className="row mx-auto topHeader">
           <div className="topheaderItem col-md-6 col-6">
-            <span> ইউনিয়ন পরিষদ ক্যাশলেস সেবা সিস্টেমে স্বাগত</span>
+            <span> {site_settings?.header_title || ""}</span>
           </div>{" "}
           <div className="topheaderItem col-md-6 col-6 text-end">
             <span
