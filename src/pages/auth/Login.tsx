@@ -7,15 +7,13 @@ import { useAppDispatch } from "@/redux/features/hooks";
 // import { RootState } from "@/redux/features/store";
 import { useGetUnionInfoMutation } from "@/redux/api/user/userApi";
 import { setUnionData } from "@/redux/features/union/unionSlice";
-import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
+
 
 type LoginType = "chairman" | "entrepreneur" | "secretary";
 
 const Login = () => {
 
 
-  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   // const user = useAppSelector((state: RootState) => state.user.user);
   const [userLogin, { isLoading }] = useUserLoginMutation();

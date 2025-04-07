@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TDistrict, TDivision, TUnion, TUpazila } from "@/types";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
+
 
 
 interface SearchBoxProps {
@@ -23,8 +22,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({ unionname,service, id }) => {
   const [unions, setUnions] = useState<TUnion[]>([]);
 
 
-  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
+  
 
   useEffect(() => {
     fetch("https://api.uniontax.gov.bd/api/global/divisions")
