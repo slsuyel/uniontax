@@ -13,10 +13,11 @@ const Header = () => {
   const [noUnion, setNoUnion] = useState(false);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   const navItems = [
     { title: "হোম", link: "/" },
-    { title: "ইউপি সেবা পরিচিতি", link: "about" },
+    { title:  site_settings?.about_title || "", link: "about" },
     {
       title: "নাগরিক সেবা",
       dropdown: sonodInfo?.map((sonod) => ({
