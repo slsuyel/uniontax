@@ -5,12 +5,15 @@ interface UnionState {
   unionInfo: TUnionInfo | null;
   sonodList: TSonod[] | [];
   tradeFee: string | null;
+  site_settings?: any;
 }
 
 const initialState: UnionState = {
   unionInfo: null,
   sonodList: [],
   tradeFee: null,
+  site_settings: null,
+  
 };
 
 const unionSlice = createSlice({
@@ -19,15 +22,17 @@ const unionSlice = createSlice({
   reducers: {
     setUnionData: (
       state,
-      action: PayloadAction<{ unionInfo: TUnionInfo; sonodList: TSonod[] }>
+      action: PayloadAction<{ unionInfo: TUnionInfo; sonodList: TSonod[]; site_settings?: any }>
     ) => {
       state.unionInfo = action.payload.unionInfo;
       state.sonodList = action.payload.sonodList;
+      state.site_settings = action.payload.site_settings;
     },
     clearUnionData: (state) => {
       state.unionInfo = null;
       state.sonodList = [];
       state.tradeFee = null;
+      state.site_settings = null;
     },
     setTradeFee: (state, action: PayloadAction<string>) => {
       state.tradeFee = action.payload;

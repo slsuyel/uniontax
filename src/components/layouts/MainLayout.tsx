@@ -115,6 +115,7 @@ const MainLayout = () => {
         setUnionData({
           unionInfo: data.data.uniouninfos,
           sonodList: data.data.sonod_name_lists,
+          site_settings: data.data.site_settings,
         })
       );
     }

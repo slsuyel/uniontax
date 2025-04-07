@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TDistrict, TDivision, TUnion, TUpazila } from "@/types";
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 
 interface SearchBoxProps {
@@ -19,6 +21,11 @@ const SearchBox: React.FC<SearchBoxProps> = ({ unionname,service, id }) => {
   const [districts, setDistricts] = useState<TDistrict[]>([]);
   const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
   const [unions, setUnions] = useState<TUnion[]>([]);
+
+
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+
+
   useEffect(() => {
     fetch("https://api.uniontax.gov.bd/api/global/divisions")
       .then((res) => res.json())
@@ -161,7 +168,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ unionname,service, id }) => {
         ))}
       </select>
       <select className="searchFrom form_control" onChange={handleUnionChange}>
-        <option>ইউনিয়ন নির্বাচন করুন</option>
+        <option>{site_settings.header_union_select_title}</option>
         {unions.map((union) => (
           <option key={union.id} value={union.name}>
             {union.bn_name}

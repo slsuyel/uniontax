@@ -8,11 +8,13 @@ import { RootState } from "@/redux/features/store";
 import { message, Modal } from "antd";
 import SearchBox from "../reusable/SearchBox";
 
+
 const Header = () => {
   const userInfo = useAppSelector((state: RootState) => state.user.user);
   const [noUnion, setNoUnion] = useState(false);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   const navItems = [
     { title: "হোম", link: "/" },
@@ -55,7 +57,7 @@ const Header = () => {
 
   const handleService = (serviceLink: string) => {
     if (unionInfo?.short_name_e == "uniontax") {
-      message.warning("ইউনিয়ন নির্বাচন করুন");
+      message.warning(site_settings.header_union_select_title);
       setNoUnion(true);
       return;
     }
@@ -130,8 +132,7 @@ const Header = () => {
       <div className="container mx-auto row">
         <Marquee className="defaltColor py-1 text-white">
           <span style={{ fontSize: 16 }}>
-            ইউনিয়ন পরিষদের ডিজিটাল অনলাইন সেবা সিস্টেম uniontax.gov.bd –তে
-            আপনাকে স্বাগতম।
+          {site_settings.main_notice}{" "}
           </span>
         </Marquee>
       </div>
@@ -144,7 +145,7 @@ const Header = () => {
         animation="fade-down"
       >
         <div style={{ zIndex: 999 }} className=" py-3">
-          <h3 className="">ইউনিয়ন নির্বাচন করুন </h3>
+          <h3 className="">{site_settings.header_union_select_title} </h3>
           <SearchBox   service={""} id={""}  unionname={""}  />
         </div>
       </Modal>
