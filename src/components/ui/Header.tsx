@@ -145,7 +145,7 @@ const Header = () => {
       >
         <div style={{ zIndex: 999 }} className=" py-3">
           <h3 className="">ইউনিয়ন নির্বাচন করুন </h3>
-          <SearchBox />
+          <SearchBox   service={""} id={""}  unionname={""}  />
         </div>
       </Modal>
     </>

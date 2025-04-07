@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { useParams, Link,useNavigate } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { FileText, ArrowLeft } from "lucide-react"
 import RightSidebar from "../Home/RightSidebar"
 import type { RootState } from "@/redux/features/store"
 import { useAppSelector } from "@/redux/features/hooks"
-import { message, Modal } from "antd"
+import { Modal } from "antd"
 import icon2 from "../../assets/icons/trade.png"
 import SearchBox from "../../components/reusable/SearchBox" //../reusable/SearchBox
 // import CitizenSearch from "../../components/CitizenSearch"
@@ -37,16 +37,17 @@ const SonodDetails: React.FC = () => {
 
  const baseUrl = window.origin;
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList)
-  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo)
+  // Removed unused unionInfo variable
 
-  const navigate = useNavigate()
+  // Removed unused navigate declaration
 
 
       const handleService = (service: string, unionName?: string) => {
     
 
         
-    if (service) {
+        if (service) {
+      setSelectedService(service)
       const domain = baseUrl.includes("uniontax")
         ? "uniontax.gov.bd"
         : baseUrl.includes("unionservices")
