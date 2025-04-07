@@ -124,8 +124,8 @@ const Login = () => {
   };
 
   const tabItems = [
-    { label: site_settings.secritary_login_text , key: "secretary" },
-    { label: site_settings.chairman_login_text , key: "chairman" },
+    { label: "সচিব লগইন", key: "secretary" },
+    { label: "চেয়ারম্যান লগইন", key: "chairman" },
     { label: "নিয়মিত ব্যবহারকারী ", key: "entrepreneur" },
   ];
 

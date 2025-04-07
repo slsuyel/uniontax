@@ -168,7 +168,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ unionname,service, id }) => {
         ))}
       </select>
       <select className="searchFrom form_control" onChange={handleUnionChange}>
-        <option>{site_settings.header_union_select_title}</option>
+        <option>ইউনিয়ন নির্বাচন করুন</option>
         {unions.map((union) => (
           <option key={union.id} value={union.name}>
             {union.bn_name}
