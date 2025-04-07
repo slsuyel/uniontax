@@ -14,15 +14,15 @@ const About = () => {
           <div className="row mx-auto">
             <div className="col-md-12">
               <h6 className="defaltColor  position-relative ps-3 py-2 serviceTitle text-white mt-3">
-              {site_settings.about_title}
+              {site_settings?.about_title || "Default About Title"}
               </h6>
             </div>{' '}
             <p style={{ padding: '2px 14px', textAlign: 'justify' }}>
-            {site_settings.about_text}
+            {site_settings?.about_text || "Default About Text"}
             </p>{' '}
             <div className="col-md-12">
               <h6 className="defaltColor  position-relative ps-3 py-2 serviceTitle text-white">
-              {site_settings.history_title}
+              {site_settings?.history_title || "Default History Title"}
               </h6>
             </div>{' '}
             <div className="col-md-12">
@@ -34,7 +34,7 @@ const About = () => {
                   textAlign: 'justify',
                 }}
               >
-                {site_settings.history}
+                {site_settings?.history || "Default History Text"}
               </p>
             </div>
           </div>

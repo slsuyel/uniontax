@@ -12,7 +12,7 @@ const initialState: UnionState = {
   unionInfo: null,
   sonodList: [],
   tradeFee: null,
-  site_settings: null,
+  site_settings: [],
   
 };
 
