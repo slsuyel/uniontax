@@ -257,7 +257,7 @@ const UddoktaApplicationForm = () => {
             <div className="col-md-12">
               <div className="app-heading">আবেদনকারীর তথ্য</div>
             </div>
-            {commonFields()}
+            {commonFields({ form, setFormData: form.setFieldsValue })}
             {service === "ট্রেড লাইসেন্স" && (
               <TradeLicenseForm data={data} isLoading={isLoading} form={form} />
             )}

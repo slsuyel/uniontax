@@ -1,149 +1,73 @@
-import RightSidebar from "../Home/RightSidebar";
-import { Link } from "react-router-dom";
-import { useAllHoldingFrontendQuery } from "@/redux/api/sonod/sonodApi";
-import { ChangeEvent,  useEffect, useState } from "react";
-import { THolding } from "../dashboard/holding/HoldingShow";
-import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
-import { TDistrict, TDivision, TUnion, TUpazila } from "@/types";
-import { Pagination, Alert } from "antd";
-import Loader from "@/components/reusable/Loader";
+"use client"
+
+import type React from "react"
+
+import RightSidebar from "../Home/RightSidebar"
+import { Link } from "react-router-dom"
+import { useAllHoldingFrontendQuery } from "@/redux/api/sonod/sonodApi"
+import { type ChangeEvent, useState } from "react"
+import type { THolding } from "../dashboard/holding/HoldingShow"
+import { useAppSelector } from "@/redux/features/hooks"
+import type { RootState } from "@/redux/features/store"
+import type { TUnion } from "@/types"
+import { Pagination, Alert } from "antd"
+import Loader from "@/components/reusable/Loader"
+import UnionLocationSelector from "../../components/reusable/Locations/UnionLocationSelector"
+import PouroLocationSelector from "@/components/reusable/Locations/PouroLocationSelector"
 
 const Holding = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [selectedUnion, setSelectedUnion] = useState<TUnion | null>(null);
-  const [selectedDivision, setSelectedDivision] = useState<TDivision | null>(null);
-  const [selectedDistrict, setSelectedDistrict] = useState<TDistrict | null>(null);
-  const [selectedUpazila, setSelectedUpazila] = useState<TUpazila | null>(null);
-  const [divisions, setDivisions] = useState<TDivision[]>([]);
-  const [districts, setDistricts] = useState<TDistrict[]>([]);
-  const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
-  const [unions, setUnions] = useState<TUnion[]>([]);
-  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedWord, setSelectedWord] = useState("1");
-  const [submittedSearchTerm, setSubmittedSearchTerm] = useState("");
-  const smallUnion = `${selectedUnion?.name}`.replace(/\s+/g, "").toLowerCase();
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [selectedUnion, setSelectedUnion] = useState<TUnion | null>(null)
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedWord, setSelectedWord] = useState("1")
+  const [submittedSearchTerm, setSubmittedSearchTerm] = useState("")
+  const smallUnion = selectedUnion?.name ? `${selectedUnion.name}`.replace(/\s+/g, "").toLowerCase() : ""
+
+
+    const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   const { data, isLoading, isFetching, isError } = useAllHoldingFrontendQuery(
     {
       word: selectedWord,
       search: submittedSearchTerm,
       page: currentPage,
-      unioun:
-        unionInfo && unionInfo.short_name_e == "uniontax"
-          ? smallUnion
-          : unionInfo && unionInfo.short_name_e,
+      unioun: unionInfo && unionInfo.short_name_e == "uniontax" ? smallUnion : unionInfo && unionInfo.short_name_e,
     },
     {
       skip: !submittedSearchTerm,
-    }
-  );
+    },
+  )
 
   const handlePageChange = (page: number, pageSize: number) => {
-    setCurrentPage(page);
-    setPageSize(pageSize);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    fetch("/divisions.json")
-      .then((res) => res.json())
-      .then((data: TDivision[]) => {
-        setDivisions(data);
-      })
-      .catch((error) => console.error("Error fetching divisions data:", error));
-  }, []);
-
-  useEffect(() => {
-    if (selectedDivision) {
-      fetch("/districts.json")
-        .then((response) => response.json())
-        .then((data: TDistrict[]) => {
-          const filteredDistricts = data.filter(
-            (d) => d?.division_id === selectedDivision.id
-          );
-          setDistricts(filteredDistricts);
-        })
-        .catch((error) => console.error("Error fetching districts data:", error));
-    }
-  }, [selectedDivision]);
-
-  useEffect(() => {
-    if (selectedDistrict) {
-      fetch("/upazilas.json")
-        .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedDistrict.id
-          );
-          setUpazilas(filteredUpazilas);
-        })
-        .catch((error) => console.error("Error fetching upazilas data:", error));
-    }
-  }, [selectedDistrict]);
-
-  useEffect(() => {
-    if (selectedUpazila) {
-      fetch("/unions.json")
-        .then((response) => response.json())
-        .then((data: TUnion[]) => {
-          const filteredUnions = data.filter(
-            (union) => union.upazilla_id === selectedUpazila.id
-          );
-          setUnions(filteredUnions);
-        })
-        .catch((error) => console.error("Error fetching unions data:", error));
-    }
-  }, [selectedUpazila]);
-
-  const handleDivisionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const division = divisions.find((d) => d?.id === event.target.value);
-    setSelectedDivision(division || null);
-    setSelectedDistrict(null);
-    setSelectedUpazila(null);
-    setCurrentPage(1); // Reset to the first page
-  };
-
-  const handleDistrictChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const district = districts.find((d) => d?.id === event.target.value);
-    setSelectedDistrict(district || null);
-    setSelectedUpazila(null);
-    setCurrentPage(1); // Reset to the first page
-  };
-
-  const handleUpazilaChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const upazila = upazilas.find((u) => u?.id === event.target.value);
-    setSelectedUpazila(upazila || null);
-    setCurrentPage(1); // Reset to the first page
-  };
-
-  const handleUnionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const union = unions.find((u) => u?.id === event.target.value);
-    setSelectedUnion(union || null);
-    setCurrentPage(1); // Reset to the first page
-  };
+    setCurrentPage(page)
+    setPageSize(pageSize)
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setCurrentPage(1); // Reset to the first page
-    setSubmittedSearchTerm(searchTerm); // Trigger API call
-  };
+    e.preventDefault()
+    setCurrentPage(1) // Reset to the first page
+    setSubmittedSearchTerm(searchTerm) // Trigger API call
+  }
 
   const handleWordChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedWord(event.target.value);
-    setCurrentPage(1); // Reset to the first page
-  };
+    setSelectedWord(event.target.value)
+    setCurrentPage(1) // Reset to the first page
+  }
 
-  const holdings = data?.data?.data || [];
-  const totalItems = data?.data?.total || 0;
-  const lastPage = data?.data?.last_page || 1; // Use last_page from the API
+  const handleUnionSelect = (union: string) => {
+    setSelectedUnion({ name: union } as TUnion)
+    setCurrentPage(1) // Reset to the first page
+  }
 
-
+  const holdings = data?.data?.data || []
+  const totalItems = data?.data?.total || 0
+  const lastPage = data?.data?.last_page || 1 // Use last_page from the API
 
   // Conditionally render the Pagination component
-  const showPagination = totalItems > pageSize && holdings.length > 0;
+  const showPagination = totalItems > pageSize && holdings.length > 0
 
   return (
     <div className="row mx-auto container my-3">
@@ -152,96 +76,22 @@ const Holding = () => {
           {unionInfo && unionInfo.short_name_e !== "uniontax" ? (
             ""
           ) : (
-            <>
-              <form>
-                <div className="row mx-auto mb-4">
-                  <div className="col-md-3">
-                    <label htmlFor="division">বিভাগ নির্বাচন করুন</label>
-                    <select
-                      required
-                      id="division"
-                      className="form-control"
-                      value={selectedDivision?.id || ""}
-                      onChange={handleDivisionChange}
-                    >
-                      <option value="">বিভাগ নির্বাচন করুন</option>
-                      {divisions?.map((d) => (
-                        <option key={d?.id} value={d?.id}>
-                          {d?.bn_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="col-md-3">
-                    <label htmlFor="district">জেলা নির্বাচন করুন</label>
-                    <select
-                      required
-                      id="district"
-                      className="form-control"
-                      value={selectedDistrict?.id || ""}
-                      onChange={handleDistrictChange}
-                    >
-                      <option value="">জেলা নির্বাচন করুন</option>
-                      {districts?.map((d) => (
-                        <option key={d?.id} value={d?.id}>
-                          {d?.bn_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="col-md-3">
-                    <label htmlFor="upazila">উপজেলা নির্বাচন করুন</label>
-                    <select
-                      required
-                      id="upazila"
-                      className="form-control"
-                      value={selectedUpazila?.id || ""}
-                      onChange={handleUpazilaChange}
-                    >
-                      <option value="">উপজেলা নির্বাচন করুন</option>
-                      {upazilas?.map((u) => (
-                        <option key={u?.id} value={u?.id}>
-                          {u?.bn_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="col-md-3">
-                    <label htmlFor="union">ইউনিয়ন নির্বাচন করুন</label>
-                    <select
-                      required
-                      id="union"
-                      className="form-control"
-                      value={selectedUnion?.id || ""}
-                      onChange={handleUnionChange}
-                    >
-                      <option value="">ইউনিয়ন নির্বাচন করুন</option>
-                      {unions?.map((u) => (
-                        <option key={u?.id} value={u?.id}>
-                          {u?.bn_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </form>
-            </>
+            <form className="pt-4 border rounded shadow-sm bg-light">
+              <h5 className="text-center mb-4 text-primary">{site_settings?.header_union_select_title || ""}</h5>
+              <div className="d-flex justify-content-center">
+              {site_settings?.union === "false" ? (
+                <PouroLocationSelector onUnionSelect={handleUnionSelect} showLabels={true} />
+              ) : (
+                <UnionLocationSelector onUnionSelect={handleUnionSelect}  showLabels={true}/>
+              )}
+              </div>
+            </form>
           )}
 
           <div className="card-header">
-            <form
-              onSubmit={handleSearch}
-              className="d-flex gap-4 my-4 align-items-center"
-            >
+            <form onSubmit={handleSearch} className="d-flex gap-4 my-4 align-items-center">
               <div className="form-group mt-0 w-25">
-                <select
-                  className="form-select"
-                  value={selectedWord}
-                  onChange={handleWordChange}
-                >
+                <select className="form-select" value={selectedWord} onChange={handleWordChange}>
                   {[...Array(9).keys()].map((_, index) => (
                     <option key={index + 1} value={index + 1}>
                       {index + 1}
@@ -253,7 +103,7 @@ const Holding = () => {
                 <input
                   type="text"
                   id="userdata"
-                  placeholder="এখানে আপনার হোল্ডিং নং/নাম/জাতীয় পরিচয় পত্র নম্বর/মোবাইল নম্বর (যে কোন একটি তথ্য) এন্ট্রি করুন"
+                  placeholder="এখানে আপনার হোল্ডিং নং/নাম/জাতীয় পরিচয় পত্র নম্বর/মোবাইল নম্বর (যে কোন একটি তথ্য) এন্ট্রি করুন"
                   className="form-control"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -275,7 +125,9 @@ const Holding = () => {
             {isError ? (
               <Alert message="Error fetching data" type="error" />
             ) : isLoading || isFetching ? (
-              <><Loader /></>
+              <>
+                <Loader />
+              </>
             ) : (
               <>
                 <table className="table">
@@ -297,10 +149,7 @@ const Holding = () => {
                           <td>{item.nid_no}</td>
                           <td>{item.mobile_no}</td>
                           <td>
-                            <Link
-                              to={`/holding/list/view/${item.id}`}
-                              className="btn btn-info"
-                            >
+                            <Link to={`/holding/list/view/${item.id}`} className="btn btn-info">
                               দেখুন
                             </Link>
                           </td>
@@ -321,7 +170,7 @@ const Holding = () => {
                   <Pagination
                     current={currentPage}
                     pageSize={pageSize}
-                    total={lastPage*pageSize}
+                    total={lastPage * pageSize}
                     onChange={handlePageChange}
                     showSizeChanger
                     onShowSizeChange={handlePageChange}
@@ -336,7 +185,7 @@ const Holding = () => {
       </div>
       <RightSidebar />
     </div>
-  );
-};
+  )
+}
 
-export default Holding;
+export default Holding

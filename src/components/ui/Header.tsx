@@ -8,6 +8,7 @@ import { RootState } from "@/redux/features/store";
 import { message, Modal } from "antd";
 import SearchBox from "../reusable/SearchBox";
 
+
 const Header = () => {
   const userInfo = useAppSelector((state: RootState) => state.user.user);
   const [noUnion, setNoUnion] = useState(false);
@@ -144,9 +145,9 @@ const Header = () => {
         footer={null}
         animation="fade-down"
       >
-        <div style={{ zIndex: 999 }} className=" py-3">
+        <div style={{ zIndex: 999 }} className="py-3">
           <h3 className="">{site_settings?.header_union_select_title || ""}</h3>
-          <SearchBox   service={""} id={""}  unionname={""}  />
+            <SearchBox service={""} id={""} unionname={""} />
         </div>
       </Modal>
     </>

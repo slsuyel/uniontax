@@ -1,0 +1,74 @@
+[
+  {
+    "id": "1",
+    "district_id": "53",
+    "name": "debiganj",
+    "bn_name": "দেবীগঞ্জ"
+  },
+  {
+    "id": "2",
+    "district_id": "53",
+    "name": "panchagarh",
+    "bn_name": "পঞ্চগড়"
+  },
+  {
+    "id": "3",
+    "district_id": "53",
+    "name": "boda",
+    "bn_name": "বোদা"
+  },
+  {
+    "id": "4",
+    "district_id": "54",
+    "name": "dinajpursadar",
+    "bn_name": "দিনাজপুর সদর"
+  },
+  {
+    "id": "5",
+    "district_id": "54",
+    "name": "parbatipur",
+    "bn_name": "পার্বতীপুর"
+  },
+  {
+    "id": "6",
+    "district_id": "54",
+    "name": "phulbari",
+    "bn_name": "ফুলবাড়ী"
+  },
+  {
+    "id": "7",
+    "district_id": "54",
+    "name": "birampur",
+    "bn_name": "বিরামপুর"
+  },
+  {
+    "id": "8",
+    "district_id": "54",
+    "name": "setabganj",
+    "bn_name": "সেতাবগঞ্জ"
+  },
+  {
+    "id": "9",
+    "district_id": "54",
+    "name": "birganj",
+    "bn_name": "বীরগঞ্জ"
+  },
+  {
+    "id": "10",
+    "district_id": "54",
+    "name": "ghoraghat",
+    "bn_name": "ঘোড়াঘাট"
+  },
+  {
+    "id": "11",
+    "district_id": "54",
+    "name": "birol",
+    "bn_name": "বিরল"
+  },
+  {
+    "id": "12",
+    "district_id": "54",
+    "name": "hakimpur",
+    "bn_name": "হাকিমপুর"
+  }
+]

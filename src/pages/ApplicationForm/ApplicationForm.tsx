@@ -166,8 +166,15 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
 
 
 
-  const successorList =
-    (sonodInfo?.successor_list && JSON.parse(sonodInfo?.successor_list)) || [];
+  const successorList = Array.isArray(sonodInfo?.successor_list)
+    ? sonodInfo?.successor_list
+    : (() => {
+        try {
+          return JSON.parse(sonodInfo?.successor_list || "[]");
+        } catch {
+          return [];
+        }
+      })();
 
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
@@ -245,6 +252,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             sonodInfo?.applicant_permanent_post_office,
           successor_list: successorList,
           applicant_mobile: sonodInfo?.applicant_mobile,
+          applicant_date_of_birth: sonodInfo?.applicant_date_of_birth,
           applicant_email: sonodInfo?.applicant_email,
           applicant_phone: sonodInfo?.applicant_phone,
           applicant_national_id_front_attachment:
@@ -278,7 +286,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             <div className="col-md-12">
               <div className="app-heading">আবেদনকারীর তথ্য</div>
             </div>
-            {commonFields()}
+            {commonFields({ form, setFormData: form.setFieldsValue })}
             {sonodName === "ট্রেড লাইসেন্স" && (
               <TradeLicenseForm data={data} isLoading={isLoading} form={form} />
             )}{" "}

@@ -6,10 +6,11 @@ import SearchBox from "../reusable/SearchBox";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 
+
 const TopHeader = () => {
   const unionData = useAppSelector((state: RootState) => state.union.unionInfo);
   const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
-  console.log("site_settings", site_settings);
+
   const baseUrl = window.origin;
 
 
@@ -60,7 +61,7 @@ const TopHeader = () => {
           <h3 className="defaltColor fs-4 searchHeader text-white">
           {site_settings?.header_union_select_title || ""}{" "}
           </h3>
-          <SearchBox   service={""} id={""}  unionname={""}  />
+            <SearchBox service={""} id={""} unionname={""} />
         </div>
       </div>
     </>

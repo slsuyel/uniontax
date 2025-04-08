@@ -1,8 +1,24 @@
-import { Form, Input, Select, DatePicker, Upload, Button } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-
+import { Form, Input, Select, Upload, Button } from "antd";
 const { Option } = Select;
-const commonFields = () => {
+import { UploadOutlined } from "@ant-design/icons";
+import DatePicker from 'react-datepicker';
+import { useEffect, useState } from 'react';
+
+
+const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: any) => void }) => {
+
+    console.log(form.getFieldsValue(), "form values");
+
+
+    const getFieldsValue =  form.getFieldsValue();
+
+    const [startDate, setStartDate] = useState<Date | null>(getFieldsValue.applicant_date_of_birth || null);
+    useEffect(() => {
+      setStartDate(getFieldsValue.applicant_date_of_birth || null);
+    }, [getFieldsValue.applicant_date_of_birth]);
+
+
+
   return (
     <>
       <div className="col-md-4">
@@ -107,11 +123,27 @@ const commonFields = () => {
           />
         </Form.Item>
       </div>
+
+
       <div className="col-md-4">
         <Form.Item label="জন্ম তারিখ" name="applicant_date_of_birth">
-          <DatePicker className="form-control" style={{ width: "100%" }} />
+          <div style={{ width: '100%' }}>
+        <div style={{ height: 40, width: "100%" }}>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => {
+              setStartDate(date);
+              setFormData({ ...form, applicant_date_of_birth: date });
+            }}
+            className="form-control w-100"
+          />
+        </div>
+          </div>
         </Form.Item>
       </div>
+
+
+
       <div className="col-md-4">
         <Form.Item
           label="ছবি"
