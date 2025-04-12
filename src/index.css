@@ -58,6 +58,7 @@ h3.searchHeader {
 h3.searchHeader {
   color: #9e5bba;
   text-align: center;
+  overflow: hidden
 }
 
 h3.searchHeader:after {

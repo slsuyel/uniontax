@@ -20,7 +20,7 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
   useEffect(() => {
     fetch("https://api.uniontax.gov.bd/api/global/divisions")
       .then((res) => res.json())
-      .then((data: any) => setDivisions(data?.data))
+      .then((data) => setDivisions(data?.data))
       .catch((error) => console.error("Error fetching divisions:", error));
   }, []);
 
@@ -28,7 +28,7 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
     if (selecteddivisions) {
       fetch(`https://api.uniontax.gov.bd/api/global/districts/${selecteddivisions}`)
         .then((res) => res.json())
-        .then((data: any) => setDistricts(data?.data))
+        .then((data) => setDistricts(data?.data))
         .catch((error) => console.error("Error fetching districts:", error));
     }
   }, [selecteddivisions]);
@@ -37,10 +37,8 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
     if (selectedDistrict) {
       fetch("/pouroseba.json")
         .then((res) => res.json())
-        .then((data: any[]) => {
-          const filteredUnions = data.filter(
-            (u) => u.district_id == selectedDistrict
-          );
+        .then((data) => {
+          const filteredUnions = data.filter((u: any) => u.district_id == selectedDistrict);
           setUnions(filteredUnions);
         })
         .catch((error) => console.error("Error fetching unions:", error));
@@ -62,77 +60,86 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
 
   const handleUnionChange = (value: string) => {
     const selectedUnionObject = unions.find(
-      (u) =>
-        u?.name.toLowerCase().replace(/\s+/g, "") ===
-        value.toLowerCase().replace(/\s+/g, "")
+      (u) => u?.name.toLowerCase().replace(/\s+/g, "") === value.toLowerCase().replace(/\s+/g, "")
     );
-
     setSelectedUnion(selectedUnionObject?.name || "");
     onUnionSelect(selectedUnionObject?.name || null);
   };
 
+  const fields = [
+    {
+      label: "বিভাগ নির্বাচন করুন:",
+      value: selecteddivisions,
+      onChange: handleDivChange,
+      placeholder: "বিভাগ নির্বাচন করুন",
+      options: divisions,
+      optionKey: "id",
+      optionValue: "id",
+      optionLabel: "bn_name",
+      disabled: false,
+    },
+    {
+      label: "জেলা নির্বাচন করুন:",
+      value: selectedDistrict,
+      onChange: handleDistrictChange,
+      placeholder: "জেলা নির্বাচন করুন",
+      options: districts,
+      optionKey: "id",
+      optionValue: "id",
+      optionLabel: "bn_name",
+      disabled: !selecteddivisions,
+    },
+    {
+      label: "পৌরসভা নির্বাচন করুন:",
+      value: selectedUnion,
+      onChange: handleUnionChange,
+      placeholder: "পৌরসভা নির্বাচন করুন",
+      options: unions,
+      optionKey: "id",
+      optionValue: "name",
+      optionLabel: "bn_name",
+      disabled: !selectedDistrict,
+    },
+  ];
+
   return (
-    <div className="row w-100">
-      {/* Division */}
-      <div className="col-md-4">
-        <Form.Item>
-          {showLabels && <label>বিভাগ নির্বাচন করুন:</label>}
-          <Select
-            value={selecteddivisions || undefined}
-            onChange={handleDivChange}
-            placeholder="বিভাগ নির্বাচন করুন"
-            className="w-100"
-            style={{ width: "100%" }}
-            
-          >
-            {divisions?.map((d) => (
-              <Option key={d.id} value={d.id}>
-                {d.bn_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </div>
-
-      {/* District */}
-      <div className="col-md-4">
-        <Form.Item>
-          {showLabels && <label>জেলা নির্বাচন করুন:</label>}
-          <Select
-            value={selectedDistrict || undefined}
-            onChange={handleDistrictChange}
-            placeholder="জেলা নির্বাচন করুন"
-            className="w-100"
-            disabled={!selecteddivisions}
-          >
-            {districts?.map((d) => (
-              <Option key={d.id} value={d.id}>
-                {d.bn_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </div>
-
-      {/* Union */}
-      <div className="col-md-4">
-        <Form.Item>
-          {showLabels && <label>পৌরসভা নির্বাচন করুন:</label>}
-          <Select
-            value={selectedUnion || undefined}
-            onChange={handleUnionChange}
-            placeholder="পৌরসভা নির্বাচন করুন"
-            className="w-100"
-            disabled={!selectedDistrict}
-          >
-            {unions?.map((u) => (
-              <Option key={u.id} value={u.name}>
-                {u.bn_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </div>
+    <div className={showLabels ? "row w-100" : "d-flex justify-content-between align-items-center gap-3"}>
+      {fields.map((field, index) => (
+        <div key={index} className={showLabels ? "col-md-4" : ""}>
+          {showLabels ? (
+            <Form.Item>
+              <label>{field.label}</label>
+              <Select
+                value={field.value || undefined}
+                onChange={field.onChange}
+                placeholder={field.placeholder}
+                style={{ width: "100%" }}
+                disabled={field.disabled}
+              >
+                {field.options?.map((option) => (
+                  <Option key={option[field.optionKey as keyof TDivision]} value={option[field.optionValue as keyof TDivision]}>
+                    {option[field.optionLabel as keyof TDivision]}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          ) : (
+            <select
+              className="searchFrom form_control"
+              value={field.value || ""}
+              onChange={(e) => field.onChange(e.target.value)}
+              disabled={field.disabled}
+            >
+              <option value="">{field.label}</option>
+              {field.options?.map((option) => (
+                <option key={option[field.optionKey as keyof TDivision]} value={option[field.optionValue as keyof TDivision]}>
+                  {option[field.optionLabel as keyof TDivision]}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

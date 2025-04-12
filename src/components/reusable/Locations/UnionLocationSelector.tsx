@@ -84,82 +84,95 @@ const UnionLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
   };
 
   return (
-    <div className="row w-100">
-      <div className="col-md-3">
-        <Form.Item>
-          {showLabels && <label>বিভাগ নির্বাচন করুন:</label>}
-          <Select
-            value={selecteddivisions || undefined}
-            onChange={handleDivChange}
-            placeholder="বিভাগ নির্বাচন করুন"
-            style={{ width: "100%" }}
-          >
-            {divisions?.map((d) => (
-              <Option key={d.id} value={d.id}>
-                {d.bn_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </div>
 
-      <div className="col-md-3">
-        <Form.Item>
-          {showLabels && <label>জেলা নির্বাচন করুন:</label>}
-          <Select
-            value={selectedDistrict || undefined}
-            onChange={handleDistrictChange}
-            placeholder="জেলা নির্বাচন করুন"
-            style={{ width: "100%" }}
-            disabled={!selecteddivisions}
-          >
-            {districts?.map((d) => (
-              <Option key={d.id} value={d.id}>
-                {d.bn_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </div>
 
-      <div className="col-md-3">
-        <Form.Item>
-          {showLabels && <label>উপজেলা নির্বাচন করুন:</label>}
+    <>
+      <div className={showLabels ? "row w-100" : "d-flex justify-content-between align-items-center gap-3"}>
+      {[
+        {
+        label: "বিভাগ নির্বাচন করুন:",
+        value: selecteddivisions,
+        onChange: handleDivChange,
+        placeholder: "বিভাগ নির্বাচন করুন",
+        options: divisions,
+        optionKey: "id",
+        optionValue: "id",
+        optionLabel: "bn_name",
+        disabled: false,
+        },
+        {
+        label: "জেলা নির্বাচন করুন:",
+        value: selectedDistrict,
+        onChange: handleDistrictChange,
+        placeholder: "জেলা নির্বাচন করুন",
+        options: districts,
+        optionKey: "id",
+        optionValue: "id",
+        optionLabel: "bn_name",
+        disabled: !selecteddivisions,
+        },
+        {
+        label: "উপজেলা নির্বাচন করুন:",
+        value: selectedUpazila,
+        onChange: handleUpazilaChange,
+        placeholder: "উপজেলা নির্বাচন করুন",
+        options: upazilas,
+        optionKey: "id",
+        optionValue: "id",
+        optionLabel: "bn_name",
+        disabled: !selectedDistrict,
+        },
+        {
+        label: "ইউনিয়ন নির্বাচন করুন:",
+        value: selectedUnion,
+        onChange: handleUnionChange,
+        placeholder: "ইউনিয়ন নির্বাচন করুন",
+        options: unions,
+        optionKey: "id",
+        optionValue: "name",
+        optionLabel: "bn_name",
+        disabled: !selectedUpazila,
+        },
+      ].map((field, index) => (
+        <div key={index} className={showLabels ? "col-md-3" : ""}>
+        {showLabels ? (
+          <Form.Item>
+          <label>{field.label}</label>
           <Select
-            value={selectedUpazila || undefined}
-            onChange={handleUpazilaChange}
-            placeholder="উপজেলা নির্বাচন করুন"
+            value={field.value || undefined}
+            onChange={field.onChange}
+            placeholder={field.placeholder}
             style={{ width: "100%" }}
-            disabled={!selectedDistrict}
+            disabled={field.disabled}
           >
-            {upazilas?.map((u) => (
-              <Option key={u.id} value={u.id}>
-                {u.bn_name}
-              </Option>
+            {field.options?.map((option) => (
+            <Option key={option[field.optionKey as keyof TDivision]} value={option[field.optionValue as keyof TDivision]}>
+              {option[field.optionLabel as keyof TDivision]}
+            </Option>
             ))}
           </Select>
-        </Form.Item>
+          </Form.Item>
+        ) : (
+          <select
+          className="searchFrom form_control"
+          value={field.value || ""}
+          onChange={(e) => field.onChange(e.target.value)}
+          disabled={field.disabled}
+          >
+          <option value="">{field.label}</option>
+          {field.options?.map((option) => (
+            <option key={option[field.optionKey as keyof TDivision]} value={option[field.optionValue as keyof TDivision]}>
+            {option[field.optionLabel as keyof TDivision]}
+            </option>
+          ))}
+          </select>
+        )}
+        </div>
+      ))}
       </div>
+    </>
 
-      <div className="col-md-3">
-        <Form.Item>
-          {showLabels && <label>ইউনিয়ন নির্বাচন করুন:</label>}
-          <Select
-            value={selectedUnion || undefined}
-            onChange={handleUnionChange}
-            placeholder="ইউনিয়ন নির্বাচন করুন"
-            style={{ width: "100%" }}
-            disabled={!selectedUpazila}
-          >
-            {unions?.map((u) => (
-              <Option key={u.id} value={u.name}>
-                {u.bn_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </div>
-    </div>
+
   );
 };
 
