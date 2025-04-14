@@ -29,7 +29,8 @@ const SonodDetails: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [selectedService, setSelectedService] = useState<string | null>(null)
-
+  
+  const apiUrl = import.meta.env.VITE_BASE_DOC_URL;
 
  const [noUnion, setNoUnion] = useState(false)
 
@@ -77,7 +78,7 @@ const SonodDetails: React.FC = () => {
 
 
 
-  const apiUrl = "https://api.uniontax.gov.bd"
+
 
   useEffect(() => {
     const fetchSonod = async () => {

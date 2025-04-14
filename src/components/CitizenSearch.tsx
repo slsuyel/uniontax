@@ -42,15 +42,11 @@ export default function CitizenSearch() {
   const [isSearching, setIsSearching] = useState(false)
   const [results, setResults] = useState<SonodData[]>([])
   const [error, setError] = useState<string | null>(null)
-  // const [apiUrl, setApiUrl] = useState("https://api.uniontax.gov.bd")
 
-  // Read API URL
-  // useEffect(() => {
-    //   const url = "https://api.uniontax.gov.bd"
-    //   setApiUrl(url)
-    // }, [])
+  
+  const apiUrl = import.meta.env.VITE_BASE_API_URL;
     
-      const apiUrl = "https://api.uniontax.gov.bd"
+
 
   // Get query from URL and search
   useEffect(() => {
@@ -75,7 +71,7 @@ export default function CitizenSearch() {
     setError(null)
 
     try {
-      const response = await fetch(`${apiUrl}/api/my/sonod/search?query=${encodeURIComponent(query)}`, {
+      const response = await fetch(`${apiUrl}/my/sonod/search?query=${encodeURIComponent(query)}`, {
         method: "GET",
         headers: {
           Accept: "application/json",

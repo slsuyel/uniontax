@@ -8,7 +8,7 @@ const UnionReports = () => {
   const token = localStorage.getItem("token");
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-
+  const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
   const [formData, setFormData] = useState({
     sonod: "",
     paymentType: "",
@@ -24,7 +24,7 @@ const UnionReports = () => {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     console.log("ফর্ম ডেটা:", formData);
-    const url = `https://api.uniontax.gov.bd/payment/report/download?union=${unionInfo?.short_name_e}&from=${formData.fromDate}&to=${formData.toDate}&sonod_type=${formData.sonod}&token=${token}`;
+    const url = `${VITE_BASE_DOC_URL}/payment/report/download?union=${unionInfo?.short_name_e}&from=${formData.fromDate}&to=${formData.toDate}&sonod_type=${formData.sonod}&token=${token}`;
     window.open(url, "_blank");
   };
 

@@ -9,7 +9,10 @@ const PostOfficeTab: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedPostOffice, setSelectedPostOffice] = useState<{ id: string; name_bn: string; name_en: string; post_code: string } | null>(null);
 
-  const apiUrl = "https://api.uniontax.gov.bd/api/user/unioun-info/post-office";
+  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
+
+
+  const apiUrl = `${BASE_API_URL}/user/unioun-info/post-office`;
 
   useEffect(() => {
     fetchPostOffices();

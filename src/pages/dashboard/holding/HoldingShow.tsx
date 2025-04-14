@@ -20,6 +20,8 @@ const HoldingShow = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 20; // Fixed page size
+  const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
+
 
   const { data, isFetching } = useAllHoldingQuery({
     word,
@@ -69,7 +71,7 @@ const HoldingShow = () => {
                 <Link
                   className="btn btn-success  m-1"
                   target="_blank"
-                  to={`https://api.uniontax.gov.bd/api/user/holding-tax/export?word_no=${word}&token=${token}`}
+                  to={`${VITE_BASE_DOC_URL}/api/user/holding-tax/export?word_no=${word}&token=${token}`}
                 >
                   {" "}
                   Export হোল্ডিং ট্যাক্স
@@ -77,7 +79,7 @@ const HoldingShow = () => {
                 <Link
                   className="btn btn-success  m-1"
                   target="_blank"
-                  to={`https://api.uniontax.gov.bd/holding/tax/bokeya/list?word=${word}&token=${token}`}
+                  to={`${VITE_BASE_DOC_URL}/holding/tax/bokeya/list?word=${word}&token=${token}`}
                 >
                   {" "}
                   বকেয়া রিপোর্ট

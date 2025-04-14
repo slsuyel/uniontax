@@ -56,7 +56,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
-
+  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 
   // Extract the 'id' query parameter from the URL
   const queryParams = new URLSearchParams(location.search);
@@ -68,7 +68,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
         // Fetch the data based on the `id` parameter
         const fetchUser = async () => {
           try {
-            const response = await fetch(`https://api.uniontax.gov.bd/api/sonod/search/for/re-applicaion?id=${idFromUrl}`);
+            const response = await fetch(`${BASE_API_URL}/sonod/search/for/re-applicaion?id=${idFromUrl}`);
             const result = await response.json();
             if (result?.data) {
               setFetchedUser(result.data);

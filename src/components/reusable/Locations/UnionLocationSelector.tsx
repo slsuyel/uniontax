@@ -19,17 +19,19 @@ const UnionLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
   const [districts, setDistricts] = useState<TDistrict[]>([]);
   const [upazilas, setUpazilas] = useState<TUpazila[]>([]);
   const [unions, setUnions] = useState<TUnion[]>([]);
-
+  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
   useEffect(() => {
-    fetch("https://api.uniontax.gov.bd/api/global/divisions")
+
+
+    fetch(`${BASE_API_URL}/global/divisions`)
       .then((res) => res.json())
-      .then((data: any) => setDivisions(data?.data))
-      .catch((error) => console.error("Error fetching divisions data:", error));
+      .then((data) => setDivisions(data?.data))
+      .catch((error) => console.error("Error fetching divisions:", error));
   }, []);
 
   useEffect(() => {
     if (selecteddivisions) {
-      fetch(`https://api.uniontax.gov.bd/api/global/districts/${selecteddivisions}`)
+      fetch(`${BASE_API_URL}/global/districts/${selecteddivisions}`)
         .then((response) => response.json())
         .then((data: any) => {
           setDistricts(data?.data);
@@ -40,7 +42,7 @@ const UnionLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
 
   useEffect(() => {
     if (selectedDistrict) {
-      fetch(`https://api.uniontax.gov.bd/api/global/upazilas/${selectedDistrict}`)
+      fetch(`${BASE_API_URL}/global/upazilas/${selectedDistrict}`)
         .then((response) => response.json())
         .then((data: any) => {
           setUpazilas(data?.data);
@@ -51,7 +53,7 @@ const UnionLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
 
   useEffect(() => {
     if (selectedUpazila) {
-      fetch(`https://api.uniontax.gov.bd/api/global/unions/${selectedUpazila}`)
+      fetch(`${BASE_API_URL}/global/unions/${selectedUpazila}`)
         .then((response) => response.json())
         .then((data: any) => {
           setUnions(data?.data);

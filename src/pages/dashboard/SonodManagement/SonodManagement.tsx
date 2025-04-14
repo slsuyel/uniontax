@@ -19,6 +19,9 @@ const SonodManagement = () => {
   const [searchSonodId, setSearchSonodId] = useState("");
   const { sonodName, condition } = useParams();
   const token = localStorage.getItem("token");
+  const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
+
+
   const { data, isLoading, isFetching, refetch } = useAllSonodQuery({
     sonodName: sonodName,
     stutus: condition || "Pending",
@@ -130,7 +133,7 @@ const SonodManagement = () => {
                       <td>
                         <Link
                           target="_blank"
-                          to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+                          to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}`}
                           className="btn btn-success btn-sm me-1"
                         >
                           বাংলা সনদ
@@ -138,7 +141,7 @@ const SonodManagement = () => {
                         {item.hasEnData === 1 && (
                           <Link
                             target="_blank"
-                            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
+                            to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?en=true`}
                             className="btn btn-success btn-sm mr-1"
                           >
                             ইংরেজি সনদ
@@ -203,7 +206,7 @@ const SonodManagement = () => {
                         <td>
                           <Link
                             target="_blank"
-                            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+                            to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}`}
                             className="btn btn-success btn-sm me-1"
                           >
                             বাংলা সনদ
@@ -211,7 +214,7 @@ const SonodManagement = () => {
                           {item.hasEnData === 1 && (
                             <Link
                               target="_blank"
-                              to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
+                              to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?en=true`}
                               className="btn btn-success btn-sm mr-1"
                             >
                               ইংরেজি সনদ

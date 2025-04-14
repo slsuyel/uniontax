@@ -71,6 +71,9 @@ const PaymentSuccessPage: React.FC = () => {
 
   const [count, setCount] = useState(10);
   const [hasCalledApi, setHasCalledApi] = useState(false);
+  const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
+
+
 
   const fetchPaymentDetails = useCallback(async () => {
     if (!transId) {
@@ -197,7 +200,7 @@ const PaymentSuccessPage: React.FC = () => {
                   </Link>
                   {ipnResponse?.data.myserver.sonod_type !== "holdingtax" && (
                     <a
-                      href={`https://api.uniontax.gov.bd/applicant/copy/download/${sonodId}`}
+                      href={`${VITE_BASE_DOC_URL}/applicant/copy/download/${sonodId}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-success"
@@ -208,8 +211,8 @@ const PaymentSuccessPage: React.FC = () => {
                   <a
                     href={
                       ipnResponse?.data.myserver.sonod_type === "holdingtax"
-                        ? `https://api.uniontax.gov.bd/holding/tax/invoice/${sonodId}`
-                        : `https://api.uniontax.gov.bd/sonod/invoice/download/${sonodId}`
+                        ? `${VITE_BASE_DOC_URL}/holding/tax/invoice/${sonodId}`
+                        : `${VITE_BASE_DOC_URL}/sonod/invoice/download/${sonodId}`
                     }
                     target="_blank"
                     rel="noopener noreferrer"

@@ -9,6 +9,10 @@ import { RootState } from "@/redux/features/store";
 import { updatePendingCount } from "@/redux/features/union/unionSlice";
 import SonodCancelModal from "../ui/SonodCancelModal";
 
+
+
+
+
 interface SonodActionBtnProps {
   sonodName: string | undefined;
   item: TApplicantData;
@@ -32,6 +36,9 @@ const SonodActionBtn = ({
   const [viewEn, setViewEn] = useState(false);
   const [sonodCancelModal, setSonodCancelModal] = useState<boolean>(false);
   const [textareaValue, setTextareaValue] = useState(item?.prottoyon);
+
+  const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
+
 
   const [textareaValueEn, setTextareaValueEn] = useState(
     item?.english_prottoyon
@@ -139,7 +146,7 @@ const SonodActionBtn = ({
       <Menu.Item className="border my-1 border-success" key="receipt">
         <Link
           className="text-decoration-none text-success "
-          to={`https://api.uniontax.gov.bd/applicant/copy/download/${item.id}`}
+          to={`${VITE_BASE_DOC_URL}/applicant/copy/download/${item.id}`}
           target="_blank"
         >
           প্রাপ্তী স্বীকারপত্র
@@ -176,7 +183,7 @@ const SonodActionBtn = ({
       <Menu.Item className="border my-1 border-success" key="invoice">
         <Link
           className="text-decoration-none"
-          to={`https://api.uniontax.gov.bd/sonod/invoice/download/${item.id}`}
+          to={`${VITE_BASE_DOC_URL}/sonod/invoice/download/${item.id}`}
           target="_blank"
         >
           রশিদ প্রিন্ট

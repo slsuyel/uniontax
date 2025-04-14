@@ -26,7 +26,9 @@ const VillageSettingsTab: React.FC = () => {
 
   const token = localStorage.getItem("token");
 
-  const apiUrl = "https://api.uniontax.gov.bd/api/user/unioun-info/village"; // Adjust the base URL for your API
+  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
+
+  const apiUrl = `${BASE_API_URL}/user/unioun-info/village`; // Adjust the base URL for your API
 
   // Fetch villages by word_no
   const fetchVillagesByWordNo = async (wordNo: number) => {

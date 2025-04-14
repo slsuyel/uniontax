@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.uniontax.gov.bd/api',
+    baseUrl: `${BASE_API_URL}`,
     credentials: 'include',
   }),
   // endpoints: (builder: any) => ({}),

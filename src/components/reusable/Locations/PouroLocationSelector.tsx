@@ -16,9 +16,14 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
   const [divisions, setDivisions] = useState<TDivision[]>([]);
   const [districts, setDistricts] = useState<TDistrict[]>([]);
   const [unions, setUnions] = useState<TUnion[]>([]);
+  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
+
+
 
   useEffect(() => {
-    fetch("https://api.uniontax.gov.bd/api/global/divisions")
+
+
+    fetch(`${BASE_API_URL}/global/divisions`)
       .then((res) => res.json())
       .then((data) => setDivisions(data?.data))
       .catch((error) => console.error("Error fetching divisions:", error));
@@ -26,7 +31,7 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
 
   useEffect(() => {
     if (selecteddivisions) {
-      fetch(`https://api.uniontax.gov.bd/api/global/districts/${selecteddivisions}`)
+      fetch(`${BASE_API_URL}/global/districts/${selecteddivisions}`)
         .then((res) => res.json())
         .then((data) => setDistricts(data?.data))
         .catch((error) => console.error("Error fetching districts:", error));
