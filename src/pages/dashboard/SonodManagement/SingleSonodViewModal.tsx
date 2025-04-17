@@ -35,8 +35,20 @@ const SingleSonodViewModal = ({
   const data: TApplicantData = !getingSonod && singleS?.data;
   console.log(data);
 
-  const successorList =
-    (data?.successor_list && JSON.parse(data?.successor_list)) || [];
+  // const successorList =
+  //   (data?.successor_list && JSON.parse(data?.successor_list)) || [];
+
+
+  const successorList = Array.isArray(data?.successor_list)
+  ? data?.successor_list
+  : (() => {
+      try {
+        return JSON.parse(data?.successor_list || "[]");
+      } catch {
+        return [];
+      }
+    })();
+
 
   return (
     <Modal
