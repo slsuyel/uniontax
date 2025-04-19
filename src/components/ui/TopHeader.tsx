@@ -41,19 +41,29 @@ const TopHeader = () => {
 
       <div className=" row mx-auto container">
         <div className="col-md-6 my-3 ps-0">
-          <Link to={"/"}>
-            <img 
-              onError={(e:any) => e.target.src = (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://uniontax.gov.bd/main_logo.webp")}
-              width={270}
-              src={`https://images.weserv.nl/?url=${encodeURIComponent(
-                unionData?.web_logo ||
-                (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://uniontax.gov.bd/main_logo.webp")
-              )}`}
-              alt="Logo"
-              height="auto"
-            />
 
-          </Link>
+
+        <Link to={"/"}>
+  <img 
+    onError={(e: any) => {
+      e.target.src = "https://pouroseba.gov.bd/main_logo-pouro.png";
+    }}
+    width={270}
+    src={`https://images.weserv.nl/?url=${encodeURIComponent(
+      unionData?.web_logo ||
+      (site_settings.union === "false"  // Explicitly check for "false" string
+        ? "https://pouroseba.gov.bd/main_logo-pouro.png"  // Show pouroseba if false
+        : (baseUrl.includes("unionservices")  // Otherwise, check baseUrl
+            ? "https://unionservices.gov.bd/unionservices_logo.webp" 
+            : "https://uniontax.gov.bd/main_logo.webp"))
+    )}`}
+    alt="Logo"
+    height="auto"
+  />
+</Link>
+
+
+
 
 
         </div>
