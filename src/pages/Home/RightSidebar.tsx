@@ -13,7 +13,7 @@ const RightSidebar = () => {
   return (
     <>
       {unionInfo &&
-        !["uniontax", "unionservices", "pouroseba"].includes(
+        !["uniontax", "unionservices", "pouroseba","root"].includes(
           unionInfo.short_name_e as string
         ) ? (
         <div className="pt-3 col-md-3 services">
