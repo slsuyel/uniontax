@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useGetPostOfficesQuery,useGetVillagesQuery } from "@/redux/api/user/userApi";
 import { Form, Select, Checkbox, AutoComplete } from "antd";
 import { TDistrict, TDivision, TUpazila, TUnion } from "@/types";
+import { useAppSelector } from "@/redux/features/hooks"
+import type { RootState } from "@/redux/features/store"
 
 const { Option } = Select;
 interface AddressFieldsProps {
@@ -39,6 +41,10 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
   // const { data: perPostOfficesData = [] } = useGetVillagesQuery(selectedPerUnion,); 
   const [trigger, setTrigger] = useState(false);
+
+
+
+    const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   useEffect(() => {
     if (selectedUnion && selectedWord) {
@@ -97,67 +103,145 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
   }, [selectedPerDivision]);
 
   useEffect(() => {
-    if (selectedDistrict) {
-      fetch("/upazilas.json")
-        .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedDistrict
+
+
+
+
+      if (selectedPerDistrict) {
+        fetch("/pouroseba.json")
+          .then((response) => response.json())
+          .then((data: any[]) => {  
+            const filteredUnions = data.filter(
+              (union) => union.district_id === selectedPerDistrict
+            );
+            setPerUnions(filteredUnions);
+          })
+          .catch((error) =>
+            console.error("Error fetching unions data:", error)
           );
-          setUpazilas(filteredUpazilas);
-        })
-        .catch((error) =>
-          console.error("Error fetching upazilas data:", error)
-        );
-    }
-    if (selectedPerDistrict) {
-      fetch("/upazilas.json")
-        .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedPerDistrict
+      }
+
+      if (selectedDistrict) {
+        fetch("/pouroseba.json")
+          .then((response) => response.json())
+          .then((data: any[]) => {  
+            const filteredUnions = data.filter(
+              (union) => union.district_id === selectedDistrict
+            );
+            setUnions(filteredUnions);
+          })
+          .catch((error) =>
+            console.error("Error fetching unions data:", error)
           );
-          setPerUpazilas(filteredUpazilas);
-        })
-        .catch((error) =>
-          console.error("Error fetching upazilas data:", error)
-        );
-    }
+      }
+
+
+
+
+
+
+      if (selectedDistrict) {
+        fetch("/upazilas.json")
+          .then((response) => response.json())
+          .then((data: TUpazila[]) => {
+            const filteredUpazilas = data.filter(
+              (upazila) => upazila.district_id === selectedDistrict
+            );
+            setUpazilas(filteredUpazilas);
+          })
+          .catch((error) =>
+            console.error("Error fetching upazilas data:", error)
+          );
+      }
+      if (selectedPerDistrict) {
+        fetch("/upazilas.json")
+          .then((response) => response.json())
+          .then((data: TUpazila[]) => {
+            const filteredUpazilas = data.filter(
+              (upazila) => upazila.district_id === selectedPerDistrict
+            );
+            setPerUpazilas(filteredUpazilas);
+          })
+          .catch((error) =>
+            console.error("Error fetching upazilas data:", error)
+          );
+      }
+
+ 
+
+
+
+
+
+
+
+
+
+
+
   }, [selectedDistrict, selectedPerDistrict]);
 
   
 
 
   useEffect(() => {
-    if (selectedUpazila) {
-      fetch("/unions.json")
-        .then((response) => response.json())
-        .then((data: any[]) => {
-          const filteredUnions = data.filter(
-            (union) => union.upazilla_id === selectedUpazila
+
+
+
+    if (site_settings?.union === "false") {
+
+    }else{
+
+
+
+      if (selectedUpazila) {
+        fetch("/unions.json")
+          .then((response) => response.json())
+          .then((data: any[]) => {
+            const filteredUnions = data.filter(
+              (union) => union.upazilla_id === selectedUpazila
+            );
+            setUnions(filteredUnions);
+          })
+          .catch((error) =>
+            console.error("Error fetching unions data:", error)
           );
-          setUnions(filteredUnions);
-        })
-        .catch((error) =>
-          console.error("Error fetching unions data:", error)
-        );
-    }
-    if (selectedPerUpazila) {
-      fetch("/unions.json")
-        .then((response) => response.json())
-        .then((data: any[]) => {
-          const filteredUnions = data.filter(
-            (union) => union.upazilla_id === selectedPerUpazila
+      }
+
+
+
+      if (selectedPerUpazila) {
+        fetch("/unions.json")
+          .then((response) => response.json())
+          .then((data: any[]) => {
+            const filteredUnions = data.filter(
+              (union) => union.upazilla_id === selectedPerUpazila
+            );
+            setPerUnions(filteredUnions);
+          })
+          .catch((error) =>
+            console.error("Error fetching unions data:", error)
           );
-          setPerUnions(filteredUnions);
-        })
-        .catch((error) =>
-          console.error("Error fetching unions data:", error)
-        );
+      }
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
   }, [selectedUpazila, selectedPerUpazila]);
 
   
+
+
 
 
 
@@ -362,9 +446,9 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           </Form.Item>
 
 
-            <Form.Item name="applicant_present_union" label="ইউনিয়ন">
+            <Form.Item name="applicant_present_union"    label={site_settings?.union !== "false" ? "ইউনিয়ন" : "পৌরসভা"}>
             <Select
-              placeholder="ইউনিয়ন নির্বাচন করুন"
+               placeholder={site_settings?.union !== "false" ? "ইউনিয়ন নির্বাচন করুন" : "পৌরসভা নির্বাচন করুন"}
               style={{ height: 40, width: "100%" }}
               value={selectedUnion}
               onChange={handleUnionChange}
@@ -525,9 +609,9 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
 
           
-          <Form.Item name="applicant_permanent_union" label="ইউনিয়ন">
+          <Form.Item name="applicant_permanent_union"    label={site_settings?.union !== "false" ? "ইউনিয়ন" : "পৌরসভা"}>
             <Select
-              placeholder="ইউনিয়ন নির্বাচন করুন"
+               placeholder={site_settings?.union !== "false" ? "ইউনিয়ন নির্বাচন করুন" : "পৌরসভা নির্বাচন করুন"}
               style={{ height: 40, width: "100%" }}
               value={selectedPerUnion}
               onChange={handlePerUnionChange}
