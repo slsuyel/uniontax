@@ -16,8 +16,9 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
   const [divisions, setDivisions] = useState<TDivision[]>([]);
   const [districts, setDistricts] = useState<TDistrict[]>([]);
   const [unions, setUnions] = useState<TUnion[]>([]);
-  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
+  // const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 
+  const BASE_API_URL = "https://api.uniontax.gov.bd/api";
 
 
   useEffect(() => {
