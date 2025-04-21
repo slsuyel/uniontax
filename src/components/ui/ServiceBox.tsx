@@ -23,7 +23,7 @@ const ServiceBox = () => {
   const handleService = (service: string) => {
 
 
-    if (unionInfo?.short_name_e === "uniontax") {
+    if (unionInfo?.short_name_e === "root") {
       message.warning("অনুগ্রহ করে আপনার ইউনিয়ন নির্বাচন করুন")
       setNoUnion(true)
       setSelectedService(service)

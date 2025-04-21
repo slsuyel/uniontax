@@ -47,6 +47,8 @@ const SonodDetails: React.FC = () => {
     
 
         
+
+
         if (service) {
       setSelectedService(service)
       const domain = baseUrl.includes("uniontax")
@@ -63,6 +65,9 @@ const SonodDetails: React.FC = () => {
         : baseUrl.split("//")[1];
       window.location.href = `http://${unionName}.${domain}`;
     }
+
+
+
 
 
     
