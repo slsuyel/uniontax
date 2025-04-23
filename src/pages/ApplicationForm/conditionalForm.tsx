@@ -53,6 +53,15 @@ const conditionalForm = (service: any) => {
         </Select>
       )}
 
+      {service == "ভোটার স্থানান্তরের প্রত্যয়ন পত্র"
+        ? renderDynamicFormItem(
+            "স্থানান্তরিত এলাকার নাম",
+            "Name_of_the_transferred_area",
+            <TextArea style={{ height: 80 }} />
+          )
+        : null}
+
+
       {service == "বিবিধ প্রত্যয়নপত্র" || service === "অনাপত্তি সনদপত্র"
         ? renderDynamicFormItem(
             "আবেদনকৃত প্রত্যয়নের বিবরণ উল্লেখ করুন",
