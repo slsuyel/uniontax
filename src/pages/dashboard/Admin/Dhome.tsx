@@ -8,7 +8,7 @@ import type { RootState } from "@/redux/features/store"
 import Breadcrumbs from "@/components/reusable/Breadcrumbs"
 import { Link } from "react-router-dom"
 import EkpayReportTable from "../../../components/EkpayReportTable"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 // Add this to your userApi.ts file
 interface EkpayReport {
@@ -32,14 +32,14 @@ const useEkpayReportsQuery = (arg: { token: string | null; page?: number }) => {
       const result = await response.json()
       setData(result)
     } catch (err) {
-      setError(err)
+      setError(err as Error)
     } finally {
       setIsLoading(false)
     }
   }
 
   // Initial fetch
-  useState(() => {
+  useEffect(() => {
     fetchData(arg.page || 1)
   }, [arg.token, arg.page])
 
