@@ -2,6 +2,49 @@
 
 import apiSlice from "../apiSlice";
 
+
+// Define the EkpayReport interface
+export interface EkpayReport {
+  id: number
+  union: string
+  start_date: string
+  end_date: string
+  ekpay_amount: string
+  server_amount: string
+  difference_amount: string
+  created_at: string
+  updated_at: string
+}
+
+// Define the pagination response interface
+export interface PaginationResponse<T> {
+  current_page: number
+  data: T[]
+  first_page_url: string
+  from: number
+  last_page: number
+  last_page_url: string
+  links: {
+    url: string | null
+    label: string
+    active: boolean
+  }[]
+  next_page_url: string | null
+  path: string
+  per_page: number
+  prev_page_url: string | null
+  to: number
+  total: number
+}
+
+// Define the API response interface
+export interface ApiResponse<T> {
+  data: T
+  isError: boolean
+  error: string | null
+  status_code: number
+}
+
 const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     sonodApply: builder.mutation({
@@ -99,6 +142,22 @@ const userApi = apiSlice.injectEndpoints({
 
 
 
+
+        ekpayReports: builder.query<ApiResponse<PaginationResponse<EkpayReport>>, { token: string | null; page?: number }>({
+          query: (arg) => ({
+            url: `/user/ekpay-reports/get/by/union?page=${arg.page || 1}`,
+            headers: {
+              Authorization: `Bearer ${arg.token}`,
+            },
+          }),
+        }),
+
+
+
+
+
+
+
   }),
 });
 
@@ -114,4 +173,5 @@ export const {
   useSonodSearchByIdQuery,
   useGetPostOfficesQuery, 
   useGetVillagesQuery, 
+  useEkpayReportsQuery
 } = userApi;

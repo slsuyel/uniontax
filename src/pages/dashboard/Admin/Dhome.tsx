@@ -1,38 +1,85 @@
-import { useDbMetricsQuery } from "@/redux/api/user/userApi";
-// import MonthlyCart from "./MonthlyCart";
-import Summary from "./Summary";
-// import SummaryChart from "./SummaryChart";
-import Loader from "@/components/reusable/Loader";
-import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
-import Breadcrumbs from "@/components/reusable/Breadcrumbs";
-import { Link } from "react-router-dom";
+"use client"
+
+import { useDbMetricsQuery } from "@/redux/api/user/userApi"
+import Summary from "./Summary"
+import Loader from "@/components/reusable/Loader"
+import { useAppSelector } from "@/redux/features/hooks"
+import type { RootState } from "@/redux/features/store"
+import Breadcrumbs from "@/components/reusable/Breadcrumbs"
+import { Link } from "react-router-dom"
+import EkpayReportTable from "../../../components/EkpayReportTable"
+import { useState } from "react"
+
+// Add this to your userApi.ts file
+interface EkpayReport {
+  data: any; // Replace 'any' with the actual structure of your data if known
+}
+
+const useEkpayReportsQuery = (arg: { token: string | null; page?: number }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [data, setData] = useState<EkpayReport | null>(null)
+  const [error, setError] = useState<Error | null>(null)
+
+  const fetchData = async (page = 1) => {
+    setIsLoading(true)
+    try {
+      const response = await fetch(`https://api.uniontax.gov.bd/api/user/ekpay-reports/get/by/union?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${arg.token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      const result = await response.json()
+      setData(result)
+    } catch (err) {
+      setError(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Initial fetch
+  useState(() => {
+    fetchData(arg.page || 1)
+  }, [arg.token, arg.page])
+
+  return { data, isLoading, error, refetch: fetchData }
+}
 
 const Dhome = () => {
-  const user = useAppSelector((state: RootState) => state.user.user);
-  const token = localStorage.getItem(`token`);
-  const { data, isLoading } = useDbMetricsQuery({ token });
+  const user = useAppSelector((state: RootState) => state.user.user)
+  const token = localStorage.getItem(`token`)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  if (isLoading) {
-    return <Loader />;
+  const { data: metricsData, isLoading: metricsLoading } = useDbMetricsQuery({ token })
+  const {
+    data: ekpayData,
+    isLoading: ekpayLoading,
+    refetch: refetchEkpay,
+  } = useEkpayReportsQuery({ token, page: currentPage })
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    refetchEkpay(page)
+  }
+
+  if (metricsLoading || ekpayLoading) {
+    return <Loader />
   }
 
   return (
     <div className="card p-3 border-0">
-      <Breadcrumbs
-        current={`${user?.dashboard_title}`}
-        page={`${user?.designation}`}
-      />
-      {/* <div className="row mx-auto my-2 ">
-        <SummaryChart />
-        <MonthlyCart />
-      </div> */}
+      <Breadcrumbs current={`${user?.dashboard_title}`} page={`${user?.designation}`} />
       <div className="d-flex justify-content-end">
-        <Link className="btn btn-sm btn-success" to={`/dashboard/sms`}>SMS প্যানেল</Link>
+        <Link className="btn btn-sm btn-success" to={`/dashboard/sms`}>
+          SMS প্যানেল
+        </Link>
       </div>
-      <Summary data={data?.data} />
-    </div>
-  );
-};
+      <Summary data={metricsData?.data} />
 
-export default Dhome;
+      {ekpayData && ekpayData.data && <EkpayReportTable data={ekpayData.data} onPageChange={handlePageChange} />}
+    </div>
+  )
+}
+
+export default Dhome
