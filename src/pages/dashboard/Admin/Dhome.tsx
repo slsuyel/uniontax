@@ -7,63 +7,63 @@ import { useAppSelector } from "@/redux/features/hooks"
 import type { RootState } from "@/redux/features/store"
 import Breadcrumbs from "@/components/reusable/Breadcrumbs"
 import { Link } from "react-router-dom"
-import EkpayReportTable from "../../../components/EkpayReportTable"
-import { useEffect, useState } from "react"
+// import EkpayReportTable from "../../../components/EkpayReportTable"
+// import { useEffect, useState } from "react"
 
 // Add this to your userApi.ts file
-interface EkpayReport {
-  data: any; // Replace 'any' with the actual structure of your data if known
-}
+// interface EkpayReport {
+//   data: any; // Replace 'any' with the actual structure of your data if known
+// }
 
-const useEkpayReportsQuery = (arg: { token: string | null; page?: number }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [data, setData] = useState<EkpayReport | null>(null)
-  const [error, setError] = useState<Error | null>(null)
+// const useEkpayReportsQuery = (arg: { token: string | null; page?: number }) => {
+//   const [isLoading, setIsLoading] = useState(false)
+//   const [data, setData] = useState<EkpayReport | null>(null)
+//   const [error, setError] = useState<Error | null>(null)
 
-  const fetchData = async (page = 1) => {
-    setIsLoading(true)
-    try {
-      const response = await fetch(`https://api.uniontax.gov.bd/api/user/ekpay-reports/get/by/union?page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${arg.token}`,
-          "Content-Type": "application/json",
-        },
-      })
-      const result = await response.json()
-      setData(result)
-    } catch (err) {
-      setError(err as Error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+//   const fetchData = async (page = 1) => {
+//     setIsLoading(true)
+//     try {
+//       const response = await fetch(`https://api.uniontax.gov.bd/api/user/ekpay-reports/get/by/union?page=${page}`, {
+//         headers: {
+//           Authorization: `Bearer ${arg.token}`,
+//           "Content-Type": "application/json",
+//         },
+//       })
+//       const result = await response.json()
+//       setData(result)
+//     } catch (err) {
+//       setError(err as Error)
+//     } finally {
+//       setIsLoading(false)
+//     }
+//   }
 
-  // Initial fetch
-  useEffect(() => {
-    fetchData(arg.page || 1)
-  }, [arg.token, arg.page])
+//   // Initial fetch
+//   useEffect(() => {
+//     fetchData(arg.page || 1)
+//   }, [arg.token, arg.page])
 
-  return { data, isLoading, error, refetch: fetchData }
-}
+//   return { data, isLoading, error, refetch: fetchData }
+// }
 
 const Dhome = () => {
   const user = useAppSelector((state: RootState) => state.user.user)
   const token = localStorage.getItem(`token`)
-  const [currentPage, setCurrentPage] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(1)
 
   const { data: metricsData, isLoading: metricsLoading } = useDbMetricsQuery({ token })
-  const {
-    data: ekpayData,
-    isLoading: ekpayLoading,
-    refetch: refetchEkpay,
-  } = useEkpayReportsQuery({ token, page: currentPage })
+  // const {
+  //   data: ekpayData,
+  //   isLoading: ekpayLoading,
+  //   refetch: refetchEkpay,
+  // } = useEkpayReportsQuery({ token, page: currentPage })
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    refetchEkpay(page)
-  }
+  // const handlePageChange = (page: number) => {
+  //   setCurrentPage(page)
+  //   refetchEkpay(page)
+  // }
 
-  if (metricsLoading || ekpayLoading) {
+  if (metricsLoading ) {
     return <Loader />
   }
 
@@ -77,7 +77,7 @@ const Dhome = () => {
       </div>
       <Summary data={metricsData?.data} />
 
-      {ekpayData && ekpayData.data && <EkpayReportTable data={ekpayData.data} onPageChange={handlePageChange} />}
+      {/* {ekpayData && ekpayData.data && <EkpayReportTable data={ekpayData.data} onPageChange={handlePageChange} />} */}
     </div>
   )
 }
