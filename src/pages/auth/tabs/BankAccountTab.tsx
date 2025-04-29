@@ -2,7 +2,12 @@ import React, { useEffect } from "react";
 import { Form, Input, Button, message, Spin } from "antd";
 import { useSetBankAccountMutation, useBankDetailsQuery } from "@/redux/api/auth/authApi";
 
-const BankAccountTab: React.FC = () => {
+// Define the prop type explicitly
+interface BankAccountTabProps {
+  setIsBankNotice?: (value: boolean) => void; // Make this optional by adding ?
+}
+
+const BankAccountTab: React.FC<BankAccountTabProps> = ({ setIsBankNotice }) => {
   const token = localStorage.getItem("token");
   const { data, isLoading: getting, error } = useBankDetailsQuery(token); // Query to get bank details
   const [setBankAccount, { isLoading }] = useSetBankAccountMutation();
@@ -18,6 +23,7 @@ const BankAccountTab: React.FC = () => {
       const res = await setBankAccount({ data: values, token }).unwrap();
       if (res.status_code === 200) {
         message.success("ব্যাংক একাউন্ট সফলভাবে যোগ করা হয়েছে।");
+        setIsBankNotice?.(false);
       }
     } catch (error) {
       message.error("ব্যাংক একাউন্ট যোগ করতে সমস্যা হয়েছে।");

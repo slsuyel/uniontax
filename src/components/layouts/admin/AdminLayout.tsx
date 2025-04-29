@@ -9,6 +9,7 @@ import ScrollToTop from "@/utils/ScrollToTop"
 import { useAppSelector } from "@/redux/features/hooks"
 import type { RootState } from "@/redux/features/store"
 import AdminNotice from "@/components/ui/AdminNotice"
+import BankAccountNotice from "@/components/ui/BankAccountNotice"
 
 
 const { Header, Content, Footer } = Layout
@@ -16,17 +17,25 @@ const UserLayout = () => {
   const user = useAppSelector((state: RootState) => state.user.user)
   const theme = false
   const [isNoticeVisible, setIsNoticeVisible] = useState(false)
+  const [isBankNotice, setIsBankNotice] = useState(false)
+
 
   useEffect(() => {
     if (user && user?.is_popup) {
       setIsNoticeVisible(true)
+    }
+    if (user && !user?.has_bank_account) {
+      setIsBankNotice(true)
     }
   }, [user])
 
   const handleCloseNotice = () => {
     setIsNoticeVisible(false)
   }
-  // console.log(user);
+  const handleBankClose = () => {
+    setIsBankNotice(false)
+  }
+ 
   return (
     <ScrollToTop>
       <Layout>
@@ -73,6 +82,7 @@ const UserLayout = () => {
 
       {/* Admin Notice Modal */}
       <AdminNotice isVisible={isNoticeVisible} onClose={handleCloseNotice} user={user} />
+      <BankAccountNotice isBankNotice={isBankNotice} onClose={handleBankClose} setIsBankNotice={ setIsBankNotice} />
     </ScrollToTop>
   )
 }
