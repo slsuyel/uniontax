@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => {
           <UnionProfileTab />
         </TabPane>
         <TabPane tab="ব্যাংক অ্যাকাউন্ট সেটআপ" key="4">
-          <BankAccountTab />
+          <BankAccountTab  />
         </TabPane>
         <TabPane tab="পাসওয়ার্ড পরিবর্তন" key="2">
           <PasswordChangeTab />

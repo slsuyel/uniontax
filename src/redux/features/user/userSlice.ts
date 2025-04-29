@@ -14,6 +14,7 @@ export interface User {
   designation: string;
   email_verified: boolean;
   is_popup: boolean;
+  has_bank_account: boolean;
 }
 
 type TInitialState = {

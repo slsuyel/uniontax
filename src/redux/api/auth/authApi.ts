@@ -28,6 +28,7 @@ const authApi = apiSlice.injectEndpoints({
         url: `/auth/user/check-token`,
         headers: { Authorization: `Bearer ${token}` },
       }),
+      providesTags:['bank-details']
     }),
 
     uddoktaTokenCheck: builder.query({
