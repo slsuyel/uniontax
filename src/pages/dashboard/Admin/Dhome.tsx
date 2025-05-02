@@ -55,7 +55,6 @@ const Dhome = () => {
   const { data: metricsData, isLoading: metricsLoading } = useDbMetricsQuery({ token })
   const {
     data: ekpayData,
-    isLoading: ekpayLoading,
     refetch: refetchEkpay,
   } = useEkpayReportsQuery({ token, page: currentPage })
 
