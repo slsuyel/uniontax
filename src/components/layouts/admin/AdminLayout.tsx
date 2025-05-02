@@ -24,9 +24,14 @@ const UserLayout = () => {
     if (user && user?.is_popup) {
       setIsNoticeVisible(true)
     }
+
     if (user && !user?.has_bank_account) {
       setIsBankNotice(true)
+    }else{
+      setIsBankNotice(false)
+
     }
+
   }, [user])
 
   const handleCloseNotice = () => {
