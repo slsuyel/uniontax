@@ -62,29 +62,29 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const queryParams = new URLSearchParams(location.search);
   const idFromUrl = queryParams.get("id");
 
-    // If no id is provided, use the `user` prop to populate the form data
-    useEffect(() => {
-      if (idFromUrl) {
-        // Fetch the data based on the `id` parameter
-        const fetchUser = async () => {
-          try {
-            const response = await fetch(`${BASE_API_URL}/sonod/search/for/re-applicaion?id=${idFromUrl}`);
-            const result = await response.json();
-            if (result?.data) {
-              setFetchedUser(result.data);
-         
-              form.setFieldsValue(result.data); // Set form values after fetching
-            }
-          } catch (error) {
-            console.error("Failed to fetch user by ID:", error);
+  // If no id is provided, use the `user` prop to populate the form data
+  useEffect(() => {
+    if (idFromUrl) {
+      // Fetch the data based on the `id` parameter
+      const fetchUser = async () => {
+        try {
+          const response = await fetch(`${BASE_API_URL}/sonod/search/for/re-applicaion?id=${idFromUrl}`);
+          const result = await response.json();
+          if (result?.data) {
+            setFetchedUser(result.data);
+
+            form.setFieldsValue(result.data); // Set form values after fetching
           }
-        };
-        fetchUser();
-      } else {
-        setFetchedUser(user || null);
-        form.setFieldsValue(user || {}); // Set form values from the `user` prop
-      }
-    }, [idFromUrl, service, user, form]);
+        } catch (error) {
+          console.error("Failed to fetch user by ID:", error);
+        }
+      };
+      fetchUser();
+    } else {
+      setFetchedUser(user || null);
+      form.setFieldsValue(user || {}); // Set form values from the `user` prop
+    }
+  }, [idFromUrl, service, user, form]);
 
 
 
@@ -121,7 +121,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             formData.append(key, value.toString());
           }
         });
-        
+
         if (frontFile)
           formData.append("applicant_national_id_front_attachment", frontFile);
         if (backFile)
@@ -131,13 +131,18 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             "applicant_birth_certificate_attachment",
             birthCertificateFile
           );
+          if (values.image && values.image.thumbUrl) {
+            formData.append("image", values.image.thumbUrl); 
+          }
+          
         if (values.successor_list) {
           formData.append(
             "successor_list",
             JSON.stringify(values.successor_list)
           );
         }
-
+        console.log(values.image.thumbUrl);
+        // return
         const res = await updateSonod({ formData, id, token }).unwrap();
 
         console.log("res---", res);
@@ -169,12 +174,12 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const successorList = Array.isArray(sonodInfo?.successor_list)
     ? sonodInfo?.successor_list
     : (() => {
-        try {
-          return JSON.parse(sonodInfo?.successor_list || "[]");
-        } catch {
-          return [];
-        }
-      })();
+      try {
+        return JSON.parse(sonodInfo?.successor_list || "[]");
+      } catch {
+        return [];
+      }
+    })();
 
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
@@ -293,7 +298,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             {/* Corrected JSX component call */}
             {conditionalForm(sonodName)}
           </div>
-            {addressFields(addressFieldsProps)}
+          {addressFields(addressFieldsProps)}
           {attachmentForm({
             setFrontFile,
             setBackFile,
