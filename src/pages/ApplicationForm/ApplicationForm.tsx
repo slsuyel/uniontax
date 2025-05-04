@@ -131,9 +131,12 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             "applicant_birth_certificate_attachment",
             birthCertificateFile
           );
-          if (values.image && values.image.thumbUrl) {
-            formData.append("image", values.image.thumbUrl); 
-          }
+
+            if (values?.image?.thumbUrl) {
+            formData.append("image", values.image.thumbUrl);
+            } else {
+            formData.append("image", "");
+            }
           
         if (values.successor_list) {
           formData.append(
@@ -141,7 +144,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             JSON.stringify(values.successor_list)
           );
         }
-        console.log(values.image.thumbUrl);
+    
         // return
         const res = await updateSonod({ formData, id, token }).unwrap();
 
