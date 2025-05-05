@@ -91,7 +91,7 @@ const conditionalForm = (service: any) => {
         renderDynamicFormItem(
           "বার্ষিক আয়",
           "Annual_income",
-          <Input style={{ height: 40 }} />
+          <Input style={{ height: 40 }} type="number" />
         )}
 
       {service == "প্রতিবন্ধী সনদপত্র" &&
