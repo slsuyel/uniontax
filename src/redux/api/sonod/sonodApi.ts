@@ -58,6 +58,16 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["holding-create-update"],
     }),
+    uddoktaAllHolding: builder.query({
+      query: ({ word, token, search, page = 1 }) => ({
+        url: `/uddokta/holdingtax?page=${page}&word=${word}${
+          search ? `&search=${search}` : ""
+        }`,
+        method: "Get",
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["holding-create-update"],
+    }),
 
     allHoldingFrontend: builder.query({
       query: ({ word, search, unioun, page = 1 }) => ({
@@ -95,6 +105,14 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["holding-create-update"],
     }),
+    uddoktaSingleHolding: builder.query({
+      query: ({ id, token }) => ({
+        url: `/uddokta/holdingtax/${id}`,
+        method: "Get",
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["holding-create-update"],
+    }),
 
     singleHoldingPublic: builder.query({
       query: ({ id }) => ({
@@ -106,6 +124,15 @@ const sonodApi = apiSlice.injectEndpoints({
     addHolding: builder.mutation({
       query: ({ data, token }) => ({
         url: `/user/holdingtax`,
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: data,
+      }),
+      invalidatesTags: ["holding-create-update"],
+    }),
+    uddoktaAddHolding: builder.mutation({
+      query: ({ data, token }) => ({
+        url: `/uddokta/holdingtax`,
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: data,
@@ -194,5 +221,8 @@ export const {
   useNidCheckMutation,
   useHoldingBokeyaUpdateMutation,
   useUpdateHoldingMutation,
-  useImportHoldingMutation
+  useImportHoldingMutation,
+  useUddoktaAllHoldingQuery,
+  useUddoktaAddHoldingMutation,
+  useUddoktaSingleHoldingQuery
 } = sonodApi;

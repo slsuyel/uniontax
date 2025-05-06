@@ -27,23 +27,48 @@ const UddoktaLayout = () => {
   }, []);
 
   const sidebarItems = [
+    // {
+    //   key: "dashboard-home",
+    //   label: (
+    //     <Link className="text-decoration-none" to="/uddokta/">
+    //       নতুন আবেদন
+    //     </Link>
+    //   ),
+    // },
+    // {
+    //   key: "application-bn",
+    //   label: (
+    //     <Link className="text-decoration-none" to="/application/charitric_sonod">
+    //       বাংলা আবেদন
+    //     </Link>
+    //   ),
+    // },
+    // {
+    //   key: "application-en",
+    //   label: (
+    //     <Link className="text-decoration-none" to="/application-english/charitric_sonod">
+    //       ইংরেজি আবেদন
+    //     </Link>
+    //   ),
+    // },
+    // {
+    //   key: "profile",
+    //   label: (
+    //     <Link className="text-decoration-none" to="/profile">
+    //       প্রোফাইল
+    //     </Link>
+    //   ),
+    // },
     {
-      key: "new-application",
+      key: "holding-tax",
       label: (
-        <Link className="text-decoration-none" to="/uddokta/">
-          নতুন আবেদন
-        </Link>
-      ),
-    },
-    {
-      key: "settings",
-      label: (
-        <Link className="text-decoration-none" to="/uddokta/settings">
-          সেটিংস
+        <Link className="text-decoration-none" to="/uddokta/holding/tax/">
+          হোল্ডিং ট্যাক্স
         </Link>
       ),
     },
   ];
+  
 
   const { data, isLoading } = useUnionInfoQuery(
     { unionName, token },
