@@ -76,8 +76,9 @@ const Login = () => {
       }).unwrap();
 
       if (res.status_code === 200) {
+        console.log(res?.data);
         const upInfo = await getUnionInfo({
-          unionName: res?.data?.user.unioun,
+          unionName: res?.data?.user?.unioun,
           token: res.data.token,
         }).unwrap();
         // console.log(upInfo);
@@ -99,7 +100,7 @@ const Login = () => {
         if (loginType === "chairman" || res.data.position === "chairman") {
           navigate("/dashboard");
         } else if (loginType === "entrepreneur" || res.data.uddokta) {
-          navigate("/uddokta");
+          navigate("/uddokta/holding/tax/");
         } else {
           navigate(from);
         }
