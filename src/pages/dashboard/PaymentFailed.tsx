@@ -1,10 +1,8 @@
-
 import {
   useCallipnMutation,
   useCheckPaymentMutation,
   useFailedPaymentQuery,
 } from "@/redux/api/payment/paymentApi";
-
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { TPaymentFailed } from "@/types/global";
@@ -66,10 +64,15 @@ const PaymentFailed = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingTrxId, setLoadingTrxId] = useState<string | null>(null);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+  const is_union = site_settings?.union;
   const [checkPayment] = useCheckPaymentMutation();
   const [selectedService, setSelectedService] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const token = localStorage.getItem(`token`);
+
+  // Dynamic labels
+  const organizationLabel = is_union ? "ইউনিয়ন" : "পৌরসভা";
 
   const [triggerSearch, setTriggerSearch] = useState(false);
   const { data, isLoading, isFetching, refetch } = useFailedPaymentQuery(
@@ -174,7 +177,7 @@ const PaymentFailed = () => {
               <tr>
                 <th>আইডি</th>
                 <th>সনদ আইডি</th>
-                <th>ইউনিয়ন</th>
+                <th>{organizationLabel}</th>
                 <th>লেনদেন আইডি</th>
                 <th>সনদ প্রকার</th>
                 <th>তারিখ</th>
@@ -260,7 +263,7 @@ const PaymentFailed = () => {
                     <strong>সনদ আইডি:</strong> {item.sonodId}
                   </p>
                   <p>
-                    <strong>ইউনিয়ন:</strong> {item.union}
+                    <strong>{organizationLabel}:</strong> {item.union}
                   </p>
                   <p>
                     <strong>লেনদেন আইডি:</strong> {item.trxId}
@@ -334,7 +337,6 @@ const PaymentFailed = () => {
       </div>
 
       <Modal
-        // width={failedPage ? "w-100" : undefined}
         title="পেমেন্ট বিস্তারিত"
         open={isModalOpen}
         className={failedPage ? "w-100" : undefined}

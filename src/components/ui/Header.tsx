@@ -132,8 +132,7 @@ const Header = () => {
       <div className="container mx-auto row">
         <Marquee className="defaltColor py-1 text-white">
           <span style={{ fontSize: 16 }}>
-            ইউনিয়ন পরিষদের ডিজিটাল অনলাইন সেবা সিস্টেম uniontax.gov.bd –তে
-            আপনাকে স্বাগতম।
+            {site_settings?.main_notice || ""}
           </span>
         </Marquee>
       </div>

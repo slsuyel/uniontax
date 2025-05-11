@@ -6,19 +6,25 @@ import suport from "../../assets/images/support.webp";
 import { RootState } from "@/redux/features/store";
 import { useAppSelector } from "@/redux/features/hooks";
 import Marquee from "react-fast-marquee";
+
 const RightSidebar = () => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+  const is_union = site_settings?.union;
   const baseUrl = window.origin;
+
+  // Dynamic labels
+  const organizationLabel = is_union == 'true' ? "ইউনিয়ন" : "পৌরসভা";
 
   return (
     <>
       {unionInfo &&
-        !["uniontax", "unionservices", "pouroseba","root"].includes(
+        !["uniontax", "unionservices", "pouroseba", "root"].includes(
           unionInfo.short_name_e as string
         ) ? (
         <div className="pt-3 col-md-3 services">
           <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>
-            <h4>এক নজরে {unionInfo.short_name_b} ইউনিয়ন</h4>
+            <h4>এক নজরে {unionInfo.short_name_b} {organizationLabel}</h4>
           </div>
           <div className="">
             <img
@@ -27,7 +33,7 @@ const RightSidebar = () => {
               src={unionInfo.u_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"}
               width="100%"
               height="100px"
-              alt="union-image"
+              alt={`${organizationLabel}-image`}
             />
             <p style={{ fontSize: 12 }} className="sidebaruser mt-3 mb-1">
               {unionInfo?.u_description || ""}

@@ -30,6 +30,11 @@ export type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 const Sidebar = ({user}:{user:any}) => {
   
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+    const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+  const is_union = site_settings?.union;
+
+    // Dynamic labels
+  const profileLabel = is_union == 'true' ? "ইউনিয়ন প্রোফাইল" : "পৌরসভা প্রোফাইল";
 
   const sidebarItems: SidebarItem[] = [
     {
@@ -41,7 +46,7 @@ const Sidebar = ({user}:{user:any}) => {
     { key: "reports", title: "সকল প্রতিবেদন", slug: "/reports" },
     {
       key: "profile",
-      title: "ইউনিয়ন প্রোফাইল",
+      title: profileLabel,
       slug: "/union/profile",
     },
     { key: "tax", title: "হোল্ডিং ট্যাক্স", slug: "/holding/tax/" },

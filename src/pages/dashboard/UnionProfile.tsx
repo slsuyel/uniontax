@@ -19,6 +19,19 @@ const UnionProfile = () => {
   const { data, isLoading } = useUnionProfileQuery({ token });
   const [updateUnion, { isLoading: updating }] = useUpdateUnionMutation();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+  const is_union = site_settings?.union;
+
+
+  // Dynamic labels based on is_union
+  const labels = {
+    organization: is_union == 'true' ? "ইউনিয়ন" : "পৌরসভা",
+    organizationEn: is_union == 'true' ? "Union" : "Municipality",
+    chairman: is_union == 'true' ? "চেয়ারম্যান" : "মেয়র",
+    chairmanEn: is_union == 'true' ? "Chairman" : "Mayor",
+  };
+
   const [form] = Form.useForm();
 
   const [files, setFiles] = useState({
@@ -51,14 +64,20 @@ const UnionProfile = () => {
     defaultColor: "",
   });
 
-  const cTypeOptions = [
-    { bn: "চেয়ারম্যান", en: "Chairman" },
-    { bn: "প্যানেল চেয়ারম্যান ১", en: "Panel Chairman 1" },
-    { bn: "প্যানেল চেয়ারম্যান ২", en: "Panel Chairman 2" },
-    { bn: "প্যানেল চেয়ারম্যান ৩", en: "Panel Chairman 3" },
-    { bn: "প্রশাসক", en: "Deputy Commissioner" },
-    { bn: "সদস্য/সদস্যা", en: "Member" },
-  ];
+  const cTypeOptions = is_union 
+    ? [
+        { bn: "চেয়ারম্যান", en: "Chairman" },
+        { bn: "প্যানেল চেয়ারম্যান ১", en: "Panel Chairman 1" },
+        { bn: "প্যানেল চেয়ারম্যান ২", en: "Panel Chairman 2" },
+        { bn: "প্যানেল চেয়ারম্যান ৩", en: "Panel Chairman 3" },
+        { bn: "প্রশাসক", en: "Deputy Commissioner" },
+        { bn: "সদস্য/সদস্যা", en: "Member" },
+      ]
+    : [
+        { bn: "মেয়র", en: "Mayor" },
+        { bn: "কাউন্সিলর", en: "Councilor" },
+        { bn: "প্রশাসক", en: "Administrator" },
+      ];
 
   useEffect(() => {
     if (data?.data) {
@@ -146,11 +165,6 @@ const UnionProfile = () => {
       }
     });
 
-    // Debugging: Log FormData contents
-    // for (const [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // }
-
     try {
       const res = await updateUnion({ data: formData, token }).unwrap();
       if (res.status_code === 200) {
@@ -161,13 +175,13 @@ const UnionProfile = () => {
               sonodList: sonodInfo,
             })
           );
-        message.success("ইউনিয়ন তথ্য সফলভাবে আপডেট করা হয়েছে।");
+        message.success(`${labels.organization} তথ্য সফলভাবে আপডেট করা হয়েছে।`);
       } else {
-        message.error("Failed to update union information.");
+        message.error("Failed to update information.");
       }
     } catch (error) {
-      console.error("Failed updating union:", error);
-      message.error("Failed to update union information. Please try again.");
+      console.error("Failed updating:", error);
+      message.error("Failed to update information. Please try again.");
     }
   };
 
@@ -178,13 +192,13 @@ const UnionProfile = () => {
   return (
     <div className="card p-3 border-0">
       {location.pathname == "/dashboard/union/profile" && (
-        <Breadcrumbs current="ইউনিয়ন প্রোফাইল" />
+        <Breadcrumbs current={`${labels.organization} প্রোফাইল`} />
       )}
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <div className="card-body">
           <div className="row">
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের পুরো নাম (বাংলা)" name="full_name">
+              <Form.Item label={`${labels.organization} এর পুরো নাম (বাংলা)`} name="full_name">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -195,7 +209,7 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item
-                label="ইউনিয়নের পুরো নাম (ইংরেজি)"
+                label={`${labels.organization} এর পুরো নাম (ইংরেজি)`}
                 name="full_name_en"
               >
                 <Input
@@ -208,7 +222,7 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item
-                label="ইউনিয়নের সংক্ষিপ্ত নাম (বাংলা)"
+                label={`${labels.organization} এর সংক্ষিপ্ত নাম (বাংলা)`}
                 name="short_name_b"
               >
                 <Input
@@ -260,7 +274,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের নাম (বাংলা)" name="c_name">
+              <Form.Item label={`${labels.chairman} এর নাম (বাংলা)`} name="c_name">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -270,7 +284,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের নাম (ইংরেজি)" name="c_name_en">
+              <Form.Item label={`${labels.chairman} এর নাম (ইংরেজি)`} name="c_name_en">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -280,7 +294,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের ধরন (বাংলা)" name="c_type">
+              <Form.Item label={`${labels.chairman} এর ধরন (বাংলা)`} name="c_type">
                 <Select style={{ height: 40 }} onChange={handleCTypeChange}>
                   {cTypeOptions.map((option) => (
                     <Select.Option key={option.bn} value={option.bn}>
@@ -291,7 +305,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4 d-none">
-              <Form.Item label="চেয়ারম্যানের ধরন (ইংরেজি)" name="c_type_en">
+              <Form.Item label={`${labels.chairman} এর ধরন (ইংরেজি)`} name="c_type_en">
                 <Input
                   style={{ height: 40 }}
                   readOnly
@@ -321,7 +335,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের ইমেইল" name="c_email">
+              <Form.Item label={`${labels.chairman} এর ইমেইল`} name="c_email">
                 <Input
                   style={{ height: 40 }}
                   type="email"
@@ -343,7 +357,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের বিবরন (বাংলা)" name="u_description">
+              <Form.Item label={`${labels.organization} এর বিবরন (বাংলা)`} name="u_description">
                 <Input.TextArea
                   rows={6}
                   onChange={handleChange}
@@ -353,7 +367,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের নোটিশ (বাংলা)" name="u_notice">
+              <Form.Item label={`${labels.organization} এর নোটিশ (বাংলা)`} name="u_notice">
                 <Input.TextArea
                   rows={6}
                   onChange={handleChange}
@@ -363,7 +377,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের ম্যাপ" name="google_map">
+              <Form.Item label={`${labels.organization} এর ম্যাপ`} name="google_map">
                 <Input.TextArea
                   rows={6}
                   onChange={handleChange}
@@ -424,7 +438,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের স্বাক্ষর" name="c_signture">
+              <Form.Item label={`${labels.chairman} এর স্বাক্ষর`} name="c_signture">
                 <Input
                   type="file"
                   onChange={(e) => handleFileChange(e, "c_signture")}
@@ -435,7 +449,7 @@ const UnionProfile = () => {
                   <img
                     width={250}
                     height={"auto"}
-                    alt="Chairman Signature"
+                    alt={`${labels.chairman} Signature`}
                     className="img-thumbnail img-fluid"
                     src={files.c_signture}
                     style={{ marginTop: "10px" }}
@@ -463,7 +477,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের ছবি" name="u_image">
+              <Form.Item label={`${labels.organization} এর ছবি`} name="u_image">
                 <Input
                   type="file"
                   onChange={(e) => handleFileChange(e, "u_image")}
@@ -473,7 +487,7 @@ const UnionProfile = () => {
                 {files.u_image && (
                   <img
                     width={250} height={"auto"}
-                    alt="Union Image"
+                    alt={`${labels.organization} Image`}
                     className="img-thumbnail img-fluid"
                     src={files.u_image}
                     style={{ marginTop: "10px" }}
