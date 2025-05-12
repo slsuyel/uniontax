@@ -54,11 +54,11 @@ const SmsPanel = () => {
     const checkPaymentStatus = async () => {
       const urlParams = new URLSearchParams(window.location.search)
       const paymentID = urlParams.get("paymentID")
+      const status = urlParams.get("status")
+      const apiUrl = import.meta.env.VITE_BASE_API_URL
 
-        const apiUrl = import.meta.env.VITE_BASE_API_URL;
-
-
-      if (paymentID) {
+      // Only proceed with verification if paymentID exists and status is "success"
+      if (paymentID && status === "success") {
         try {
           setVerifyingPayment(true)
           const response = await fetch(`${apiUrl}/global/sms-purchase-success`, {
@@ -88,6 +88,15 @@ const SmsPanel = () => {
         } finally {
           setVerifyingPayment(false)
         }
+      } else if (paymentID && status === "cancel") {
+        // If payment was canceled, just clean up the URL and show a message
+        message.info("Payment was canceled")
+        const newUrl = window.location.pathname
+        window.history.replaceState({}, document.title, newUrl)
+      } else if (paymentID) {
+        // For any other status with paymentID, just clean up the URL
+        const newUrl = window.location.pathname
+        window.history.replaceState({}, document.title, newUrl)
       }
     }
 
@@ -166,19 +175,7 @@ const SmsPanel = () => {
       {/* Modal for SMS Purchase */}
       <Modal title="Purchase SMS" open={isModalVisible} onCancel={handleCancel} footer={null} destroyOnClose>
         <Form form={form} layout="vertical" onFinish={onFinish} autoComplete="off">
-          <Form.Item
-            label="SMS Amount"
-            name="sms_amount"
-            rules={[
-              { required: true, message: "Enter SMS amount" },
-              { 
-                validator: (_, value) => 
-                  value && value < 100 
-                    ? Promise.reject("Minimum SMS amount is 100") 
-                    : Promise.resolve(),
-              },
-            ]}
-          >
+          <Form.Item label="SMS Amount" name="sms_amount" rules={[{ required: true, message: "Enter SMS amount" }]}>
             <Input type="number" placeholder="SMS amount" />
           </Form.Item>
           <Form.Item
