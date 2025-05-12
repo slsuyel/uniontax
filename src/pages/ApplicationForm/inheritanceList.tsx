@@ -67,6 +67,7 @@ const InheritanceList: React.FC = () => {
                             <Select.Option value="ভাতিজা">ভাতিজা</Select.Option>
                             <Select.Option value="ভাতিজী">ভাতিজী</Select.Option>
                             <Select.Option value="চাচা">চাচা</Select.Option>
+                            <Select.Option value="ফুফু">ফুফু</Select.Option>
                           </Select>
                         </Form.Item>
                       </td>
