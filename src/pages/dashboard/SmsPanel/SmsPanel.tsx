@@ -166,7 +166,19 @@ const SmsPanel = () => {
       {/* Modal for SMS Purchase */}
       <Modal title="Purchase SMS" open={isModalVisible} onCancel={handleCancel} footer={null} destroyOnClose>
         <Form form={form} layout="vertical" onFinish={onFinish} autoComplete="off">
-          <Form.Item label="SMS Amount" name="sms_amount" rules={[{ required: true, message: "Enter SMS amount" }]}>
+          <Form.Item
+            label="SMS Amount"
+            name="sms_amount"
+            rules={[
+              { required: true, message: "Enter SMS amount" },
+              { 
+                validator: (_, value) => 
+                  value && value < 100 
+                    ? Promise.reject("Minimum SMS amount is 100") 
+                    : Promise.resolve(),
+              },
+            ]}
+          >
             <Input type="number" placeholder="SMS amount" />
           </Form.Item>
           <Form.Item
