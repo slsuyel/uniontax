@@ -55,10 +55,13 @@ const SmsPanel = () => {
       const urlParams = new URLSearchParams(window.location.search)
       const paymentID = urlParams.get("paymentID")
 
+        const apiUrl = import.meta.env.VITE_BASE_API_URL;
+
+
       if (paymentID) {
         try {
           setVerifyingPayment(true)
-          const response = await fetch("https://api.uniontax.gov.bd/api/global/sms-purchase-success", {
+          const response = await fetch(`${apiUrl}/global/sms-purchase-success`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
