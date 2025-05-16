@@ -15,6 +15,9 @@ export interface User {
   email_verified: boolean;
   is_popup: boolean;
   has_bank_account: boolean;
+  has_paid_maintance_fee: boolean;
+  maintance_fee_type: string;
+  maintance_fee: string;
 }
 
 type TInitialState = {

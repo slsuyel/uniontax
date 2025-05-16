@@ -11,8 +11,6 @@ import type { RootState } from "@/redux/features/store"
 import AdminNotice from "@/components/ui/AdminNotice"
 import BankAccountNotice from "@/components/ui/BankAccountNotice"
 import MaintenanceFeeNotice from "@/components/ui/MaintenanceFeeNotice"
-import axios from "axios"
-import { message } from "antd"
 
 const { Header, Content, Footer } = Layout
 const UserLayout = () => {
@@ -21,51 +19,6 @@ const UserLayout = () => {
   const [isNoticeVisible, setIsNoticeVisible] = useState(false)
   const [isBankNotice, setIsBankNotice] = useState(false)
   const [isMaintenanceNotice, setIsMaintenanceNotice] = useState(false)
-  const [loadingExecute, setLoadingExecute] = useState(false)
-
-  // URL থেকে paymentID, status ইত্যাদি নেওয়া
-  const getPaymentIDFromURL = () => {
-    if (typeof window !== "undefined") {
-      const urlParams = new URLSearchParams(window.location.search)
-      return urlParams.get("paymentID")
-    }
-    return null
-  }
-
-  // Execute API কল করার ফাংশন
-  const executePayment = async (paymentID: string) => {
-    try {
-      setLoadingExecute(true)
-      const token = localStorage.getItem("token")
-      const BASE_API_URL = import.meta.env.VITE_BASE_API_URL
-
-      const response = await axios.post(
-        `${BASE_API_URL}/maintance-fee/execute`,
-        { paymentID },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      )
-
-      if (response.data.success) {
-        message.success("পেমেন্ট সফলভাবে সম্পন্ন হয়েছে।")
-        setIsMaintenanceNotice(false)
-      } else {
-        message.error(response.data.message || "পেমেন্ট সম্পন্ন করতে সমস্যা হয়েছে।")
-        // প্রয়োজন হলে maintenance notice দেখানো যেতে পারে
-        setIsMaintenanceNotice(true)
-      }
-    } catch (error) {
-      message.error("পেমেন্ট সম্পন্ন করতে সমস্যা হয়েছে।")
-      setIsMaintenanceNotice(true)
-      console.error("Execute payment error:", error)
-    } finally {
-      setLoadingExecute(false)
-    }
-  }
 
   useEffect(() => {
     if (user && user?.is_popup) {
@@ -78,17 +31,11 @@ const UserLayout = () => {
       setIsBankNotice(false)
     }
 
-    // Maintenance fee notice এর লজিক (যদি পেমেন্ট হয়নি)
+    // Check for maintenance fee status
     if (user && !user?.has_paid_maintance_fee) {
       setIsMaintenanceNotice(true)
     } else {
       setIsMaintenanceNotice(false)
-    }
-
-    // ইউআরএল থেকে paymentID চেক করে execute API কল করা
-    const paymentID = getPaymentIDFromURL()
-    if (paymentID) {
-      executePayment(paymentID)
     }
   }, [user])
 
@@ -155,6 +102,10 @@ const UserLayout = () => {
         isMaintenanceNotice={isMaintenanceNotice}
         onClose={handleMaintenanceClose}
         setIsMaintenanceNotice={setIsMaintenanceNotice}
+         user={{
+          maintance_fee_type: user?.maintance_fee_type ?? "", // or "yearly"
+          maintance_fee: user?.maintance_fee ?? "",
+        }}
       />
     </ScrollToTop>
   )
