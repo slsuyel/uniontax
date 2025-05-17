@@ -4,8 +4,8 @@ import {
   useSonodFeesQuery,
   useUpdateSonodFeesMutation,
 } from "@/redux/api/sonod/sonodApi";
-import { useAppSelector } from "@/redux/features/hooks";
-import { RootState } from "@/redux/features/store";
+// import { useAppSelector } from "@/redux/features/hooks";
+// import { RootState } from "@/redux/features/store";
 import { message } from "antd";
 import { useState, useEffect } from "react";
 
@@ -20,7 +20,7 @@ interface TSonodFee {
 }
 
 const SonodFee = () => {
-  const userInfo = useAppSelector((state: RootState) => state.user.user);
+  // const userInfo = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
   const { data, isLoading } = useSonodFeesQuery({ token });
   const [updateSonod, { isLoading: updating }] = useUpdateSonodFeesMutation();
@@ -111,7 +111,7 @@ const SonodFee = () => {
       <button
         onClick={handleSave}
         className="btn btn-primary mt-3"
-        disabled={updating || userInfo?.position =="Secretary"}
+        disabled={updating } /* || userInfo?.position =="Secretary" */
       >
         {updating ? "Saving..." : "Save Changes"}
       </button>
