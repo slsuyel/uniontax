@@ -495,7 +495,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     onChange={(value) => setSelectedWord(value)}
   >
     <Option value="">ওয়াড নং</Option>
-    {Array.from({ length: 9 }, (_, i) => (
+    {Array.from({ length: 12 }, (_, i) => (
     <Option key={i + 1} value={i + 1}>
       {i + 1}
     </Option>
@@ -654,7 +654,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
             onChange={(value) => setSelectedWord(value)}
           >
             <Option value="">ওয়াড নং</Option>
-            {Array.from({ length: 9 }, (_, i) => (
+            {Array.from({ length: 12 }, (_, i) => (
             <Option key={i + 1} value={i + 1}>
               {i + 1}
             </Option>
