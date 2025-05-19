@@ -138,7 +138,7 @@ const SonodManagement = () => {
                         >
                           বাংলা সনদ
                         </Link>
-                        {item.hasEnData === 1 && (
+                        {item.hasEnData == 1 && (
                           <Link
                             target="_blank"
                             to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?en=true`}
@@ -211,7 +211,7 @@ const SonodManagement = () => {
                           >
                             বাংলা সনদ
                           </Link>
-                          {item.hasEnData === 1 && (
+                          {item.hasEnData == 1 && (
                             <Link
                               target="_blank"
                               to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?en=true`}
