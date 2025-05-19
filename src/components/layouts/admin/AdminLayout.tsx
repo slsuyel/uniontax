@@ -6,20 +6,28 @@ import { useEffect, useState } from "react"
 import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 import ScrollToTop from "@/utils/ScrollToTop"
-import { useAppSelector } from "@/redux/features/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks"
 import type { RootState } from "@/redux/features/store"
 import AdminNotice from "@/components/ui/AdminNotice"
 import BankAccountNotice from "@/components/ui/BankAccountNotice"
 import MaintenanceFeeNotice from "@/components/ui/MaintenanceFeeNotice"
+import { useUnionInfoQuery } from "@/redux/api/user/userApi"
+import { setUnionData } from "@/redux/features/union/unionSlice"
+import Loader from "@/components/reusable/Loader"
 
 const { Header, Content, Footer } = Layout
 const UserLayout = () => {
   const user = useAppSelector((state: RootState) => state.user.user)
+  const token = localStorage.getItem("token");
+  const dispatch = useAppDispatch();
+  const unionName = user?.unioun
   const theme = false
   const [isNoticeVisible, setIsNoticeVisible] = useState(false)
   const [isBankNotice, setIsBankNotice] = useState(false)
   const [isMaintenanceNotice, setIsMaintenanceNotice] = useState(false)
-
+  const { data, isLoading } = useUnionInfoQuery(
+    { unionName, token },
+  );
   useEffect(() => {
     if (user && user?.is_popup) {
       setIsNoticeVisible(true)
@@ -39,6 +47,18 @@ const UserLayout = () => {
     }
   }, [user])
 
+  useEffect(() => {
+    if (data?.data) {
+      dispatch(
+        setUnionData({
+          unionInfo: data.data.uniouninfos,
+          sonodList: data.data.sonod_name_lists,
+          site_settings: data.data.site_settings,
+        })
+      );
+    }
+  }, [data, dispatch]);
+
   const handleCloseNotice = () => {
     setIsNoticeVisible(false)
   }
@@ -49,6 +69,10 @@ const UserLayout = () => {
 
   const handleMaintenanceClose = () => {
     setIsMaintenanceNotice(false)
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   return (
@@ -102,7 +126,7 @@ const UserLayout = () => {
         isMaintenanceNotice={isMaintenanceNotice}
         onClose={handleMaintenanceClose}
         setIsMaintenanceNotice={setIsMaintenanceNotice}
-         user={{
+        user={{
           maintance_fee_type: user?.maintance_fee_type ?? "", // or "yearly"
           maintance_fee: user?.maintance_fee ?? "",
         }}

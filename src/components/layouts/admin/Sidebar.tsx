@@ -27,13 +27,13 @@ type SidebarItemWithoutSubmenu = SidebarItemBase & {
 
 export type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 
-const Sidebar = ({user}:{user:any}) => {
-  
-  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-    const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
-  const is_union = site_settings?.union;
+const Sidebar = ({ user }: { user: any }) => {
 
-    // Dynamic labels
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+  const is_union = site_settings?.union;
+  console.log(sonodInfo);
+  // Dynamic labels
   const profileLabel = is_union == 'true' ? "ইউনিয়ন প্রোফাইল" : "পৌরসভা প্রোফাইল";
 
   const sidebarItems: SidebarItem[] = [
@@ -123,7 +123,7 @@ const Sidebar = ({user}:{user:any}) => {
       breakpoint="lg"
       collapsedWidth="0"
       style={{ background: "#00b7b7" }}
-      // width={"16%"}
+    // width={"16%"}
     >
       <div
         className="border-bottom "

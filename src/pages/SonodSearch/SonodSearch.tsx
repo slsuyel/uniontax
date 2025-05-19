@@ -52,7 +52,7 @@ const SonodSearch = () => {
       setSonodNo(urlSonodNo);
       sonodSearch({ sonodType: urlSonodType, sonodNo: urlSonodNo });
     }
-  }, []);
+  }, [searchParams, sonodSearch]);
 
   return (
     <div className="row mx-auto my-3 container">
