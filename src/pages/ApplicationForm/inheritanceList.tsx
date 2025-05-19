@@ -1,10 +1,15 @@
-import React from "react";
-import { Button, Form, Input, Select } from "antd";
 
-const InheritanceList: React.FC = () => {
+import { Button, Form, Input, Select } from "antd";
+/* sonodName={sonodName } */
+const InheritanceList = ({ sonodName }: { sonodName: string }) => {
   return (
     <div>
-      <div className="app-heading">ওয়ারিশগণের তালিকা</div>
+      <div className="app-heading">
+        {sonodName == "পারিবারিক সনদ"
+          ? "পরিবারের সদস্যদের তালিকা"
+          : sonodName == "উত্তরাধিকারী সনদ"
+            ? "উত্তরাধিকারীগণের তালিকা"
+            : "ওয়ারিশগণের তালিকা"} </div>
 
       <Form.List name="successor_list">
         {(fields, { add, remove }) => (
@@ -16,7 +21,7 @@ const InheritanceList: React.FC = () => {
                 onClick={() => add()}
                 block
               >
-                ওয়ারিশ যোগ করুন
+                যোগ করুন
               </Button>
             </div>
             <div className="table-responsive">
@@ -75,9 +80,9 @@ const InheritanceList: React.FC = () => {
                         <Form.Item
                           {...restField}
                           name={[name, "w_age"]}
-                          // rules={[
-                          //   { required: true, message: "জন্ম তারিখ প্রয়োজন" },
-                          // ]}
+                        // rules={[
+                        //   { required: true, message: "জন্ম তারিখ প্রয়োজন" },
+                        // ]}
                         >
                           <Input
                             type="date"
@@ -90,12 +95,12 @@ const InheritanceList: React.FC = () => {
                         <Form.Item
                           {...restField}
                           name={[name, "w_nid"]}
-                          // rules={[
-                          //   {
-                          //     required: true,
-                          //     message: "জাতীয় পরিচয়পত্র নম্বর প্রয়োজন",
-                          //   },
-                          // ]}
+                        // rules={[
+                        //   {
+                        //     required: true,
+                        //     message: "জাতীয় পরিচয়পত্র নম্বর প্রয়োজন",
+                        //   },
+                        // ]}
                         >
                           <Input
                             style={{ height: 40 }}

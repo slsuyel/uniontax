@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Form, Button, message /* Modal */ } from "antd";
@@ -308,9 +309,10 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             setBirthCertificateFile,
           })}
 
-          {sonodName === "ওয়ারিশান সনদ" && <InheritanceList />}
+          {sonodName === "ওয়ারিশান সনদ" && <InheritanceList sonodName={"ওয়ারিশান সনদ"} />}
+          {sonodName === "পারিবারিক সনদ" && <InheritanceList sonodName={"পারিবারিক সনদ"} />}
 
-          {sonodName === "উত্তরাধিকারী সনদ" && <InheritanceList />}
+          {sonodName === "উত্তরাধিকারী সনদ" && <InheritanceList sonodName={"উত্তরাধিকারী সনদ"}/>}
 
           <div style={{ textAlign: "center" }}>
             <Button

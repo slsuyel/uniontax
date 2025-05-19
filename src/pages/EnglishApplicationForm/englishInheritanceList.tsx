@@ -1,11 +1,19 @@
-import React from "react";
+
 import { Button, Form, Input, Select } from "antd";
 
-const englishInheritanceList: React.FC = () => {
+const englishInheritanceList = (sonodName: string) => {
   return (
     <div>
-      <div className="app-heading">ওয়ারিশগণের তালিকা</div>
-
+      <div className="app-heading">
+        <div>
+          {sonodName == "পারিবারিক সনদ"
+            ? "পরিবারের সদস্যদের তালিকা"
+            : sonodName == "উত্তরাধিকারী সনদ"
+              ? "উত্তরাধিকারীগণের তালিকা"
+              : "ওয়ারিশগণের তালিকা"}
+        </div>
+      </div>
+   
       <Form.List name="successor_list">
         {(fields, { add, remove }) => (
           <div>
@@ -16,7 +24,7 @@ const englishInheritanceList: React.FC = () => {
                 onClick={() => add()}
                 block
               >
-                ওয়ারিশ যোগ করুন
+                যোগ করুন
               </Button>
             </div>
             <div className="table-responsive">
