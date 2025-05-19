@@ -53,7 +53,7 @@ const EkpayReportTable: React.FC<EkpayReportTableProps> = ({ data, onPageChange 
   return (
     <div className="card mt-4">
       <div className="card-header bg-primary text-white">
-        <h5 className="mb-0">ইকপে পেমেন্ট রিপোর্ট</h5>
+        <h5 className="mb-0">EkPay পেমেন্ট রিপোর্ট</h5>
       </div>
       <div className="card-body">
         <div className="table-responsive">
