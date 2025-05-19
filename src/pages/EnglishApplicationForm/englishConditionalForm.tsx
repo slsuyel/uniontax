@@ -63,6 +63,12 @@ const englishConditionalForm = (service: any) => {
           "Annual_income",
           <Input style={{ height: 40 }} placeholder="বার্ষিক আয় লিখুন" />
         )}
+      {service == "মাসিক আয়ের সনদ" &&
+        renderDynamicFormItem(
+          "মাসিক আয় (Annual Income)",
+          "Annual_income",
+          <Input style={{ height: 40 }} placeholder="মাসিক আয় লিখুন" />
+        )}
 
       {service == "প্রতিবন্ধী সনদপত্র" &&
         renderDynamicFormItem(
