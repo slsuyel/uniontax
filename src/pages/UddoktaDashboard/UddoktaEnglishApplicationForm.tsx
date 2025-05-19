@@ -40,7 +40,7 @@ const UddoktaEnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
 
   const pathname = location.pathname;
   const isDashboard = pathname.includes("dashboard");
-  const [inherList, setInherList] = useState(1);
+
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -128,10 +128,10 @@ const UddoktaEnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
           {englishAttachmentForm()}
 
           {sonodName === "ওয়ারিশান সনদ" &&
-            englishInheritanceList(inherList, setInherList)}
+            englishInheritanceList(sonodName)}
 
           {sonodName === "উত্তরাধিকারী সনদ" &&
-            englishInheritanceList(inherList, setInherList)}
+            englishInheritanceList(sonodName)}
 
           <div style={{ textAlign: "center" }}>
             <Button type="primary" htmlType="submit" size="large">
