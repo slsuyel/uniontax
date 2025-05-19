@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTradeInfoQuery } from "@/redux/api/user/userApi";
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
-import inheritanceList from "../ApplicationForm/inheritanceList";
+
 import conditionalForm from "../ApplicationForm/conditionalForm";
 import commonFields from "../ApplicationForm/commonFields";
 import InheritanceForm from "../ApplicationForm/inheritanceForm";
@@ -17,6 +17,7 @@ import DatePicker from "react-datepicker";
 import { TApplicantData, TPersonalInformation } from "@/types/global";
 import { setApplicantInfo } from "@/redux/features/application/applicantSlice";
 import { useNidCheckMutation } from "@/redux/api/sonod/sonodApi";
+import InheritanceList from "../ApplicationForm/inheritanceList";
 
 const { Option } = Select;
 
@@ -42,7 +43,6 @@ const UddoktaApplicationForm = () => {
     }
   );
   const dispatch = useAppDispatch();
-  const [inherList, setInherList] = useState(1);
   const [userData, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -266,11 +266,12 @@ const UddoktaApplicationForm = () => {
           {addressFields({ form })}
           {/* {attachmentForm()} */}
 
-          {service === "ওয়ারিশান সনদ" &&
-            inheritanceList(inherList, setInherList)}
+          {service === "ওয়ারিশান সনদ" && <InheritanceList sonodName={"ওয়ারিশান সনদ"} />}
 
-          {service === "উত্তরাধিকারী সনদ" &&
-            inheritanceList(inherList, setInherList)}
+  
+          {service === "পারিবারিক সনদ" && <InheritanceList sonodName={"পারিবারিক সনদ"} />}
+
+          {service === "উত্তরাধিকারী সনদ" && <InheritanceList sonodName={"উত্তরাধিকারী সনদ"}/>}
 
           <div style={{ textAlign: "center" }}>
             <Button type="primary" htmlType="submit" size="large">
