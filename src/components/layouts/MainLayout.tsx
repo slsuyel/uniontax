@@ -9,14 +9,14 @@ import { useEffect, useState } from "react";
 import { useUnionInfoQuery } from "@/redux/api/user/userApi";
 import Loader from "../reusable/Loader";
 
-// import { setUnionData } from "@/redux/features/union/unionSlice";
-// import { useAppDispatch } from "@/redux/features/hooks";
+import { setUnionData } from "@/redux/features/union/unionSlice";
+import { useAppDispatch } from "@/redux/features/hooks";
 // import { RootState } from "@/redux/features/store";
 import Chatbot from "../ui/Chatbot";
 
 const MainLayout = () => {
   const token = localStorage.getItem("token");
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const hostname = window.location.hostname;
   let union = hostname.split(".")[0];
@@ -50,17 +50,17 @@ const MainLayout = () => {
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   if (data?.data) {
-  //     dispatch(
-  //       setUnionData({
-  //         unionInfo: data.data.uniouninfos,
-  //         sonodList: data.data.sonod_name_lists,
-  //         site_settings: data.data.site_settings,
-  //       })
-  //     );
-  //   }
-  // }, [data, dispatch]);
+  useEffect(() => {
+    if (data?.data) {
+      dispatch(
+        setUnionData({
+          unionInfo: data.data.uniouninfos,
+          sonodList: data.data.sonod_name_lists,
+          site_settings: data.data.site_settings,
+        })
+      );
+    }
+  }, [data, dispatch]);
 
   useEffect(() => {
     // Update the CSS variable in the :root element
