@@ -92,9 +92,9 @@ const englishInheritanceList = (sonodName: string) => {
                         <Form.Item
                           {...restField}
                           name={[name, "w_age"]}
-                          rules={[
-                            { required: true, message: "জন্ম তারিখ প্রয়োজন" },
-                          ]}
+                          // rules={[
+                          //   { required: true, message: "জন্ম তারিখ প্রয়োজন" },
+                          // ]}
                         >
                           <Input
                             type="date"
@@ -107,12 +107,7 @@ const englishInheritanceList = (sonodName: string) => {
                         <Form.Item
                           {...restField}
                           name={[name, "w_nid"]}
-                          rules={[
-                            {
-                              required: true,
-                              message: "জাতীয় পরিচয়পত্র নম্বর প্রয়োজন",
-                            },
-                          ]}
+                         
                         >
                           <Input
                             style={{ height: 40 }}
