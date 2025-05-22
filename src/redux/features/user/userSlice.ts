@@ -18,6 +18,7 @@ export interface User {
   has_paid_maintance_fee: boolean;
   maintance_fee_type: string;
   maintance_fee: string;
+  maintance_fee_option: string;
 }
 
 type TInitialState = {

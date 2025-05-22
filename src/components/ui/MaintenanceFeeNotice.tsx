@@ -9,6 +9,7 @@ const BASE_API_URL = import.meta.env.VITE_BASE_API_URL
 interface User {
   maintance_fee_type: string
   maintance_fee: string
+  maintance_fee_option: string
 }
 
 interface MaintenanceFeeNoticeProps {
