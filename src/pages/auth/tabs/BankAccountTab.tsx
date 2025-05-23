@@ -84,7 +84,5 @@ const BankAccountTab: React.FC<BankAccountTabProps> = ({ setIsBankNotice }) => {
 };
 
 export default BankAccountTab;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
+
 
