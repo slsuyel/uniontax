@@ -6,7 +6,7 @@ import { setUser } from "@/redux/features/user/userSlice";
 import { useDispatch } from "react-redux";
 
 // Custom hook for handling token check
-export const useTokenCheck = (token: string | null, p0: { skipInitial: boolean; }) => {
+export const useTokenCheck = (token: string | null, _p0: { skipInitial: boolean; }) => {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
