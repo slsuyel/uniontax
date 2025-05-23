@@ -7,10 +7,12 @@ import {
 import { TUnionInfo } from "@/types";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { setUnionData } from "@/redux/features/union/unionSlice";
 import { RootState } from "@/redux/features/store";
+import { setUser } from "@/redux/features/user/userSlice";
+import { useTokenCheck } from "@/components/reusable/useTokenCheck";
 
 const UnionProfile = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +24,10 @@ const UnionProfile = () => {
 
   const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
   const is_union = site_settings?.union;
+
+    const navigate = useNavigate();
+
+  const { refetch } = useTokenCheck(token);
 
 
   // Dynamic labels based on is_union
@@ -175,6 +181,15 @@ const UnionProfile = () => {
               sonodList: sonodInfo,
             })
           );
+
+
+        if (token && res.data.data?.profile_steps !== 10) {
+          refetch();
+        }
+
+
+
+
         message.success(`${labels.organization} তথ্য সফলভাবে আপডেট করা হয়েছে।`);
       } else {
         message.error("Failed to update information.");
@@ -510,3 +525,5 @@ const UnionProfile = () => {
 };
 
 export default UnionProfile;
+
+

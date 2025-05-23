@@ -1,11 +1,12 @@
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
+import { useTokenCheck } from "@/components/reusable/useTokenCheck";
 import {
   useSonodFeesQuery,
   useUpdateSonodFeesMutation,
 } from "@/redux/api/sonod/sonodApi";
-// import { useAppSelector } from "@/redux/features/hooks";
-// import { RootState } from "@/redux/features/store";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 import { message } from "antd";
 import { useState, useEffect } from "react";
 
@@ -20,11 +21,15 @@ interface TSonodFee {
 }
 
 const SonodFee = () => {
-  // const userInfo = useAppSelector((state: RootState) => state.user.user);
+     const user = useAppSelector((state: RootState) => state.user.user)
   const token = localStorage.getItem("token");
   const { data, isLoading } = useSonodFeesQuery({ token });
   const [updateSonod, { isLoading: updating }] = useUpdateSonodFeesMutation();
   const [feesData, setFeesData] = useState<TSonodFee[]>([]);
+
+    const { refetch } = useTokenCheck(token);
+
+
 
   useEffect(() => {
     if (data?.data?.data) {
@@ -62,6 +67,10 @@ const SonodFee = () => {
       const res = await updateSonod({ data: payload, token }).unwrap();
       if (res.status_code == 200) {
         message.success("সনদ ফি সফলভাবে আপডেট করা হয়েছে");
+        
+          if (token && user?.profile_steps !== 10) {
+            refetch();
+          }
       }
       if (res.status_code !== 200) {
         message.success("SonodFees updated failed");

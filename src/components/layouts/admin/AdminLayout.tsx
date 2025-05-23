@@ -14,6 +14,8 @@ import MaintenanceFeeNotice from "@/components/ui/MaintenanceFeeNotice"
 import { useUnionInfoQuery } from "@/redux/api/user/userApi"
 import { setUnionData } from "@/redux/features/union/unionSlice"
 import Loader from "@/components/reusable/Loader"
+import { useNavigate, useLocation } from "react-router-dom";
+import { useTokenCheck } from "@/components/reusable/useTokenCheck"
 
 const { Header, Content, Footer } = Layout
 const UserLayout = () => {
@@ -28,24 +30,89 @@ const UserLayout = () => {
   const { data, isLoading } = useUnionInfoQuery(
     { unionName, token },
   );
+
+  // Handle redirect when user profile steps are incomplete, on path change
+  const navigate = useNavigate();
+  const location = useLocation();
+
+    const { refetch } = useTokenCheck(token);
+
+    useEffect(() => {
+      const fullPath = location.pathname + location.search + location.hash;
+
+
+        if (token && user?.profile_steps !== 10) {
+          refetch();
+        }
+
+      if (user?.profile_steps === 0 && fullPath !== "/dashboard/union/profile?tab=UnionProfile") {
+        import("antd").then(({ Modal }) => {
+          Modal.warning({
+            title: "প্রোফাইল সম্পূর্ণ করুন",
+            content: "আপনার ইউনিয়নের প্রোফাইল সম্পূর্ণ করা আবশ্যক। দয়া করে প্রথমে প্রোফাইল তথ্য পূরণ করুন, তারপর অন্যান্য ফিচার ব্যবহার করুন।",
+            okText: "ঠিক আছে, প্রোফাইল সম্পূর্ণ করব",
+            onOk: () => {
+              navigate("/dashboard/union/profile?tab=UnionProfile");
+            },
+          });
+        });
+        return;
+      }
+
+      if (user?.profile_steps === 1 && fullPath !== "/dashboard/union/profile?tab=BankAccount") {
+        import("antd").then(({ Modal }) => {
+          Modal.warning({
+            title: "ব্যাংক অ্যাকাউন্ট তথ্য দিন",
+            content: "আপনার ইউনিয়নের ব্যাংক অ্যাকাউন্ট তথ্য প্রদান করা আবশ্যক। দয়া করে প্রথমে ব্যাংক অ্যাকাউন্ট তথ্য পূরণ করুন, তারপর অন্যান্য ফিচার ব্যবহার করুন।",
+            okText: "ঠিক আছে, ব্যাংক অ্যাকাউন্ট তথ্য দিব",
+            onOk: () => {
+              navigate("/dashboard/union/profile?tab=BankAccount");
+            },
+          });
+        });
+        return;
+      }
+
+      if (user?.profile_steps === 2 && fullPath !== "/dashboard/sonod/fee") {
+        import("antd").then(({ Modal }) => {
+          Modal.warning({
+            title: "ফি সেট করুন",
+            content: "আপনার ইউনিয়নের সনদের ফি নির্ধারণ করা আবশ্যক। দয়া করে প্রথমে সনদের ফি নির্ধারণ করুন, তারপর অন্যান্য ফিচার ব্যবহার করুন।",
+            okText: "ঠিক আছে, ফি নির্ধারণ করব",
+            onOk: () => {
+              navigate("/dashboard/sonod/fee");
+            },
+          });
+        });
+        return;
+      }
+    }, [location.pathname, location.search, location.hash, user?.profile_steps, navigate, token, dispatch]);
+
+
+
+
+
+  // Handle notices when user data changes
   useEffect(() => {
-    if (user && user?.is_popup) {
-      setIsNoticeVisible(true)
-    }
+    if (user?.profile_steps === 10) {
+      if (user?.is_popup) {
+        setIsNoticeVisible(true);
+      }
 
-    if (user && !user?.has_bank_account) {
-      setIsBankNotice(true)
-    } else {
-      setIsBankNotice(false)
-    }
+      if (!user?.has_bank_account) {
+        setIsBankNotice(true);
+      } else {
+        setIsBankNotice(false);
+      }
 
-    // Check for maintenance fee status
-    if (user && !user?.has_paid_maintance_fee) {
-      setIsMaintenanceNotice(true)
-    } else {
-      setIsMaintenanceNotice(false)
+      // Check for maintenance fee status
+      if (!user?.has_paid_maintance_fee) {
+        setIsMaintenanceNotice(true);
+      } else {
+        setIsMaintenanceNotice(false);
+      }
     }
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     if (data?.data) {

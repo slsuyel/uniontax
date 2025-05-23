@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { Form, Input, Button, message, Spin } from "antd";
-import { useSetBankAccountMutation, useBankDetailsQuery } from "@/redux/api/auth/authApi";
+import { useSetBankAccountMutation, useBankDetailsQuery} from "@/redux/api/auth/authApi";
+import { useAppSelector } from "@/redux/features/hooks";
+import type { RootState } from "@/redux/features/store"
+import { useTokenCheck } from "@/components/reusable/useTokenCheck";
 
 // Define the prop type explicitly
 interface BankAccountTabProps {
@@ -8,9 +11,14 @@ interface BankAccountTabProps {
 }
 
 const BankAccountTab: React.FC<BankAccountTabProps> = ({ setIsBankNotice }) => {
+   const user = useAppSelector((state: RootState) => state.user.user)
   const token = localStorage.getItem("token");
   const { data, isLoading: getting, error } = useBankDetailsQuery(token); // Query to get bank details
   const [setBankAccount, { isLoading }] = useSetBankAccountMutation();
+
+
+  const { refetch } = useTokenCheck(token);
+
 
   useEffect(() => {
     if (error) {
@@ -19,15 +27,22 @@ const BankAccountTab: React.FC<BankAccountTabProps> = ({ setIsBankNotice }) => {
   }, [error]);
 
   const handleBankFormSubmit = async (values: BankFormValues) => {
-    try {
+
       const res = await setBankAccount({ data: values, token }).unwrap();
       if (res.status_code === 200) {
         message.success("ব্যাংক একাউন্ট সফলভাবে যোগ করা হয়েছে।");
         setIsBankNotice?.(false);
+
+
+          if (token && user?.profile_steps !== 10) {
+            refetch();
+          }
+
+
+      }else{
+          message.error("ব্যাংক একাউন্ট যোগ করতে সমস্যা হয়েছে।");
       }
-    } catch (error) {
-      message.error("ব্যাংক একাউন্ট যোগ করতে সমস্যা হয়েছে।");
-    }
+
   };
 
   interface BankFormValues {
@@ -69,3 +84,7 @@ const BankAccountTab: React.FC<BankAccountTabProps> = ({ setIsBankNotice }) => {
 };
 
 export default BankAccountTab;
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+
