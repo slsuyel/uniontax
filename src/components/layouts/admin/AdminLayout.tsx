@@ -15,7 +15,7 @@ import { useUnionInfoQuery } from "@/redux/api/user/userApi"
 import { setUnionData } from "@/redux/features/union/unionSlice"
 import Loader from "@/components/reusable/Loader"
 import { useNavigate, useLocation } from "react-router-dom";
-import { useTokenCheck } from "@/components/reusable/useTokenCheck"
+// import { useTokenCheck } from "@/components/reusable/useTokenCheck"
 
 const { Header, Content, Footer } = Layout
 const UserLayout = () => {
@@ -35,15 +35,15 @@ const UserLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-    const { refetch } = useTokenCheck(token);
+    // const { refetch } = useTokenCheck(token);
 
     useEffect(() => {
       const fullPath = location.pathname + location.search + location.hash;
 
 
-        if (token && user?.profile_steps !== 10) {
-          refetch();
-        }
+        // if (token && user?.profile_steps !== 10) {
+        //   refetch();
+        // }
 
       if (user?.profile_steps === 0 && fullPath !== "/dashboard/union/profile?tab=UnionProfile") {
         import("antd").then(({ Modal }) => {
