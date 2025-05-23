@@ -27,7 +27,7 @@ const SonodFee = () => {
   const [updateSonod, { isLoading: updating }] = useUpdateSonodFeesMutation();
   const [feesData, setFeesData] = useState<TSonodFee[]>([]);
 
-    const { refetch } = useTokenCheck(token);
+   const { refetch } = useTokenCheck(token, { skipInitial: true });
 
 
 

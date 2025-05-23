@@ -25,7 +25,7 @@ const UnionProfile = () => {
   const is_union = site_settings?.union;
 
 
-  const { refetch } = useTokenCheck(token);
+  const { refetch } = useTokenCheck(token, { skipInitial: true });
 
 
   // Dynamic labels based on is_union

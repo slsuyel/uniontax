@@ -17,7 +17,7 @@ const BankAccountTab: React.FC<BankAccountTabProps> = ({ setIsBankNotice }) => {
   const [setBankAccount, { isLoading }] = useSetBankAccountMutation();
 
 
-  const { refetch } = useTokenCheck(token);
+   const { refetch } = useTokenCheck(token, { skipInitial: true });
 
 
   useEffect(() => {
