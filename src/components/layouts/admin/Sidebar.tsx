@@ -135,7 +135,7 @@ const Sidebar = ({ user }: { user: any }) => {
         }}
       >
         {/* <img loading="lazy" src={mainLogo} alt="" width={160} /> */}
-        <h5 className=" fw-semibold text-white mb-0">
+        <h5 className=" fw-semibold text-white mb-0 fs-6">
           {user?.dashboard_title}
         </h5>
       </div>
