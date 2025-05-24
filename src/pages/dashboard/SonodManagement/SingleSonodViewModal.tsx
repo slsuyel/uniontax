@@ -115,6 +115,25 @@ const SingleSonodViewModal = ({
               আবেদনকৃত প্রত্যয়নের : <br />
             </b>
           </div>
+          {data.holding_owners  && (
+            <>
+              <div className="col-md-12">
+                <div className="app-heading">হোল্ডিং মালিকের তথ্য</div>
+              </div>
+
+              <div className="col-md-4 col-6 mt-3">
+                <b>হোল্ডিং মালিকের নাম: {data?.holding_owners?.name}</b>
+              </div>
+              <div className="col-md-4 col-6 mt-3">
+                <b>হোল্ডিং মালিকের সাথে সম্পর্ক: {data?.holding_owners?.relationship}</b>
+              </div>
+              <div className="col-md-4 col-6 mt-3">
+                <b>হোল্ডিং মালিকের মোবাইল নম্বর: {data?.holding_owners?.mobile}</b>
+              </div>
+            </>
+          )}
+
+
           <div className="col-md-12">
             <div className="app-heading">বর্তমান ঠিকানা</div>
           </div>

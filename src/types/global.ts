@@ -148,7 +148,20 @@ export interface TApplicantData {
   format: string | null;
   created_at: string;
   updated_at: string;
+  holding_owners?:THoldingOwner
 }
+
+export interface THoldingOwner {
+  id: number;
+  sonod_id: number;
+  holding_no: string;
+  name: string;
+  mobile: string;
+  relationship: string;
+  created_at: string;  // ISO timestamp
+  updated_at: string;  // ISO timestamp
+}
+
 
 export interface TUnionInfo {
   full_name: string;
