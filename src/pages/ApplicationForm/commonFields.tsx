@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Input, Select, Upload, Button } from "antd";
 const { Option } = Select;
 import { UploadOutlined } from "@ant-design/icons";
@@ -7,15 +8,16 @@ import { useEffect, useState } from 'react';
 
 const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: any) => void }) => {
 
-    console.log(form.getFieldsValue(), "form values");
+  console.log(form.getFieldsValue(), "form values");
 
 
-    const getFieldsValue =  form.getFieldsValue();
+  const getFieldsValue = form.getFieldsValue();
 
-    const [startDate, setStartDate] = useState<Date | null>(getFieldsValue.applicant_date_of_birth || null);
-    useEffect(() => {
-      setStartDate(getFieldsValue.applicant_date_of_birth || null);
-    }, [getFieldsValue.applicant_date_of_birth]);
+  const [startDate, setStartDate] = useState<Date | null>(getFieldsValue.applicant_date_of_birth || null);
+  
+  useEffect(() => {
+    setStartDate(getFieldsValue.applicant_date_of_birth || null);
+  }, [getFieldsValue.applicant_date_of_birth]);
 
 
 
@@ -83,6 +85,24 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
           />
         </Form.Item>
       </div>
+
+      <div className="col-md-4">
+        {" "}
+        <Form.Item
+          label="বাসিন্দার ধরণ"
+          name="applicant_resident_status"
+          initialValue={'স্থায়ী'}
+        // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+        >
+          <Select style={{ height: 40 }}>
+            <Option  value="">নির্বাচন করুন</Option>
+            <Option  value="স্থায়ী">স্থায়ী</Option>
+            <Option value="অস্থায়ী">বসবাসকারী</Option>
+          </Select>
+        </Form.Item>
+      </div>
+
+
       <div className="col-md-4">
         <Form.Item label="হোল্ডিং নং" name="applicant_holding_tax_number">
           <Input
@@ -91,14 +111,8 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
           />
         </Form.Item>
       </div>
-      {/* "applicant_mobile",
-        <Input
-          min={11}
-          max={11}
-          style={{ height: 40, width: "100%" }}
-          type="tel"
-          className="form-control"
-        /> */}
+     
+
 
       <div className="col-md-4">
         <Form.Item
@@ -128,16 +142,16 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
       <div className="col-md-4">
         <Form.Item label="জন্ম তারিখ" name="applicant_date_of_birth">
           <div style={{ width: '100%' }}>
-        <div style={{ height: 40, width: "100%" }}>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => {
-              setStartDate(date);
-              setFormData({ ...form, applicant_date_of_birth: date });
-            }}
-            className="form-control w-100"
-          />
-        </div>
+            <div style={{ height: 40, width: "100%" }}>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => {
+                  setStartDate(date);
+                  setFormData({ ...form, applicant_date_of_birth: date });
+                }}
+                className="form-control w-100"
+              />
+            </div>
           </div>
         </Form.Item>
       </div>

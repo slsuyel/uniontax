@@ -40,7 +40,7 @@ const conditionalForm = (service: any) => {
         />
       )}
 
-      {renderDynamicFormItem(
+      {/* {renderDynamicFormItem(
         "বাসিন্দার ধরণ",
         "applicant_resident_status",
         <Select
@@ -51,7 +51,7 @@ const conditionalForm = (service: any) => {
           <Option value="স্থায়ী">স্থায়ী</Option>
           <Option value="অস্থায়ী">অস্থায়ী</Option>
         </Select>
-      )}
+      )} */}
 
       {service == "ভোটার স্থানান্তরের প্রত্যয়ন পত্র"
         ? renderDynamicFormItem(
