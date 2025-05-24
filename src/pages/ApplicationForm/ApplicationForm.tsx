@@ -103,6 +103,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   }, [isDashboard, sonodInfo?.sonod_name, service]);
 
   const handleSubmitForm = async (values: any) => {
+
     const files = {
       frontFile,
       backFile,
@@ -133,19 +134,19 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             birthCertificateFile
           );
 
-            if (values?.image?.thumbUrl) {
-            formData.append("image", values.image.thumbUrl);
-            } else {
-            formData.append("image", "");
-            }
-          
+        if (values?.image?.thumbUrl) {
+          formData.append("image", values.image.thumbUrl);
+        } else {
+          formData.append("image", "");
+        }
+
         if (values.successor_list) {
           formData.append(
             "successor_list",
             JSON.stringify(values.successor_list)
           );
         }
-    
+
         // return
         const res = await updateSonod({ formData, id, token }).unwrap();
 
@@ -312,7 +313,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           {sonodName === "ওয়ারিশান সনদ" && <InheritanceList sonodName={"ওয়ারিশান সনদ"} />}
           {sonodName === "পারিবারিক সনদ" && <InheritanceList sonodName={"পারিবারিক সনদ"} />}
 
-          {sonodName === "উত্তরাধিকারী সনদ" && <InheritanceList sonodName={"উত্তরাধিকারী সনদ"}/>}
+          {sonodName === "উত্তরাধিকারী সনদ" && <InheritanceList sonodName={"উত্তরাধিকারী সনদ"} />}
 
           <div style={{ textAlign: "center" }}>
             <Button

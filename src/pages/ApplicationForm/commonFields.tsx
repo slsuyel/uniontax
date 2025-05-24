@@ -14,7 +14,7 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
   const getFieldsValue = form.getFieldsValue();
 
   const [startDate, setStartDate] = useState<Date | null>(getFieldsValue.applicant_date_of_birth || null);
-  
+
   useEffect(() => {
     setStartDate(getFieldsValue.applicant_date_of_birth || null);
   }, [getFieldsValue.applicant_date_of_birth]);
@@ -36,7 +36,9 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="লিঙ্গ" name="applicant_gender">
+        <Form.Item label="লিঙ্গ" name="applicant_gender"
+          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+        >
           <Select
             placeholder="লিঙ্গ নির্বাচন করুন"
             style={{ height: 40, width: "100%" }}
@@ -48,7 +50,7 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="পিতা/স্বামীর নাম" name="applicant_father_name">
+        <Form.Item label="পিতা/স্বামীর নাম" name="applicant_father_name" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
           <Input
             style={{ height: 40, width: "100%" }}
             className="form-control"
@@ -56,7 +58,7 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
         </Form.Item>
       </div>
       <div className="col-md-4">
-        <Form.Item label="মাতার নাম" name="applicant_mother_name">
+        <Form.Item label="মাতার নাম" name="applicant_mother_name" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
           <Input
             style={{ height: 40, width: "100%" }}
             className="form-control"
@@ -92,27 +94,15 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
           label="বাসিন্দার ধরণ"
           name="applicant_resident_status"
           initialValue={'স্থায়ী'}
-        // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
         >
           <Select style={{ height: 40 }}>
-            <Option  value="">নির্বাচন করুন</Option>
-            <Option  value="স্থায়ী">স্থায়ী</Option>
+            <Option value="">নির্বাচন করুন</Option>
+            <Option value="স্থায়ী">স্থায়ী</Option>
             <Option value="অস্থায়ী">বসবাসকারী</Option>
           </Select>
         </Form.Item>
       </div>
-
-
-      <div className="col-md-4">
-        <Form.Item label="হোল্ডিং নং" name="applicant_holding_tax_number">
-          <Input
-            style={{ height: 40, width: "100%" }}
-            className="form-control"
-          />
-        </Form.Item>
-      </div>
-     
-
 
       <div className="col-md-4">
         <Form.Item
@@ -138,9 +128,73 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
         </Form.Item>
       </div>
 
+      <div className="col-md-4">
+        <Form.Item label="হোল্ডিং নং" name="applicant_holding_tax_number">
+          <Input
+            style={{ height: 40, width: "100%" }}
+            className="form-control"
+          />
+        </Form.Item>
+      </div>
+      <fieldset className="border rounded p-3 mb-3 col-md-12">
+        <legend className="w-auto px-2" style={{ fontWeight: 'bold' }}>হোল্ডিং সম্পর্কিত তথ্য</legend>
+
+        <div className="row mx-auto">
+
+          <div className="col-md-4">
+            <Form.Item label="হোল্ডিং মালিকের নাম" name="holding_owner_name">
+              <Input
+                style={{ height: 40, width: "100%" }}
+                className="form-control"
+              />
+            </Form.Item>
+          </div>
+          <div className="col-md-4">
+            <Form.Item
+              label="হোল্ডিং মালিকের সাথে সম্পর্ক"
+              name="holding_owner_relationship"
+            >
+              <Select style={{ height: 40 }} placeholder="সম্পর্ক">
+                <Select.Option value="নিজ">নিজ</Select.Option>
+                <Select.Option value="পিতা">পিতা</Select.Option>
+                <Select.Option value="মাতা">মাতা</Select.Option>
+                <Select.Option value="ভাই/বোন">
+                  ভাই/বোন
+                </Select.Option>
+                <Select.Option value="স্ত্রী">স্ত্রী</Select.Option>
+                <Select.Option value="পুত্র">পুত্র</Select.Option>
+                <Select.Option value="কন্যা">কন্যা</Select.Option>
+                <Select.Option value="স্বামী">স্বামী</Select.Option>
+                <Select.Option value="ভাই">ভাই</Select.Option>
+                <Select.Option value="বোন">বোন</Select.Option>
+                <Select.Option value="নাতি">নাতি</Select.Option>
+                <Select.Option value="নাতনি">নাতনি</Select.Option>
+                <Select.Option value="ভাতিজা">ভাতিজা</Select.Option>
+                <Select.Option value="ভাতিজী">ভাতিজী</Select.Option>
+                <Select.Option value="চাচা">চাচা</Select.Option>
+                <Select.Option value="ফুফু">ফুফু</Select.Option>
+              </Select>
+            </Form.Item>
+          </div>
+
+          <div className="col-md-4">
+            <Form.Item label="হোল্ডিং মালিকের মোবাইল নম্বর" name="holding_owner_mobile">
+              <Input
+                style={{ height: 40, width: "100%" }}
+                className="form-control"
+              />
+            </Form.Item>
+          </div>
+        </div>
+      </fieldset>
+
+
+
+
+
 
       <div className="col-md-4">
-        <Form.Item label="জন্ম তারিখ" name="applicant_date_of_birth">
+        <Form.Item label="জন্ম তারিখ (মাস/দিন/বছর)" name="applicant_date_of_birth" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
           <div style={{ width: '100%' }}>
             <div style={{ height: 40, width: "100%" }}>
               <DatePicker
@@ -160,7 +214,7 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
 
       <div className="col-md-4">
         <Form.Item
-          label="ছবি"
+          label="আবেদনকারীর ছবি"
           name="image"
           valuePropName="file"
           getValueFromEvent={(e) => {
@@ -174,7 +228,8 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
       </div>
       <div className="col-md-4">
         {" "}
-        <Form.Item label="ধর্ম" name="applicant_religion">
+        <Form.Item label="ধর্ম" name="applicant_religion"
+          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
           <Select style={{ height: 40 }}>
             <Option value="ইসলাম">ইসলাম</Option>
             <Option value="হিন্দু">হিন্দু</Option>
