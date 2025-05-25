@@ -187,8 +187,8 @@ const TradeLicenseForm = ({
       style={{ height: 40, width: "100%" }}
       placeholder="নির্বাচন করুন"
     >
-      <Option value="normal">নরমাল</Option>
-      <Option value="digital_led">ডিজিটাল এলইডি</Option>
+      <Option value="normal">সাধারন</Option>
+      <Option value="digital_led">ডিজিটাল/এলইডি/নিয়ন</Option>
     </Select>
   </Form.Item>
 </div>
