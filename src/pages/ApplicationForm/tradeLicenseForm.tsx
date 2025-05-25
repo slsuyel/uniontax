@@ -174,6 +174,45 @@ const TradeLicenseForm = ({
         </div>
       )}
 
+
+
+<div className="col-md-4">
+  <Form.Item
+    label="সাইনবোর্ডের ধরন"
+    name="signboard_type"
+    rules={[{ required: true, message: "সাইনবোর্ডের ধরন নির্বাচন করুন" }]}
+  >
+    <Select
+      showSearch
+      style={{ height: 40, width: "100%" }}
+      placeholder="নির্বাচন করুন"
+    >
+      <Option value="normal">নরমাল</Option>
+      <Option value="digital_led">ডিজিটাল এলইডি</Option>
+    </Select>
+  </Form.Item>
+</div>
+
+<div className="col-md-4">
+  <Form.Item
+    label="সাইনবোর্ডের আকার (বর্গফুটে)"
+    name="signboard_size_square_fit"
+    rules={[{ required: true, message: "সাইনবোর্ডের আকার লিখুন" }]}
+  >
+    <Input
+      type="number"
+      style={{ height: 40, width: "100%" }}
+      placeholder="আকার লিখুন"
+      min={1}
+    />
+  </Form.Item>
+</div>
+
+
+
+
+
+
       <div className="col-md-4">
         <Form.Item label="বকেয়া" name="last_years_money">
           <InputNumber min={0} style={{ height: 40, width: "100%" }} />

@@ -156,11 +156,9 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
             >
               <Select style={{ height: 40 }} placeholder="সম্পর্ক">
                 <Select.Option value="নিজ">নিজ</Select.Option>
+                <Select.Option value="ভাড়াটিয়া">ভাড়াটিয়া</Select.Option>
                 <Select.Option value="পিতা">পিতা</Select.Option>
                 <Select.Option value="মাতা">মাতা</Select.Option>
-                <Select.Option value="ভাই/বোন">
-                  ভাই/বোন
-                </Select.Option>
                 <Select.Option value="স্ত্রী">স্ত্রী</Select.Option>
                 <Select.Option value="পুত্র">পুত্র</Select.Option>
                 <Select.Option value="কন্যা">কন্যা</Select.Option>
@@ -169,10 +167,7 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
                 <Select.Option value="বোন">বোন</Select.Option>
                 <Select.Option value="নাতি">নাতি</Select.Option>
                 <Select.Option value="নাতনি">নাতনি</Select.Option>
-                <Select.Option value="ভাতিজা">ভাতিজা</Select.Option>
-                <Select.Option value="ভাতিজী">ভাতিজী</Select.Option>
-                <Select.Option value="চাচা">চাচা</Select.Option>
-                <Select.Option value="ফুফু">ফুফু</Select.Option>
+
               </Select>
             </Form.Item>
           </div>
