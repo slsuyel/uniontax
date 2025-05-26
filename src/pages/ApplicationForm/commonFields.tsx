@@ -2,22 +2,22 @@
 import { Form, Input, Select, Upload, Button } from "antd";
 const { Option } = Select;
 import { UploadOutlined } from "@ant-design/icons";
-import DatePicker from 'react-datepicker';
-import { useEffect, useState } from 'react';
+// import DatePicker from 'react-datepicker';
+// import { useEffect, useState } from 'react';
 
 
-const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: any) => void }) => {
+const commonFields = ({ form }: { form: any; setFormData: (data: any) => void }) => {
 
   console.log(form.getFieldsValue(), "form values");
 
 
-  const getFieldsValue = form.getFieldsValue();
+  // const getFieldsValue = form.getFieldsValue();
 
-  const [startDate, setStartDate] = useState<Date | null>(getFieldsValue.applicant_date_of_birth || null);
+  // const [startDate, setStartDate] = useState<Date | null>(getFieldsValue.applicant_date_of_birth || null);
 
-  useEffect(() => {
-    setStartDate(getFieldsValue.applicant_date_of_birth || null);
-  }, [getFieldsValue.applicant_date_of_birth]);
+  // useEffect(() => {
+  //   setStartDate(getFieldsValue.applicant_date_of_birth || null);
+  // }, [getFieldsValue.applicant_date_of_birth]);
 
 
 
@@ -189,19 +189,12 @@ const commonFields = ({ form, setFormData }: { form: any; setFormData: (data: an
 
 
       <div className="col-md-4">
-        <Form.Item label="জন্ম তারিখ (মাস/দিন/বছর)" name="applicant_date_of_birth" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
-          <div style={{ width: '100%' }}>
-            <div style={{ height: 40, width: "100%" }}>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => {
-                  setStartDate(date);
-                  setFormData({ ...form, applicant_date_of_birth: date });
-                }}
-                className="form-control w-100"
-              />
-            </div>
-          </div>
+        <Form.Item
+          label="জন্ম তারিখ (মাস/দিন/বছর)"
+          name="applicant_date_of_birth"
+          rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+        >
+          <Input type="date" className="form-control" style={{ height: 40, width: "100%" }} />
         </Form.Item>
       </div>
 
