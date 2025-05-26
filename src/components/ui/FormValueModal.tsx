@@ -339,7 +339,9 @@ const FormValueModal = ({
                         );
                       })()
                       ) : (
-                      Number(sonod?.sonod_fees) + Number(data?.last_years_money || 0)
+                      Number(tradeFee) +
+                          Number(Number(sonod?.sonod_fees) * 1.15) +
+                          Number(data?.last_years_money || 0)
                       )
                     ) : (
                       sonod?.sonod_fees
