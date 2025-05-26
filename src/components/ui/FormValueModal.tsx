@@ -324,6 +324,9 @@ const FormValueModal = ({
                     {service === "ট্রেড লাইসেন্স" ? (
                       site_settings?.union == "false" ? (
                       (() => {
+
+
+
                         let signboard_fee = 0;
                         if (data?.signboard_type === "normal") {
                         signboard_fee = Number(data?.signboard_size_square_fit || 0) * 100;
@@ -332,11 +335,18 @@ const FormValueModal = ({
                         }
                         const lastYearsMoney = Number(data?.last_years_money || 0);
                         return (
-                        Math.round(Number(tradeFee) * 1.15) +
+
+
+                        // Math.round(Number(tradeFee) * 1.15) +
+
+                        Number(tradeFee) +
                         Number(sonod?.sonod_fees) +
                         signboard_fee +
                         lastYearsMoney
                         );
+
+
+
                       })()
                       ) : (
                       Number(tradeFee) +
