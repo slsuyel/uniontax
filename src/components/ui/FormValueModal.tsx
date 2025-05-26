@@ -76,6 +76,7 @@ const FormValueModal = ({
         window.location.href = response.data.redirect_url;
       }
     } catch (error) {
+      console.log(error);
       message.error("An error occurred while processing your request");
     }
   };
