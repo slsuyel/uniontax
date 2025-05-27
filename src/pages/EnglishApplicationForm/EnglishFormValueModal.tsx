@@ -30,6 +30,7 @@ const EnglishFormValueModal = ({
   const sonod = sonodList.find((d) => d.bnname == service);
   const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   const handleCancel = () => {
     onCancel();
@@ -71,12 +72,48 @@ const EnglishFormValueModal = ({
     }
   };
 
-  const fees =
-    service === "ট্রেড লাইসেন্স"
-      ? tradeFee
-        ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
-        : Number(sonod?.sonod_fees)
-      : Number(sonod?.sonod_fees);
+
+
+
+
+    const fees =
+      service === "ট্রেড লাইসেন্স"
+        ? site_settings?.union == "false"
+          ? (() => {
+              let signboard_fee = 0;
+              if (bn?.signboard_type === "normal") {
+                signboard_fee = Number(bn?.signboard_size_square_fit || 0) * 100;
+              } else if (bn?.signboard_type === "digital_led") {
+                signboard_fee = Number(bn?.signboard_size_square_fit || 0) * 150;
+              }
+              const lastYearsMoney = Number(bn?.last_years_money || 0);
+              return (
+                Number(tradeFee) +
+                Number(sonod?.sonod_fees) +Number(sonod?.sonod_fees) +
+                signboard_fee +
+                lastYearsMoney
+              );
+            })()
+          : (
+              Number(tradeFee) +
+              Number(Number(sonod?.sonod_fees) * 1.15) +
+              Number(bn?.last_years_money || 0)
+            )
+        : Number(sonod?.sonod_fees);
+
+
+
+
+  // const fees =
+  //   service === "ট্রেড লাইসেন্স"
+  //     ? tradeFee
+  //       ? Number(tradeFee) + Number(sonod?.sonod_fees) * 1.15
+  //       : Number(sonod?.sonod_fees)
+  //     : Number(sonod?.sonod_fees);
+
+
+
+
 
   // console.log(bn?.last_years_money)
 
@@ -249,10 +286,7 @@ const EnglishFormValueModal = ({
               অনুগ্রহ করে আপনার আবেদন সম্পূর্ণ করতে ফি প্রদান করুন। {service} এর
               ফি হল{" "}
               {service == "ট্রেড লাইসেন্স"
-                ? fees +
-                  Number(bn?.last_years_money) +
-                  // Number(sonod?.sonod_fees) +
-                  Number(sonod?.sonod_fees) * 1.15
+                ? fees 
                 : fees * 2}{" "}
               টাকা।
             </h3>

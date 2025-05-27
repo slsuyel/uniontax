@@ -252,3 +252,6 @@ const TradeLicenseForm = ({
 };
 
 export default TradeLicenseForm;
+
+
+// api.pouroseba.gov.bd/create/payment?sonod_id=27005&s_uri=https://dinajpursadar.pouroseba.gov.bd/payment-success&f_uri=https://dinajpursadar.pouroseba.gov.bd/payment-failed&c_uri=https://dinajpursadar.pouroseba.gov.bd/payment-cancel&hasEnData=&uddoktaId=
