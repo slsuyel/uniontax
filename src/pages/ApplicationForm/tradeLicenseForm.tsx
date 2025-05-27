@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useAppDispatch } from "@/redux/features/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { setTradeFee } from "@/redux/features/union/unionSlice";
 import { Form, Input, InputNumber, Select } from "antd";
 import { useState } from "react";
+import type { RootState } from "@/redux/features/store"
 const { Option } = Select;
 export interface TTradeKhat {
   name: string;
@@ -67,6 +68,9 @@ const TradeLicenseForm = ({
   const currentMonth = new Date().getMonth() + 1;
   const financialYearStart = currentMonth >= 4 ? currentYear : currentYear - 1;
   const financialYearEnd = financialYearStart + 1;
+
+   const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+
 
   const financialYears = [];
   for (let i = 0; i < 3; i++) {
@@ -175,38 +179,86 @@ const TradeLicenseForm = ({
       )}
 
 
+      {site_settings?.union == "false" && (
+        <>
+          <div className="col-md-4">
+            <Form.Item
+              label="সাইনবোর্ডের ধরন"
+              name="signboard_type"
+              rules={[{ required: true, message: "সাইনবোর্ডের ধরন নির্বাচন করুন" }]}
+            >
+              <Select
+                showSearch
+                style={{ height: 40, width: "100%" }}
+                placeholder="নির্বাচন করুন"
+              >
+                <Option value="normal">সাধারন</Option>
+                <Option value="digital_led">ডিজিটাল/এলইডি/নিয়ন</Option>
+              </Select>
+            </Form.Item>
+          </div>
 
-<div className="col-md-4">
-  <Form.Item
-    label="সাইনবোর্ডের ধরন"
-    name="signboard_type"
-    rules={[{ required: true, message: "সাইনবোর্ডের ধরন নির্বাচন করুন" }]}
-  >
-    <Select
-      showSearch
-      style={{ height: 40, width: "100%" }}
-      placeholder="নির্বাচন করুন"
-    >
-      <Option value="normal">সাধারন</Option>
-      <Option value="digital_led">ডিজিটাল/এলইডি/নিয়ন</Option>
-    </Select>
-  </Form.Item>
-</div>
+          <div className="col-md-4">
+            <Form.Item
+              label="সাইনবোর্ডের আকার (বর্গফুটে)"
+              name="signboard_size_square_fit"
+              rules={[{ required: true, message: "সাইনবোর্ডের আকার লিখুন" }]}
+            >
+              <Input
+                type="number"
+                style={{ height: 40, width: "100%" }}
+                placeholder="আকার লিখুন"
+                min={1}
+              />
+            </Form.Item>
+          </div>
 
-<div className="col-md-4">
-  <Form.Item
-    label="সাইনবোর্ডের আকার (বর্গফুটে)"
-    name="signboard_size_square_fit"
-    rules={[{ required: true, message: "সাইনবোর্ডের আকার লিখুন" }]}
-  >
-    <Input
-      type="number"
-      style={{ height: 40, width: "100%" }}
-      placeholder="আকার লিখুন"
-      min={1}
-    />
-  </Form.Item>
-</div>
+      <div className="col-md-4">
+        <Form.Item
+          label="চালান ট্র্যাকিং নম্বর"
+          name="chalan_traking_no"
+        //   rules={[
+        // { required: true, message: "চালান ট্র্যাকিং নম্বর লিখুন" },
+        //   ]}
+        >
+          <Input style={{ height: 40, width: "100%" }} />
+        </Form.Item>
+      </div>
+      <div className="col-md-4">
+        <Form.Item
+          label="চালান তারিখ (মাস/দিন/বছর)"
+          name="chalan_date"
+        //   rules={[
+        // { required: true, message: "চালান তারিখ নির্বাচন করুন" },
+        //   ]}
+        >
+          <Input type="date" style={{ height: 40, width: "100%" }} />
+        </Form.Item>
+      </div>
+      <div className="col-md-4">
+        <Form.Item
+          label="চালান টাকার পরিমাণ"
+          name="chalan_amount"
+        //   rules={[
+        // { required: true, message: "চালান পরিমাণ লিখুন" },
+        //   ]}
+        >
+          <InputNumber min={0} style={{ height: 40, width: "100%" }} />
+        </Form.Item>
+      </div>
+
+
+
+
+
+        </>
+      )}
+
+
+
+
+
+
 
 
 
@@ -229,6 +281,9 @@ const TradeLicenseForm = ({
           <Input style={{ height: 40, width: "100%" }} />
         </Form.Item>
       </div>
+
+
+      
       <div className="col-md-4">
         <Form.Item
           label="অর্থ বছর"
