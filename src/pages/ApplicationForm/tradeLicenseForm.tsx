@@ -185,7 +185,7 @@ const TradeLicenseForm = ({
             <Form.Item
               label="সাইনবোর্ডের ধরন"
               name="signboard_type"
-              rules={[{ required: true, message: "সাইনবোর্ডের ধরন নির্বাচন করুন" }]}
+              // rules={[{ required: true, message: "সাইনবোর্ডের ধরন নির্বাচন করুন" }]}
             >
               <Select
                 showSearch
@@ -202,7 +202,7 @@ const TradeLicenseForm = ({
             <Form.Item
               label="সাইনবোর্ডের আকার (বর্গফুটে)"
               name="signboard_size_square_fit"
-              rules={[{ required: true, message: "সাইনবোর্ডের আকার লিখুন" }]}
+              // rules={[{ required: true, message: "সাইনবোর্ডের আকার লিখুন" }]}
             >
               <Input
                 type="number"

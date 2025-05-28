@@ -9,6 +9,7 @@ import Breadcrumbs from "@/components/reusable/Breadcrumbs"
 import { Link } from "react-router-dom"
 import EkpayReportTable from "../../../components/EkpayReportTable"
 import { useEffect, useState } from "react"
+import MaintanceFeesTable from "@/components/ui/MaintenanceFeeTable"
 
 // Add this to your userApi.ts file
 interface EkpayReport {
@@ -76,6 +77,8 @@ const Dhome = () => {
         </Link>
       </div>
       <Summary data={metricsData?.data} />
+      
+      <MaintanceFeesTable />
 
       {ekpayData && ekpayData.data && <EkpayReportTable data={ekpayData.data} onPageChange={handlePageChange} />}
     </div>
