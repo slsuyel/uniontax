@@ -3,7 +3,6 @@
 
 import { Form, Button, message /* Modal */ } from "antd";
 import addressFields from "./addressFields";
-import attachmentForm from "./attachmentForm";
 
 import { useEffect, useState } from "react";
 import TradeLicenseForm from "./tradeLicenseForm";
@@ -21,16 +20,18 @@ import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { useSonodUpdateMutation } from "@/redux/api/sonod/sonodApi";
 import InheritanceList from "./inheritanceList";
+import AttachmentForm from "./attachmentForm";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   /* ```````````` */
   const [fetchedUser, setFetchedUser] = useState<TApplicantData | null>(null);
 
+  const [attachments, setAttachments] = useState<{ [key: string]: File | null }>({});
+  const [previews, setPreviews] = useState<{ [key: string]: string | null }>({});
   const [frontFile, setFrontFile] = useState<File | null>(null);
   const [backFile, setBackFile] = useState<File | null>(null);
-  const [birthCertificateFile, setBirthCertificateFile] = useState<File | null>(
-    null
-  );
+  const [birthCertificateFile, setBirthCertificateFile] = useState<File | null>(null);
+
   /* ```````````` */
   const { id } = useParams();
   const navigate = useNavigate();
@@ -87,8 +88,11 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     }
   }, [idFromUrl, service, user, form]);
 
-
-
+  const onFinishFailed = (errorInfo: any) => {
+    if (errorInfo?.errorFields?.length > 0) {
+      form.scrollToField(errorInfo.errorFields[0].name);
+    }
+  };
 
 
 
@@ -103,14 +107,13 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   }, [isDashboard, sonodInfo?.sonod_name, service]);
 
   const handleSubmitForm = async (values: any) => {
-
     const files = {
       frontFile,
       backFile,
       birthCertificateFile,
     };
 
-    const updatedData = { ...values, ...files };
+    const updatedData = { ...values, ...files,...attachments };
 
     // console.log(updatedData);
     // return;
@@ -123,7 +126,11 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             formData.append(key, value.toString());
           }
         });
-
+        Object.entries(attachments).forEach(([key, file]) => {
+          if (file) {
+            formData.append(`attachments[${key}]`, file);
+          }
+        });
         if (frontFile)
           formData.append("applicant_national_id_front_attachment", frontFile);
         if (backFile)
@@ -191,6 +198,8 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
       <Form
         form={form}
         layout="vertical"
+        onFinishFailed={onFinishFailed}
+
         onFinish={handleSubmitForm}
         initialValues={{
           unioun_name: sonodInfo?.unioun_name,
@@ -304,11 +313,15 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             {conditionalForm(sonodName)}
           </div>
           {addressFields(addressFieldsProps)}
-          {attachmentForm({
-            setFrontFile,
-            setBackFile,
-            setBirthCertificateFile,
-          })}
+          <AttachmentForm
+            setFrontFile={setFrontFile}
+            setBackFile={setBackFile}
+            setBirthCertificateFile={setBirthCertificateFile}
+            attachments={attachments}
+            setAttachments={setAttachments}
+            previews={previews}
+            setPreviews={setPreviews}
+          />
 
           {sonodName === "ওয়ারিশান সনদ" && <InheritanceList sonodName={"ওয়ারিশান সনদ"} />}
           {sonodName === "পারিবারিক সনদ" && <InheritanceList sonodName={"পারিবারিক সনদ"} />}

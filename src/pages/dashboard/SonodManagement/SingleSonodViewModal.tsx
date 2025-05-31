@@ -115,7 +115,7 @@ const SingleSonodViewModal = ({
               আবেদনকৃত প্রত্যয়নের : <br />
             </b>
           </div>
-          {data.holding_owners  && (
+          {data.holding_owners && (
             <>
               <div className="col-md-12">
                 <div className="app-heading">হোল্ডিং মালিকের তথ্য</div>
@@ -259,6 +259,25 @@ const SingleSonodViewModal = ({
               />
             )}
           </div>
+          <div className="col-md-12">
+            <div className="app-heading">অন্যান্য সংযুক্ত</div>
+          </div>
+          {
+            data?.files?.map((file) => <>
+              <div className="col-md-4 col-6 mt-3">
+                <span>{file.type}</span> <br />{" "}
+                {file.file_path && (
+                  <img
+                    height={"auto"}
+                    className="w-100 img-thumbnail"
+                    src={file.file_path}
+                    alt="birth"
+                  />
+                )}
+              </div>
+            </>)
+          }
+
         </div>
         <br /> <br />
       </div>

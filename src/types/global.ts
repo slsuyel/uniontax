@@ -35,7 +35,14 @@ export type TService = {
   title: string;
   link: string;
 };
-
+interface TFile {
+  id: number;
+  sonod_id: number;
+  type: string;           // ফাইলের ধরন (যেমন "প্রত্যয়ন", "এসএসসি সনদ")
+  file_path: string;
+  created_at: string;     // ISO Date string
+  updated_at: string;     // ISO Date string
+}
 export interface TApplicantData {
   unioun_name?: string;
   hasEnData?: 0 | 1;
@@ -148,7 +155,8 @@ export interface TApplicantData {
   format: string | null;
   created_at: string;
   updated_at: string;
-  holding_owners?:THoldingOwner
+  holding_owners?: THoldingOwner
+  files?:TFile[]
 }
 
 export interface THoldingOwner {

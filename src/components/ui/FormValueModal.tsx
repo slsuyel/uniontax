@@ -32,7 +32,7 @@ const FormValueModal = ({
   const sonod = sonodList.find((d) => d.bnname == service);
   const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
 
-
+  console.log(data?.attachments);
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
 
 
@@ -48,6 +48,7 @@ const FormValueModal = ({
   const blobUrl = imageFile ? URL.createObjectURL(imageFile) : null;
 
   const handlePayment = async () => {
+  
     const additionalData = {
       applicant_date_of_birth: formattedDate,
       unioun_name: unionInfo?.short_name_e,
@@ -64,11 +65,18 @@ const FormValueModal = ({
     formData.append("bn", JSON.stringify(updatedData)); // append additional data as JSON string
     formData.append("applicant_national_id_front_attachment", data?.frontFile);
     formData.append("applicant_national_id_back_attachment", data?.backFile);
+   
     formData.append(
       "applicant_birth_certificate_attachment",
       data?.birthCertificateFile
     );
-
+    // যদি অন্য ফাইল থাকে, সেগুলোও append করবে
+    formData.append("certification", data?.certification);
+    formData.append("ssc_certificate", data?.ssc_certificate);
+    formData.append("hsc_certificate", data?.hsc_certificate);
+    formData.append("vaccine_card", data?.vaccine_card);
+    formData.append("parents_id", data?.parents_id);
+    formData.append("others", data?.othersFile);
     try {
       const response = await sonodApply({ formData, token }).unwrap();
       // return;
@@ -325,43 +333,43 @@ const FormValueModal = ({
                     এর ফি{" "}
                     {service === "ট্রেড লাইসেন্স" ? (
                       site_settings?.union == "false" ? (
-                      (() => {
+                        (() => {
 
 
 
-                        let signboard_fee = 0;
-                        if (data?.signboard_type === "normal") {
-                        signboard_fee = Number(data?.signboard_size_square_fit || 0) * 100;
-                        } else if (data?.signboard_type === "digital_led") {
-                        signboard_fee = Number(data?.signboard_size_square_fit || 0) * 150;
-                        }
-                        const lastYearsMoney = Number(data?.last_years_money || 0);
-                        return (
+                          let signboard_fee = 0;
+                          if (data?.signboard_type === "normal") {
+                            signboard_fee = Number(data?.signboard_size_square_fit || 0) * 100;
+                          } else if (data?.signboard_type === "digital_led") {
+                            signboard_fee = Number(data?.signboard_size_square_fit || 0) * 150;
+                          }
+                          const lastYearsMoney = Number(data?.last_years_money || 0);
+                          return (
 
 
-                        // Math.round(Number(tradeFee) * 1.15) +
+                            // Math.round(Number(tradeFee) * 1.15) +
 
-                        Number(tradeFee) +
-                        Number(sonod?.sonod_fees) +
-                        signboard_fee +
-                        lastYearsMoney
-                        );
+                            Number(tradeFee) +
+                            Number(sonod?.sonod_fees) +
+                            signboard_fee +
+                            lastYearsMoney
+                          );
 
 
 
-                      })()
+                        })()
                       ) : (
-                      Number(tradeFee) +
-                          Number(Number(sonod?.sonod_fees) * 1.15) +
-                          Number(data?.last_years_money || 0)
+                        Number(tradeFee) +
+                        Number(Number(sonod?.sonod_fees) * 1.15) +
+                        Number(data?.last_years_money || 0)
                       )
                     ) : (
                       sonod?.sonod_fees
                     )}
                     {" "}
-                      
-                      
-{/*                       
+
+
+                    {/*                       
                       {service === "ট্রেড লাইসেন্স"
                       ? tradeFee
                         ? Number(tradeFee) +
