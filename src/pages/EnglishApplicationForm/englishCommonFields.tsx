@@ -1,10 +1,30 @@
-import { Form, Input } from "antd";
+import { Form, Input, Select } from "antd";
 
+const { Option } = Select;
 // const { Option } = Select;
 
 const englishCommonFields = () => {
   return (
     <>
+      <div className="col-md-4">
+        <Form.Item
+          label="আবেদনকারীর টাইটেল (Applicant's Title)"
+          name="name_title"
+          rules={[{ required: true, message: "দয়া করে আপনার টাইটেল নির্বাচন করুন" }]}
+        >
+          <Select
+            placeholder="আপনার টাইটেল নির্বাচন করুন"
+            style={{ height: 40, width: "100%" }}
+          // className="form-control"
+          >
+            <Option value="Mr">জনাব (Mr.)</Option>
+            <Option value="Mrs">জনাবা (Mrs.)</Option>
+            <Option value="Ms">মিস (Ms.)</Option>
+            <Option value="Dr">ডঃ (Dr.)</Option>
+            <Option value="Prof">প্রফেসর (Prof.)</Option>
+          </Select>
+        </Form.Item>
+      </div>
       <div className="col-md-4">
         <Form.Item
           label="আবেদনকারীর নাম (Applicant's Name)"

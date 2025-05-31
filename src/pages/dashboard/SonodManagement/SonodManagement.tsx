@@ -155,11 +155,10 @@ const SonodManagement = () => {
                       sonodName={sonodName}
                     />
                     <p
-                      className={`mt-2 fs-6 text-white text-center py-2 ${
-                        item.payment_status === "Paid"
-                          ? "bg-success"
-                          : "bg-danger"
-                      }`}
+                      className={`mt-2 fs-6 text-white text-center py-2 ${item.payment_status === "Paid"
+                        ? "bg-success"
+                        : "bg-danger"
+                        }`}
                     >
                       <strong>ফি:</strong> {item.payment_status}
                     </p>
@@ -192,18 +191,17 @@ const SonodManagement = () => {
                       <td>{new Date(item.created_at).toLocaleString()}</td>
                       <td>
                         <span
-                          className={`d-block font-monospace fs-6 p-1 rounded text-white ${
-                            item.payment_status === "Paid"
-                              ? "bg-success"
-                              : "bg-danger"
-                          }`}
+                          className={`d-block font-monospace fs-6 p-1 rounded text-white ${item.payment_status === "Paid"
+                            ? "bg-success"
+                            : "bg-danger"
+                            }`}
                         >
                           {" "}
                           {item.payment_status}
                         </span>
                       </td>
                       {condition === "approved" && (
-                        <td>
+                        <td className=" d-flex flex-wrap gap-2 align-items-center justify-content-center">
                           <Link
                             target="_blank"
                             to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}`}
@@ -212,13 +210,24 @@ const SonodManagement = () => {
                             বাংলা সনদ
                           </Link>
                           {item.hasEnData == 1 && (
-                            <Link
-                              target="_blank"
-                              to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?en=true`}
-                              className="btn btn-success btn-sm mr-1"
-                            >
-                              ইংরেজি সনদ
-                            </Link>
+                            <>
+                              <Link
+                                target="_blank"
+                                to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?en=true`}
+                                className="btn btn-success btn-sm mr-1"
+                              >
+                                ইংরেজি সনদ
+                              </Link>
+                              {sonodName === "ট্রেড লাইসেন্স" && (
+                                <Link
+                                  target="_blank"
+                                  to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?en=both`}
+                                  className="btn btn-success btn-sm mr-1"
+                                >
+                                  বাংলা-ইংরেজি যৌথ
+                                </Link>
+                              )}
+                            </>
                           )}
                         </td>
                       )}
