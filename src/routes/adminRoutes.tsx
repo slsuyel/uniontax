@@ -16,6 +16,7 @@ import EnglishEditSonod from "@/pages/dashboard/SonodManagement/EnglishEditSonod
 import SonodManagement from "@/pages/dashboard/SonodManagement/SonodManagement";
 // import UnionProfile from "@/pages/dashboard/UnionProfile";
 import UnionReports from "@/pages/dashboard/UnionReports";
+import HoldingTaxBokeyaList from "@/pages/Holding/HoldingTaxBokeyaList";
 
 export const adminRoutes = [
   {
@@ -37,6 +38,10 @@ export const adminRoutes = [
   {
     path: "holding/tax/",
     element: <HoldingTax />,
+  },
+  {
+    path: "holding/tax/bokeya/list",
+    element: <HoldingTaxBokeyaList />,
   },
   {
     path: "holding/import/",
