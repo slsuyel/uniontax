@@ -10,17 +10,20 @@ import { Link } from "react-router-dom"
 import EkpayReportTable from "../../../components/EkpayReportTable"
 import { useEffect, useState } from "react"
 import MaintanceFeesTable from "@/components/ui/MaintenanceFeeTable"
+import "@/assets/styles/dashboard.css"
+import "@/assets/styles/dashboard-header.css"
+import "@/assets/styles/table-sections.css"
 
 // Add this to your userApi.ts file
 interface EkpayReport {
-  data: any; // Replace 'any' with the actual structure of your data if known
+  data: any // Replace 'any' with the actual structure of your data if known
 }
 
 const useEkpayReportsQuery = (arg: { token: string | null; page?: number }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<EkpayReport | null>(null)
   const [error, setError] = useState<Error | null>(null)
-  const apiUrl = import.meta.env.VITE_BASE_API_URL;
+  const apiUrl = import.meta.env.VITE_BASE_API_URL
 
   const fetchData = async (page = 1) => {
     setIsLoading(true)
@@ -54,33 +57,64 @@ const Dhome = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const { data: metricsData, isLoading: metricsLoading } = useDbMetricsQuery({ token })
-  const {
-    data: ekpayData,
-    refetch: refetchEkpay,
-  } = useEkpayReportsQuery({ token, page: currentPage })
+  const { data: ekpayData, refetch: refetchEkpay } = useEkpayReportsQuery({ token, page: currentPage })
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
     refetchEkpay(page)
   }
 
-  if (metricsLoading ) {
+  if (metricsLoading) {
     return <Loader />
   }
 
   return (
-    <div className="card p-3 border-0">
-      <Breadcrumbs current={`${user?.dashboard_title}`} page={`${user?.designation}`} />
-      <div className="d-flex justify-content-end">
-        <Link className="btn btn-sm btn-success" to={`/dashboard/sms`}>
-          SMS প্যানেল
-        </Link>
+    <div className="dashboard-container">
+      {/* Enhanced Header */}
+      <div className="dashboard-header-content">
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="breadcrumb-container">
+            <Breadcrumbs current={`${user?.dashboard_title}`} page={`${user?.designation}`} />
+          </div>
+          <Link className="sms-panel-btn" to={`/dashboard/sms`}>
+            <i className="bi bi-chat-text me-2"></i>
+            SMS প্যানেল
+          </Link>
+        </div>
       </div>
-      <Summary data={metricsData?.data} />
-      
-      <MaintanceFeesTable />
 
-      {ekpayData && ekpayData.data && <EkpayReportTable data={ekpayData.data} onPageChange={handlePageChange} />}
+      {/* Enhanced Summary Section */}
+      <div className="summary-section">
+        <Summary data={metricsData?.data} />
+      </div>
+
+      {/* Enhanced Maintenance Fees Table */}
+      <div className="table-section">
+        <div className="ekpay-header">
+          <h5 className="ekpay-title">
+            <i className="bi bi-credit-card-2-front"></i>
+            রক্ষণাবেক্ষণ ফি টেবিল
+          </h5>
+        </div>
+        <div className="table-content">
+          <MaintanceFeesTable />
+        </div>
+      </div>
+
+      {/* Enhanced Ekpay Report Table */}
+      {ekpayData && ekpayData.data && (
+        <div className="table-section">
+          <div className="ekpay-header">
+            <h5 className="ekpay-title">
+              <i className="bi bi-credit-card-2-front"></i>
+              EkPay পেমেন্ট রিপোর্ট
+            </h5>
+          </div>
+          <div className="table-content">
+            <EkpayReportTable data={ekpayData.data} onPageChange={handlePageChange} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

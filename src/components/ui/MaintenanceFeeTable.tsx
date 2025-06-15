@@ -67,11 +67,7 @@ const MaintanceFeesTable: React.FC = () => {
   if (!data || data.length === 0) return <div className="alert alert-warning">No maintenance fee data found.</div>
 
   return (
-    <div className="card mt-4">
-      <div className="card-header bg-info text-white">
-        <h5 className="mb-0">মেইনটেনেন্স ফি রিপোর্ট</h5>
-      </div>
-      <div className="card-body">
+
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
             <thead className="bg-light">
@@ -113,8 +109,7 @@ const MaintanceFeesTable: React.FC = () => {
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
+ 
   )
 }
 

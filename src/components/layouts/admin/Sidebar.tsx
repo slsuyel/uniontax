@@ -50,6 +50,7 @@ const Sidebar = ({ user }: { user: any }) => {
       slug: "/union/profile",
     },
     { key: "tax", title: "হোল্ডিং ট্যাক্স", slug: "/holding/tax/" },
+    { key: "tax-bokeya", title: "হোল্ডিং ট্যাক্স বকেয়া", slug: "/holding/tax/bokeya/list" },
     { key: "fee", title: "সনদ ফি", slug: "/sonod/fee" },
     { key: "failed", title: "পেমেন্ট ফেইল্ড ", slug: "/payment-failed" },
     ...sonodInfo.map((sonod) => ({

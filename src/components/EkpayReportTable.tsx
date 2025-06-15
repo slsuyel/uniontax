@@ -51,11 +51,7 @@ const EkpayReportTable: React.FC<EkpayReportTableProps> = ({ data, onPageChange 
   }
 
   return (
-    <div className="card mt-4">
-      <div className="card-header bg-primary text-white">
-        <h5 className="mb-0">EkPay পেমেন্ট রিপোর্ট</h5>
-      </div>
-      <div className="card-body">
+<>
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
             <thead className="bg-light">
@@ -88,8 +84,8 @@ const EkpayReportTable: React.FC<EkpayReportTableProps> = ({ data, onPageChange 
         {data.last_page > 1 && (
           <Pagination currentPage={data.current_page} lastPage={data.last_page} onPageChange={onPageChange} />
         )}
-      </div>
-    </div>
+
+        </>
   )
 }
 
