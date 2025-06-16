@@ -32,7 +32,6 @@ const Sidebar = ({ user }: { user: any }) => {
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
   const is_union = site_settings?.union;
-  console.log(sonodInfo);
   // Dynamic labels
   const profileLabel = is_union == 'true' ? "ইউনিয়ন প্রোফাইল" : "পৌরসভা প্রোফাইল";
 

@@ -41,7 +41,7 @@ const MaintanceFeesTable: React.FC = () => {
         },
       })
       const result = await response.json()
-      console.log("Maintance Fees Data:", result)
+    
       setData(result?.data || [])
     } catch (err) {
       setError(err as Error)

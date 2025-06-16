@@ -185,8 +185,8 @@ export default function HoldingTaxBokeyaList() {
       if (result.isError) {
         throw new Error(result.error || "SMS পাঠাতে ব্যর্থ")
       }
-
-      setSmsSuccess(`${selectedTaxpayers.size} জন প্রাপকের কাছে সফলভাবে SMS পাঠানো হয়েছে`)
+      // console.log(result);
+      setSmsSuccess(result.data.message)
       setSelectedTaxpayers(new Set())
     } catch (err) {
       setError(err instanceof Error ? err.message : "SMS পাঠাতে ব্যর্থ")
@@ -480,7 +480,7 @@ export default function HoldingTaxBokeyaList() {
                     <span className="visually-hidden">Loading...</span>
                   </div>
                   <h4 className="mb-3">বকেয়া রেকর্ড লোড হচ্ছে...</h4>
-                  
+
                 </div>
               </div>
             </div>
