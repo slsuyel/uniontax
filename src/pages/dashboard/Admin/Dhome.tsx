@@ -10,9 +10,9 @@ import { Link } from "react-router-dom"
 import EkpayReportTable from "../../../components/EkpayReportTable"
 import { useEffect, useState } from "react"
 import MaintanceFeesTable from "@/components/ui/MaintenanceFeeTable"
-import "@/assets/styles/dashboard.css"
-import "@/assets/styles/dashboard-header.css"
-import "@/assets/styles/table-sections.css"
+// import "@/assets/styles/dashboard.css"
+// import "@/assets/styles/dashboard-header.css"
+// import "@/assets/styles/table-sections.css"
 
 // Add this to your userApi.ts file
 interface EkpayReport {
