@@ -21,16 +21,24 @@ import { RootState } from "@/redux/features/store";
 import { useSonodUpdateMutation } from "@/redux/api/sonod/sonodApi";
 import InheritanceList from "./inheritanceList";
 import AttachmentForm from "./attachmentForm";
+import adminEditFields from "./adminEditFields";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   /* ```````````` */
+  const loggedUser = useAppSelector((state: RootState) => state.user.user);
   const [fetchedUser, setFetchedUser] = useState<TApplicantData | null>(null);
 
-  const [attachments, setAttachments] = useState<{ [key: string]: File | null }>({});
-  const [previews, setPreviews] = useState<{ [key: string]: string | null }>({});
+  const [attachments, setAttachments] = useState<{
+    [key: string]: File | null;
+  }>({});
+  const [previews, setPreviews] = useState<{ [key: string]: string | null }>(
+    {}
+  );
   const [frontFile, setFrontFile] = useState<File | null>(null);
   const [backFile, setBackFile] = useState<File | null>(null);
-  const [birthCertificateFile, setBirthCertificateFile] = useState<File | null>(null);
+  const [birthCertificateFile, setBirthCertificateFile] = useState<File | null>(
+    null
+  );
 
   /* ```````````` */
   const { id } = useParams();
@@ -70,7 +78,9 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
       // Fetch the data based on the `id` parameter
       const fetchUser = async () => {
         try {
-          const response = await fetch(`${BASE_API_URL}/sonod/search/for/re-applicaion?id=${idFromUrl}`);
+          const response = await fetch(
+            `${BASE_API_URL}/sonod/search/for/re-applicaion?id=${idFromUrl}`
+          );
           const result = await response.json();
           if (result?.data) {
             setFetchedUser(result.data);
@@ -94,8 +104,6 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     }
   };
 
-
-
   const sonodInfo = fetchedUser;
 
   useEffect(() => {
@@ -113,9 +121,8 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
       birthCertificateFile,
     };
 
-    const updatedData = { ...values, ...files,...attachments };
+    const updatedData = { ...values, ...files, ...attachments };
 
-    // console.log(updatedData);
     // return;
     try {
       setUserData(updatedData);
@@ -181,25 +188,22 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
     setModalVisible(false);
   };
 
-
-
   const successorList = Array.isArray(sonodInfo?.successor_list)
     ? sonodInfo?.successor_list
     : (() => {
-      try {
-        return JSON.parse(sonodInfo?.successor_list || "[]");
-      } catch {
-        return [];
-      }
-    })();
-
+        try {
+          return JSON.parse(sonodInfo?.successor_list || "[]");
+        } catch {
+          return [];
+        }
+      })();
+  console.log(loggedUser?.designation);
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form
         form={form}
         layout="vertical"
         onFinishFailed={onFinishFailed}
-
         onFinish={handleSubmitForm}
         initialValues={{
           unioun_name: sonodInfo?.unioun_name,
@@ -214,8 +218,10 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           ut_thana: sonodInfo?.ut_thana,
           ut_district: sonodInfo?.ut_district,
           ut_word: sonodInfo?.ut_word,
-          successor_father_alive_status: sonodInfo?.successor_father_alive_status,
-          successor_mother_alive_status: sonodInfo?.successor_mother_alive_status,
+          successor_father_alive_status:
+            sonodInfo?.successor_father_alive_status,
+          successor_mother_alive_status:
+            sonodInfo?.successor_mother_alive_status,
           applicant_holding_tax_number: sonodInfo?.applicant_holding_tax_number,
           applicant_national_id_number: sonodInfo?.applicant_national_id_number,
           applicant_birth_certificate_number:
@@ -227,7 +233,8 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           Annual_income_text: sonodInfo?.Annual_income_text,
           Subject_to_permission: sonodInfo?.Subject_to_permission,
           disabled: sonodInfo?.disabled,
-          The_subject_of_the_certificate: sonodInfo?.The_subject_of_the_certificate,
+          The_subject_of_the_certificate:
+            sonodInfo?.The_subject_of_the_certificate,
           Name_of_the_transferred_area: sonodInfo?.Name_of_the_transferred_area,
           applicant_second_name: sonodInfo?.applicant_second_name,
           applicant_owner_type: sonodInfo?.applicant_owner_type,
@@ -244,7 +251,8 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_vat_id_number: sonodInfo?.applicant_vat_id_number,
           applicant_tax_id_number: sonodInfo?.applicant_tax_id_number,
           applicant_type_of_business: sonodInfo?.applicant_type_of_business,
-          applicant_type_of_businessKhat: sonodInfo?.applicant_type_of_businessKhat,
+          applicant_type_of_businessKhat:
+            sonodInfo?.applicant_type_of_businessKhat,
           applicant_type_of_businessKhatAmount:
             sonodInfo?.applicant_type_of_businessKhatAmount,
           applicant_father_name: sonodInfo?.applicant_father_name,
@@ -256,10 +264,12 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_present_village: sonodInfo?.applicant_present_village,
           applicant_present_road_block_sector:
             sonodInfo?.applicant_present_road_block_sector,
-          applicant_present_word_number: sonodInfo?.applicant_present_word_number,
+          applicant_present_word_number:
+            sonodInfo?.applicant_present_word_number,
           applicant_present_district: sonodInfo?.applicant_present_district,
           applicant_present_Upazila: sonodInfo?.applicant_present_Upazila,
-          applicant_present_post_office: sonodInfo?.applicant_present_post_office,
+          applicant_present_post_office:
+            sonodInfo?.applicant_present_post_office,
           applicant_permanent_village: sonodInfo?.applicant_permanent_village,
           applicant_permanent_road_block_sector:
             sonodInfo?.applicant_permanent_road_block_sector,
@@ -297,6 +307,10 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
         </div>
         <div className="form-pannel">
           <div className="row">
+            {isDashboard &&
+              unionInfo?.short_name_e == "dinajpursadar" &&
+              loggedUser?.designation == "প্রশাসক" &&
+              adminEditFields()}
             {sonodName == "উত্তরাধিকারী সনদ" && InheritanceForm(sonodName)}
             {/* {sonodName == "উত্তরাধিকারী সনদ" && InheritanceForm(sonodName)} */}
             {sonodName == "ওয়ারিশান সনদ" && InheritanceForm(sonodName)}
@@ -323,10 +337,16 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
             setPreviews={setPreviews}
           />
 
-          {sonodName === "ওয়ারিশান সনদ" && <InheritanceList sonodName={"ওয়ারিশান সনদ"} />}
-          {sonodName === "পারিবারিক সনদ" && <InheritanceList sonodName={"পারিবারিক সনদ"} />}
+          {sonodName === "ওয়ারিশান সনদ" && (
+            <InheritanceList sonodName={"ওয়ারিশান সনদ"} />
+          )}
+          {sonodName === "পারিবারিক সনদ" && (
+            <InheritanceList sonodName={"পারিবারিক সনদ"} />
+          )}
 
-          {sonodName === "উত্তরাধিকারী সনদ" && <InheritanceList sonodName={"উত্তরাধিকারী সনদ"} />}
+          {sonodName === "উত্তরাধিকারী সনদ" && (
+            <InheritanceList sonodName={"উত্তরাধিকারী সনদ"} />
+          )}
 
           <div style={{ textAlign: "center" }}>
             <Button

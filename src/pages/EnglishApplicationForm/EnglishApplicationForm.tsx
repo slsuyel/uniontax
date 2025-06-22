@@ -18,6 +18,9 @@ import englishConditionalForm from "./englishConditionalForm";
 import englishInheritanceForm from "./englishInheritanceForm";
 import EnglishFormValueModal from "./EnglishFormValueModal";
 import { useEnglishSonodUpdateMutation } from "@/redux/api/sonod/sonodApi";
+import adminEditFields from "./adminEditFields";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
   const { id } = useParams();
@@ -38,10 +41,11 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
   //     skip: !unionInfo?.short_name_e || sonodName !== "ট্রেড লাইসেন্স",
   //   }
   // );
-
+  const loggedUser = useAppSelector((state: RootState) => state.user.user);
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const pathname = location.pathname;
   const isDashboard = pathname.includes("dashboard");
-  
+
   const [userDta, setUserData] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -169,7 +173,7 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
             style={{
               fontWeight: "bold",
               fontSize: "20px",
-             
+
               textAlign: "center",
               color: "white",
             }}
@@ -182,6 +186,10 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
             *সকল তথ্য ইংরেজিতে লিখতে হবে
           </h6>
           <div className="row">
+            {isDashboard &&
+              unionInfo?.short_name_e == "dinajpursadar" &&
+              loggedUser?.designation == "প্রশাসক" &&
+              adminEditFields()}
             {sonodName == "উত্তরাধিকারী সনদ" &&
               englishInheritanceForm(sonodName)}
             {/* {sonodName == "উত্তরাধিকারী সনদ" && InheritanceForm(sonodName)} */}
@@ -201,10 +209,8 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
           {englishAddressFields({ form })}
           {englishAttachmentForm()}
 
-          {sonodName === "ওয়ারিশান সনদ" &&
-            englishInheritanceList(sonodName)}
-          {sonodName === "পারিবারিক সনদ" &&
-            englishInheritanceList(sonodName)}
+          {sonodName === "ওয়ারিশান সনদ" && englishInheritanceList(sonodName)}
+          {sonodName === "পারিবারিক সনদ" && englishInheritanceList(sonodName)}
 
           {sonodName === "উত্তরাধিকারী সনদ" &&
             englishInheritanceList(sonodName)}

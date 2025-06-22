@@ -4,6 +4,7 @@ import { useSingleSonodQuery } from "@/redux/api/sonod/sonodApi";
 import { TApplicantData } from "@/types";
 
 import { Button, Modal } from "antd";
+import FileShowEdit from "./FileShowEdit";
 
 interface FormValueModalProps {
   en?: boolean;
@@ -38,17 +39,15 @@ const SingleSonodViewModal = ({
   // const successorList =
   //   (data?.successor_list && JSON.parse(data?.successor_list)) || [];
 
-
   const successorList = Array.isArray(data?.successor_list)
     ? data?.successor_list
     : (() => {
-      try {
-        return JSON.parse(data?.successor_list || "[]");
-      } catch {
-        return [];
-      }
-    })();
-
+        try {
+          return JSON.parse(data?.successor_list || "[]");
+        } catch {
+          return [];
+        }
+      })();
 
   return (
     <Modal
@@ -125,14 +124,18 @@ const SingleSonodViewModal = ({
                 <b>হোল্ডিং মালিকের নাম: {data?.holding_owners?.name}</b>
               </div>
               <div className="col-md-4 col-6 mt-3">
-                <b>হোল্ডিং মালিকের সাথে সম্পর্ক: {data?.holding_owners?.relationship}</b>
+                <b>
+                  হোল্ডিং মালিকের সাথে সম্পর্ক:{" "}
+                  {data?.holding_owners?.relationship}
+                </b>
               </div>
               <div className="col-md-4 col-6 mt-3">
-                <b>হোল্ডিং মালিকের মোবাইল নম্বর: {data?.holding_owners?.mobile}</b>
+                <b>
+                  হোল্ডিং মালিকের মোবাইল নম্বর: {data?.holding_owners?.mobile}
+                </b>
               </div>
             </>
           )}
-
 
           <div className="col-md-12">
             <div className="app-heading">বর্তমান ঠিকানা</div>
@@ -190,13 +193,11 @@ const SingleSonodViewModal = ({
             <div className="row mx-auto">
               <div className="col-md-12">
                 <div className="app-heading">
-
                   {data?.sonod_name == "পারিবারিক সনদ"
                     ? "পরিবারের সদস্যদের তালিকা"
                     : data?.sonod_name == "উত্তরাধিকারী সনদ"
-                      ? "উত্তরাধিকারীগণের তালিকা"
-                      : "ওয়ারিশগণের তালিকা"}
-
+                    ? "উত্তরাধিকারীগণের তালিকা"
+                    : "ওয়ারিশগণের তালিকা"}
                 </div>
               </div>
               <table className="table table-bordered mt-3">
@@ -259,6 +260,46 @@ const SingleSonodViewModal = ({
               />
             )}
           </div>
+
+          <FileShowEdit data={data} />
+
+          {/* 
+          <div className="col-md-12">
+            <div className="app-heading">সংযুক্ত</div>
+          </div>
+          <div className="col-md-4 col-6 mt-3">
+            <span>ন্যাশনাল আইডি (Front page)</span> <br />
+            {data.applicant_national_id_front_attachment && (
+              <img
+                height={"auto"}
+                className="w-100 img-thumbnail"
+                src={data.applicant_national_id_front_attachment}
+                alt="nid"
+              />
+            )}
+          </div>
+          <div className="col-md-4 col-6 mt-3">
+            <span>ন্যাশনাল আইডি (Back page)</span> <br />
+            {data.applicant_national_id_back_attachment && (
+              <img
+                height={"auto"}
+                className="w-100 img-thumbnail"
+                src={data.applicant_national_id_back_attachment}
+                alt="nid"
+              />
+            )}
+          </div>
+          <div className="col-md-4 col-6 mt-3">
+            <span>জন্ম নিবন্ধন</span> <br />{" "}
+            {data.applicant_birth_certificate_attachment && (
+              <img
+                height={"auto"}
+                className="w-100 img-thumbnail"
+                src={data.applicant_birth_certificate_attachment}
+                alt="birth"
+              />
+            )}
+          </div>
           <div className="col-md-12">
             <div className="app-heading">অন্যান্য সংযুক্ত</div>
           </div>
@@ -276,8 +317,7 @@ const SingleSonodViewModal = ({
                 )}
               </div>
             </>)
-          }
-
+          } */}
         </div>
         <br /> <br />
       </div>

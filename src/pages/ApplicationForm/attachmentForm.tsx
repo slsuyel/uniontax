@@ -9,13 +9,18 @@ interface AttachmentFormProps {
   setBackFile: React.Dispatch<React.SetStateAction<File | null>>;
   setBirthCertificateFile: React.Dispatch<React.SetStateAction<File | null>>;
   attachments?: { [key: string]: File | null };
-  setAttachments?: React.Dispatch<React.SetStateAction<{ [key: string]: File | null }>>;
+  setAttachments?: React.Dispatch<
+    React.SetStateAction<{ [key: string]: File | null }>
+  >;
   previews?: { [key: string]: string | null };
-  setPreviews?: React.Dispatch<React.SetStateAction<{ [key: string]: string | null }>>;
+  setPreviews?: React.Dispatch<
+    React.SetStateAction<{ [key: string]: string | null }>
+  >;
 }
 
 const optionalFields: Record<string, string> = {
   recommendation: "সুপারিশ",
+  holding_tax_promanok: "হোল্ডিং ট্যাক্সের  প্রমাণক ",
   certification: "প্রত্যয়ন",
   ssc_certificate: "এসএসসি সনদ",
   hsc_certificate: "এইচএসসি সনদ",
@@ -35,9 +40,13 @@ const AttachmentForm: React.FC<AttachmentFormProps> = ({
   const [attachmentType, setAttachmentType] = useState<"nid" | "birth">("nid");
   const [frontPreview, setFrontPreview] = useState<string | null>(null);
   const [backPreview, setBackPreview] = useState<string | null>(null);
-  const [birthCertificatePreview, setBirthCertificatePreview] = useState<string | null>(null);
+  const [birthCertificatePreview, setBirthCertificatePreview] = useState<
+    string | null
+  >(null);
 
-  const [selectedOptionalDocs, setSelectedOptionalDocs] = useState<string[]>([]);
+  const [selectedOptionalDocs, setSelectedOptionalDocs] = useState<string[]>(
+    []
+  );
 
   // NID / Birth Certificate জন্য ফাইল হ্যান্ডলার
   const handleFileChange = (
@@ -53,7 +62,10 @@ const AttachmentForm: React.FC<AttachmentFormProps> = ({
   };
 
   // অন্যান্য ডকুমেন্টের ফাইল হ্যান্ডলার
-  const handleOptionalFileChange = (event: React.ChangeEvent<HTMLInputElement>, key: string) => {
+  const handleOptionalFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: string
+  ) => {
     const file = event.target.files?.[0] ?? null;
     if (file) {
       setAttachments((prev) => ({ ...prev, [key]: file }));
@@ -67,7 +79,11 @@ const AttachmentForm: React.FC<AttachmentFormProps> = ({
         <div className="app-heading">সংযুক্ত</div>
       </div>
       <div className="col-md-6 mb-3">
-        <Form.Item label="সংযুক্তির ধরণ" initialValue="nid" name="attachment_type">
+        <Form.Item
+          label="সংযুক্তির ধরণ"
+          initialValue="nid"
+          name="attachment_type"
+        >
           <Select
             style={{ width: "100%", height: 40 }}
             onChange={(val) => setAttachmentType(val)}
@@ -85,12 +101,16 @@ const AttachmentForm: React.FC<AttachmentFormProps> = ({
           <div className="col-md-6 mb-3">
             <Form.Item
               label="NID সামনের পাতা"
-              rules={[{ required: true, message: "NID সামনের পাতা আপলোড করুন" }]}
+              rules={[
+                { required: true, message: "NID সামনের পাতা আপলোড করুন" },
+              ]}
             >
               <Input
                 type="file"
                 accept="image/*"
-                onChange={(e) => handleFileChange(e, setFrontFile, setFrontPreview)}
+                onChange={(e) =>
+                  handleFileChange(e, setFrontFile, setFrontPreview)
+                }
               />
               {frontPreview && (
                 <img
@@ -105,12 +125,16 @@ const AttachmentForm: React.FC<AttachmentFormProps> = ({
           <div className="col-md-6 mb-3">
             <Form.Item
               label="NID পেছনের পাতা"
-              rules={[{ required: true, message: "NID পেছনের পাতা আপলোড করুন" }]}
+              rules={[
+                { required: true, message: "NID পেছনের পাতা আপলোড করুন" },
+              ]}
             >
               <Input
                 type="file"
                 accept="image/*"
-                onChange={(e) => handleFileChange(e, setBackFile, setBackPreview)}
+                onChange={(e) =>
+                  handleFileChange(e, setBackFile, setBackPreview)
+                }
               />
               {backPreview && (
                 <img
@@ -135,7 +159,13 @@ const AttachmentForm: React.FC<AttachmentFormProps> = ({
             <Input
               type="file"
               accept="image/*"
-              onChange={(e) => handleFileChange(e, setBirthCertificateFile, setBirthCertificatePreview)}
+              onChange={(e) =>
+                handleFileChange(
+                  e,
+                  setBirthCertificateFile,
+                  setBirthCertificatePreview
+                )
+              }
             />
             {birthCertificatePreview && (
               <img

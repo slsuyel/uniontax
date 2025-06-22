@@ -6,9 +6,8 @@ const sonodApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     allSonod: builder.query({
       query: ({ sonodName, stutus, token, sondId, page = 1 }) => ({
-        url: `/user/sonod/list?sonod_name=${sonodName}&page=${page}&stutus=${stutus}${
-          sondId ? `&sondId=${sondId}` : ""
-        }`,
+        url: `/user/sonod/list?sonod_name=${sonodName}&page=${page}&stutus=${stutus}${sondId ? `&sondId=${sondId}` : ""
+          }`,
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
@@ -27,6 +26,20 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["sonod-action"],
     }),
+    sonodFilesUpdate: builder.mutation({
+      query: ({ id, formData, token }) => ({
+        url: `/user/sonod/update/${id}/files`,
+        method: "POST",
+        body: formData,
+        formData: true,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["sonod-action"],
+    }),
+
+
     englishSonodUpdate: builder.mutation({
       query: ({ id, data, token }) => ({
         url: `/user/english/sonod/update/${id}`,
@@ -50,9 +63,8 @@ const sonodApi = apiSlice.injectEndpoints({
 
     allHolding: builder.query({
       query: ({ word, token, search, page = 1 }) => ({
-        url: `/user/holdingtax?page=${page}&word=${word}${
-          search ? `&search=${search}` : ""
-        }`,
+        url: `/user/holdingtax?page=${page}&word=${word}${search ? `&search=${search}` : ""
+          }`,
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
@@ -60,9 +72,8 @@ const sonodApi = apiSlice.injectEndpoints({
     }),
     uddoktaAllHolding: builder.query({
       query: ({ word, token, search, page = 1 }) => ({
-        url: `/uddokta/holdingtax?page=${page}&word=${word}${
-          search ? `&search=${search}` : ""
-        }`,
+        url: `/uddokta/holdingtax?page=${page}&word=${word}${search ? `&search=${search}` : ""
+          }`,
         method: "Get",
         headers: { Authorization: `Bearer ${token}` },
       }),
@@ -71,9 +82,8 @@ const sonodApi = apiSlice.injectEndpoints({
 
     allHoldingFrontend: builder.query({
       query: ({ word, search, unioun, page = 1 }) => ({
-        url: `/holdingtax/search?page=${page}&word=${word}${
-          search ? `&search=${search}&unioun=${unioun}` : ""
-        }`,
+        url: `/holdingtax/search?page=${page}&word=${word}${search ? `&search=${search}&unioun=${unioun}` : ""
+          }`,
         method: "GET",
       }),
       providesTags: ["holding-create-update"],
@@ -160,16 +170,16 @@ const sonodApi = apiSlice.injectEndpoints({
     }),
     importHolding: builder.mutation({
       query: ({ token, formData }) => ({
-          url: `/user/holding-tax/import`,
-          method: "POST",
-          headers: {
-              Authorization: `Bearer ${token}`
-          },
-          body: formData,
+        url: `/user/holding-tax/import`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData,
       }),
       invalidatesTags: ["holding-create-update"],
-  }),
-  
+    }),
+
 
     sonodAction: builder.mutation({
       query: ({
@@ -224,5 +234,6 @@ export const {
   useImportHoldingMutation,
   useUddoktaAllHoldingQuery,
   useUddoktaAddHoldingMutation,
-  useUddoktaSingleHoldingQuery
+  useUddoktaSingleHoldingQuery,
+  useSonodFilesUpdateMutation
 } = sonodApi;
