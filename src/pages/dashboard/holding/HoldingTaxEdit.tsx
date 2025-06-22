@@ -6,11 +6,14 @@ import Loader from "@/components/reusable/Loader";
 import {
   useHoldingBokeyaUpdateMutation,
   useSingleHoldingQuery,
+  useAddHoldingBokeyaMutation,
   useUpdateHoldingMutation,
 } from "@/redux/api/sonod/sonodApi";
 import { useParams } from "react-router-dom";
 import { Form, Input, Select, InputNumber, Modal, Button, message } from "antd";
 import { SetStateAction, useState } from "react";
+
+
 
 const HoldingTaxEdit = () => {
   const [updateHolding, { isLoading: updatingHolding }] =
@@ -23,14 +26,81 @@ const HoldingTaxEdit = () => {
   const [category, setCategory] = useState("");
   const [holdingBokeyaUpdate, { isLoading: updating }] =
     useHoldingBokeyaUpdateMutation();
-  const { data, isLoading } = useSingleHoldingQuery({
+  const { data, isLoading, refetch } = useSingleHoldingQuery({
     id,
     token,
   });
 
+
+  const [addHoldingBokeya, { isLoading: adding }] = useAddHoldingBokeyaMutation(); // custom mutation hook
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [addForm] = Form.useForm();
+
+
+
+
+
   if (isLoading) {
     return <Loader />;
   }
+
+
+  const handleAddModalOpen = () => {
+    setIsAddModalVisible(true);
+    addForm.resetFields();
+  };
+
+  const handleAddModalOk = async () => {
+    try {
+      const values = await addForm.validateFields();
+      const res = await addHoldingBokeya({
+        id,
+        data: {
+          year: values.year,
+          price: values.price,
+        },
+        token,
+      }).unwrap();
+
+      if (!res.isError && res.status_code === 201) {
+        message.success("নতুন বকেয়া সফলভাবে যোগ করা হয়েছে");
+        setIsAddModalVisible(false);
+         await refetch();
+      } else {
+        message.error("বকেয়া যোগ করতে সমস্যা হয়েছে");
+      }
+    } catch (err) {
+      message.error("ত্রুটি ঘটেছে। অনুগ্রহ করে ফর্মটি যাচাই করুন");
+    }
+  };
+
+  const handleAddModalCancel = () => {
+    setIsAddModalVisible(false);
+  };
+
+
+  const generateYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const options = [];
+
+    // গত ২০ বছরের সাল (চলতি বছর সহ)
+    for (let i = 0; i < 20; i++) {
+      const start = currentYear - i;
+      const end = start + 1;
+      options.push(`${start}-${end}`);
+    }
+
+    // সামনের ১ বছরের সাল
+    const nextStart = currentYear + 1;
+    const nextEnd = nextStart + 1;
+    options.unshift(`${nextStart}-${nextEnd}`); // চাইলে নিচেও রাখতে পারো push() দিয়ে
+
+    return options;
+  };
+
+
+
+
   const onFinish = async (values: any) => {
     try {
       const res = await updateHolding({ data: values, token, id }).unwrap();
@@ -311,6 +381,10 @@ const HoldingTaxEdit = () => {
             </Button>
           </Form.Item>
 
+ <Button type="dashed" onClick={handleAddModalOpen} className="mb-3">
+  নতুন বকেয়া যুক্ত করুন
+</Button>
+
           {/* Bokeya Table */}
           <div className="border rounded my-4">
             <h3>
@@ -383,6 +457,44 @@ const HoldingTaxEdit = () => {
           </Form.Item>
         </Form>
       </Modal>
+
+
+
+    <Modal
+      title="নতুন বকেয়া যুক্ত করুন"
+      open={isAddModalVisible}
+      onOk={handleAddModalOk}
+      onCancel={handleAddModalCancel}
+      okText="যোগ করুন"
+      cancelText="বাতিল করুন"
+      confirmLoading={adding}
+    >
+      <Form form={addForm} layout="vertical">
+        <Form.Item
+          label="সাল"
+          name="year"
+          rules={[{ required: true, message: "সাল অবশ্যই পূরণ করতে হবে" }]}
+        >
+          <Select style={{ height: 40 }}>
+            {generateYearOptions().map((year) => (
+              <Select.Option key={year} value={year}>
+                {year}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="টাকার পরিমাণ"
+          name="price"
+          rules={[{ required: true, message: "পরিমাণ অবশ্যই দিতে হবে" }]}
+        >
+          <InputNumber style={{ width: "100%", height: 40 }} />
+        </Form.Item>
+      </Form>
+    </Modal>
+
+
     </div>
   );
 };

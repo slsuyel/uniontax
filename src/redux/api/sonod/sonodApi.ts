@@ -115,6 +115,20 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["holding-create-update"],
     }),
+
+    addHoldingBokeya: builder.mutation({
+    query: ({ id, data, token }) => ({
+      url: `/user/holdingtax/${id}/bokeya`,
+      method: "POST",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  }),
+
+
+
     uddoktaSingleHolding: builder.query({
       query: ({ id, token }) => ({
         url: `/uddokta/holdingtax/${id}`,
@@ -221,6 +235,7 @@ export const {
   useSonodActionMutation,
   useAllHoldingQuery,
   useSingleHoldingQuery,
+  useAddHoldingBokeyaMutation,
   useAddHoldingMutation,
   useSonodFeesQuery,
   useUpdateSonodFeesMutation,
