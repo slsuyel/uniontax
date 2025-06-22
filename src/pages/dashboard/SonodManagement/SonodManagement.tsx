@@ -21,7 +21,6 @@ const SonodManagement = () => {
   const token = localStorage.getItem("token");
   const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
 
-
   const { data, isLoading, isFetching, refetch } = useAllSonodQuery({
     sonodName: sonodName,
     stutus: condition || "Pending",
@@ -61,7 +60,7 @@ const SonodManagement = () => {
   };
   const allSonod: TApplicantData[] = data?.data.sonods.data || [];
 
-  // console.log(allSonod);
+  console.log(allSonod);
 
   return (
     <div className="card p-3 border-0">
@@ -129,6 +128,7 @@ const SonodManagement = () => {
                     <p>
                       <strong>আবেদনের তারিখ:</strong> {item.created_at}
                     </p>
+
                     {condition === "approved" && (
                       <td>
                         <Link
@@ -149,16 +149,29 @@ const SonodManagement = () => {
                         )}
                       </td>
                     )}
+                    {item.stutus === "sec_approved" && (
+                      <td>
+                        <Link
+                          target="_blank"
+                          to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?token=${token}`}
+                          className="btn btn-success btn-sm me-1"
+                        >
+                          খসড়া সনদ
+                        </Link>
+                      </td>
+                    )}
+
                     <SonodActionBtn
                       condition={condition}
                       item={item}
                       sonodName={sonodName}
                     />
                     <p
-                      className={`mt-2 fs-6 text-white text-center py-2 ${item.payment_status === "Paid"
-                        ? "bg-success"
-                        : "bg-danger"
-                        }`}
+                      className={`mt-2 fs-6 text-white text-center py-2 ${
+                        item.payment_status === "Paid"
+                          ? "bg-success"
+                          : "bg-danger"
+                      }`}
                     >
                       <strong>ফি:</strong> {item.payment_status}
                     </p>
@@ -191,10 +204,11 @@ const SonodManagement = () => {
                       <td>{new Date(item.created_at).toLocaleString()}</td>
                       <td>
                         <span
-                          className={`d-block font-monospace fs-6 p-1 rounded text-white ${item.payment_status === "Paid"
-                            ? "bg-success"
-                            : "bg-danger"
-                            }`}
+                          className={`d-block font-monospace fs-6 p-1 rounded text-white ${
+                            item.payment_status === "Paid"
+                              ? "bg-success"
+                              : "bg-danger"
+                          }`}
                         >
                           {" "}
                           {item.payment_status}
@@ -231,6 +245,18 @@ const SonodManagement = () => {
                           )}
                         </td>
                       )}
+                      {item.stutus == "sec_approved" && (
+                        <td className=" d-flex flex-wrap gap-2 align-items-center justify-content-center">
+                          <Link
+                            target="_blank"
+                            to={`${VITE_BASE_DOC_URL}/sonod/download/${item.id}?token=${token}`}
+                            className="btn btn-success btn-sm me-1"
+                          >
+                            খসড়া সনদ
+                          </Link>
+                        </td>
+                      )}
+
                       <td>
                         <SonodActionBtn
                           condition={condition}
