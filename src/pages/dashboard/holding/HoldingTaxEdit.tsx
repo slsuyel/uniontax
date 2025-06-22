@@ -381,7 +381,20 @@ const HoldingTaxEdit = () => {
             </Button>
           </Form.Item>
 
- <Button type="dashed" onClick={handleAddModalOpen} className="mb-3">
+<Button
+  type="dashed"
+  onClick={handleAddModalOpen}
+  className="mb-3"
+  style={{
+    borderColor: "#1890ff",
+    color: "#fff",
+    background: "#1890ff",
+    fontWeight: "bold",
+    borderRadius: 6,
+    padding: "8px 20px",
+  }}
+  icon={<EditOutlined style={{ color: "#fff" }} />}
+>
   নতুন বকেয়া যুক্ত করুন
 </Button>
 
