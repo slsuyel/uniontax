@@ -4,6 +4,7 @@ import { useDropTenderMutation } from "@/redux/api/tender/tenderApi";
 import React from "react";
 import { TTenderResponse } from "./ScheduleTender";
 import { message } from "antd";
+import CountdownTimerMin from "./CountdownTimerMin";
 
 const convertToBanglaDate = (isoDate: string) => {
     const months = [
@@ -43,10 +44,14 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
         }
     };
 
+    console.log(data.tender_end_time);/* 2025-06-30T17:06 */
 
     return (
         <div className="container">
             <div className=" text-center mt-3">  <img src="/images/tender-banner.png" alt="" width={350} /></div>
+
+            <CountdownTimerMin endTime={data.tender_end_time} />
+
 
             <div className="col-md-12 mt-3 my-3 card rounded p-2">
                 <p>বিজ্ঞপ্তির তারিখ: {data?.tender_list?.noticeDate && convertToBanglaDate(data.tender_list.noticeDate)}</p>
@@ -58,13 +63,14 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
             <form
                 onSubmit={handleSubmit}
             >
-                <div className="row  card">
+                <div className="row  card mb-4">
                     <div className="col-md-12 mt-3 d-none">
                         <div className="form-group">
                             <label className="mb-1" htmlFor="dorId">
                                 দাখিলকৃত দরপত্র নম্বর
                             </label>
                             <input
+                                required
                                 type="hidden"
                                 className="form-control"
                                 id="dorId"
@@ -77,6 +83,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                 tender_id
                             </label>
                             <input
+                                required
                                 type="hidden"
                                 className="form-control"
                                 id="tender_id"
@@ -93,6 +100,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                 দরপত্র দাখিলকারীর নাম
                             </label>
                             <input
+                                required
                                 type="text"
                                 className="form-control"
                                 id="applicant_orgName"
@@ -107,6 +115,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                 পিতার নাম
                             </label>
                             <input
+                                required
                                 type="text"
                                 className="form-control"
                                 id="applicant_org_fatherName"
@@ -121,6 +130,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                     জাতীয় পরিচয়পত্র নম্বর
                                 </label>
                                 <input
+                                    required
                                     type="text"
                                     className="form-control"
                                     id="nidNo"
@@ -136,6 +146,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                     জন্ম তারিখ
                                 </label>
                                 <input
+                                    required
                                     type="date"
                                     className="form-control"
                                     id="nidDate"
@@ -160,6 +171,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                         গ্রাম
                                     </label>
                                     <input
+                                        required
                                         type="text"
                                         className="form-control"
                                         id="addvilless"
@@ -173,6 +185,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                         ডাকঘর
                                     </label>
                                     <input
+                                        required
                                         type="text"
                                         className="form-control"
                                         id="postoffice"
@@ -186,6 +199,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                         উপজেলা
                                     </label>
                                     <input
+                                        required
                                         type="text"
                                         className="form-control"
                                         id="thana"
@@ -199,6 +213,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                         জেলা
                                     </label>
                                     <input
+                                        required
                                         type="text"
                                         className="form-control"
                                         id="distric"
@@ -214,6 +229,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                 মোবাইল নম্বর
                             </label>
                             <input
+                                required
                                 type="tel"
                                 className="form-control"
                                 id="mobile"
@@ -226,11 +242,12 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                     <div className="col-md-12 mt-3">
                         <div className="form-group">
                             <label className="mb-1" htmlFor="DorAmount">
-                                দাখিলকৃত দরের পরিমাণ (সর্ব নিম্ন দরপত্র দাখিল 1001 টাকা)
+                                দাখিলকৃত দরের পরিমাণ (সর্ব নিম্ন দরপত্র দাখিল {Number(data.tender_list.govt_price) + 1} টাকা)
                             </label>
                             <input
+                                required
                                 type="number"
-                                min={1001}
+                                min={Number(data.tender_list.govt_price) + 1}
                                 className="form-control"
                                 id="DorAmount"
                                 name="DorAmount"
@@ -243,6 +260,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                 কথায়
                             </label>
                             <input
+                                required
                                 type="text"
                                 className="form-control"
                                 id="DorAmountText"
@@ -256,6 +274,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                 ৫০% জামানত হিসেবে ব্যাংক ড্রাফট/পে অর্ডারের পরিমাণ (টাকা)
                             </label>
                             <input
+                                required
                                 type="text"
                                 className="form-control"
                                 id="depositAmount"
@@ -269,6 +288,7 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                                 ব্যাংক ড্রাফট/পে-অর্ডারের ছবি আপলোড করুন
                             </label>
                             <input
+                                required
                                 type="file"
                                 className="form-control"
                                 id="bank_draft_image"
@@ -281,6 +301,8 @@ const TenderSubmitForm = ({ data }: { data: TTenderResponse }) => {
                     দরপত্র দাখিল করুন
                 </button>
             </form>
+            <br />
+            <br />
         </div>
     );
 };

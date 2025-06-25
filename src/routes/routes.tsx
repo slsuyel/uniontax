@@ -27,6 +27,7 @@ import UddoktaAuthProvider from "@/Providers/UddoktaAuthProvider";
 import SonodSearchById from "@/pages/SonodSearch/SonodSearchById";
 import SonodDetails from "@/pages/About/SonodDetails";
 import ScheduleTender from "@/pages/Tenders/ScheduleTender";
+import SingleTender from "@/pages/Tenders/SingleTender";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/tenders",
         element: <Tenders />,
+      },
+      {
+        path: "/tender/:id",
+        element: <SingleTender />,
       },
       {
         path: "/schedule-tenders/:id",

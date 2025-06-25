@@ -5,7 +5,7 @@ import apiSlice from '../apiSlice';
 const tenderApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         // GET: tender?union_name=test&status=pending
-        getTenders: builder.query<any, any>({
+        getTenders: builder.query({
             query: ({ status, token }) => ({
                 url: `tender?status=${status}`,
                 headers: {
@@ -16,11 +16,8 @@ const tenderApi = apiSlice.injectEndpoints({
 
         // GET: get/single/tender/1
         getSingleTender: builder.query<any, any>({
-            query: ({ id, token }) => ({
-                url: `get/single/tender/${id}`,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+            query: (id) => ({
+                url: `/tender/${id}`,
             }),
         }),
         getTenderTime: builder.query<any, any>({
@@ -57,7 +54,16 @@ const tenderApi = apiSlice.injectEndpoints({
                 url: `/drop/tender`,
                 method: 'POST',
                 body: data,
-
+            }),
+        }),
+        committeeValidation: builder.mutation<any, any>({
+            query: ({ token, data }) => ({
+                url: `/tender/committee/validation`,
+                method: 'POST',
+                body: data,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             }),
         }),
     }),
@@ -69,5 +75,6 @@ export const {
     useCreateTenderMutation,
     useUpdateCommitteeMutation,
     useGetTenderTimeQuery,
-    useDropTenderMutation
+    useDropTenderMutation,
+    useCommitteeValidationMutation
 } = tenderApi;

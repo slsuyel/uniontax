@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, Button, Form, Input, message, } from "antd";
+import { Form, message, } from "antd";
 
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import { useGetTendersQuery, useUpdateCommitteeMutation } from "@/redux/api/tender/tenderApi"
 import { useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
+import CreateCommitteeModal from "./CreateCommitteeModal";
+import CommitteeDetailsModal from "./CommitteeDetailsModal";
+import ValidateCommitteeModal from "./ValidateCommitteeModal";
 
 
 export interface TTender {
@@ -58,6 +61,8 @@ const TenderList = () => {
     const token = localStorage.getItem("token") || ""
     const [committeeModalVisible, setCommitteeModalVisible] = useState(false);
     const [committeeDetailsModalVisible, setCommitteeDetailsModalVisible] = useState(false);
+    const [validateModalVisible, setValidateModalVisible] = useState(false);
+
     const [updateCommittee, { isLoading: updating }] = useUpdateCommitteeMutation()
     const [selectedTender, setSelectedTender] = useState<TTender | null>(null);
     const [form] = Form.useForm();
@@ -88,6 +93,18 @@ const TenderList = () => {
         setCommitteeDetailsModalVisible(false);
         setSelectedTender(null);
     };
+
+    const openValidateCommitteeModal = (tender: TTender) => {
+        setSelectedTender(tender);
+        setValidateModalVisible(true);
+    };
+
+    const closeValidateCommitteeModal = () => {
+        setValidateModalVisible(false);
+        setSelectedTender(null);
+    };
+
+
 
     const onFinish = async (values: any) => {
         if (!selectedTender) return;
@@ -219,6 +236,9 @@ const TenderList = () => {
                                                             <i className="fas fa-eye me-1"></i> সিডিউল ফর্ম
                                                         </button>
                                                     </Link>
+
+
+
                                                     {tender.is_committee_created ? (
                                                         <button
                                                             onClick={() => openCommitteeDetailsModal(tender)}
@@ -237,6 +257,18 @@ const TenderList = () => {
                                                             <i className="fas fa-edit me-1"></i> মূল্যায়ন কমিটি তৈরী করুন
                                                         </button>
                                                     )}
+
+                                                    {status == 'proccesing' &&
+                                                        <button
+                                                            onClick={() => openValidateCommitteeModal(tender)}
+                                                            type="button"
+                                                            className="btn btn-sm btn-outline-info"
+                                                            title="মূল্যায়ন করার জন্য ক্লিক দিন"
+                                                        >
+                                                            <i className="fas fa-edit me-1"></i> মূল্যায়ন করার জন্য ক্লিক দিন
+                                                        </button>}
+
+
                                                     <button type="button" className="btn btn-sm btn-outline-danger" title="মুছুন">
                                                         <i className="fas fa-trash me-1"></i> মুছুন
                                                     </button>
@@ -263,119 +295,32 @@ const TenderList = () => {
             </div>
 
             {/* Modal for VIEWING Committee Details */}
-            <Modal
-                title="মূল্যায়ন কমিটির বিবরণ"
+            <CommitteeDetailsModal
                 open={committeeDetailsModalVisible}
-                onCancel={closeCommitteeDetailsModal}
-                footer={[
-                    <Button key="close" onClick={closeCommitteeDetailsModal}>
-                        বন্ধ করুন
-                    </Button>,
-                ]}
-                width={'60%'}
-                destroyOnClose
-            >
-                {selectedTender && (
-                    <div className="table-responsive">
-                        <table className="table table-bordered table-striped">
-                            <thead className="table-light">
-                                <tr>
-                                    <th className="text-center">কমিটি নং</th>
-                                    <th>নাম</th>
-                                    <th>পদবি</th>
-                                    <th>মোবাইল</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="text-center fw-bold">১</td>
-                                    <td>{selectedTender.committe1name || 'N/A'}</td>
-                                    <td>{selectedTender.committe1position || 'N/A'}</td>
-                                    <td>{selectedTender.commette1phone || 'N/A'}</td>
-                                </tr>
-                                <tr>
-                                    <td className="text-center fw-bold">২</td>
-                                    <td>{selectedTender.committe2name || 'N/A'}</td>
-                                    <td>{selectedTender.committe2position || 'N/A'}</td>
-                                    <td>{selectedTender.commette2phone || 'N/A'}</td>
-                                </tr>
-                                <tr>
-                                    <td className="text-center fw-bold">৩</td>
-                                    <td>{selectedTender.committe3name || 'N/A'}</td>
-                                    <td>{selectedTender.committe3position || 'N/A'}</td>
-                                    <td>{selectedTender.commette3phone || 'N/A'}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-            </Modal>
+                onClose={closeCommitteeDetailsModal}
+                selectedTender={selectedTender}
+            />
+
 
             {/* Modal for CREATING Committee */}
-            <Modal
-                title="মূল্যায়ন কমিটি তৈরি করুন"
+            <CreateCommitteeModal
                 open={committeeModalVisible}
-                onCancel={closeCommitteeModal}
-                footer={null}
-                width={'60%'}
-                destroyOnClose
-            >
-                <Form initialValues={{
-                    committe1name: 'ssss',
-                    committe1position: 'sdfgsdfg',
-                    commette1phone: '01909756552',
-                    committe2name: 'sdfg',
-                    committe2position: 'sdfg',
-                    commette2phone: '01796949749',
-                    committe3name: 'dsgf',
-                    committe3position: 'sdfg',
-                    commette3phone: '01722597565',
+                onClose={closeCommitteeModal}
+                onFinish={onFinish}
+                loading={updating}
+                selectedTender={selectedTender}
+                form={form}
+            />
 
-                }} form={form} layout="vertical" onFinish={onFinish} className="row mx-auto">
-                    {/* Committee member fields remain unchanged */}
-                    <fieldset className="border p-3 mb-4 col-12 m-3 row mx-auto rounded ">
-                        <legend className="fw-bold col-12 px-2">১নং মূল্যায়ন কমিটি </legend>
-                        <Form.Item className=" col-4" label=" নাম" name="committe1name" rules={[{ required: true, message: "ের নাম দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item className=" col-4" label=" পদবি" name="committe1position" rules={[{ required: true, message: "পদবি দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item className=" col-4" label=" মোবাইল" name="commette1phone" rules={[{ required: true, message: "মোবাইল নম্বর দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                    </fieldset>
-                    <fieldset className="border p-3 mb-4 col-12 m-3 row mx-auto rounded">
-                        <legend className="fw-bold col-12 px-2">২নং মূল্যায়ন কমিটি </legend>
-                        <Form.Item className=" col-4" label=" নাম" name="committe2name" rules={[{ required: true, message: "ের নাম দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item className=" col-4" label=" পদবি" name="committe2position" rules={[{ required: true, message: "পদবি দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item className=" col-4" label=" মোবাইল" name="commette2phone" rules={[{ required: true, message: "মোবাইল নম্বর দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                    </fieldset>
-                    <fieldset className="border p-3 mb-4 col-12 m-3 row mx-auto rounded">
-                        <legend className="fw-bold col-12 px-2">৩নং মূল্যায়ন কমিটি </legend>
-                        <Form.Item className=" col-4" label=" নাম" name="committe3name" rules={[{ required: true, message: "ের নাম দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item className=" col-4" label=" পদবি" name="committe3position" rules={[{ required: true, message: "পদবি দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                        <Form.Item className=" col-4" label=" মোবাইল" name="commette3phone" rules={[{ required: true, message: "মোবাইল নম্বর দিন" }]}>
-                            <Input />
-                        </Form.Item>
-                    </fieldset>
-                    <Form.Item className="col-md-6">
-                        <Button loading={updating} disabled={updating} type="primary" htmlType="submit" block>
-                            Save Committee
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Modal>
+            <ValidateCommitteeModal
+                open={validateModalVisible}
+                onClose={closeValidateCommitteeModal}
+                selectedTender={selectedTender}
+                loading={false}
+            />
+
+
+
         </div>
     )
 }
