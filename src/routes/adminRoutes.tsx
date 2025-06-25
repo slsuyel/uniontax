@@ -14,6 +14,7 @@ import SonodFee from "@/pages/dashboard/SonodFee";
 import EditSonod from "@/pages/dashboard/SonodManagement/EditSonod";
 import EnglishEditSonod from "@/pages/dashboard/SonodManagement/EnglishEditSonod";
 import SonodManagement from "@/pages/dashboard/SonodManagement/SonodManagement";
+import TenderList from "@/pages/dashboard/Tender/TenderList";
 // import UnionProfile from "@/pages/dashboard/UnionProfile";
 import UnionReports from "@/pages/dashboard/UnionReports";
 import HoldingTaxBokeyaList from "@/pages/Holding/HoldingTaxBokeyaList";
@@ -82,6 +83,10 @@ export const adminRoutes = [
   {
     path: "sonod/:sonodName/action/edit-english/:id",
     element: <EnglishEditSonod />,
+  },
+  {
+    path: "tender",
+    element: <TenderList />,
   },
   {
     path: "settings",
