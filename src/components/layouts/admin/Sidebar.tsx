@@ -51,7 +51,33 @@ const Sidebar = ({ user }: { user: any }) => {
     { key: "tax", title: "হোল্ডিং ট্যাক্স", slug: "/holding/tax/" },
     { key: "tax-bokeya", title: "হোল্ডিং ট্যাক্স বকেয়া", slug: "/holding/tax/bokeya/list" },
     { key: "fee", title: "সনদ ফি", slug: "/sonod/fee" },
-    { key: "tender", title: "ইজারা ", slug: "/tender" },
+    {
+      key: "tender",
+      title: "ইজারা",
+      slug: "/tender",
+      submenu: [
+        {
+          key: "tender-new",
+          title: "নতুন ইজারা",
+          slug: "/tender/pending",
+        },
+        {
+          key: "tender-running",
+          title: "চলমান ইজারা",
+          slug: "/tender/active",
+        },
+        {
+          key: "tender-selection",
+          title: "নির্বাচন প্রক্রিয়াধীন",
+          slug: "/tender/proccesing",
+        },
+        {
+          key: "tender-completed",
+          title: "কমপ্লিট ইজারা",
+          slug: "/tender/Completed",
+        },
+      ],
+    },
     { key: "failed", title: "পেমেন্ট ফেইল্ড ", slug: "/payment-failed" },
     ...sonodInfo.map((sonod) => ({
       key: sonod.id.toString(),

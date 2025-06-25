@@ -12,6 +12,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.3.0",
+    "@tinymce/tinymce-react": "^6.2.1",
     "@tsparticles/engine": "^3.0.0",
     "@tsparticles/react": "^3.0.0",
     "antd": "^5.18.0",

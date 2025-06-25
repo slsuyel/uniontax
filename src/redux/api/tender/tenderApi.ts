@@ -23,11 +23,16 @@ const tenderApi = apiSlice.injectEndpoints({
                 },
             }),
         }),
+        getTenderTime: builder.query<any, any>({
+            query: (id) => ({
+                url: `tenders/${id}`,
+            }),
+        }),
 
         // POST: tender
         createTender: builder.mutation<any, any>({
             query: ({ data, token }) => ({
-                url: 'tender',
+                url: '/tender',
                 method: 'POST',
                 body: data,
                 headers: {
@@ -40,11 +45,19 @@ const tenderApi = apiSlice.injectEndpoints({
         updateCommittee: builder.mutation<any, any>({
             query: ({ id, data, token }) => ({
                 url: `committe/update/${id}`,
-                method: 'PUT',
+                method: 'POST',
                 body: data,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
+            }),
+        }),
+        dropTender: builder.mutation<any, any>({
+            query: ({ data, }) => ({
+                url: `/drop/tender`,
+                method: 'POST',
+                body: data,
+
             }),
         }),
     }),
@@ -55,4 +68,6 @@ export const {
     useGetSingleTenderQuery,
     useCreateTenderMutation,
     useUpdateCommitteeMutation,
+    useGetTenderTimeQuery,
+    useDropTenderMutation
 } = tenderApi;
