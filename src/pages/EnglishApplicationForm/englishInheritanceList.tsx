@@ -72,9 +72,15 @@ const englishInheritanceList = (sonodName: string) => {
                             <Select.Option value="Husband">
                               Husband
                             </Select.Option>
+                            
                             <Select.Option value="Brother">
                               Brother
                             </Select.Option>
+
+                            <Select.Option value="Sister-in-law">
+                              Sister-in-law
+                            </Select.Option>
+
                             <Select.Option value="Sister">Sister</Select.Option>
                             <Select.Option value="Grandson">
                               Grandson

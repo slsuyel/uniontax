@@ -164,6 +164,7 @@ const commonFields = ({ form }: { form: any; setFormData: (data: any) => void })
                 <Select.Option value="কন্যা">কন্যা</Select.Option>
                 <Select.Option value="স্বামী">স্বামী</Select.Option>
                 <Select.Option value="ভাই">ভাই</Select.Option>
+                <Select.Option value="ভাবি">ভাবি</Select.Option>
                 <Select.Option value="বোন">বোন</Select.Option>
                 <Select.Option value="নাতি">নাতি</Select.Option>
                 <Select.Option value="নাতনি">নাতনি</Select.Option>
