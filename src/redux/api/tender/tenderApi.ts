@@ -66,6 +66,29 @@ const tenderApi = apiSlice.injectEndpoints({
                 },
             }),
         }),
+
+
+        selectTender: builder.mutation({
+            query: (tenderId) => ({
+                url: `tender/selection/${tenderId}`,
+                method: 'POST',
+            }),
+        }),
+
+
+
+        GetAllApplications: builder.query({
+            query: ({ tender_id, status }) => {
+                const queryParam = status ? `?status=${status}` : '';
+                return `/get/all/aplications/${tender_id}${queryParam}`;
+            },
+        }),
+
+
+
+
+
+
     }),
 });
 
@@ -76,5 +99,7 @@ export const {
     useUpdateCommitteeMutation,
     useGetTenderTimeQuery,
     useDropTenderMutation,
-    useCommitteeValidationMutation
+    useCommitteeValidationMutation,
+    useSelectTenderMutation,
+    useLazyGetAllApplicationsQuery
 } = tenderApi;

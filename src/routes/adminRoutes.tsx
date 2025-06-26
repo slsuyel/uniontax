@@ -16,6 +16,7 @@ import EnglishEditSonod from "@/pages/dashboard/SonodManagement/EnglishEditSonod
 import SonodManagement from "@/pages/dashboard/SonodManagement/SonodManagement";
 import CreateTender from "@/pages/dashboard/Tender/CreateTender";
 import TenderList from "@/pages/dashboard/Tender/TenderList";
+import TenderDropList from "@/pages/dashboard/Tender/TenderDropList";
 // import UnionProfile from "@/pages/dashboard/UnionProfile";
 import UnionReports from "@/pages/dashboard/UnionReports";
 import HoldingTaxBokeyaList from "@/pages/Holding/HoldingTaxBokeyaList";
@@ -89,6 +90,12 @@ export const adminRoutes = [
     path: "tender/:status",
     element: <TenderList />,
   },
+
+  {
+    path: "tender/drop/list/:id",
+    element: <TenderDropList />,
+  },
+
   {
     path: "create-tender",
     element: <CreateTender />,

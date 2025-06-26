@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // components/tender/ValidateCommitteeModal.tsx
+import { useNavigate } from "react-router-dom"; 
 import { Modal, Form, Input, Button, message } from "antd";
 import { TTender } from "./TenderList";
 import { useCommitteeValidationMutation } from "@/redux/api/tender/tenderApi";
@@ -18,7 +19,7 @@ const ValidateCommitteeModal = ({
     selectedTender,
 }: Props) => {
     const [form] = Form.useForm();
-
+const navigate = useNavigate();
     const token = localStorage.getItem(`token`)
     const [committeeValidation, { isLoading }] = useCommitteeValidationMutation()
 
@@ -31,13 +32,21 @@ const ValidateCommitteeModal = ({
         try {
             const res = await committeeValidation({ data, token }).unwrap();
             if (res?.data?.status === "partial" || res?.data?.status === "success") {
+
+
                 message.success("কমিটি যাচাই সম্পন্ন হয়েছে");
+                       // ✅ Navigate to TenderDropList page
+                navigate(`/dashboard/tender/drop/list/${selectedTender?.id}`);
+
             } else {
                 message.error("কমিটি যাচাই ব্যর্থ হয়েছে");
             }
 
             onClose();
             form.resetFields();
+
+
+
         } catch (error) {
             message.error("সার্ভার ত্রুটি হয়েছে। দয়া করে আবার চেষ্টা করুন।");
         }

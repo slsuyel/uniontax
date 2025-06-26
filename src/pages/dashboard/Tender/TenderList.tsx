@@ -67,6 +67,7 @@ const TenderList = () => {
     const [selectedTender, setSelectedTender] = useState<TTender | null>(null);
     const [form] = Form.useForm();
 
+  const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
 
     const { data: tenders, isLoading, isFetching, error, refetch } = useGetTendersQuery({ status, token })
 
@@ -114,9 +115,10 @@ const TenderList = () => {
                 data: values,
                 token,
             }).unwrap();
-            if (res?.status === "success") {
+            console.log("Update response:", res.data.status);
+            if (res?.data?.status === "success") {
                 refetch()
-                message.success(res.message || "কমিটি সফলভাবে আপডেট হয়েছে");
+                message.success(res.data.message || "কমিটি সফলভাবে আপডেট হয়েছে");
             } else {
                 message.error("কিছু ভুল হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন।");
             }
@@ -267,6 +269,28 @@ const TenderList = () => {
                                                         >
                                                             <i className="fas fa-edit me-1"></i> মূল্যায়ন করার জন্য ক্লিক দিন
                                                         </button>}
+
+
+
+                                                    {status == 'Completed' &&
+                                                        <>
+                                                            <Link to={`/dashboard/tender/drop/list/${tender.id}`}>
+                                                                <button type="button" className="btn btn-sm btn-outline-success" title="দরপত্রের তালিকা দেখুন">
+                                                                    <i className="fas fa-list me-1"></i> নির্বাচিত তালিকা দেখুন
+                                                                </button>
+                                                            </Link>
+                                                            <a href={`${VITE_BASE_DOC_URL}/api/pdf/tenders/work/access/${tender.tender_id}`} target="_blank">
+                                                                <button type="button" className="btn btn-sm btn-outline-primary" title="নতুন দরপত্র যুক্ত করুন">
+                                                                    <i className="fas fa-plus me-1"></i> কার্যাদেশ 
+                                                                </button>
+                                                            </a>
+                                                        </>      
+                                                        
+                                                        }
+
+
+
+
 
 
                                                     <button type="button" className="btn btn-sm btn-outline-danger" title="মুছুন">
