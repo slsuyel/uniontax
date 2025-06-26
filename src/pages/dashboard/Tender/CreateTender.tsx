@@ -1,299 +1,3 @@
-// import React, { useState } from "react";
-// import { useCreateTenderMutation } from "@/redux/api/tender/tenderApi";
-
-// const CreateTender = () => {
-//     const [createTender, { isLoading, error, isSuccess }] = useCreateTenderMutation();
-//     const token = localStorage.getItem(`token`)
-//     const [formData, setFormData] = useState({
-//         tender_type: "",
-//         memorial_no: "",
-//         tender_name: "",
-//         description: "",
-//         tender_word_no: "",
-//         govt_price: "",
-//         form_price: "",
-//         noticeDate: "",
-//         form_buy_last_date: "",
-//         tender_start: "",
-//         tender_end: "",
-//         tender_open: "",
-//         tender_roles: "",
-
-//     });
-
-
-//     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//         setFormData((prev) => ({
-//             ...prev,
-//             [e.target.name]: e.target.value,
-//         }));
-//     };
-
-//     const handleSubmit = async (e: React.FormEvent) => {
-//         e.preventDefault();
-
-//         try {
-//             await createTender({ data: formData, token }).unwrap();
-//             /* status_code ==201 */
-//             alert("Tender created successfully");
-//             setFormData({
-//                 tender_type: "",
-//                 memorial_no: "",
-//                 tender_name: "",
-//                 description: "",
-//                 tender_word_no: "",
-//                 govt_price: "",
-//                 form_price: "",
-//                 noticeDate: "",
-//                 form_buy_last_date: "",
-//                 tender_start: "",
-//                 tender_end: "",
-//                 tender_open: "",
-//                 tender_roles: "",
-//             });
-//         } catch (err) {
-//             alert("Failed to create tender");
-//             console.error(err);
-//         }
-//     };
-
-//     return (
-//         <div className="container mt-4">
-//             <h2>Create Tender</h2>
-//             <form onSubmit={handleSubmit}>
-//                 {/* tender_type */}
-//                 <div className="mb-3">
-//                     <label htmlFor="tender_type" className="form-label">
-//                         Tender Type
-//                     </label>
-//                     <input
-//                         type="text"
-//                         className="form-control"
-//                         id="tender_type"
-//                         name="tender_type"
-//                         value={formData.tender_type}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* memorial_no */}
-//                 <div className="mb-3">
-//                     <label htmlFor="memorial_no" className="form-label">
-//                         Memorial No
-//                     </label>
-//                     <input
-//                         type="text"
-//                         className="form-control"
-//                         id="memorial_no"
-//                         name="memorial_no"
-//                         value={formData.memorial_no}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* tender_name */}
-//                 <div className="mb-3">
-//                     <label htmlFor="tender_name" className="form-label">
-//                         Tender Name
-//                     </label>
-//                     <input
-//                         type="text"
-//                         className="form-control"
-//                         id="tender_name"
-//                         name="tender_name"
-//                         value={formData.tender_name}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* description */}
-//                 <div className="mb-3">
-//                     <label htmlFor="description" className="form-label">
-//                         Description
-//                     </label>
-//                     <textarea
-//                         className="form-control"
-//                         id="description"
-//                         name="description"
-//                         value={formData.description}
-//                         onChange={handleChange}
-//                         rows={3}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* tender_word_no */}
-//                 <div className="mb-3">
-//                     <label htmlFor="tender_word_no" className="form-label">
-//                         Tender Word No
-//                     </label>
-//                     <input
-//                         type="text"
-//                         className="form-control"
-//                         id="tender_word_no"
-//                         name="tender_word_no"
-//                         value={formData.tender_word_no}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* govt_price */}
-//                 <div className="mb-3">
-//                     <label htmlFor="govt_price" className="form-label">
-//                         Govt Price
-//                     </label>
-//                     <input
-//                         type="number"
-//                         className="form-control"
-//                         id="govt_price"
-//                         name="govt_price"
-//                         value={formData.govt_price}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* form_price */}
-//                 <div className="mb-3">
-//                     <label htmlFor="form_price" className="form-label">
-//                         Form Price
-//                     </label>
-//                     <input
-//                         type="number"
-//                         className="form-control"
-//                         id="form_price"
-//                         name="form_price"
-//                         value={formData.form_price}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* noticeDate */}
-//                 <div className="mb-3">
-//                     <label htmlFor="noticeDate" className="form-label">
-//                         Notice Date & Time
-//                     </label>
-//                     <input
-//                         type="datetime-local"
-//                         className="form-control"
-//                         id="noticeDate"
-//                         name="noticeDate"
-//                         value={formData.noticeDate}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* form_buy_last_date */}
-//                 <div className="mb-3">
-//                     <label htmlFor="form_buy_last_date" className="form-label">
-//                         Form Buy Last Date & Time
-//                     </label>
-//                     <input
-//                         type="datetime-local"
-//                         className="form-control"
-//                         id="form_buy_last_date"
-//                         name="form_buy_last_date"
-//                         value={formData.form_buy_last_date}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* tender_start */}
-//                 <div className="mb-3">
-//                     <label htmlFor="tender_start" className="form-label">
-//                         Tender Start Date & Time
-//                     </label>
-//                     <input
-//                         type="datetime-local"
-//                         className="form-control"
-//                         id="tender_start"
-//                         name="tender_start"
-//                         value={formData.tender_start}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* tender_end */}
-//                 <div className="mb-3">
-//                     <label htmlFor="tender_end" className="form-label">
-//                         Tender End Date & Time
-//                     </label>
-//                     <input
-//                         type="datetime-local"
-//                         className="form-control"
-//                         id="tender_end"
-//                         name="tender_end"
-//                         value={formData.tender_end}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* tender_open */}
-//                 <div className="mb-3">
-//                     <label htmlFor="tender_open" className="form-label">
-//                         Tender Open Date & Time
-//                     </label>
-//                     <input
-//                         type="datetime-local"
-//                         className="form-control"
-//                         id="tender_open"
-//                         name="tender_open"
-//                         value={formData.tender_open}
-//                         onChange={handleChange}
-//                         required
-//                     />
-//                 </div>
-
-//                 {/* tender_roles */}
-//                 <div className="mb-3">
-//                     <label htmlFor="tender_roles" className="form-label">
-//                         Tender Roles (HTML allowed)
-//                     </label>
-//                     <textarea
-//                         className="form-control"
-//                         id="tender_roles"
-//                         name="tender_roles"
-//                         value={formData.tender_roles}
-//                         onChange={handleChange}
-//                         rows={4}
-//                         required
-//                     />
-//                 </div>
-
-
-
-
-//                 <button type="submit" className="btn btn-primary" disabled={isLoading}>
-//                     {isLoading ? "Saving..." : "Create Tender"}
-//                 </button>
-
-//                 {error && (
-//                     <div className="alert alert-danger mt-3">
-//                         Error creating tender. Please try again.
-//                     </div>
-//                 )}
-
-//                 {isSuccess && (
-//                     <div className="alert alert-success mt-3">
-//                         Tender created successfully!
-//                     </div>
-//                 )}
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default CreateTender;
-
 "use client"
 
 import type React from "react"
@@ -369,7 +73,7 @@ const CreateTender = () => {
                         <div className="card-header bg-primary text-white py-3">
                             <h2 className="card-title mb-0 text-center">
                                 <i className="fas fa-file-contract me-2"></i>
-                                Create New Tender
+                                নতুন ইজারা তৈরি করুন
                             </h2>
                         </div>
                         <div className="card-body p-4">
@@ -379,7 +83,7 @@ const CreateTender = () => {
                                     <div className="col-12">
                                         <h5 className="text-primary border-bottom pb-2 mb-4">
                                             <i className="fas fa-info-circle me-2"></i>
-                                            Basic Information
+                                            মৌলিক তথ্য
                                         </h5>
                                     </div>
 
@@ -387,7 +91,7 @@ const CreateTender = () => {
                                     <div className="col-md-6 mb-3">
                                         <label htmlFor="tender_type" className="form-label fw-semibold">
                                             <i className="fas fa-tag me-1"></i>
-                                            Tender Type <span className="text-danger">*</span>
+                                            ইজারার ধরণ <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="text"
@@ -405,7 +109,7 @@ const CreateTender = () => {
                                     <div className="col-md-6 mb-3">
                                         <label htmlFor="memorial_no" className="form-label fw-semibold">
                                             <i className="fas fa-hashtag me-1"></i>
-                                            Memorial No <span className="text-danger">*</span>
+                                            স্মারক নং <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="text"
@@ -423,7 +127,7 @@ const CreateTender = () => {
                                     <div className="col-12 mb-3">
                                         <label htmlFor="tender_name" className="form-label fw-semibold">
                                             <i className="fas fa-signature me-1"></i>
-                                            Tender Name <span className="text-danger">*</span>
+                                            ইজারার শিরোনাম <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="text"
@@ -441,7 +145,7 @@ const CreateTender = () => {
                                     <div className="col-12 mb-4">
                                         <label htmlFor="description" className="form-label fw-semibold">
                                             <i className="fas fa-align-left me-1"></i>
-                                            Description <span className="text-danger">*</span>
+                                            ইজারার বিবরণ <span className="text-danger">*</span>
                                         </label>
                                         <textarea
                                             className="form-control"
@@ -459,7 +163,7 @@ const CreateTender = () => {
                                     <div className="col-12">
                                         <h5 className="text-success border-bottom pb-2 mb-4">
                                             <i className="fas fa-dollar-sign me-2"></i>
-                                            Financial Information
+                                            আর্থিক তথ্য
                                         </h5>
                                     </div>
 
@@ -467,7 +171,7 @@ const CreateTender = () => {
                                     <div className="col-md-4 mb-3">
                                         <label htmlFor="tender_word_no" className="form-label fw-semibold">
                                             <i className="fas fa-file-alt me-1"></i>
-                                            Tender Word No <span className="text-danger">*</span>
+                                            ওয়ার্ড নং <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="text"
@@ -485,7 +189,7 @@ const CreateTender = () => {
                                     <div className="col-md-4 mb-3">
                                         <label htmlFor="govt_price" className="form-label fw-semibold">
                                             <i className="fas fa-coins me-1"></i>
-                                            Govt Price <span className="text-danger">*</span>
+                                            সরকারি মূল্য <span className="text-danger">*</span>
                                         </label>
                                         <div className="input-group">
                                             <span className="input-group-text">$</span>
@@ -508,7 +212,7 @@ const CreateTender = () => {
                                     <div className="col-md-4 mb-4">
                                         <label htmlFor="form_price" className="form-label fw-semibold">
                                             <i className="fas fa-receipt me-1"></i>
-                                            Form Price <span className="text-danger">*</span>
+                                            সিডিউল মূল্য <span className="text-danger">*</span>
                                         </label>
                                         <div className="input-group">
                                             <span className="input-group-text">$</span>
@@ -531,7 +235,7 @@ const CreateTender = () => {
                                     <div className="col-12">
                                         <h5 className="text-warning border-bottom pb-2 mb-4">
                                             <i className="fas fa-calendar-alt me-2"></i>
-                                            Timeline Information
+                                            সময়সীমা সংক্রান্ত তথ্য
                                         </h5>
                                     </div>
 
@@ -539,7 +243,7 @@ const CreateTender = () => {
                                     <div className="col-md-6 mb-3">
                                         <label htmlFor="noticeDate" className="form-label fw-semibold">
                                             <i className="fas fa-bell me-1"></i>
-                                            Notice Date & Time <span className="text-danger">*</span>
+                                            বিজ্ঞপ্তির তারিখ <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="datetime-local"
@@ -556,7 +260,7 @@ const CreateTender = () => {
                                     <div className="col-md-6 mb-3">
                                         <label htmlFor="form_buy_last_date" className="form-label fw-semibold">
                                             <i className="fas fa-shopping-cart me-1"></i>
-                                            Form Buy Last Date & Time <span className="text-danger">*</span>
+                                            অনলাইনে সিডিউল ক্রয়ের শেষ তারিখ <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="datetime-local"
@@ -573,7 +277,7 @@ const CreateTender = () => {
                                     <div className="col-md-6 mb-3">
                                         <label htmlFor="tender_start" className="form-label fw-semibold">
                                             <i className="fas fa-play me-1"></i>
-                                            Tender Start Date & Time <span className="text-danger">*</span>
+                                            দরপত্র গ্রহনের শুরুর তারিখ <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="datetime-local"
@@ -590,7 +294,7 @@ const CreateTender = () => {
                                     <div className="col-md-6 mb-3">
                                         <label htmlFor="tender_end" className="form-label fw-semibold">
                                             <i className="fas fa-stop me-1"></i>
-                                            Tender End Date & Time <span className="text-danger">*</span>
+                                            দরপত্র গ্রহনের শেষ তারিখ <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="datetime-local"
@@ -607,7 +311,7 @@ const CreateTender = () => {
                                     <div className="col-12 mb-4">
                                         <label htmlFor="tender_open" className="form-label fw-semibold">
                                             <i className="fas fa-unlock me-1"></i>
-                                            Tender Open Date & Time <span className="text-danger">*</span>
+                                            দরপত্র খোলার তারিখ <span className="text-danger">*</span>
                                         </label>
                                         <input
                                             type="datetime-local"
@@ -624,7 +328,7 @@ const CreateTender = () => {
                                     <div className="col-12">
                                         <h5 className="text-info border-bottom pb-2 mb-4">
                                             <i className="fas fa-gavel me-2"></i>
-                                            Tender Rules & Requirements
+                                            শর্তাবলি ও প্রয়োজনীয়তা
                                         </h5>
                                     </div>
 
@@ -632,7 +336,7 @@ const CreateTender = () => {
                                     <div className="col-12 mb-4">
                                         <label htmlFor="tender_roles" className="form-label fw-semibold">
                                             <i className="fas fa-list-ul me-1"></i>
-                                            Tender Rules <span className="text-danger">*</span>
+                                            শর্তাবলি <span className="text-danger">*</span>
                                         </label>
                                         <div className="border rounded">
                                             <Editor
