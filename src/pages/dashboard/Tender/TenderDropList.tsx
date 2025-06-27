@@ -20,8 +20,9 @@ const TenderDropList = () => {
  
     let SelectedStatus = '';
     if (data?.data?.status === "Completed") {
-         SelectedStatus = 'Selected';
+        //  SelectedStatus = 'Selected';
     }
+
       trigger({ tender_id: id, status: SelectedStatus })
         .unwrap()
         .then((res) => {
@@ -43,7 +44,7 @@ const TenderDropList = () => {
       if (res.status_code === 200) {
         message.success("নির্বাচন সফল হয়েছে");
 
-        const selected = await trigger({ tender_id: id, status: "Selected" }).unwrap();
+        const selected = await trigger({ tender_id: id }).unwrap();
         setDropList(selected.data || selected);
       } else {
         message.error(res.data?.message || "নির্বাচন ব্যর্থ হয়েছে");
@@ -72,37 +73,55 @@ const TenderDropList = () => {
             <th>কথায়</th>
             <th>জামানতের পরিমাণ</th>
             <th>Files</th>
+             <th>অবস্থা</th>
           </tr>
         </thead>
-        <tbody>
-          {dropList.length > 0 ? (
-            dropList.map((item:any, index) => (
-              <tr key={index}>
-                <td>{item.dorId}</td>
-                <td>{item.applicant_orgName}</td>
-                <td>{item.applicant_org_fatherName}</td>
-                <td>{`${item.vill}, ${item.postoffice}, ${item.thana}, ${item.distric}`}</td>
-                <td>{item.mobile}</td>
-                <td>{item.DorAmount}</td>
-                <td>{item.DorAmountText}</td>
-                <td>{item.depositAmount}</td>
-                <td>
-                  {item.bank_draft_image ? (
-                    <a href={item.bank_draft_image} target="_blank" rel="noreferrer">
-                      দেখুন
-                    </a>
-                  ) : (
-                    'N/A'
-                  )}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={9} className="text-center">তথ্য পাওয়া যায়নি</td>
-            </tr>
-          )}
-        </tbody>
+<tbody>
+  {dropList.length > 0 ? (
+    dropList.map((item: any, index) => {
+      const isSelected = item.status === "Selected";
+      const cellStyle = isSelected
+        ? { backgroundColor: "#198754", color: "white" } // Bootstrap success green
+        : { backgroundColor: "#6c757d", color: "white" }; // Bootstrap secondary gray
+
+      return (
+        <tr key={index}>
+          <td style={cellStyle}>{item.dorId}</td>
+          <td style={cellStyle}>{item.applicant_orgName}</td>
+          <td style={cellStyle}>{item.applicant_org_fatherName}</td>
+          <td style={cellStyle}>{`${item.vill}, ${item.postoffice}, ${item.thana}, ${item.distric}`}</td>
+          <td style={cellStyle}>{item.mobile}</td>
+          <td style={cellStyle}>{item.DorAmount}</td>
+          <td style={cellStyle}>{item.DorAmountText}</td>
+          <td style={cellStyle}>{item.depositAmount}</td>
+          <td style={cellStyle}>
+            {item.bank_draft_image ? (
+              <a
+                href={item.bank_draft_image}
+                target="_blank"
+                rel="noreferrer"
+                style={isSelected ? { color: "white", textDecoration: "underline" } : { color: "white", textDecoration: "underline" }}
+              >
+                দেখুন
+              </a>
+            ) : (
+              'N/A'
+            )}
+          </td>
+          <td style={cellStyle}>
+            {isSelected ? <strong>নির্বাচিত</strong> : <strong>নির্বাচিত হতে পারে নি</strong>}
+          </td>
+        </tr>
+      );
+    })
+  ) : (
+    <tr>
+      <td colSpan={10} className="text-center">তথ্য পাওয়া যায়নি</td>
+    </tr>
+  )}
+</tbody>
+
+
       </table>
 
       {/* ✅ নির্বাচন বাটন শুধু তখনই দেখাও যখন status !== Completed */}

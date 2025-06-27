@@ -85,6 +85,20 @@ const tenderApi = apiSlice.injectEndpoints({
         }),
 
 
+        updatePermitDetails: builder.mutation<any, { id: number; data: any; token: string }>({
+            query: ({ id, data, token }) => ({
+                url: `tenderlist/${id}/update-permit-details`,
+                method: 'POST',
+                body: data,
+                headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                },
+            }),
+        }),
+
+
+
 
 
 
@@ -101,5 +115,6 @@ export const {
     useDropTenderMutation,
     useCommitteeValidationMutation,
     useSelectTenderMutation,
-    useLazyGetAllApplicationsQuery
+    useLazyGetAllApplicationsQuery,
+    useUpdatePermitDetailsMutation,
 } = tenderApi;
