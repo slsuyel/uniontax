@@ -4,10 +4,10 @@ import { Card, message, Modal } from "antd";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import { useRenewPreviousHoldingMutation } from "@/redux/api/sonod/sonodApi";
 import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const HoldingTax = () => {
   const user = useAppSelector((state: RootState) => state.user.user)
-  console.log(user.unioun);
   const token = localStorage.getItem('token')
   const [renewPreviousHolding, { isLoading }] = useRenewPreviousHoldingMutation()
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -19,7 +19,7 @@ const HoldingTax = () => {
 
   const handleOk = async () => {
     try {
-      const res = await renewPreviousHolding({ token,union:user.unioun }).unwrap();
+      const res = await renewPreviousHolding({ token,union:user?.unioun }).unwrap();
       if (res.isError) {
         setIsModalVisible(false);
         message.error("কিছু সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন।");
