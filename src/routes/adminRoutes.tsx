@@ -20,6 +20,7 @@ import TenderDropList from "@/pages/dashboard/Tender/TenderDropList";
 // import UnionProfile from "@/pages/dashboard/UnionProfile";
 import UnionReports from "@/pages/dashboard/UnionReports";
 import HoldingTaxBokeyaList from "@/pages/Holding/HoldingTaxBokeyaList";
+import BusinessDirectoryPage from "@/pages/dashboard/BusinessDirectory/BusinessDirectoryPage";
 
 export const adminRoutes = [
   {
@@ -89,6 +90,11 @@ export const adminRoutes = [
   {
     path: "tender/:status",
     element: <TenderList />,
+  },
+
+  {
+    path: "business-directory",
+    element: <BusinessDirectoryPage />,
   },
 
   {

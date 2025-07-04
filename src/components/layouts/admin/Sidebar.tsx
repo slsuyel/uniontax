@@ -43,6 +43,9 @@ const Sidebar = ({ user }: { user: any }) => {
       pendingCount: 0,
     },
     { key: "reports", title: "সকল প্রতিবেদন", slug: "/reports" },
+
+    { key: "business-directory", title: "ব্যবসা প্রতিষ্ঠান সমূহ", slug: "/business-directory" },
+
     {
       key: "profile",
       title: profileLabel,

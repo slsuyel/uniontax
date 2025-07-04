@@ -10,6 +10,7 @@ export interface TTradeKhat {
   name: string;
   khat_id: string;
   khat_fees: TKhatFee[];
+  has_child?: boolean;
   
 }
 
