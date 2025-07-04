@@ -1,9 +1,43 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Card } from "antd";
+import { Card, message, Modal } from "antd";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
+import { useRenewPreviousHoldingMutation } from "@/redux/api/sonod/sonodApi";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const HoldingTax = () => {
+  const user = useAppSelector((state: RootState) => state.user.user)
+  const token = localStorage.getItem('token')
+  const [renewPreviousHolding, { isLoading }] = useRenewPreviousHoldingMutation()
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const wards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = async () => {
+    try {
+      const res = await renewPreviousHolding({ token,union:user?.unioun }).unwrap();
+      if (res.isError) {
+        setIsModalVisible(false);
+        message.error("কিছু সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন।");
+      } else {
+        message.success("পূর্বের হোল্ডিং ট্যাক্স সফলভাবে রিনিউ করা হয়েছে।");
+        setIsModalVisible(false);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+      message.error("কিছু সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন।");
+    }
+
+  };
+
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <div className="card p-3 border-0">
@@ -13,8 +47,16 @@ const HoldingTax = () => {
           <div className="d-flex justify-content-between mb-3">
             <div className="row">
               <div className="align-item-center d-flex justify-content-between">
-                <h5 className="card-title">হোল্ডিং ট্যাক্স</h5>
-                <Link className="btn btn-sm btn-success" to={`/dashboard/holding/import/`}>Import</Link>
+                <div className="align-item-center d-flex gap-1">
+                  <button
+                    className="btn btn-sm btn-info"
+                    onClick={showModal}
+                  >
+                    পূর্বের হোল্ডিং ট্যাক্স রিনিউ করুন
+                  </button>
+
+                  <Link className="btn btn-sm btn-success" to={`/dashboard/holding/import/`}>Import</Link>
+                </div>
               </div>
               {wards.map((ward) => (
                 <div key={ward} className="col-md-2 col-sm-3 my-4 col-4">
@@ -40,6 +82,18 @@ const HoldingTax = () => {
           </div>
         </div>
       </Card>
+      {/* Confirmation Modal */}
+      <Modal
+        title="নিশ্চিত করুন"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="হ্যাঁ"
+        cancelText="না"
+        loading={isLoading}
+      >
+        <p className=" border-top p-2">আপনি কি পূর্বের হোল্ডিং ট্যাক্স রিনিউ করতে চান?</p>
+      </Modal>
     </div>
   );
 };
