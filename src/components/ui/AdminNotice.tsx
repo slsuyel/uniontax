@@ -18,9 +18,9 @@ const AdminNotice = ({ isVisible, onClose, user }: AdminNoticeProps) => {
     const [form] = Form.useForm()
 
     const handleSubmit = async (values: any) => {
-        console.log("Form Data:", values)
+
         const res = await updateUnion({ data: values, token }).unwrap()
-        console.log(res);
+       
         if (res.status_code === 200) {
             dispatch(setUser({ ...user, is_popup: false }));
             message.success("Phone number updated successfully")

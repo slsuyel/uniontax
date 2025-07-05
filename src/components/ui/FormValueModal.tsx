@@ -32,8 +32,6 @@ const FormValueModal = ({
   const sonod = sonodList.find((d) => d.bnname == service);
   const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
 
-  console.log(data);
-  console.log(data?.attachments);
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
 
   const site_settings = useAppSelector(
