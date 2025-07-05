@@ -120,7 +120,7 @@ const SonodActionBtn = ({
     setSonodCancelModal(true);
   };
 
-  console.log(user?.position == "position");
+
 
   const menu = (
     <Menu>

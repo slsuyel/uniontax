@@ -56,7 +56,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleService = (serviceLink: string) => {
-    if (unionInfo?.short_name_e == "uniontax") {
+    if (unionInfo?.short_name_e === "root") {
       message.warning(site_settings?.header_union_select_title || "");
       setNoUnion(true);
       return;
@@ -66,7 +66,7 @@ const Header = () => {
   };
 
   const [navbarExpanded, setNavbarExpanded] = useState(false);
-
+console.log(unionInfo?.short_name_e);
   return (
     <>
       <div id="mainMenu" className="container mx-auto mt-2">

@@ -197,7 +197,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           return [];
         }
       })();
-  console.log(loggedUser?.designation);
+  
   return (
     <div className={`${!isDashboard ? "container my-3" : ""}`}>
       <Form

@@ -289,8 +289,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
  
     const filterUnion = unions?.find((union: any) => union.id === value);
-    console.log("filterUnion:", filterUnion);
-
+   
     form.setFieldsValue({
       applicant_present_union: filterUnion?.bn_name,
     });

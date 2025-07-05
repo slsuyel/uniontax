@@ -91,7 +91,7 @@ const SonodDetails: React.FC = () => {
         const response = await fetch(`${apiUrl}/api/sonod/search?uniqeKey=${id}`)
         if (!response.ok) throw new Error("Failed to fetch sonod details")
         const res = await response.json()
-        console.log(res)
+
         if (res.data && res.status_code === 200) {
           setSonod(res.data)
         } else {
