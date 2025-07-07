@@ -74,7 +74,7 @@ const InheritanceList = ({ sonodName }: { sonodName: string }) => {
                             <Select.Option value="ভাতিজী">ভাতিজী</Select.Option>
                             <Select.Option value="চাচা">চাচা</Select.Option>
                             <Select.Option value="ফুফু">ফুফু</Select.Option>
-                            <Select.Option value="ভাগিনা ">ভাগিনা </Select.Option>
+                            <Select.Option value="ভাগিনা">ভাগিনা</Select.Option>
                             <Select.Option value="ভাগিনি">ভাগিনি</Select.Option>
                           </Select>
                         </Form.Item>

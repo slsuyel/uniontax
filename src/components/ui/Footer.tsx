@@ -93,19 +93,22 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img
+                  {/* <img
                     loading="lazy"
                     src="/bangladesh-govt.png"
                     alt="bangladesh"
                     height={"auto"}
                     width={50}
-                  />{" "}
+                  />{" "} */}
                   <span style={{ padding: "0px 15px" }}>
                     <b> ব্যবস্থাপনা ও তত্ত্বাবধানে:</b> <br />
                     {baseUrl.includes("unionservices")
                       ? "বিভাগীয় কমিশনারের কার্যালয়, রংপুর"
-                      : " জেলা প্রশাসন,পঞ্চগড়। "}
+                      : " জেলা প্রশাসন,পঞ্চগড়"} | A2i
                   </span>
+                  <div>
+                    <img src="https://images.seeklogo.com/logo-png/25/1/a2i-logo-png_seeklogo-258213.png" width={50} className="img-fluid" alt="" />
+                  </div>
                 </li>
               </ul>
             </div>{" "}
@@ -118,7 +121,7 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img loading="lazy" src={sos} alt="sys" width={40}  height={"auto"} />{" "}
+                  <img loading="lazy" src={sos} alt="sys" width={40} height={"auto"} />{" "}
                   <span style={{ padding: "0px 15px" }}>
                     <b> কারিগরি সহায়তায়:</b> <br />{" "}
                     <a
@@ -138,7 +141,7 @@ const Footer = () => {
         <div className="footerpayment row">
           <div className="col-md-2" />{" "}
           <div className="col-md-8">
-            <img loading="lazy" src={ekpay} width="100%"  height={"auto"} alt="sys" />
+            <img loading="lazy" src={ekpay} width="100%" height={"auto"} alt="sys" />
           </div>{" "}
           <div className="col-md-2" />
         </div>
