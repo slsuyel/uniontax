@@ -10,10 +10,6 @@ body {
 }
 
 
-/* 
-* {
-  --defaultColor: green;
-} */
 .defaltTextColor {
   color: var(--defaultColor) !important;
 }
