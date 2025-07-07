@@ -5,7 +5,11 @@
 }
 body {
   font-family: 'Kalpurush', "Nunito Sans", serif;
+  /* background: url(https://dncc.gov.bd/themes/responsive_npf/images/bg_main.gif) ;
+  background-size: cover; */
 }
+
+
 /* 
 * {
   --defaultColor: green;
