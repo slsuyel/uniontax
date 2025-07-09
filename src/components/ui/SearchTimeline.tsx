@@ -61,8 +61,7 @@ const SearchTimeline = ({ data }: any) => {
           <Steps.Step key={index} title={title} />
         ))}
       </Steps>
-      {/* "https://api.pouroseba.gov.bd/create/payment?sonod_id=29684&s_uri=https://api.pouroseba.gov.bd/bokeya/payment&f_uri=https://api.pouroseba.gov.bd/bokeya/payment&c_uri=https://api.pouroseba.gov.bd/bokeya/payment"
- */}
+    
       <div className="text-end">
         {
           sonod?.bokeya_payment_url &&
