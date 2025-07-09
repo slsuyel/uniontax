@@ -42,13 +42,13 @@ const handleOk =async ()=>{
               </button>
             ) : (
               <>
-                <Link
+                {sonod.download_url && <Link
                   to={sonod.download_url}
                   target="_blank"
                   className="btn btn-sm btn-success"
                 >
                   ডাউনলোড
-                </Link>
+                </Link>}
                 {sonod.download_url_en && (
                   <Link
                     to={sonod.download_url_en}
