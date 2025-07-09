@@ -23,8 +23,8 @@ export interface TSonodDetails {
   renew_able: boolean;
   download_url: string;
   download_url_en: string;
-  bokeya_payment_url: string;
-  bokeya: string;
+  bokeya_payment_url?: string;
+  bokeya?: string;
 }
 
 const SearchTimeline = ({ data }: any) => {
@@ -65,8 +65,8 @@ const SearchTimeline = ({ data }: any) => {
  */}
       <div className="text-end">
         {
-          sonod.bokeya_payment_url &&
-          <a href={`${sonod.bokeya_payment_url}&s_uri=${window.origin}/payment-success&f_uri=${window.origin}/payment-failed&c_uri=${window.origin}/payment-cancel`}>
+          sonod?.bokeya_payment_url &&
+          <a href={`${sonod?.bokeya_payment_url}&s_uri=${window.origin}/payment-success&f_uri=${window.origin}/payment-failed&c_uri=${window.origin}/payment-cancel`}>
             <button className="mt-2 btn btn-sm btn-info">
               বকেয়া পরিশোধ করুন
             </button>
