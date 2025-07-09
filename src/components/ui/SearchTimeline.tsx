@@ -23,6 +23,8 @@ export interface TSonodDetails {
   renew_able: boolean;
   download_url: string;
   download_url_en: string;
+  bokeya_payment_url: string;
+  bokeya: string;
 }
 
 const SearchTimeline = ({ data }: any) => {
@@ -59,6 +61,18 @@ const SearchTimeline = ({ data }: any) => {
           <Steps.Step key={index} title={title} />
         ))}
       </Steps>
+      {/* "https://api.pouroseba.gov.bd/create/payment?sonod_id=29684&s_uri=https://api.pouroseba.gov.bd/bokeya/payment&f_uri=https://api.pouroseba.gov.bd/bokeya/payment&c_uri=https://api.pouroseba.gov.bd/bokeya/payment"
+ */}
+      <div className="text-end">
+        {
+          sonod.bokeya_payment_url &&
+          <a href={`${sonod.bokeya_payment_url}&s_uri=${window.origin}/payment-success&f_uri=${window.origin}/payment-failed&c_uri=${window.origin}/payment-cancel`}>
+            <button className="mt-2 btn btn-sm btn-info">
+              বকেয়া পরিশোধ করুন
+            </button>
+          </a>
+        }
+      </div>
 
       {sonod.stutus == "approved" && <VerificationSuccessful sonod={sonod} />}
 
