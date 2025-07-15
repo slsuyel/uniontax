@@ -20,6 +20,7 @@ export interface User {
   maintance_fee: string;
   maintance_fee_option: string;
   profile_steps: number;
+  payment_last_date: number;
 }
 
 type TInitialState = {

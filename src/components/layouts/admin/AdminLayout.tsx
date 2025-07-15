@@ -203,6 +203,7 @@ const UserLayout = () => {
           maintance_fee_type: user?.maintance_fee_type ?? "", // or "yearly"
           maintance_fee: user?.maintance_fee ?? "",
           maintance_fee_option: user?.maintance_fee_option ?? "",
+          payment_last_date : user?.payment_last_date ? user?.payment_last_date  :15
         }}
       />
       <GoToTop />

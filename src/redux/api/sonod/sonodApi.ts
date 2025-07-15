@@ -26,6 +26,19 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["sonod-action"],
     }),
+    tradeKhatUpdate: builder.mutation({
+      query: ({ id, data, token }) => ({
+        url: `user/sonod/khat/update/${id}`,
+        method: "PUT",
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["sonod-action"],
+    }),
+
+
     sonodFilesUpdate: builder.mutation({
       query: ({ id, formData, token }) => ({
         url: `/user/sonod/update/${id}/files`,
@@ -261,5 +274,6 @@ export const {
   useUddoktaAddHoldingMutation,
   useUddoktaSingleHoldingQuery,
   useSonodFilesUpdateMutation,
-  useRenewPreviousHoldingMutation
+  useRenewPreviousHoldingMutation,
+  useTradeKhatUpdateMutation
 } = sonodApi;

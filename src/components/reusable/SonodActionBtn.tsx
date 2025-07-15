@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { updatePendingCount } from "@/redux/features/union/unionSlice";
 import SonodCancelModal from "../ui/SonodCancelModal";
+import TradeKhatEditModal from "@/pages/dashboard/SonodManagement/TradeKhatEdit";
 
 
 
@@ -26,7 +27,7 @@ const SonodActionBtn = ({
 }: SonodActionBtnProps) => {
   const dispatch = useAppDispatch();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-
+  const [isTradeEditModalVisible, setIsTradeEditModalVisible] = useState(false);
   const user = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
   const [sonodAction, { isLoading }] = useSonodActionMutation();
@@ -36,8 +37,8 @@ const SonodActionBtn = ({
   const [viewEn, setViewEn] = useState(false);
   const [sonodCancelModal, setSonodCancelModal] = useState<boolean>(false);
   const [textareaValue, setTextareaValue] = useState(item?.prottoyon);
-
   const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
+  
 
 
   const [textareaValueEn, setTextareaValueEn] = useState(
@@ -120,7 +121,13 @@ const SonodActionBtn = ({
     setSonodCancelModal(true);
   };
 
+  const handleTradeEditModalOpen = () => {
+    setIsTradeEditModalVisible(true); // Open the Trade Edit Modal
+  };
 
+  const closeTradeEditModal = () => {
+    setIsTradeEditModalVisible(false); // Close the Trade Edit Modal
+  };
 
   const menu = (
     <Menu>
@@ -152,6 +159,17 @@ const SonodActionBtn = ({
           প্রাপ্তী স্বীকারপত্র
         </Link>
       </Menu.Item>
+      {sonodName == 'ট্রেড লাইসেন্স' && <Menu.Item className="border my-1 border-success" key="receipt">
+        <Link
+          onClick={handleTradeEditModalOpen}
+          className="text-decoration-none text-success "
+          to={'#'}
+        >
+          খাত এডিট করুন
+        </Link>
+      </Menu.Item>
+      }
+
       <Menu.Item
         className="border my-1 border-info"
         key="view"
@@ -170,7 +188,7 @@ const SonodActionBtn = ({
       )}
 
       {(user?.position === "Secretary" && condition === "cancel") ||
-      (condition !== "cancel" && condition !== "approved") ? (
+        (condition !== "cancel" && condition !== "approved") ? (
         <Menu.Item
           className="border text-success border-warning my-1"
           key="approve"
@@ -204,14 +222,14 @@ const SonodActionBtn = ({
       <div className="d-flex justify-content-center flex-wrap gap-2">
         {(user?.position === "Secretary" ||
           (condition !== "cancel" && condition !== "approved")) && (
-          <button
-            className="border border-warning btn btn-sm btn-success"
-            key="approve"
-            onClick={handleApproved}
-          >
-            {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
-          </button>
-        )}
+            <button
+              className="border border-warning btn btn-sm btn-success"
+              key="approve"
+              onClick={handleApproved}
+            >
+              {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
+            </button>
+          )}
 
         <Dropdown overlay={menu} placement="bottomLeft" arrow>
           <Button type="primary">Actions</Button>
@@ -289,6 +307,11 @@ const SonodActionBtn = ({
           sonodCancelModal={sonodCancelModal}
         />
       )}
+      <TradeKhatEditModal
+        isVisible={isTradeEditModalVisible}
+        onClose={closeTradeEditModal}
+        sonod={item}
+      />
     </>
   );
 };

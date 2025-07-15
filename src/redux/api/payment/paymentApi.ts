@@ -41,6 +41,26 @@ const paymentApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["holding_pay"],
     }),
+    checkMaintenance: builder.mutation({
+      query: (trnx_id) => {
+        return {
+          url: `/maintance-fee/execute`, // Adjusted URL to match the API for your payment processing
+          method: "POST",
+          body: { paymentID: trnx_id },
+        };
+      },
+    }),
+    // Initiate payment process
+    initiatePayment: builder.mutation({
+      query: (data) => ({
+        url: `/user/maintance-fees`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+
+
   }),
 });
 
@@ -49,4 +69,6 @@ export const {
   useCheckPaymentMutation,
   useFailedPaymentQuery,
   usePayTaxMutation,
+  useCheckMaintenanceMutation,
+  useInitiatePaymentMutation
 } = paymentApi;

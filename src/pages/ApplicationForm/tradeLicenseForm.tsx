@@ -11,7 +11,7 @@ export interface TTradeKhat {
   khat_id: string;
   khat_fees: TKhatFee[];
   has_child?: boolean;
-  
+
 }
 
 export interface TKhatFee {
@@ -70,7 +70,7 @@ const TradeLicenseForm = ({
   const financialYearStart = currentMonth >= 4 ? currentYear : currentYear - 1;
   const financialYearEnd = financialYearStart + 1;
 
-   const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
 
   const financialYears = [];
@@ -186,7 +186,7 @@ const TradeLicenseForm = ({
             <Form.Item
               label="সাইনবোর্ডের ধরন"
               name="signboard_type"
-              // rules={[{ required: true, message: "সাইনবোর্ডের ধরন নির্বাচন করুন" }]}
+            // rules={[{ required: true, message: "সাইনবোর্ডের ধরন নির্বাচন করুন" }]}
             >
               <Select
                 showSearch
@@ -203,7 +203,7 @@ const TradeLicenseForm = ({
             <Form.Item
               label="সাইনবোর্ডের আকার (বর্গফুটে)"
               name="signboard_size_square_fit"
-              // rules={[{ required: true, message: "সাইনবোর্ডের আকার লিখুন" }]}
+            // rules={[{ required: true, message: "সাইনবোর্ডের আকার লিখুন" }]}
             >
               <Input
                 type="number"
@@ -214,39 +214,39 @@ const TradeLicenseForm = ({
             </Form.Item>
           </div>
 
-      <div className="col-md-4">
-        <Form.Item
-          label="চালান ট্র্যাকিং নম্বর"
-          name="chalan_traking_no"
-        //   rules={[
-        // { required: true, message: "চালান ট্র্যাকিং নম্বর লিখুন" },
-        //   ]}
-        >
-          <Input style={{ height: 40, width: "100%" }} />
-        </Form.Item>
-      </div>
-      <div className="col-md-4">
-        <Form.Item
-          label="চালান তারিখ (মাস/দিন/বছর)"
-          name="chalan_date"
-        //   rules={[
-        // { required: true, message: "চালান তারিখ নির্বাচন করুন" },
-        //   ]}
-        >
-          <Input type="date" style={{ height: 40, width: "100%" }} />
-        </Form.Item>
-      </div>
-      <div className="col-md-4">
-        <Form.Item
-          label="চালান টাকার পরিমাণ"
-          name="chalan_amount"
-        //   rules={[
-        // { required: true, message: "চালান পরিমাণ লিখুন" },
-        //   ]}
-        >
-          <InputNumber min={0} style={{ height: 40, width: "100%" }} />
-        </Form.Item>
-      </div>
+          <div className="col-md-4">
+            <Form.Item
+              label="চালান ট্র্যাকিং নম্বর"
+              name="chalan_traking_no"
+            //   rules={[
+            // { required: true, message: "চালান ট্র্যাকিং নম্বর লিখুন" },
+            //   ]}
+            >
+              <Input style={{ height: 40, width: "100%" }} />
+            </Form.Item>
+          </div>
+          <div className="col-md-4">
+            <Form.Item
+              label="চালান তারিখ (মাস/দিন/বছর)"
+              name="chalan_date"
+            //   rules={[
+            // { required: true, message: "চালান তারিখ নির্বাচন করুন" },
+            //   ]}
+            >
+              <Input type="date" style={{ height: 40, width: "100%" }} />
+            </Form.Item>
+          </div>
+          <div className="col-md-4">
+            <Form.Item
+              label="চালান টাকার পরিমাণ"
+              name="chalan_amount"
+            //   rules={[
+            // { required: true, message: "চালান পরিমাণ লিখুন" },
+            //   ]}
+            >
+              <InputNumber min={0} style={{ height: 40, width: "100%" }} />
+            </Form.Item>
+          </div>
 
 
 
@@ -284,7 +284,7 @@ const TradeLicenseForm = ({
       </div>
 
 
-      
+
       <div className="col-md-4">
         <Form.Item
           label="অর্থ বছর"
