@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 import { useEffect, useState } from "react"
@@ -10,6 +11,7 @@ interface User {
   maintance_fee_type: string
   maintance_fee: string
   maintance_fee_option: string
+  payment_last_date: number
 }
 
 interface MaintenanceFeeNoticeProps {
@@ -31,15 +33,15 @@ const MaintenanceFeeNotice = ({
   const [retry, setRetry] = useState(false)
 
 
-const currentMonthName = new Date().toLocaleString("bn-BD", { month: "long" });
+  const currentMonthName = new Date().toLocaleString("bn-BD", { month: "long" });
 
-// উপরের অংশে হিসাব করে নিন
-const fee = parseFloat(user.maintance_fee ?? "0");
-const transactionCharge = Math.ceil((fee * 1.5) ) / 100;
-const totalAmount = Math.ceil((fee + transactionCharge) * 100) / 100;
+  // উপরের অংশে হিসাব করে নিন
+  const fee = parseFloat(user.maintance_fee ?? "0");
+  const transactionCharge = Math.ceil((fee * 1.5)) / 100;
+  const totalAmount = Math.ceil((fee + transactionCharge) * 100) / 100;
 
 
-
+  console.log(user);
 
   const query = new URLSearchParams(window.location.search)
   const paymentID = query.get("paymentID")
@@ -130,9 +132,9 @@ const totalAmount = Math.ceil((fee + transactionCharge) * 100) / 100;
   return (
     <Modal
       title={
-      <div className="text-danger fw-bold fs-4">
-        ⚠️ জরুরি নোটিশ: রক্ষণাবেক্ষণ ফি বাকি রয়েছে
-      </div>
+        <div className="text-danger fw-bold fs-4">
+          ⚠️ জরুরি নোটিশ: রক্ষণাবেক্ষণ ফি বাকি রয়েছে
+        </div>
       }
       open={isMaintenanceNotice}
       footer={null}
@@ -168,78 +170,76 @@ const totalAmount = Math.ceil((fee + transactionCharge) * 100) / 100;
 
 
 
-<div className="alert alert-danger border border-danger rounded mb-4 fs-5">
-  <p className="fw-bold">প্রিয় ব্যবহারকারী,</p>
+            <div className="alert alert-danger border border-danger rounded mb-4 fs-5">
+              <div className="d-flex justify-content-between">
+                <p className="fw-bold mb-0">প্রিয় ব্যবহারকারী,</p>
+                <p className="bg-danger border border-danger fs-6 mb-0 p-1 rounded-2 text-white"><i>পরিশোধের শেষ তারিখঃ {user.payment_last_date} {currentMonthName}</i></p>
+              </div>
+              <p>
+                আপনার ব্যবহৃত সিস্টেমটির <strong className="text-primary">
+                  {user.maintance_fee_type === "monthly" ? "মাসিক" : "বার্ষিক"}
+                </strong> রক্ষণাবেক্ষণ ফি এখনো পরিশোধ হয়নি।
+              </p>
 
-  <p>
-    আপনার ব্যবহৃত সিস্টেমটির <strong className="text-primary">
-      {user.maintance_fee_type === "monthly" ? "মাসিক" : "বার্ষিক"}
-    </strong> রক্ষণাবেক্ষণ ফি এখনো পরিশোধ হয়নি।
-  </p>
+              {user.maintance_fee_type == "monthly" && (
+                <div className="alert alert-info border-info mt-2 mb-3">
+                  <p className="mb-0">
+                    🔄 <strong>আপনাদের সুবিধার্থে</strong>, পূর্বের বার্ষিক ফি-এর পরিবর্তে এখন থেকে
+                    <strong> মাসিক ভিত্তিতে </strong> রক্ষণাবেক্ষণ ফি প্রদান করার ব্যবস্থা করা হয়েছে।
+                    <strong className="text-danger"> এই মাসের ফি পরিশোধ করুন এবং সেবা চালু রাখুন।</strong>
 
-{user.maintance_fee_type == "monthly" && (
-  <div className="alert alert-info border-info mt-2 mb-3">
-    <p className="mb-0">
-      🔄 <strong>আপনাদের সুবিধার্থে</strong>, পূর্বের বার্ষিক ফি-এর পরিবর্তে এখন থেকে 
-      <strong> মাসিক ভিত্তিতে </strong> রক্ষণাবেক্ষণ ফি প্রদান করার ব্যবস্থা করা হয়েছে। 
-      <strong className="text-danger"> এই মাসের ফি পরিশোধ করুন এবং সেবা চালু রাখুন।</strong>
-      
-    </p>
-  </div>
-)}
+                  </p>
+                </div>
+              )}
 
-  {/* Table Section Starts Here */}
-  <p className="text-danger fw-semibold mb-1">➤</p>
-<table className="table border border-danger rounded overflow-hidden shadow-sm">
-  <thead style={{ backgroundColor: "#f8d7da" }}>
-    <tr>
-      <th className="py-2 ps-3 text-start">🧾 বিবরণ</th>
-      <th className="py-2 pe-3 text-end">পরিমাণ (৳)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td className="ps-3 text-start">
-        রক্ষণাবেক্ষণ ফি 
-        ({user.maintance_fee_type === "monthly" ? `${currentMonthName} মাস` : "বার্ষিক"})
-      </td>
-      <td className="pe-3 text-end">{fee.toFixed(2)}</td>
-    </tr>
-    <tr>
-      <td className="ps-3 text-start">ট্রানজেকশন ফি (১.৫%)</td>
-      <td className="pe-3 text-end">{transactionCharge.toFixed(2)}</td>
-    </tr>
-    <tr style={{ backgroundColor: "#f8d7da", fontWeight: "bold", fontSize: "1.1rem" }}>
-      <td className="ps-3 text-start text-danger">মোট পরিশোধযোগ্য</td>
-      <td className="pe-3 text-end text-danger">{totalAmount.toFixed(2)}</td>
-    </tr>
-  </tbody>
-</table>
-  {/* Table Section Ends Here */}
+              {/* Table Section Starts Here */}
+              <p className="text-danger fw-semibold mb-1">➤</p>
+              <table className="table border border-danger rounded overflow-hidden shadow-sm">
+                <thead style={{ backgroundColor: "#f8d7da" }}>
+                  <tr>
+                    <th className="py-2 ps-3 text-start">🧾 বিবরণ</th>
+                    <th className="py-2 pe-3 text-end">পরিমাণ (৳)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="ps-3 text-start">
+                      রক্ষণাবেক্ষণ ফি
+                      ({user.maintance_fee_type === "monthly" ? `${currentMonthName} মাস` : "বার্ষিক"})
+                    </td>
+                    <td className="pe-3 text-end">{fee.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td className="ps-3 text-start">ট্রানজেকশন ফি (১.৫%)</td>
+                    <td className="pe-3 text-end">{transactionCharge.toFixed(2)}</td>
+                  </tr>
+                  <tr style={{ backgroundColor: "#f8d7da", fontWeight: "bold", fontSize: "1.1rem" }}>
+                    <td className="ps-3 text-start text-danger">মোট পরিশোধযোগ্য</td>
+                    <td className="pe-3 text-end text-danger">{totalAmount.toFixed(2)}</td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* Table Section Ends Here */}
 
-  <p>
-    ফি পরিশোধ না করলে আপনার সিস্টেম অ্যাক্সেস সাময়িকভাবে সীমিত বা বন্ধ হয়ে যেতে পারে।
-  </p>
+              <div>
+                <p className=" mb-0">
+                  ফি পরিশোধ না করলে আপনার সিস্টেম অ্যাক্সেস সাময়িকভাবে সীমিত বা বন্ধ হয়ে যেতে পারে। </p>
+                <p className=" mb-0">বিল পরিশোধের শেষ তারিখঃ {user.payment_last_date} {currentMonthName}</p>
 
-  <p className="fw-semibold text-success">
-    ➤ এখনই ফি পরিশোধ করে সেবা চালু রাখুন।
-  </p>
 
-  <p className="text-secondary mt-3">
-    🔺 <strong>মনে রাখবেন:</strong> অনলাইন পেমেন্টের ক্ষেত্রে মোট অর্থের উপর
-    <strong className="text-danger"> ১.৫% ট্রানজেকশন ফি</strong> প্রযোজ্য হবে।
-  </p>
+              </div>
 
-  <div className="mt-4 p-3 bg-warning-subtle border border-warning rounded text-dark">
-    <strong className="d-block text-danger fs-5 mb-2">❗ সমস্যায় পড়েছেন?</strong>
-    <p className="mb-1">
-      পেমেন্ট করতে অসুবিধা হলে অথবা কিছু বুঝতে সমস্যা হলে দয়া করে নিচের নম্বরে যোগাযোগ করুন:
-    </p>
-    <a href="tel:01909756552" className="fs-5 fw-bold text-primary mb-0 d-inline-block">
-      📞 ০১৯০৯৭৫৬৫৫২
-    </a>
-  </div>
-</div>
+
+              <div className="mt-4 p-3 bg-warning-subtle border border-warning rounded text-dark">
+                <strong className="d-block text-danger fs-5 mb-2">❗ সমস্যায় পড়েছেন?</strong>
+                <p className="mb-1">
+                  পেমেন্ট করতে অসুবিধা হলে অথবা কিছু বুঝতে সমস্যা হলে দয়া করে নিচের নম্বরে যোগাযোগ করুন:
+                </p>
+                <a href="tel:01909756552" className="fs-5 fw-bold text-primary mb-0 d-inline-block">
+                  📞 ০১৯০৯৭৫৬৫৫২
+                </a>
+              </div>
+            </div>
 
 
 

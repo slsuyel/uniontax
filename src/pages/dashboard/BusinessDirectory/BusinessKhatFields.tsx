@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Col, Form, Select } from "antd";
 import { TTradeKhat, TKhatFee } from "@/pages/ApplicationForm/tradeLicenseForm";
 

@@ -86,7 +86,7 @@ const Login = () => {
           setUnionData({
             unionInfo: upInfo.data.uniouninfos,
             sonodList: upInfo.data.sonod_name_lists,
-          site_settings: upInfo.data.site_settings,
+            site_settings: upInfo.data.site_settings,
           })
         );
         localStorage.setItem("token", res.data.token);
