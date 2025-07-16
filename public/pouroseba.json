@@ -70,5 +70,17 @@
     "district_id": "54",
     "name": "hakimpur",
     "bn_name": "হাকিমপুর"
+  },
+  {
+    "id": "13",
+    "district_id": "55",
+    "name": "lalmonirhatsadar",
+    "bn_name": "লালমনিরহাট সদর "
+  },
+  {
+    "id": "14",
+    "district_id": "55",
+    "name": "patgram",
+    "bn_name": "পাটগ্রাম "
   }
 ]
