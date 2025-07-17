@@ -83,4 +83,33 @@
     "name": "patgram",
     "bn_name": "পাটগ্রাম "
   }
+  ,
+  {
+    "id": "15",
+    "district_id": "57",
+    "name": "gaibandha",
+    "bn_name": "গাইবান্ধা "
+  }
+  ,
+  {
+    "id": "16",
+    "district_id": "57",
+    "name": "palashbaripoura",
+    "bn_name": "পলাশবাড়ী "
+  }
+  ,
+  {
+    "id": "17",
+    "district_id": "57",
+    "name": "Gobindaganj",
+    "bn_name": "গোবিন্দগঞ্জ "
+  }
+  ,
+  {
+    "id": "18",
+    "district_id": "57",
+    "name": "Sundarganj",
+    "bn_name": "সুন্দরগঞ্জ "
+  }
+ 
 ]
