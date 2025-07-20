@@ -6,7 +6,10 @@ import { message, Modal } from "antd";
 import { useRenewSonodMutation } from "@/redux/api/user/userApi";
 
 const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
-  const [renewSonod,{isLoading}]=useRenewSonodMutation()
+
+  const hostname = window.location.hostname;
+
+  const [renewSonod, { isLoading }] = useRenewSonodMutation()
   const [renew, setRenew] = useState<boolean>(false);
   const handleRenew = () => {
     setRenew(true);
@@ -16,20 +19,22 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
     setRenew(false);
   };
   const additionalData = {
-   
+
     s_uri: window.origin + "/payment-success",
     f_uri: window.origin + "/payment-failed",
     c_uri: window.origin + "/payment-cancel",
   };
-const handleOk =async ()=>{
-  const res = await renewSonod({data:additionalData,id:sonod.id}).unwrap()
-  if (res.status_code === 200) {
-    message.success("You are redirect to payment gateway");
-    window.location.href = res.data.redirect_url;
-    setRenew(false);
+  const handleOk = async () => {
+    const res = await renewSonod({ data: additionalData, id: sonod.id }).unwrap()
+    if (res.status_code === 200) {
+      message.success("You are redirect to payment gateway");
+      window.location.href = res.data.redirect_url;
+      setRenew(false);
+    }
+
   }
-  
-}
+
+  console.log(hostname);
 
   return (
     <div className="d-flex justify-content-between my-5 sonod-verification">
@@ -49,7 +54,7 @@ const handleOk =async ()=>{
                 >
                   ডাউনলোড
                 </Link>}
-                {sonod.download_url_en && (
+                {sonod.download_url_en ?
                   <Link
                     to={sonod.download_url_en}
                     target="_blank"
@@ -57,7 +62,13 @@ const handleOk =async ()=>{
                   >
                     ইংরেজি সনদ ডাউনলোড
                   </Link>
-                )}
+                  : <Link
+                    to={`http://${sonod.unioun_name}.${window.location.hostname}:3000/application-english/${encodeURIComponent(sonod.sonod_name)}?id=${sonod.id}`}
+                    className="btn btn-sm btn-success"
+                  >
+                    ইংরেজি সনদ আবেদন করুন
+                  </Link>
+                }
               </>
             )}
           </div>
@@ -65,7 +76,7 @@ const handleOk =async ()=>{
         <div className="border">
           <div className="row m-0 mt-2 mx-auto ">
             <div className="logo-img col-md-3 col-sm-12 text-end hide-mobile">
-              <img width={70}  height={"auto"} alt="bangladesh-govt" src="/bangladesh-govt.png" />
+              <img width={70} height={"auto"} alt="bangladesh-govt" src="/bangladesh-govt.png" />
             </div>{" "}
             <div className="header-text col-md-6 col-sm-12 text-center">
               <p>Government of the People's Republic of Bangladesh</p>{" "}
