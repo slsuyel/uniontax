@@ -35,7 +35,6 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
 
   }
 
-  // console.log(site_settings.url);
 
   return (
     <div className="d-flex justify-content-between my-5 sonod-verification">
@@ -65,7 +64,7 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
                   </Link>
                   :
                   <div>
-                    {site_settings.union && <a
+                    {site_settings.union =='false' && <a
                       href={`https://${sonod.unioun_name}.pouroseba.gov.bd/application-english/${encodeURIComponent(sonod.sonod_name)}?id=${sonod.id}`}
                       className="btn btn-sm btn-success"
                     >
