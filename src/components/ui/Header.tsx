@@ -10,7 +10,7 @@ import SearchBox from "../reusable/SearchBox";
 
 
 const Header = () => {
-  const userInfo = useAppSelector((state: RootState) => state.user.user);
+  const userInfo = useAppSelector((state: RootState) => state.user?.user);
   const [noUnion, setNoUnion] = useState(false);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
@@ -39,6 +39,10 @@ const Header = () => {
           link: "https://bdris.gov.bd/dr/application",
           target: "_blank",
         },
+        // {
+        //   title: "অটো বাইক মালিকানা / তালিকাভুক্তি / নিবন্ধন",
+        //   link: "/auto-bike-registration"
+        // },
       ],
     },
     { title: "সনদ যাচাই", link: "/sonod/search" },

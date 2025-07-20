@@ -62,12 +62,12 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
                   >
                     ইংরেজি সনদ ডাউনলোড
                   </Link>
-                  : <Link
-                    to={`http://${sonod.unioun_name}.${window.location.hostname}:3000/application-english/${encodeURIComponent(sonod.sonod_name)}?id=${sonod.id}`}
+                  : <a
+                    href={`http://${sonod.unioun_name}.${window.location.hostname}/application-english/${encodeURIComponent(sonod.sonod_name)}?id=${sonod.id}`}
                     className="btn btn-sm btn-success"
                   >
                     ইংরেজি সনদ আবেদন করুন
-                  </Link>
+                  </a>
                 }
               </>
             )}
