@@ -207,7 +207,7 @@ const sonodApi = apiSlice.injectEndpoints({
       invalidatesTags: ["holding-create-update"],
     }),
     renewPreviousHolding: builder.mutation({
-      query: ({ token ,union}) => ({
+      query: ({ token, union }) => ({
         url: `user/holding-tax/Renew?unioun=${union}`,
         method: "POST",
         headers: {
@@ -249,6 +249,13 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["check-nid"],
     }),
+    bikeRegistration: builder.mutation({
+      query: (data) => ({
+        url: `bike-registration`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -275,5 +282,6 @@ export const {
   useUddoktaSingleHoldingQuery,
   useSonodFilesUpdateMutation,
   useRenewPreviousHoldingMutation,
-  useTradeKhatUpdateMutation
+  useTradeKhatUpdateMutation,
+  useBikeRegistrationMutation
 } = sonodApi;

@@ -25,7 +25,7 @@ import adminEditFields from "./adminEditFields";
 // const { confirm } = Modal;
 const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
   /* ```````````` */
-  const loggedUser = useAppSelector((state: RootState) => state.user.user);
+  const loggedUser = useAppSelector((state: RootState) => state.user?.user);
   const [fetchedUser, setFetchedUser] = useState<TApplicantData | null>(null);
 
   const [attachments, setAttachments] = useState<{

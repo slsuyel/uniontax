@@ -28,6 +28,7 @@ import SonodSearchById from "@/pages/SonodSearch/SonodSearchById";
 import SonodDetails from "@/pages/About/SonodDetails";
 import ScheduleTender from "@/pages/Tenders/ScheduleTender";
 import SingleTender from "@/pages/Tenders/SingleTender";
+import AutoBikeRegistration from "@/pages/AutoBikeRegistration/AutoBikeRegistration";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
       {
         path: "/payment-cancel",
         element: <PaymentSuccessPage />,
+      },
+      {
+        path: "/auto-bike-registration",
+        element: <AutoBikeRegistration />,
       },
 
       /* application */
