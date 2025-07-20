@@ -4,10 +4,11 @@ import { TSonodDetails } from "./SearchTimeline";
 import { useState } from "react";
 import { message, Modal } from "antd";
 import { useRenewSonodMutation } from "@/redux/api/user/userApi";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 
 const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
-
-  const hostname = window.location.hostname;
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   const [renewSonod, { isLoading }] = useRenewSonodMutation()
   const [renew, setRenew] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
 
   }
 
-  console.log(hostname);
+  // console.log(site_settings.url);
 
   return (
     <div className="d-flex justify-content-between my-5 sonod-verification">
@@ -62,13 +63,16 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
                   >
                     ইংরেজি সনদ ডাউনলোড
                   </Link>
-                  : <a
-                    href={`https://${sonod.unioun_name}.${window.location.hostname.split('.').slice(-2).join('.')}/application-english/${encodeURIComponent(sonod.sonod_name)}?id=${sonod.id}`}
-                    className="btn btn-sm btn-success"
-                  >
-                    ইংরেজি সনদ আবেদন করুন
-                  </a>
-
+                  :
+                  <div>
+                    {site_settings.union && <a
+                      href={`https://${sonod.unioun_name}.pouroseba.gov.bd/application-english/${encodeURIComponent(sonod.sonod_name)}?id=${sonod.id}`}
+                      className="btn btn-sm btn-success"
+                    >
+                      ইংরেজি সনদ আবেদন করুন
+                    </a>
+                    }
+                  </div>
                 }
               </>
             )}
