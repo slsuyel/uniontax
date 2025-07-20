@@ -7,7 +7,7 @@ import { RootState } from "@/redux/features/store";
 import { TApplicantData } from "@/types";
 import { getFormattedDate } from "@/utils/getFormattedDate";
 import { Button, message, Modal } from "antd";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 interface EnglishFormValueModalProps {
   visible: boolean;
@@ -24,6 +24,10 @@ const EnglishFormValueModal = ({
   onCancel,
   from,
 }: EnglishFormValueModalProps) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id'); 
+  console.log(id);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const sonodList = useAppSelector((state: RootState) => state.union.sonodList);
   const { service } = useParams<{ service: string }>();
@@ -42,6 +46,7 @@ const EnglishFormValueModal = ({
     const additionalData = {
       // applicant_date_of_birth: formattedDate,
       unioun_name: unionInfo?.short_name_e,
+     
       sonod_name: service,
       s_uri: window.origin + "/payment-success",
       f_uri: window.origin + "/payment-failed",
@@ -50,9 +55,15 @@ const EnglishFormValueModal = ({
     // const updatedData = { ...data, ...additionalData };
 
     const payload = {
-      bn: { ...bn, ...additionalData, image: bn?.image?.thumbUrl },
+      ...(bn && { bn: { ...bn, ...additionalData, image: bn?.image?.thumbUrl } }),
       en: { ...data, ...additionalData },
+      sonod_id: id || '',
     };
+    
+    // const payload = {
+    //   bn: { ...bn, ...additionalData, image: bn?.image?.thumbUrl, },
+    //   en: { ...data, ...additionalData },
+    // };
 
     console.log({ ...payload, token });
     // return;
@@ -287,7 +298,7 @@ const EnglishFormValueModal = ({
               ফি হল{" "}
               {service == "ট্রেড লাইসেন্স"
                 ? fees 
-                : fees * 2}{" "}
+                : fees * (bn?2:1)}{" "}
               টাকা।
             </h3>
             <button
