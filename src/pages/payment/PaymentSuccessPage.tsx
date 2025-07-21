@@ -129,7 +129,7 @@ const PaymentSuccessPage: React.FC = () => {
     }
   }, [count, transId, hasCalledApi, fetchPaymentDetails]);
 
-  console.log(ipnResponse);
+  console.log(ipnResponse?.data.myserver.sonod_type);
 
   return (
     <div className="container">
@@ -200,7 +200,11 @@ const PaymentSuccessPage: React.FC = () => {
                   </Link>
                   {ipnResponse?.data.myserver.sonod_type !== "holdingtax" && (
                     <a
-                      href={`${VITE_BASE_DOC_URL}/applicant/copy/download/${sonodId}`}
+                      href={
+                        ipnResponse?.data.myserver.sonod_type === "AutoBikeRegistration"
+                          ? `${VITE_BASE_DOC_URL}/auto/bike/applicant/copy/download/${sonodId}`
+                          : `${VITE_BASE_DOC_URL}/applicant/copy/download/${sonodId}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-success"
@@ -208,7 +212,17 @@ const PaymentSuccessPage: React.FC = () => {
                       Applicant Copy
                     </a>
                   )}
-                  <a
+                  {/* {ipnResponse?.data.myserver.sonod_type !== "holdingtax" && (
+                    <a
+                      href={`${VITE_BASE_DOC_URL}/applicant/copy/download/${sonodId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-success"
+                    >
+                      Applicant Copy
+                    </a>
+                  )} */}
+                  {/* <a
                     href={
                       ipnResponse?.data.myserver.sonod_type === "holdingtax"
                         ? `${VITE_BASE_DOC_URL}/holding/tax/invoice/${sonodId}`
@@ -219,7 +233,23 @@ const PaymentSuccessPage: React.FC = () => {
                     className="btn btn-success"
                   >
                     Invoice
+                  </a> */}
+                  <a
+                    href={
+                      ipnResponse?.data.myserver.sonod_type === "holdingtax"
+                        ? `${VITE_BASE_DOC_URL}/holding/tax/invoice/${sonodId}`
+                        : ipnResponse?.data.myserver.sonod_type === "AutoBikeRegistration"
+                          ? `${VITE_BASE_DOC_URL}/auto/bike/applicant/invoice/download/${sonodId}`
+                          : `${VITE_BASE_DOC_URL}/sonod/invoice/download/${sonodId}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-success"
+                  >
+                    Invoice
                   </a>
+
+
                 </div>
               </div>
             </div>
