@@ -21,6 +21,7 @@ export interface BusinessDirectory {
   applicant_owner_type: string;
   applicant_name_of_the_organization: string;
   organization_address: string;
+  organization_word_no: string;
   applicant_occupation: string;
   applicant_vat_id_number: string;
   applicant_tax_id_number: string;

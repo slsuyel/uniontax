@@ -120,6 +120,7 @@ const EnglishApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_name_of_the_organization:
             user?.applicant_name_of_the_organization,
           organization_address: user?.organization_address,
+          organization_word_no: user?.organization_word_no,
           applicant_name: user?.applicant_name,
           utname: user?.utname,
           ut_religion: user?.ut_religion,

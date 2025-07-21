@@ -104,6 +104,7 @@ export interface TApplicantData {
   applicant_owner_type: string | null;
   applicant_name_of_the_organization: string | null;
   organization_address: string | null;
+  organization_word_no: string | null;
 
   utname: string | null;
   ut_religion: string | null;

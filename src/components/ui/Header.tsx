@@ -39,10 +39,10 @@ const Header = () => {
           link: "https://bdris.gov.bd/dr/application",
           target: "_blank",
         },
-        // {
-        //   title: "অটো বাইক মালিকানা / তালিকাভুক্তি / নিবন্ধন",
-        //   link: "/auto-bike-registration"
-        // },
+        {
+          title: "অটো বাইক মালিকানা / তালিকাভুক্তি / নিবন্ধন",
+          link: "/auto-bike-registration"
+        },
       ],
     },
     { title: "সনদ যাচাই", link: "/sonod/search" },
