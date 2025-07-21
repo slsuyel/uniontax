@@ -112,6 +112,17 @@ const TradeLicenseForm = ({
         </Form.Item>
       </div>
       <div className="col-md-4">
+        <Form.Item label="প্রতিষ্ঠানের ওয়ার্ড নং " name="organization_word_no">
+          <Select defaultValue="1" style={{ height: 40, width: "100%" }} >
+            {Array.from({ length: 12 }, (_, index) => (
+              <Select.Option key={index + 1} value={index + 1}>
+                {index + 1}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </div>
+      <div className="col-md-4">
         <Form.Item label="পেশা" name="applicant_occupation">
           <Input style={{ height: 40, width: "100%" }} />
         </Form.Item>

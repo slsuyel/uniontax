@@ -66,6 +66,7 @@ const EnglishTradeLicenseForm = () => {
           <Input style={{ height: 40, width: "100%" }} />
         </Form.Item>
       </div>
+     
       <div className="col-md-4">
         <Form.Item label="পেশা" name="applicant_occupation">
           <Input style={{ height: 40, width: "100%" }} />

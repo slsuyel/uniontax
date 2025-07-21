@@ -241,6 +241,7 @@ const ApplicationForm = ({ user }: { user?: TApplicantData }) => {
           applicant_name_of_the_organization:
             sonodInfo?.applicant_name_of_the_organization,
           organization_address: sonodInfo?.organization_address,
+          organization_word_no: sonodInfo?.organization_word_no || 1,
           applicant_name: sonodInfo?.applicant_name,
           utname: sonodInfo?.utname,
           orthoBchor: sonodInfo?.orthoBchor,

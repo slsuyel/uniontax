@@ -31,7 +31,7 @@ const FormValueModal = ({
   const { service } = useParams<{ service: string }>();
   const sonod = sonodList.find((d) => d.bnname == service);
   const tradeFee = useAppSelector((state: RootState) => state.union.tradeFee);
-
+  
   const [sonodApply, { isLoading }] = useSonodApplyMutation();
 
   const site_settings = useAppSelector(
@@ -332,31 +332,31 @@ const FormValueModal = ({
                     {service === "ট্রেড লাইসেন্স"
                       ? site_settings?.union == "false"
                         ? (() => {
-                            let signboard_fee = 0;
-                            if (data?.signboard_type === "normal") {
-                              signboard_fee =
-                                Number(data?.signboard_size_square_fit || 0) *
-                                100;
-                            } else if (data?.signboard_type === "digital_led") {
-                              signboard_fee =
-                                Number(data?.signboard_size_square_fit || 0) *
-                                150;
-                            }
-                            const lastYearsMoney = Number(
-                              data?.last_years_money || 0
-                            );
-                            return (
-                              // Math.round(Number(tradeFee) * 1.15) +
+                          let signboard_fee = 0;
+                          if (data?.signboard_type === "normal") {
+                            signboard_fee =
+                              Number(data?.signboard_size_square_fit || 0) *
+                              100;
+                          } else if (data?.signboard_type === "digital_led") {
+                            signboard_fee =
+                              Number(data?.signboard_size_square_fit || 0) *
+                              150;
+                          }
+                          const lastYearsMoney = Number(
+                            data?.last_years_money || 0
+                          );
+                          return (
+                            // Math.round(Number(tradeFee) * 1.15) +
 
-                              Number(tradeFee) +
-                              Number(sonod?.sonod_fees) +
-                              signboard_fee +
-                              lastYearsMoney
-                            );
-                          })()
+                            Number(tradeFee) +
+                            Number(sonod?.sonod_fees) +
+                            signboard_fee +
+                            lastYearsMoney
+                          );
+                        })()
                         : Number(tradeFee) +
-                          Number(Number(sonod?.sonod_fees) * 1.15) +
-                          Number(data?.last_years_money || 0)
+                        Number(Number(sonod?.sonod_fees) * 1.15) +
+                        Number(data?.last_years_money || 0)
                       : sonod?.sonod_fees}{" "}
                     {/*                       
                       {service === "ট্রেড লাইসেন্স"
