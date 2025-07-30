@@ -46,7 +46,7 @@ const commonFields = ({ form }: { form: any; setFormData: (data: any) => void })
           >
             <Option value="পুরুষ">পুরুষ</Option>
             <Option value="মহিলা">মহিলা</Option>
-            <Option value="পুরুষ ও মহিলা">পুরুষ ও মহিলা</Option>
+          
           </Select>
         </Form.Item>
       </div>
