@@ -16,6 +16,7 @@ const AutoBikeRegistration = () => {
     const postOffices = unionInfo?.post_offices || [];
     const addressFieldsProps = { form, postOffices };
 
+    const [holdingPromanok, setHoldingPromanok] = useState<File | null>(null);
     const [passportPhoto, setPassportPhoto] = useState<File | null>(null);
     const [nationalIdCopy, setNationalIdCopy] = useState<File | null>(null);
     const [autoBikeReceipt, setAutoBikeReceipt] = useState<File | null>(null);
@@ -38,6 +39,7 @@ const AutoBikeRegistration = () => {
         if (autoBikeReceipt) formData.append("auto_bike_receipt", autoBikeReceipt);
         if (previousLicenseCopy) formData.append("previous_license_copy", previousLicenseCopy);
         if (affidavitCopy) formData.append("affidavit_copy", affidavitCopy);
+        if (holdingPromanok) formData.append("holding_tax_promanok", holdingPromanok);
 
         // Append additional metadata (non-file fields)
         formData.append("union_name", unionInfo?.short_name_e || '');
@@ -48,6 +50,7 @@ const AutoBikeRegistration = () => {
         // Append all other form values (excluding files)
         Object.keys(values).forEach((key) => {
             if (
+                key !== "holding_tax_promanok" &&
                 key !== "passport_photo" &&
                 key !== "national_id_copy" &&
                 key !== "auto_bike_receipt" &&
@@ -286,6 +289,15 @@ const AutoBikeRegistration = () => {
                             <div className="row mx-auto">
 
                                 <div className="col-md-4">
+                                    <Form.Item label="হোল্ডিং নং" name="applicant_holding_tax_number">
+                                        <Input
+                                            style={{ height: 40, width: "100%" }}
+                                            className="form-control"
+                                        />
+                                    </Form.Item>
+                                </div>
+
+                                <div className="col-md-4">
                                     <Form.Item label="হোল্ডিং মালিকের নাম" name="holding_owner_name">
                                         <Input
                                             style={{ height: 40, width: "100%" }}
@@ -435,7 +447,7 @@ const AutoBikeRegistration = () => {
                             </Form.Item>
                         </div>
                         <div className="col-md-4">
-                            <Form.Item label="পৌরসভা কর্তৃক ইতোপূর্বে প্রদত্ত অটোরিক্সা নিবন্ধন নম্বর" name="auto_bike_last_regi_no" >
+                            <Form.Item label="পৌরসভা কর্তৃক ইতোপূর্বে প্রদত্ত নিবন্ধন নম্বর" name="auto_bike_last_regi_no" >
                                 <Input style={{ height: 40, width: "100%" }} />
                             </Form.Item>
                         </div>
@@ -490,12 +502,23 @@ const AutoBikeRegistration = () => {
 
                         <div className="col-md-4">
                             <Form.Item
-                                label="জাতীয় পরিচয়পত্র/জনা নিবন্ধন পত্রের ফটোকপি"
+                                label="জাতীয় পরিচয়পত্র/জন্ম নিবন্ধন পত্রের ফটোকপি"
                                 name="national_id_copy"
                             >
                                 <Input
                                     type="file"
                                     onChange={(e) => handleFileChange(e, setNationalIdCopy)}
+                                />
+                            </Form.Item>
+                        </div>
+                        <div className="col-md-4">
+                            <Form.Item
+                                label="হোল্ডিং ট্যাক্সের  প্রমাণক "
+                                name="holding_tax_promanok"
+                            >
+                                <Input
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, setHoldingPromanok)}
                                 />
                             </Form.Item>
                         </div>
