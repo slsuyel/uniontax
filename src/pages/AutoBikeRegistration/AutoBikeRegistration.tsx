@@ -102,7 +102,7 @@ const AutoBikeRegistration = () => {
                         color: "white",
                     }}
                 >
-                    'অটো বাইক মালিকানা/তালিকাভুক্তি/নিবন্ধন আবেদন ফরম'
+                    'ব্যাটারি চালিত অটোরিক্সা/ইজিবাইক মালিকানা/তালিকাভুক্তি/নিবন্ধন আবেদন ফরম'
                 </div>
 
                 <div className="form-pannel">
@@ -364,12 +364,12 @@ const AutoBikeRegistration = () => {
 
 
                         <div className="col-md-12">
-                            <div className="app-heading">অটো বাইকের তথ্য</div>
+                            <div className="app-heading">ব্যাটারি চালিত অটোরিক্সা/ইজিবাইকের তথ্য</div>
                         </div>
 
 
                         <div className="col-md-4">
-                            <Form.Item label="অটো বাইক ক্রয়ের তারিখ" name="auto_bike_purchase_date" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
+                            <Form.Item label=" ক্রয়ের তারিখ" name="auto_bike_purchase_date" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
                                 <Input style={{ height: 40, width: "100%" }} type="date" />
                             </Form.Item>
                         </div>
@@ -381,14 +381,14 @@ const AutoBikeRegistration = () => {
                             </Form.Item>
                         </div>
                         <div className="col-md-4">
-                            <Form.Item label="পৌরসভা কর্তৃক ইতোপূর্বে প্রদত্ত অটোরিক্সা নিবন্ধন নম্বর" name="auto_bike_last_regi_no" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
-                                <Input style={{ height: 40, width: "100%" }} type="date" />
+                            <Form.Item label="পৌরসভা কর্তৃক ইতোপূর্বে প্রদত্ত অটোরিক্সা নিবন্ধন নম্বর" name="auto_bike_last_regi_no" >
+                                <Input style={{ height: 40, width: "100%" }} />
                             </Form.Item>
                         </div>
 
 
                         <div className="col-md-4">
-                            <Form.Item label="অটো বাইক সরবরাহকারী প্রতিষ্ঠানের নাম" name="auto_bike_supplier_name" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
+                            <Form.Item label="সরবরাহকারী প্রতিষ্ঠানের নাম" name="auto_bike_supplier_name" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
                                 <Input style={{ height: 40, width: "100%" }} />
                             </Form.Item>
                         </div>
@@ -444,7 +444,7 @@ const AutoBikeRegistration = () => {
                      
                         <div className="col-md-4">
                             <Form.Item
-                                label="অটো বাইক ক্রয়ের রশিদের ফটোকপি"
+                                label="ব্যাটারি চালিত অটোরিক্সা/ইজিবাইক ক্রয়ের রশিদের ফটোকপি"
                                 name="auto_bike_receipt"
                             >
                                 <Input type="file" />
