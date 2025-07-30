@@ -16,7 +16,7 @@ const AutoBikeRegistration = () => {
     const addressFieldsProps = { form, postOffices };
 
     // Handle form submission
-    const onFinish = async (values:any) => {
+    const onFinish = async (values: any) => {
         const formData = new FormData();
 
         // Append files (if they exist)
@@ -68,26 +68,26 @@ const AutoBikeRegistration = () => {
                 initialValues={{
                     fiscal_year: '২০২৪-২৫',
                     application_type: 'নতুন',
-                    applicant_name_bn: 'John Doe',
-                    applicant_name_en: 'John Doe',
-                    applicant_father_name: 'Father Name',
-                    applicant_mother_name: 'Mother Name',
+                    applicant_name_bn: '',
+                    applicant_name_en: '',
+                    applicant_father_name: '',
+                    applicant_mother_name: '',
                     applicant_gender: 'পুরুষ',
                     nationality: 'বাংলাদেশি',
                     applicant_religion: 'ইসলাম',
                     marital_status: 'বিবাহিত',
-                    profession: 'Software Developer',
-                    blood_group: 'A+',
-                    applicant_mobile: '01234567891',
-                    emergency_contact_name: 'Mother',
-                    emergency_contact_phone: '01234567892',
+                    profession: '',
+                    blood_group: '',
+                    applicant_mobile: '',
+                    emergency_contact_name: '',
+                    emergency_contact_phone: '',
                     emergency_contact_relation: 'মা',
-                    emergency_contact_national_id_number: '1234567890123',
-                    auto_bike_purchase_date: '2023-01-01',
-                    auto_bike_last_renew_date: '2024-01-01',
-                    auto_bike_supplier_name: 'XYZ Supplier',
-                    auto_bike_supplier_address: '123 Street, City',
-                    auto_bike_supplier_mobile: '01234567893',
+                    emergency_contact_national_id_number: '',
+                    auto_bike_purchase_date: '',
+                    auto_bike_last_renew_date: '',
+                    auto_bike_supplier_name: '',
+                    auto_bike_supplier_address: '',
+                    auto_bike_supplier_mobile: '',
                 }}
 
 
@@ -226,6 +226,54 @@ const AutoBikeRegistration = () => {
                         </div>
 
 
+                        <fieldset className="border rounded p-3 mb-3 col-md-12">
+                            <legend className="w-auto px-2" style={{ fontWeight: 'bold' }}>হোল্ডিং সম্পর্কিত তথ্য</legend>
+
+                            <div className="row mx-auto">
+
+                                <div className="col-md-4">
+                                    <Form.Item label="হোল্ডিং মালিকের নাম" name="holding_owner_name">
+                                        <Input
+                                            style={{ height: 40, width: "100%" }}
+                                            className="form-control"
+                                        />
+                                    </Form.Item>
+                                </div>
+                                <div className="col-md-4">
+                                    <Form.Item
+                                        label="হোল্ডিং মালিকের সাথে সম্পর্ক"
+                                        name="holding_owner_relationship"
+                                    >
+                                        <Select style={{ height: 40 }} placeholder="সম্পর্ক">
+                                            <Select.Option value="নিজ">নিজ</Select.Option>
+                                            <Select.Option value="ভাড়াটিয়া">ভাড়াটিয়া</Select.Option>
+                                            <Select.Option value="পিতা">পিতা</Select.Option>
+                                            <Select.Option value="মাতা">মাতা</Select.Option>
+                                            <Select.Option value="স্ত্রী">স্ত্রী</Select.Option>
+                                            <Select.Option value="পুত্র">পুত্র</Select.Option>
+                                            <Select.Option value="কন্যা">কন্যা</Select.Option>
+                                            <Select.Option value="স্বামী">স্বামী</Select.Option>
+                                            <Select.Option value="ভাই">ভাই</Select.Option>
+                                            <Select.Option value="ভাবি">ভাবি</Select.Option>
+                                            <Select.Option value="বোন">বোন</Select.Option>
+                                            <Select.Option value="নাতি">নাতি</Select.Option>
+                                            <Select.Option value="নাতনি">নাতনি</Select.Option>
+
+                                        </Select>
+                                    </Form.Item>
+                                </div>
+
+                                <div className="col-md-4">
+                                    <Form.Item label="হোল্ডিং মালিকের মোবাইল নম্বর" name="holding_owner_mobile">
+                                        <Input
+                                            style={{ height: 40, width: "100%" }}
+                                            className="form-control"
+                                        />
+                                    </Form.Item>
+                                </div>
+                            </div>
+                        </fieldset>
+
                         <div className="col-md-4">
                             <Form.Item label="রক্তের গ্রুপ" name="blood_group" rules={[{ required: true, message: "রক্তের গ্রুপ নির্বাচন করুন" }]}>
                                 <Select placeholder="রক্তের গ্রুপ নির্বাচন করুন" style={{ height: 40, width: "100%" }}>
@@ -329,6 +377,11 @@ const AutoBikeRegistration = () => {
 
                         <div className="col-md-4">
                             <Form.Item label="সর্বশেষ নবায়ন তারিখ" name="auto_bike_last_renew_date" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
+                                <Input style={{ height: 40, width: "100%" }} type="date" />
+                            </Form.Item>
+                        </div>
+                        <div className="col-md-4">
+                            <Form.Item label="পৌরসভা কর্তৃক ইতোপূর্বে প্রদত্ত অটোরিক্সা নিবন্ধন নম্বর" name="auto_bike_last_regi_no" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
                                 <Input style={{ height: 40, width: "100%" }} type="date" />
                             </Form.Item>
                         </div>
