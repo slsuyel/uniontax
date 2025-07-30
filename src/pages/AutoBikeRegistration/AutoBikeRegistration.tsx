@@ -5,6 +5,7 @@ import addressFields from '../ApplicationForm/addressFields';
 import { useAppSelector } from '@/redux/features/hooks';
 import { RootState } from '@/redux/features/store';
 import { useBikeRegistrationMutation } from '@/redux/api/sonod/sonodApi';
+import { useState } from 'react';
 
 const { Option } = Select;
 
@@ -15,16 +16,28 @@ const AutoBikeRegistration = () => {
     const postOffices = unionInfo?.post_offices || [];
     const addressFieldsProps = { form, postOffices };
 
+    const [passportPhoto, setPassportPhoto] = useState<File | null>(null);
+    const [nationalIdCopy, setNationalIdCopy] = useState<File | null>(null);
+    const [autoBikeReceipt, setAutoBikeReceipt] = useState<File | null>(null);
+    const [previousLicenseCopy, setPreviousLicenseCopy] = useState<File | null>(null);
+    const [affidavitCopy, setAffidavitCopy] = useState<File | null>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setFile: React.Dispatch<React.SetStateAction<File | null>>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setFile(e.target.files[0]);
+        }
+    };
+
     // Handle form submission
     const onFinish = async (values: any) => {
         const formData = new FormData();
 
-        // Append files (if they exist)
-        if (values.passport_photo) formData.append("passport_photo", values.passport_photo);
-        if (values.national_id_copy) formData.append("national_id_copy", values.national_id_copy);
-        if (values.auto_bike_receipt) formData.append("auto_bike_receipt", values.auto_bike_receipt);
-        if (values.previous_license_copy) formData.append("previous_license_copy", values.previous_license_copy);
-        if (values.affidavit_copy) formData.append("affidavit_copy", values.affidavit_copy);
+        // Append files if they exist
+        if (passportPhoto) formData.append("passport_photo", passportPhoto);
+        if (nationalIdCopy) formData.append("national_id_copy", nationalIdCopy);
+        if (autoBikeReceipt) formData.append("auto_bike_receipt", autoBikeReceipt);
+        if (previousLicenseCopy) formData.append("previous_license_copy", previousLicenseCopy);
+        if (affidavitCopy) formData.append("affidavit_copy", affidavitCopy);
 
         // Append additional metadata (non-file fields)
         formData.append("union_name", unionInfo?.short_name_e || '');
@@ -66,28 +79,62 @@ const AutoBikeRegistration = () => {
                 onFinishFailed={onFinishFailed}
                 layout="vertical"
                 initialValues={{
+                    // Application Info
                     fiscal_year: '২০২৪-২৫',
                     application_type: 'নতুন',
+
+                    // Applicant Personal Info
                     applicant_name_bn: '',
                     applicant_name_en: '',
                     applicant_father_name: '',
                     applicant_mother_name: '',
-                    applicant_gender: 'পুরুষ',
-                    nationality: 'বাংলাদেশি',
-                    applicant_religion: 'ইসলাম',
-                    marital_status: 'বিবাহিত',
+                    applicant_gender: '',
+                    nationality: '',
+                    applicant_religion: '',
+                    applicant_date_of_birth: '',
+                    marital_status: '',
                     profession: '',
                     blood_group: '',
                     applicant_mobile: '',
+
+                    // Holding Info
+                    holding_owner_name: '',
+                    holding_owner_relationship: '',
+                    holding_owner_mobile: '',
+
+                    // Address Info
+                    division_id: '', // Dhaka division
+                    district_id: '', // Dhaka district
+                    upazila_id: '', // Savar upazila
+                    union_id: '', // Ashulia union
+                    ward_id: '',
+                    post_office_id: '', // Ashulia post office
+                    village: '',
+                    postal_code: '',
+
+                    // Emergency Contact
                     emergency_contact_name: '',
                     emergency_contact_phone: '',
-                    emergency_contact_relation: 'মা',
+                    emergency_contact_relation: '',
                     emergency_contact_national_id_number: '',
+
+                    // Bike Information
                     auto_bike_purchase_date: '',
                     auto_bike_last_renew_date: '',
+                    auto_bike_last_regi_no: '',
                     auto_bike_supplier_name: '',
                     auto_bike_supplier_address: '',
                     auto_bike_supplier_mobile: '',
+
+                    // Documents (these would be handled via file upload state)
+                    passport_photo: null,
+                    national_id_copy: null,
+                    auto_bike_receipt: null,
+                    previous_license_copy: null,
+                    affidavit_copy: null,
+
+                    // Confirmation
+                    confirmation: true
                 }}
 
 
@@ -116,9 +163,16 @@ const AutoBikeRegistration = () => {
                         <div className="col-md-4">
                             <Form.Item label="অর্থ বছর" name="fiscal_year" rules={[{ required: true, message: "অর্থ বছর নির্বাচন করুন" }]}>
                                 <Select placeholder="অর্থ বছর নির্বাচন করুন" style={{ height: 40, width: "100%" }}>
-                                    <Option value="২০২৪-২৫">২০২৪-২৫</Option>
                                     <Option value="২০২৫-২৬">২০২৫-২৬</Option>
-
+                                    <Option value="২০২৪-২৫">২০২৪-২৫</Option>
+                                    <Option value="২০২৩-২৪">২০২৩-২৪</Option>
+                                    <Option value="২০২২-২৩">২০২২-২৩</Option>
+                                    <Option value="২০২১-২২">২০২১-২২</Option>
+                                    <Option value="২০২০-২১">২০২০-২১</Option>
+                                    <Option value="২০১৯-২০">২০১৯-২০</Option>
+                                    <Option value="২০১৮-১৯">২০১৮-১৯</Option>
+                                    <Option value="২০১৭-১৮">২০১৭-১৮</Option>
+                                    <Option value="২০১৬-১৭">২০১৬-১৭</Option>
                                 </Select>
                             </Form.Item>
                         </div>
@@ -416,61 +470,71 @@ const AutoBikeRegistration = () => {
                         </div>
 
 
-                        {/* <div className="col-md-12">
+                        <div className="col-md-12">
                             <div className="app-heading">প্রদত্ত লিপি</div>
                         </div>
 
-                     
+
                         <div className="col-md-4">
                             <Form.Item
                                 label="সদস্য তোলা পাসপোর্ট সাইজের ছবি"
                                 name="passport_photo"
                                 rules={[{ required: true, message: "পাসপোর্ট সাইজের ছবি আপলোড করুন" }]}
                             >
-                                <Input type="file" />
+                                <Input
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, setPassportPhoto)}
+                                />
                             </Form.Item>
                         </div>
 
-                     
                         <div className="col-md-4">
                             <Form.Item
                                 label="জাতীয় পরিচয়পত্র/জনা নিবন্ধন পত্রের ফটোকপি"
                                 name="national_id_copy"
                             >
-                                <Input type="file" />
+                                <Input
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, setNationalIdCopy)}
+                                />
                             </Form.Item>
                         </div>
 
-                     
                         <div className="col-md-4">
                             <Form.Item
                                 label="ব্যাটারি চালিত অটোরিক্সা/ইজিবাইক ক্রয়ের রশিদের ফটোকপি"
                                 name="auto_bike_receipt"
                             >
-                                <Input type="file" />
+                                <Input
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, setAutoBikeReceipt)}
+                                />
                             </Form.Item>
                         </div>
 
-                     
                         <div className="col-md-4">
                             <Form.Item
                                 label="পূর্ববর্তী লাইসেন্সের মূল কপি"
                                 name="previous_license_copy"
                             >
-                                <Input type="file" />
+                                <Input
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, setPreviousLicenseCopy)}
+                                />
                             </Form.Item>
                         </div>
 
-                     
                         <div className="col-md-4">
                             <Form.Item
                                 label="মালিকানা পরিবর্তন হলে এফিডেভিট এর ফটোকপি"
                                 name="affidavit_copy"
                             >
-                                <Input type="file" />
+                                <Input
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, setAffidavitCopy)}
+                                />
                             </Form.Item>
                         </div>
-                         */}
 
 
                         <div className="col-md-12">
