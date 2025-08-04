@@ -26,12 +26,14 @@ const HoldingAdd = () => {
   const { word } = useParams();
   const [form] = Form.useForm();
   const [category, setCategory] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState(false);
 
   const handleTaxType = (value: string) => {
     setCategory(value);
   };
 
   const onFinish = async (values: any) => {
+   
     try {
       const res = await addHolding({ data: values, token }).unwrap();
       if (res.status_code === 201) {
@@ -111,6 +113,18 @@ const HoldingAdd = () => {
               <Input style={{ height: 40 }} />
             </Form.Item>
           </div>
+
+          <div className="col-md-6">
+            <Form.Item
+              label="মাতার নাম"
+              name="mother_name"
+              className="my-1"
+              rules={[{ required: true, message: "মাতার নাম দিন" }]}
+            >
+              <Input style={{ height: 40 }} />
+            </Form.Item>
+          </div>
+
           <div className="col-md-6">
             <Form.Item
               rules={[
@@ -310,19 +324,197 @@ const HoldingAdd = () => {
             </>
           )}
 
-          {/* Upload Field */}
-          {/* <div className="col-md-6">
-            <Form.Item
-              label="মালিকের ছবি"
-              name="image"
-              valuePropName="fileList"
-              className="my-1"
+          <div>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setAdditionalInfo(!additionalInfo);
+              }}
+              className="btn btn-info btn-sm text-white my-2"
             >
-              <Upload listType="text">
-                <Button icon={<UploadOutlined />}>Choose file</Button>
-              </Upload>
-            </Form.Item>
-          </div> */}
+              অতিরিক্ত তথ্য যোগ করুন
+            </button>
+          </div>
+
+          {
+            additionalInfo && <>
+              <div className="col-md-6">
+                <Form.Item
+                  label="জন্ম তারিখ"
+                  name="date_of_birth"
+                  className="my-1"
+
+                >
+                  <Input type="date" style={{ height: 40 }} />
+                </Form.Item>
+              </div>
+
+
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="পেশা"
+                  name="profession"
+                  className="my-1"
+
+                >
+                  <Input style={{ height: 40 }} />
+                </Form.Item>
+              </div>
+
+              <div className="col-md-3">
+                <Form.Item
+                  label="ধর্ম"
+                  name="religion"
+                  className="my-1"
+
+                >
+                  <Select placeholder="ধর্ম নির্বাচন করুন" style={{ height: 40 }}>
+                    <Option value="হিন্দু">হিন্দু</Option>
+                    <Option value="মুসলিম">মুসলিম</Option>
+                    <Option value="খ্রিস্টান">খ্রিস্টান</Option>
+                    <Option value="বৌদ্ধ">বৌদ্ধ</Option>
+                    <Option value="অন্যান্য">অন্যান্য</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+
+
+              <div className="col-md-3">
+                <Form.Item
+                  label="গৃহের ধরণ"
+                  name="house_type"
+                  className="my-1"
+
+                >
+                  <Select placeholder="গৃহের ধরণ নির্বাচন করুন" style={{ height: 40 }}>
+                    <Option value="পাকা">পাকা</Option>
+                    <Option value="কাচা">কাচা</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="সামাজিক সুবিধা"
+                  name="social_facility"
+                  className="my-1"
+
+                >
+                  <Select placeholder="সামাজিক সুবিধা নির্বাচন করুন" style={{ height: 40 }}>
+                    <Option value="টিসিবি">টিসিবি</Option>
+                    <Option value="ভি ডব্লিউ বি">ভি ডব্লিউ বি</Option>
+                    <Option value="বয়স্ক ভাতা">বয়স্ক ভাতা</Option>
+                    <Option value="বিধবা ভাতা">বিধবা ভাতা</Option>
+                    <Option value="স্বামী পরিত্যাক্ত ভাতা">স্বামী পরিত্যক্ত ভাতা</Option>
+                    <Option value="মা ও শিশু সহায়তা ভাতা">মা ও শিশু সহায়তা ভাতা</Option>
+                    <Option value="প্রতিবন্ধী ভাতা">প্রতিবন্ধী ভাতা</Option>
+                    <Option value="আদিবাসী ভাতা">আদিবাসী ভাতা</Option>
+                    <Option value="মুক্তিযোদ্ধা ভাতা">মুক্তিযোদ্ধা ভাতা</Option>
+                    <Option value="হতদরিদ্র ভাতা">হতদরিদ্র ভাতা</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="স্যানেটারি বা হাইজেনিক অবস্থা"
+                  name="sanitary_condition"
+                  className="my-1"
+                >
+                  <Select placeholder="বাড়ির ওপর ঋণ নির্বাচন করুন" style={{ height: 40 }}>
+                    <Option value={'হ্যাঁ'}>হ্যাঁ</Option>
+                    <Option value={'না'}>না</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+
+              <div className="col-md-3">
+                <Form.Item
+                  label="ছেলে সন্তান"
+                  name="number_of_sons"
+                  className="my-1"
+
+                >
+                  <InputNumber style={{ height: 40, width: "100%" }} />
+                </Form.Item>
+              </div>
+
+              <div className="col-md-3">
+                <Form.Item
+                  label="মেয়ে সন্তান"
+                  name="number_of_daughters"
+                  className="my-1"
+
+                >
+                  <InputNumber style={{ height: 40, width: "100%" }} />
+                </Form.Item>
+              </div>
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="বাড়ির ওপর ঋণ"
+                  name="house_loan"
+                  className="my-1"
+
+                >
+                  <Select placeholder="বাড়ির ওপর ঋণ নির্বাচন করুন" style={{ height: 40 }}>
+                    <Option value={'হ্যাঁ'}>হ্যাঁ</Option>
+                    <Option value={'না'}>না</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="জমির পরিমান"
+                  name="land_amount"
+                  className="my-1"
+                >
+                  <InputNumber style={{ height: 40, width: "100%" }} />
+                </Form.Item>
+              </div>
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="বসত ভিটার পরিমান"
+                  name="homestead_amount"
+                  className="my-1"
+                >
+                  <InputNumber style={{ height: 40, width: "100%" }} />
+                </Form.Item>
+              </div>
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="ব্যবসার মূলধনের পরিমান"
+                  name="business_capital"
+                  className="my-1"
+                >
+                  <InputNumber style={{ height: 40, width: "100%" }} />
+                </Form.Item>
+              </div>
+
+              <div className="col-md-6">
+                <Form.Item
+                  label="আর্থ সামাজিক অবস্থার ধরণ"
+                  name="socioeconomic_status"
+                  className="my-1"
+                >
+                  <Select placeholder="আর্থ সামাজিক অবস্থার ধরণ নির্বাচন করুন" style={{ height: 40 }}>
+                    <Option value="A">A</Option>
+                    <Option value="B">B</Option>
+                    <Option value="C">C</Option>
+                    <Option value="D">D</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+
+            </>
+          }
+
 
           <div className="border rounded my-4">
             <h3>
