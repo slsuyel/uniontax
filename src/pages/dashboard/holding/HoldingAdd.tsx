@@ -389,6 +389,7 @@ const HoldingAdd = () => {
                 >
                   <Select placeholder="গৃহের ধরণ নির্বাচন করুন" style={{ height: 40 }}>
                     <Option value="পাকা">পাকা</Option>
+                    <Option value=" আধা পাকা"> আধা পাকা</Option>
                     <Option value="কাচা">কাচা</Option>
                   </Select>
                 </Form.Item>
