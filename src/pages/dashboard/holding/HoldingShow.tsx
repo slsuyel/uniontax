@@ -84,6 +84,14 @@ const HoldingShow = () => {
                   {" "}
                   বকেয়া রিপোর্ট
                 </Link>
+                <Link
+                  className="btn btn-success  m-1"
+                  target="_blank"
+                  to={`${VITE_BASE_DOC_URL}/holding/download/assessment/${word}?token=${token}`}
+                >
+                  {" "}
+                  Assessment রিপোর্ট
+                </Link>
                 
               </div>
             </div>
