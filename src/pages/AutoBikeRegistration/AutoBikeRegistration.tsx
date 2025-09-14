@@ -435,14 +435,18 @@ const AutoBikeRegistration = () => {
 
 
                         <div className="col-md-4">
-                            <Form.Item label=" ক্রয়ের তারিখ" name="auto_bike_purchase_date" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
+                            <Form.Item label=" ক্রয়ের তারিখ" name="auto_bike_purchase_date"
+                            // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+                            >
                                 <Input style={{ height: 40, width: "100%" }} type="date" />
                             </Form.Item>
                         </div>
 
 
                         <div className="col-md-4">
-                            <Form.Item label="সর্বশেষ নবায়ন তারিখ" name="auto_bike_last_renew_date" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
+                            <Form.Item label="সর্বশেষ নবায়ন তারিখ" name="auto_bike_last_renew_date"
+                            // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+                            >
                                 <Input style={{ height: 40, width: "100%" }} type="date" />
                             </Form.Item>
                         </div>
@@ -454,14 +458,19 @@ const AutoBikeRegistration = () => {
 
 
                         <div className="col-md-4">
-                            <Form.Item label="সরবরাহকারী প্রতিষ্ঠানের নাম" name="auto_bike_supplier_name" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
+                            <Form.Item label="সরবরাহকারী প্রতিষ্ঠানের নাম" name="auto_bike_supplier_name"
+                                
+                                // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+                            >
                                 <Input style={{ height: 40, width: "100%" }} />
                             </Form.Item>
                         </div>
 
 
                         <div className="col-md-4">
-                            <Form.Item label="প্রতিষ্ঠানের ঠিকানা" name="auto_bike_supplier_address" rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}>
+                            <Form.Item label="প্রতিষ্ঠানের ঠিকানা" name="auto_bike_supplier_address"
+                                // rules={[{ required: true, message: "এই তথ্যটি প্রয়োজন" }]}
+                            >
                                 <Input style={{ height: 40, width: "100%" }} />
                             </Form.Item>
                         </div>
@@ -472,7 +481,7 @@ const AutoBikeRegistration = () => {
                                 label="প্রতিষ্ঠানের মোবাইল নম্বর"
                                 name="auto_bike_supplier_mobile"
                                 rules={[
-                                    { required: true, message: "দয়া করে প্রতিষ্ঠানের মোবাইল নম্বর লিখুন" },
+                                    // { required: true, message: "দয়া করে প্রতিষ্ঠানের মোবাইল নম্বর লিখুন" },
                                     { len: 11, message: "মোবাইল নম্বরটি ১১ অক্ষর হতে হবে" },
                                     { pattern: /^[0-9]+$/, message: "মোবাইল নম্বরটি শুধুমাত্র সংখ্যা হতে হবে" },
                                 ]}
