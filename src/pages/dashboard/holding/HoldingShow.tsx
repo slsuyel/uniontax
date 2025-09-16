@@ -4,7 +4,7 @@ import Loader from "@/components/reusable/Loader";
 import { useAllHoldingQuery } from "@/redux/api/sonod/sonodApi";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { Pagination } from "antd";
+import { Modal, Pagination } from "antd";
 
 export interface THolding {
   id: number;
@@ -18,6 +18,7 @@ const HoldingShow = () => {
   const token = localStorage.getItem("token");
   const { word } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showCardModal, setShowCardModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 20; // Fixed page size
   const VITE_BASE_DOC_URL = import.meta.env.VITE_BASE_DOC_URL;
@@ -34,6 +35,9 @@ const HoldingShow = () => {
     e.preventDefault();
     setCurrentPage(1); // Reset to the first page when searching
   };
+  const handleCardModal = () => {
+    setShowCardModal(true)
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -42,6 +46,13 @@ const HoldingShow = () => {
 
   const holdings = data?.data?.data || [];
   const totalItems = data?.data?.total || 0;
+
+  const btnItems = totalItems / 40
+  const toBanglaNumber = (num: number) => {
+    const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    return num.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
+  };
+
 
   // Check if the current page has no data
   const isPageEmpty = holdings.length === 0 && currentPage > 1;
@@ -60,7 +71,7 @@ const HoldingShow = () => {
         <div className="">
           <div className="card-header">
             <div className="d-flex justify-content-between align-items-center">
-            
+
               <div>
                 <Link
                   to={`/dashboard/holding/list/add/${word}`}
@@ -77,7 +88,7 @@ const HoldingShow = () => {
                   Export হোল্ডিং ট্যাক্স
                 </Link>
                 <Link
-                  className="btn btn-success  m-1"
+                  className="btn btn-info  m-1"
                   target="_blank"
                   to={`${VITE_BASE_DOC_URL}/holding/tax/bokeya/list?word=${word}&token=${token}`}
                 >
@@ -92,7 +103,12 @@ const HoldingShow = () => {
                   {" "}
                   Assessment রিপোর্ট
                 </Link>
-                
+
+                <button className="btn btn-info" onClick={handleCardModal}>
+                  Card Download
+                </button>
+
+
               </div>
             </div>
             <form
@@ -202,6 +218,35 @@ const HoldingShow = () => {
           </div>
         </div>
       </div>
+
+
+      <Modal
+        title="ইউিনয়ন হোল্ডিং কার্ড"
+        open={showCardModal}
+        onCancel={() => setShowCardModal(false)}
+        footer={[
+          <button className="btn btn-danger btn-sm" key="close" onClick={() => setShowCardModal(false)}>
+            Close
+          </button>,
+        ]}
+      >
+        <div className="d-flex flex-wrap gap-2">
+          {Array.from({ length: btnItems }, (_, index) => (
+            <Link
+              to={`${VITE_BASE_DOC_URL}/holding/card/download/by/word/${word}?page=${index + 1}&token=${token}`}
+              className="btn btn-success btn-md"
+              key={index}
+              target="_blank"
+            >
+              ডাউনলোড ({toBanglaNumber(index + 1)})
+            </Link>
+          ))}
+        </div>
+
+      </Modal>
+
+
+
     </div>
   );
 };
