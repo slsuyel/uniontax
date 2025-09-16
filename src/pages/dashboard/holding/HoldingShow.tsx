@@ -182,9 +182,16 @@ const HoldingShow = () => {
                                 </Link>{" "}
                                 <Link
                                   to={`/dashboard/holding/list/view/${item.id}`}
-                                  className="btn btn-info"
+                                  className="btn btn-info mx-2"
                                 >
                                   দেখুন
+                                </Link>
+                                <Link
+                                  target="_blank"
+                                  to={`https://api.uniontax.gov.bd/holding/card/${item.id}`}
+                                  className="btn btn-success"
+                                >
+                                  Card
                                 </Link>
                               </td>
                             </tr>
