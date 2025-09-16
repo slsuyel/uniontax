@@ -47,7 +47,7 @@ const HoldingShow = () => {
   const holdings = data?.data?.data || [];
   const totalItems = data?.data?.total || 0;
 
-  const btnItems = totalItems / 40
+  const btnItems = Math.ceil(totalItems / 40);
   const toBanglaNumber = (num: number) => {
     const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
     return num.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
