@@ -65,8 +65,6 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
 
 
 
-
-
   const handleDivChange = (value: string) => {
     setSelectedDivisions(value);
     setSelectedDistrict("");
