@@ -20,7 +20,7 @@ const MainLayout = () => {
 
   const hostname = window.location.hostname;
   let union = hostname.split(".")[0];
-  if (union === "localhost" || union === "uniontax" || union === "unionservices" || union === "pouroseba") {
+  if (union === "localhost" || union === "192" || union === "uniontax" || union === "unionservices" || union === "pouroseba") {
     union = 'root';
   }
   const [unionName] = useState(union);

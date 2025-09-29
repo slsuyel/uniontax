@@ -39,19 +39,33 @@ const PouroLocationSelector = ({ onUnionSelect, showLabels = false }: LocationSe
     }
   }, [selecteddivisions]);
 
+
+
+
+  
   useEffect(() => {
     if (selectedDistrict) {
-      fetch("/pouroseba.json")
+      fetch(`${BASE_API_URL}/global/pourashavas/${selectedDistrict}`)
         .then((res) => res.json())
         .then((data) => {
-          const filteredUnions = data.filter((u: any) => u.district_id == selectedDistrict);
-          setUnions(filteredUnions);
+          console.log(data);
+
+          setUnions(data?.data || []);
+          // const filteredUnions = data.filter((u: any) => u.district_id == selectedDistrict);
+          // setUnions(filteredUnions);
         })
         .catch((error) => console.error("Error fetching unions:", error));
     } else {
       setUnions([]);
     }
   }, [selectedDistrict]);
+
+
+
+
+
+
+
 
   const handleDivChange = (value: string) => {
     setSelectedDivisions(value);
