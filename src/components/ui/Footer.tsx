@@ -3,41 +3,44 @@ const footerLinks = [
     title: "গুরুত্বপূর্ণ লিংক",
     links: [
       { text: "রাষ্ট্রপতির কার্যালয়", url: "http://www.bangabhaban.gov.bd/" },
-      { text: "প্রধানমন্ত্রীর কার্যালয়", url: "http://www.pmo.gov.bd" },
-      { text: "জাতীয় সংসদ", url: "http://www.parliament.gov.bd/" },
+      { text: "প্রধান উপদেষ্টার কার্যালয়", url: "https://cao.gov.bd/" },
+      // { text: "প্রধানমন্ত্রীর কার্যালয়", url: "http://www.pmo.gov.bd" },
+      // { text: "জাতীয় সংসদ", url: "http://www.parliament.gov.bd/" },
       { text: "জনপ্রশাসন মন্ত্রণালয়", url: "http://mopa.gov.bd" },
       { text: "জাতীয় তথ্য বাতায়ন", url: "http://www.bangladesh.gov.bd" },
-      { text: "পঞ্চগড় জেলা", url: "http://www.panchagarh.gov.bd/" },
-      { text: "তেঁতুলিয়া উপজেলা", url: "http://tetulia.panchagarh.gov.bd/" },
+      { text: "বাংলাদেশ ফরম", url: "http://forms.mygov.bd/" },
     ],
   },
   {
     title: "অন্যান্য",
     links: [
-      { text: "বাংলাদেশ ফরম", url: "http://forms.mygov.bd/" },
-      { text: "ই-বুক", url: "http://www.ebook.gov.bd/" },
       { text: "সকল ই-সেবা", url: "https://www.mygov.bd/" },
-      { text: "পাসপোর্টের আবেদন", url: "http://mopa.gov.bd" },
+      // { text: "পাসপোর্টের আবেদন", url: "http://mopa.gov.bd" },
       { text: "ই-চালান", url: "http://echallan.gov.bd/" },
       { text: "ভূমি সেবা", url: "https://ldtax.gov.bd/" },
+      { text: " ভ্রমণ গাইড", url: "https://tourinfobd.com/" },
       { text: "এটুআই", url: "https://a2i.gov.bd/" },
     ],
   },
   {
-    title: "ইজারা নোটিশ বোর্ড",
+    title: " নোটিশ বোর্ড",
     links: [
-      { text: "৭নং দেবনগড় ইউনিয়নের পাথরবালি ইজারা", url: "/tenderview/9" },
-      { text: "“বিবিধ পণ্য পরিবহনের উপর পারমিট ফিস”", url: "/tenderview/8" },
-      { text: "“পশু জবাই ফিস”", url: "/tenderview/7" },
-      { text: "বিবিধ পণ্য পরিবহন পারমটি ফিস", url: "/tenderview/4" },
-      { text: "0৭নং দেবনগড় ইউনিয়নের পাথরবালি ইজারা", url: "/tenderview/3" },
-      { text: "তেতুলিয়া মহানন্দা নদীর পাথরঘাট ইজারা", url: "/tenderview/2" },
+      {
+        text: "ইউনিয়ন ট্যাক্স: আবেদন, পেমেন্ট ও সনদ গাইড",
+        url: "https://www.youtube.com/watch?v=WxMzwKq5PcE",
+      },
+      {
+        text: "UnionTax অ্যাডমিন: ইউনিয়ন সেবা পরিচালনার সহজ গাইড",
+        url: "https://www.youtube.com/watch?v=BrlwWTU7Uuk",
+      },
+      { text: "নতুন  ইউনিয়ন/পৌরসভা রেজিস্ট্রেশন", url: "/new-area" },
+      { text: "হোল্ডিং ট্যাক্স সেবা নিন ", url: "/holding/tax" },
     ],
   },
 ];
+import { CheckCircleOutlined } from "@ant-design/icons";
 import sos from "../../assets/icons/sos.png";
 import ekpay from "../../assets/images/ekpay.webp";
-import { CheckCircleOutlined } from "@ant-design/icons";
 
 const Footer = () => {
   const baseUrl = window.origin;
@@ -104,10 +107,16 @@ const Footer = () => {
                     <b> ব্যবস্থাপনা ও তত্ত্বাবধানে:</b> <br />
                     {baseUrl.includes("unionservices")
                       ? "বিভাগীয় কমিশনারের কার্যালয়, রংপুর"
-                      : " জেলা প্রশাসন,পঞ্চগড়"} | A2i
+                      : " জেলা প্রশাসন,পঞ্চগড়"}{" "}
+                    | A2i
                   </span>
                   <div>
-                    <img src="https://images.seeklogo.com/logo-png/25/1/a2i-logo-png_seeklogo-258213.png" width={50} className="img-fluid" alt="" />
+                    <img
+                      src="https://images.seeklogo.com/logo-png/25/1/a2i-logo-png_seeklogo-258213.png"
+                      width={50}
+                      className="img-fluid"
+                      alt=""
+                    />
                   </div>
                 </li>
               </ul>
@@ -121,7 +130,13 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img loading="lazy" src={sos} alt="sys" width={40} height={"auto"} />{" "}
+                  <img
+                    loading="lazy"
+                    src={sos}
+                    alt="sys"
+                    width={40}
+                    height={"auto"}
+                  />{" "}
                   <span style={{ padding: "0px 15px" }}>
                     <b> কারিগরি সহায়তায়:</b> <br />{" "}
                     <a
@@ -141,7 +156,13 @@ const Footer = () => {
         <div className="footerpayment row">
           <div className="col-md-2" />{" "}
           <div className="col-md-8">
-            <img loading="lazy" src={ekpay} width="100%" height={"auto"} alt="sys" />
+            <img
+              loading="lazy"
+              src={ekpay}
+              width="100%"
+              height={"auto"}
+              alt="sys"
+            />
           </div>{" "}
           <div className="col-md-2" />
         </div>

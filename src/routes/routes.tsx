@@ -15,20 +15,21 @@ import Tenders from "@/pages/Tenders/Tenders";
 import Login from "@/pages/auth/Login";
 import ResetPassword from "@/pages/auth/ResetPassword";
 
-import { createBrowserRouter } from "react-router-dom";
-import { adminRoutes } from "./adminRoutes";
 import AuthProvider from "@/Providers/AuthProvider";
-import PaymentSuccessPage from "@/pages/payment/PaymentSuccessPage";
-import SingleHoldingPublic from "@/pages/Holding/SingleHoldingPublic";
-import EnglishApplicationForm from "@/pages/EnglishApplicationForm/EnglishApplicationForm";
-import UddoktaLayout from "./../components/layouts/uddokta/UddoktaLayout";
-import { uddoktaRoutes } from "./uddoktaRoutes";
 import UddoktaAuthProvider from "@/Providers/UddoktaAuthProvider";
-import SonodSearchById from "@/pages/SonodSearch/SonodSearchById";
 import SonodDetails from "@/pages/About/SonodDetails";
+import AutoBikeRegistration from "@/pages/AutoBikeRegistration/AutoBikeRegistration";
+import EnglishApplicationForm from "@/pages/EnglishApplicationForm/EnglishApplicationForm";
+import SingleHoldingPublic from "@/pages/Holding/SingleHoldingPublic";
+import SonodSearchById from "@/pages/SonodSearch/SonodSearchById";
 import ScheduleTender from "@/pages/Tenders/ScheduleTender";
 import SingleTender from "@/pages/Tenders/SingleTender";
-import AutoBikeRegistration from "@/pages/AutoBikeRegistration/AutoBikeRegistration";
+import UnionRegistration from "@/pages/new-area/NewArea";
+import PaymentSuccessPage from "@/pages/payment/PaymentSuccessPage";
+import { createBrowserRouter } from "react-router-dom";
+import UddoktaLayout from "./../components/layouts/uddokta/UddoktaLayout";
+import { adminRoutes } from "./adminRoutes";
+import { uddoktaRoutes } from "./uddoktaRoutes";
 
 const router = createBrowserRouter([
   {
@@ -118,6 +119,10 @@ const router = createBrowserRouter([
       {
         path: "/application-english/:service",
         element: <EnglishApplicationForm />,
+      },
+      {
+        path: "/new-area",
+        element: <UnionRegistration />,
       },
     ],
   },

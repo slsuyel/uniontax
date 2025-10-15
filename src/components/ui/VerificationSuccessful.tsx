@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link } from "react-router-dom";
-import { TSonodDetails } from "./SearchTimeline";
-import { useState } from "react";
-import { message, Modal } from "antd";
 import { useRenewSonodMutation } from "@/redux/api/user/userApi";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
+import { message, Modal } from "antd";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { TSonodDetails } from "./SearchTimeline";
 
 const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
-  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+  const site_settings = useAppSelector(
+    (state: RootState) => state.union.site_settings
+  );
 
-  const [renewSonod, { isLoading }] = useRenewSonodMutation()
+  const [renewSonod, { isLoading }] = useRenewSonodMutation();
   const [renew, setRenew] = useState<boolean>(false);
   const handleRenew = () => {
     setRenew(true);
@@ -20,21 +22,21 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
     setRenew(false);
   };
   const additionalData = {
-
     s_uri: window.origin + "/payment-success",
     f_uri: window.origin + "/payment-failed",
     c_uri: window.origin + "/payment-cancel",
   };
   const handleOk = async () => {
-    const res = await renewSonod({ data: additionalData, id: sonod.id }).unwrap()
+    const res = await renewSonod({
+      data: additionalData,
+      id: sonod.id,
+    }).unwrap();
     if (res.status_code === 200) {
       message.success("You are redirect to payment gateway");
       window.location.href = res.data.redirect_url;
       setRenew(false);
     }
-
-  }
-
+  };
 
   return (
     <div className="d-flex justify-content-between my-5 sonod-verification">
@@ -47,14 +49,16 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
               </button>
             ) : (
               <>
-                {sonod.download_url && <Link
-                  to={sonod.download_url}
-                  target="_blank"
-                  className="btn btn-sm btn-success"
-                >
-                  ডাউনলোড
-                </Link>}
-                {sonod.download_url_en ?
+                {sonod.download_url && (
+                  <Link
+                    to={sonod.download_url}
+                    target="_blank"
+                    className="btn btn-sm btn-success"
+                  >
+                    ডাউনলোড
+                  </Link>
+                )}
+                {sonod.download_url_en ? (
                   <Link
                     to={sonod.download_url_en}
                     target="_blank"
@@ -62,17 +66,23 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
                   >
                     ইংরেজি সনদ ডাউনলোড
                   </Link>
-                  :
+                ) : (
                   <div>
-                    {site_settings.union =='false' && <a
-                      href={`https://${sonod.unioun_name}.pouroseba.gov.bd/application-english/${encodeURIComponent(sonod.sonod_name)}?id=${sonod.id}`}
+                    <a
+                      target="_blank"
+                      href={`https://${
+                        site_settings.union === "true"
+                          ? `${sonod.unioun_name}.uniontax.gov.bd`
+                          : `${sonod.unioun_name}.pouroseba.gov.bd`
+                      }/application-english/${encodeURIComponent(
+                        sonod.sonod_name
+                      )}?id=${sonod.id}`}
                       className="btn btn-sm btn-success"
                     >
                       ইংরেজি সনদ আবেদন করুন
                     </a>
-                    }
                   </div>
-                }
+                )}
               </>
             )}
           </div>
@@ -80,7 +90,12 @@ const VerificationSuccessful = ({ sonod }: { sonod: TSonodDetails }) => {
         <div className="border">
           <div className="row m-0 mt-2 mx-auto ">
             <div className="logo-img col-md-3 col-sm-12 text-end hide-mobile">
-              <img width={70} height={"auto"} alt="bangladesh-govt" src="/bangladesh-govt.png" />
+              <img
+                width={70}
+                height={"auto"}
+                alt="bangladesh-govt"
+                src="/bangladesh-govt.png"
+              />
             </div>{" "}
             <div className="header-text col-md-6 col-sm-12 text-center">
               <p>Government of the People's Republic of Bangladesh</p>{" "}
