@@ -19677,6 +19677,13 @@
     "url": "chanpurup.narsingdi.gov.bd"
   },
   {
+    "id": "4545",
+    "upazila_id": "315",
+    "bn_name": "মির্জাপুর",
+    "name": "Mirjapur",
+    "url": "mirzapur.narsingdi.gov.bd"  
+},
+  {
     "id": "2812",
     "upazilla_id": "315",
     "name": "Alipura",
@@ -19823,6 +19830,7 @@
     "bn_name": "মরজাল",
     "url": "marjal2up.narsingdi.gov.bd"
   },
+ 
   {
     "id": "2833",
     "upazilla_id": "316",
