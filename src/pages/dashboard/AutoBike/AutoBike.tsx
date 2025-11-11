@@ -42,7 +42,7 @@ const AutoBike = () => {
         setTimeout(() => refetch(), 100);
     };
     const total = data?.data?.data?.total
-    const btnItems = Math.ceil(total / 500);
+    const btnItems = Math.ceil(total / 400);
     const toBanglaNumber = (num: number) => {
         const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
         return num.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
@@ -147,7 +147,7 @@ const AutoBike = () => {
                 <div className="d-flex align-items-center gap-2">
                     {/* <a href={`${VITE_BASE_DOC_URL}/auto/bike/applicant/report/download?token=${token}`} target="_blank" className=" btn btn-info btn-sm">PDF তালিকা ডাউনলোড</a> */}
 
-                    <button className="btn btn-info" onClick={handleCardModal}>
+                    <button className="btn btn-info btn-sm" onClick={handleCardModal}>
                         PDF তালিকা ডাউনলোড
                     </button>
 
@@ -218,7 +218,7 @@ const AutoBike = () => {
                 <div className="d-flex flex-wrap gap-2">
                     {Array.from({ length: btnItems }, (_, index) => (
 
-                        <a href={`${VITE_BASE_DOC_URL}/auto/bike/applicant/report/download?token=${token}&per_page=${500}&page=${index + 1}`} target="_blank" className=" btn btn-info btn-sm"> তালিকা ({toBanglaNumber(index + 1)})</a>
+                        <a href={`${VITE_BASE_DOC_URL}/auto/bike/applicant/report/download?token=${token}&per_page=${400}&page=${index + 1}`} target="_blank" className=" btn btn-info btn-sm"> তালিকা ({toBanglaNumber(index + 1)})</a>
 
                         // <Link
                         //     to={`${VITE_BASE_DOC_URL}/holding/card/download/by/word/${word}?page=${index + 1}&token=${token}`}
