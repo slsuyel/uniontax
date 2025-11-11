@@ -82,6 +82,7 @@ const Sidebar = ({ user }: { user: any }) => {
       ],
     },
     { key: "failed", title: "পেমেন্ট ফেইল্ড ", slug: "/payment-failed" },
+    { key: "auto-bike", title: "অটো বাইক তালিকা", slug: "/auto-bike" },
     ...sonodInfo.map((sonod) => ({
       key: sonod.id.toString(),
       title: sonod.bnname,

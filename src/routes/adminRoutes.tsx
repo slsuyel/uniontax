@@ -21,6 +21,7 @@ import TenderDropList from "@/pages/dashboard/Tender/TenderDropList";
 import UnionReports from "@/pages/dashboard/UnionReports";
 import HoldingTaxBokeyaList from "@/pages/Holding/HoldingTaxBokeyaList";
 import BusinessDirectoryPage from "@/pages/dashboard/BusinessDirectory/BusinessDirectoryPage";
+import AutoBike from "@/pages/dashboard/AutoBike/AutoBike";
 
 export const adminRoutes = [
   {
@@ -113,5 +114,9 @@ export const adminRoutes = [
   {
     path: "profile",
     element: <ProfilePage />,
+  },
+  {
+    path: "auto-bike",
+    element: <AutoBike />,
   },
 ];

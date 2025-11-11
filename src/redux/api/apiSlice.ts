@@ -20,6 +20,7 @@ const apiSlice = createApi({
     'sonod-apply',
     "sms",
     "bank-details",
+    "Supports",
   ],
 });
 

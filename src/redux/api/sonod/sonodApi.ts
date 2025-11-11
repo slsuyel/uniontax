@@ -256,6 +256,17 @@ const sonodApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    bikeRegistrationsList: builder.query({
+      query: ({ token, page, per_page, search }) => ({
+        url: `/user/auto-bike-registration?page=${page}&per_page=${per_page}&search=${search}`,
+        method: "Get",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+
+
   }),
 });
 
@@ -283,5 +294,6 @@ export const {
   useSonodFilesUpdateMutation,
   useRenewPreviousHoldingMutation,
   useTradeKhatUpdateMutation,
-  useBikeRegistrationMutation
+  useBikeRegistrationMutation,
+  useBikeRegistrationsListQuery
 } = sonodApi;

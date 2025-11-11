@@ -51,6 +51,7 @@ const Header = () => {
     { title: "যোগাযোগ", link: "/contact" },
     { title: "হোল্ডিং ট্যাক্স", link: "/holding/tax" },
     { title: "নাগরিক কর্নার", link: "/citizens_corner" },
+    { title: "সহযোগিতা", link: "/supports" },
     {
       title: userInfo ? "ড্যাশবোর্ড" : "লগইন",
       link: "/login",
