@@ -30,6 +30,7 @@ import { createBrowserRouter } from "react-router-dom";
 import UddoktaLayout from "./../components/layouts/uddokta/UddoktaLayout";
 import { adminRoutes } from "./adminRoutes";
 import { uddoktaRoutes } from "./uddoktaRoutes";
+import Supports from "@/pages/Supports/Supports";
 
 const router = createBrowserRouter([
   {
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
       {
         path: "/new-area",
         element: <UnionRegistration />,
+      },
+      {
+        path: "/supports",
+        element: <Supports />,
       },
     ],
   },
