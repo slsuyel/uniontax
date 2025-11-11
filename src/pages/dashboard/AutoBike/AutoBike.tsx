@@ -12,7 +12,7 @@ const AutoBike = () => {
     const [perPage, setPerPage] = useState(15);
     const [searchTerm, setSearchTerm] = useState("");
     const token = localStorage.getItem("token");
-
+    const [showDownloadModal, setShowDownloadModal] = useState(false);
     const { data, isLoading, refetch, isFetching } = useBikeRegistrationsListQuery({
         token,
         page,
@@ -27,7 +27,9 @@ const AutoBike = () => {
         setSelected(record);
         setOpen(true);
     };
-
+    const handleCardModal = () => {
+        setShowDownloadModal(true)
+    };
     const handlePerPageChange = (value: number) => {
         setPerPage(value);
         setPage(1);
@@ -39,9 +41,17 @@ const AutoBike = () => {
         setPage(1);
         setTimeout(() => refetch(), 100);
     };
+    const total = data?.data?.data?.total
+    const btnItems = Math.ceil(total / 500);
+    const toBanglaNumber = (num: number) => {
+        const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+        return num.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
+    };
+
+
 
     const columns = [
-      
+
         {
             title: " আইডি",
             dataIndex: "application_id",
@@ -68,15 +78,15 @@ const AutoBike = () => {
                 </a>
             ),
         },
-       
-       
+
+
         {
             title: "পেশা",
             dataIndex: "profession",
             key: "profession",
         },
-      
-      
+
+
         {
             title: " ক্রয়ের তারিখ",
             dataIndex: "auto_bike_purchase_date",
@@ -135,7 +145,12 @@ const AutoBike = () => {
                     />
                 </div>
                 <div className="d-flex align-items-center gap-2">
-                    <a href={`${VITE_BASE_DOC_URL}/auto/bike/applicant/report/download?token=${token}`} target="_blank" className=" btn btn-info btn-sm">PDF তালিকা ডাউনলোড</a>
+                    {/* <a href={`${VITE_BASE_DOC_URL}/auto/bike/applicant/report/download?token=${token}`} target="_blank" className=" btn btn-info btn-sm">PDF তালিকা ডাউনলোড</a> */}
+
+                    <button className="btn btn-info" onClick={handleCardModal}>
+                        PDF তালিকা ডাউনলোড
+                    </button>
+
                     <a href={`${VITE_BASE_DOC_URL}/auto/bike/applicant/report/excel/download?token=${token}`} target="_blank" className=" btn btn-primary btn-sm">Exel তালিকা ডাউনলোড</a>
                 </div>
             </div>
@@ -188,6 +203,38 @@ const AutoBike = () => {
                     </Descriptions>
                 )}
             </Modal>
+
+
+            <Modal
+                title="অটো/বাইক নিবন্ধন তালিকা"
+                open={showDownloadModal}
+                onCancel={() => setShowDownloadModal(false)}
+                footer={[
+                    <button className="btn btn-danger btn-sm" key="close" onClick={() => setShowDownloadModal(false)}>
+                        Close
+                    </button>,
+                ]}
+            >
+                <div className="d-flex flex-wrap gap-2">
+                    {Array.from({ length: btnItems }, (_, index) => (
+
+                        <a href={`${VITE_BASE_DOC_URL}/auto/bike/applicant/report/download?token=${token}&per_page=${500}&page=${index + 1}`} target="_blank" className=" btn btn-info btn-sm"> তালিকা ({toBanglaNumber(index + 1)})</a>
+
+                        // <Link
+                        //     to={`${VITE_BASE_DOC_URL}/holding/card/download/by/word/${word}?page=${index + 1}&token=${token}`}
+                        //     className="btn btn-success btn-md"
+                        //     key={index}
+                        //     target="_blank"
+                        // >
+                        //     ডাউনলোড ({toBanglaNumber(index + 1)})
+                        // </Link>
+                    ))}
+                </div>
+
+            </Modal>
+
+
+
         </div>
     );
 };
