@@ -45,7 +45,8 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
 
   const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
-  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
+  const BASE_API_URL = "https://api.uniontax.gov.bd/api";
+
   useEffect(() => {
     if (selectedUnion && selectedWord) {
       setTrigger(true);
@@ -65,36 +66,34 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
 
   useEffect(() => {
-    fetch("/divisions.json")
+    fetch(`${BASE_API_URL}/global/divisions`)
       .then((res) => res.json())
-      .then((data: TDivision[]) => {
-        setDivisions(data);
+      .then((data) => {
+        setDivisions(data?.data);
       })
       .catch((error) => console.error("Error fetching divisions data:", error));
   }, []);
 
   useEffect(() => {
     if (selectedPerDivision) {
-      fetch("/districts.json")
+      fetch(`${BASE_API_URL}/global/districts/${selectedPerDivision}`)
         .then((response) => response.json())
-        .then((data: TDistrict[]) => {
-          const filteredDistricts = data.filter(
-            (d) => d.division_id === selectedPerDivision
-          );
-          setDistricts(filteredDistricts);
+        .then((data) => {
+          // const filteredDistricts = data.filter(
+          //   (d) => d.division_id === selectedPerDivision
+          // );
+          setDistricts(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching districts data:", error)
         );
     }
     if (selectedPerDivision) {
-      fetch("/districts.json")
+      fetch(`${BASE_API_URL}/global/districts/${selectedPerDivision}`)
         .then((response) => response.json())
-        .then((data: TDistrict[]) => {
-          const filteredDistricts = data.filter(
-            (d) => d.division_id === selectedPerDivision
-          );
-          setPerDistricts(filteredDistricts);
+        .then((data) => {
+
+          setPerDistricts(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching districts data:", error)
@@ -108,13 +107,13 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
 
     if (selectedPerDistrict) {
-      fetch("/pouroseba.json")
+      fetch(`${BASE_API_URL}/global/pourashavas/${selectedDistrict}`)
         .then((response) => response.json())
-        .then((data: any[]) => {
-          const filteredUnions = data.filter(
-            (union) => union.district_id === selectedPerDistrict
-          );
-          setPerUnions(filteredUnions);
+        .then((data) => {
+          // const filteredUnions = data.filter(
+          //   (union) => union.district_id === selectedPerDistrict
+          // );
+          setUnions(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching unions data:", error)
@@ -122,13 +121,10 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
     }
 
     if (selectedDistrict) {
-      fetch("/pouroseba.json")
+      fetch(`${BASE_API_URL}/global/pourashavas/${selectedDistrict}`)
         .then((response) => response.json())
-        .then((data: any[]) => {
-          const filteredUnions = data.filter(
-            (union) => union.district_id === selectedDistrict
-          );
-          setUnions(filteredUnions);
+        .then((data) => {
+          setUnions(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching unions data:", error)
@@ -141,26 +137,26 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
 
     if (selectedDistrict) {
-      fetch("/upazilas.json")
+      fetch(`${BASE_API_URL}/global/upazilas/${selectedDistrict}`)
         .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedDistrict
-          );
-          setUpazilas(filteredUpazilas);
+        .then((data) => {
+          // const filteredUpazilas = data.filter(
+          //   (upazila) => upazila.district_id === selectedDistrict
+          // );
+          setUpazilas(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching upazilas data:", error)
         );
     }
     if (selectedPerDistrict) {
-      fetch("/upazilas.json")
+      fetch(`${BASE_API_URL}/global/upazilas/${selectedDistrict}`)
         .then((response) => response.json())
-        .then((data: TUpazila[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedPerDistrict
-          );
-          setPerUpazilas(filteredUpazilas);
+        .then((data) => {
+          // const filteredUpazilas = data.filter(
+          //   (upazila) => upazila.district_id === selectedPerDistrict
+          // );
+          setPerUpazilas(data?.data);
         })
         .catch((error) =>
           console.error("Error fetching upazilas data:", error)
@@ -211,7 +207,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
         fetch(`${BASE_API_URL}/global/unions/${selectedUpazila}`)
           .then((response) => response.json())
           .then((data) => {
-           
+
             setPerUnions(data?.data);
           })
           .catch((error) =>
@@ -232,7 +228,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
 
 
 
-  }, [selectedUpazila, selectedPerUpazila]);
+  }, [selectedUpazila, selectedPerUpazila, site_settings?.union]);
 
 
 
@@ -473,7 +469,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
                 label: postOffice.name_bn,
               }))}
               placeholder="পোষ্ট অফিস লিখুন"
-
+              style={{ height: 40, width: "100%" }}
               onChange={(value) => form.setFieldsValue({ applicant_present_post_office: value })}
               filterOption={(inputValue, option) =>
                 (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
@@ -515,7 +511,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
                 label: village.name_bn,
               }))}
               placeholder="গ্রাম/মহল্লা লিখুন"
-
+              style={{ height: 40, width: "100%" }}
               onChange={(value) => form.setFieldsValue({ applicant_present_village: value })}
               filterOption={(inputValue, option) =>
                 (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
@@ -630,7 +626,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
                 label: postOffice.name_bn,
               }))}
               placeholder="পোষ্ট অফিস লিখুন"
-
+              style={{ height: 40, width: "100%" }}
               onChange={(value) => form.setFieldsValue({ applicant_permanent_post_office: value })}
               filterOption={(inputValue, option) =>
                 (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
@@ -671,7 +667,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
                 label: village.name_bn,
               }))}
               placeholder="গ্রাম/মহল্লা লিখুন"
-
+              style={{ height: 40, width: "100%" }}
               onChange={(value) => form.setFieldsValue({ applicant_permanent_village: value })}
               filterOption={(inputValue, option) =>
                 (String(option?.value ?? "")).toLowerCase().includes(inputValue.toLowerCase())
