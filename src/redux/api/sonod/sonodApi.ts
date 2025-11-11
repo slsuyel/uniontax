@@ -257,8 +257,8 @@ const sonodApi = apiSlice.injectEndpoints({
       }),
     }),
     bikeRegistrationsList: builder.query({
-      query: ({ token, page, per_page }) => ({
-        url: `/user/auto-bike-registration?page=${page}&per_page=${per_page}`,
+      query: ({ token, page, per_page, search }) => ({
+        url: `/user/auto-bike-registration?page=${page}&per_page=${per_page}&search=${search}`,
         method: "Get",
         headers: {
           Authorization: `Bearer ${token}`,
