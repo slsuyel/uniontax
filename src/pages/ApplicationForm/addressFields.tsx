@@ -319,7 +319,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
               value={selectedDistrict}
               onChange={handleDistrictChange}
             >
-              {districts.map((district) => (
+              {districts?.map((district) => (
                 <Option key={district.id} value={district.id}>
                   {district.bn_name}
                 </Option>
@@ -334,7 +334,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
               value={selectedUpazila}
               onChange={handleUpazilaChange}
             >
-              {upazilas.map((upazila) => (
+              {upazilas?.map((upazila) => (
                 <Option key={upazila.id} value={upazila.id}>
                   {upazila.bn_name}
                 </Option>
@@ -356,7 +356,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
               value={selectedUnion}
               onChange={handleUnionChange}
             >
-              {unions.map((union) => (
+              {unions?.map((union) => (
                 <Option key={union.id} value={union.id}>
                   {union.bn_name}
                 </Option>
@@ -445,7 +445,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           <Form.Item
             name="applicant_permanent_division"
             label="বিভাগ"
-            // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'বিভাগ নির্বাচন করুন' }]}
           >
             <Select
               placeholder="বিভাগ নির্বাচন করুন"
@@ -464,7 +464,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           <Form.Item
             name="applicant_permanent_district"
             label="জেলা"
-            // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'জেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="জেলা নির্বাচন করুন"
@@ -483,7 +483,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
           <Form.Item
             name="applicant_permanent_Upazila"
             label="উপজেলা/থানা"
-            // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
+          // rules={[{ required: true, message: 'উপজেলা নির্বাচন করুন' }]}
           >
             <Select
               placeholder="উপজেলা নির্বাচন করুন"
@@ -492,7 +492,7 @@ const AddressFields = ({ form }: AddressFieldsProps) => {
               value={selectedPerUpazila}
               onChange={handlePerUpazilaChange}
             >
-              {perUpazilas.map((upazila) => (
+              {perUpazilas?.map((upazila) => (
                 <Option key={upazila.id} value={upazila.id}>
                   {upazila.bn_name}
                 </Option>
